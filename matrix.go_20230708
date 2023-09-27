@@ -1,0 +1,98 @@
+package gg
+
+import (
+    "fmt"
+    "math"
+)
+
+type Matrix struct {
+    XX, XY, X0, YX, YY, Y0 float64
+}
+
+// Erstellungsfunktionen.
+func Identity() Matrix {
+    return Matrix{1, 0, 0,
+                  0, 1, 0}
+}
+
+func Translate(x, y float64) Matrix {
+    return Matrix{1, 0, x,
+                  0, 1, y}
+}
+
+func Scale(x, y float64) Matrix {
+    return Matrix{x, 0, 0,
+                  0, y, 0}
+}
+
+func Rotate(angle float64) Matrix {
+    c := math.Cos(angle)
+    s := math.Sin(angle)
+    return Matrix{c, -s, 0,
+                  s,  c, 0}
+}
+
+func Shear(x, y float64) Matrix {
+    return Matrix{1, x, 0,
+                  y, 1, 0}
+}
+
+func (a Matrix) Multiply(b Matrix) Matrix {
+    return Matrix{
+        a.XX*b.XX + a.YX*b.XY,
+        a.XY*b.XX + a.YY*b.XY,
+        a.X0*b.XX + a.Y0*b.XY + b.X0,
+
+        a.XX*b.YX + a.YX*b.YY,
+        a.XY*b.YX + a.YY*b.YY,
+        a.X0*b.YX + a.Y0*b.YY + b.Y0,
+    }
+}
+
+func (a Matrix) Translate(x, y float64) Matrix {
+    return Translate(x, y).Multiply(a)
+}
+
+func (a Matrix) Scale(x, y float64) Matrix {
+    return Scale(x, y).Multiply(a)
+}
+
+func (a Matrix) Rotate(angle float64) Matrix {
+    return Rotate(angle).Multiply(a)
+}
+
+func (a Matrix) Shear(x, y float64) Matrix {
+    return Shear(x, y).Multiply(a)
+}
+
+func (a Matrix) Invert() Matrix {
+    d := a.XX*a.YY - a.XY*a.YX
+    return Matrix{ a.YY/d, -a.XY/d, (a.XY*a.Y0-a.YY*a.X0)/d,
+                  -a.YX/d,  a.XX/d, (a.YX*a.X0-a.XX*a.Y0)/d}
+}
+
+func (a Matrix) Normalize() Matrix {
+    lx := math.Hypot(a.XX, a.YX)
+    ly := math.Hypot(a.XY, a.YY)
+    return Matrix{a.XX/lx, a.XY/ly, a.X0,
+                  a.YX/lx, a.YY/ly, a.Y0}
+}
+
+func (a Matrix) TransformPoint(x, y float64) (tx, ty float64) {
+    tx = a.XX*x + a.XY*y + a.X0
+    ty = a.YX*x + a.YY*y + a.Y0
+    return
+}
+
+func (a Matrix) TransformVector(x, y float64) (tx, ty float64) {
+    tx = a.XX*x + a.XY*y
+    ty = a.YX*x + a.YY*y
+    return
+}
+
+func (a Matrix) String() string {
+    return fmt.Sprintf("[ % .4f  % .4f  % .4f ]\n[ % .4f  % .4f  % .4f ]\n[ % .4f  % .4f  % .4f ]",
+            a.XX, a.XY, a.X0,
+            a.YX, a.YY, a.Y0,
+            0.0, 0.0, 1.0)
+}
