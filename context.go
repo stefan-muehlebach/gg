@@ -12,6 +12,8 @@ import (
     _ "log"
     "math"
     "strings"
+    
+    . "mju.net/geom"
 
     "github.com/golang/freetype/raster"
     "golang.org/x/image/draw"
@@ -106,7 +108,7 @@ func NewContextForRGBA(im *image.RGBA) *Context {
     return &Context{
         width:      w,
         height:     h,
-        bounds:     Rectangle{Max: Point{float64(w), float64(h)}},
+        bounds:     Rectangle{Max: Point{X: float64(w), Y: float64(h)}},
         rasterizer: raster.NewRasterizer(w, h),
         im:         im,
         // color:          color.Transparent,
@@ -314,7 +316,7 @@ func (dc *Context) MoveTo(x, y float64) {
     //     dc.fillPath.Add1(dc.start.Fixed())
     // }
     x, y = dc.TransformPoint(x, y)
-    p := Point{x, y}
+    p := Point{X: x, Y: y}
     dc.path.Start(p.Fixed())
     //dc.strokePath.Start(p.Fixed())
     //dc.fillPath.Start(p.Fixed())
@@ -330,7 +332,7 @@ func (dc *Context) LineTo(x, y float64) {
         dc.MoveTo(x, y)
     } else {
         x, y = dc.TransformPoint(x, y)
-        p := Point{x, y}
+        p := Point{X: x, Y: y}
         dc.path.Add1(p.Fixed())
         // dc.strokePath.Add1(p.Fixed())
         // dc.fillPath.Add1(p.Fixed())
@@ -347,8 +349,8 @@ func (dc *Context) QuadraticTo(x1, y1, x2, y2 float64) {
     }
     x1, y1 = dc.TransformPoint(x1, y1)
     x2, y2 = dc.TransformPoint(x2, y2)
-    p1 := Point{x1, y1}
-    p2 := Point{x2, y2}
+    p1 := Point{X: x1, Y: y1}
+    p2 := Point{X: x2, Y: y2}
     dc.path.Add2(p1.Fixed(), p2.Fixed())
     // dc.strokePath.Add2(p1.Fixed(), p2.Fixed())
     // dc.fillPath.Add2(p1.Fixed(), p2.Fixed())
@@ -367,21 +369,37 @@ func (dc *Context) CubicTo(x1, y1, x2, y2, x3, y3 float64) {
     x1, y1 = dc.TransformPoint(x1, y1)
     x2, y2 = dc.TransformPoint(x2, y2)
     x3, y3 = dc.TransformPoint(x3, y3)
-    points := CubicBezier(x0, y0, x1, y1, x2, y2, x3, y3)
-    previous := dc.current.Fixed()
-    for _, p := range points[1:] {
-        f := p.Fixed()
-        if f == previous {
-            // TODO: this fixes some rendering issues but not all
-            continue
-        }
-        previous = f
+    pts := CubicBezier(x0, y0, x1, y1, x2, y2, x3, y3)
+    for _, pt := range pts[1:] {
+        f := pt.Fixed()
         dc.path.Add1(f)
-        // dc.strokePath.Add1(f)
-        // dc.fillPath.Add1(f)
-        dc.current = p
+        dc.current = pt
     }
 }
+
+// func (dc *Context) CubicTo(x1, y1, x2, y2, x3, y3 float64) {
+//     if !dc.hasCurrent {
+//         dc.MoveTo(x1, y1)
+//     }
+//     x0, y0 := dc.current.X, dc.current.Y
+//     x1, y1 = dc.TransformPoint(x1, y1)
+//     x2, y2 = dc.TransformPoint(x2, y2)
+//     x3, y3 = dc.TransformPoint(x3, y3)
+//     points := CubicBezier(x0, y0, x1, y1, x2, y2, x3, y3)
+//     previous := dc.current.Fixed()
+//     for _, p := range points[1:] {
+//         f := p.Fixed()
+//         if f == previous {
+//             // TODO: this fixes some rendering issues but not all
+//             continue
+//         }
+//         previous = f
+//         dc.path.Add1(f)
+//         // dc.strokePath.Add1(f)
+//         // dc.fillPath.Add1(f)
+//         dc.current = p
+//     }
+// }
 
 // ClosePath adds a line segment from the current point to the beginning
 // of the current subpath. If there is no current point, this is a no-op.
@@ -444,7 +462,7 @@ func (dc *Context) stroke(painter raster.Painter) {
     } else {
         // TODO: this is a temporary workaround to remove tiny segments
         // that result in rendering issues
-        path = rasterPath(flattenPath(path))
+        // path = rasterPath(flattenPath(path))
     }
     r := dc.rasterizer
     r.UseNonZeroWinding = true
@@ -730,7 +748,7 @@ func (dc *Context) DrawImageAnchored(im image.Image, x, y int, ax, ay float64) {
     y -= int(ay * float64(s.Y))
     transformer := draw.BiLinear
     fx, fy := float64(x), float64(y)
-    m := dc.matrix.Translate(fx, fy)
+    m := dc.matrix.Translate(Point{X: fx, Y: fy})
     s2d := f64.Aff3{m.M11, m.M12, m.M13, m.M21, m.M22, m.M23}
     if dc.mask == nil {
         transformer.Transform(dc.im, s2d, im, im.Bounds(), draw.Over, nil)
@@ -786,7 +804,7 @@ func (dc *Context) drawString(im *image.RGBA, s string, x, y float64) {
         sr := dr.Sub(dr.Min)
         transformer := draw.ApproxBiLinear
         fx, fy := float64(dr.Min.X), float64(dr.Min.Y)
-        ml := dc.matrix.Translate(fx, fy)
+        ml := dc.matrix.Translate(Point{X: fx, Y: fy})
         s2d := f64.Aff3{ml.M11, ml.M12, ml.M13, ml.M21, ml.M22, ml.M23}
         transformer.Transform(d.Dst, s2d, d.Src, sr, draw.Over, &draw.Options{
             SrcMask:  mask,
@@ -897,7 +915,7 @@ func (dc *Context) Identity() {
 
 // Translate updates the current matrix with a translation.
 func (dc *Context) Translate(x, y float64) {
-    dc.matrix = dc.matrix.Translate(x, y)
+    dc.matrix = dc.matrix.Translate(Point{X: x, Y: y})
     // dc.localMatrixInv = dc.matrix.Invert()
 }
 
@@ -911,9 +929,10 @@ func (dc *Context) Scale(x, y float64) {
 // ScaleAbout updates the current matrix with a scaling factor.
 // Scaling occurs about the specified point.
 func (dc *Context) ScaleAbout(sx, sy, x, y float64) {
-    dc.Translate(x, y)
-    dc.Scale(sx, sy)
-    dc.Translate(-x, -y)
+    dc.matrix = dc.matrix.ScaleAbout(Point{X: x, Y: y}, sx, sy)
+    // dc.Translate(x, y)
+    // dc.Scale(sx, sy)
+    // dc.Translate(-x, -y)
 }
 
 // Rotate updates the current matrix with a anticlockwise rotation.
@@ -926,9 +945,10 @@ func (dc *Context) Rotate(angle float64) {
 // RotateAbout updates the current matrix with a anticlockwise rotation.
 // Rotation occurs about the specified point. Angle is specified in radians.
 func (dc *Context) RotateAbout(angle, x, y float64) {
-    dc.Translate(x, y)
-    dc.Rotate(angle)
-    dc.Translate(-x, -y)
+    dc.matrix = dc.matrix.RotateAbout(Point{X: x, Y: y}, angle)
+    // dc.Translate(x, y)
+    // dc.Rotate(angle)
+    // dc.Translate(-x, -y)
 }
 
 // Shear updates the current matrix with a shearing angle.
@@ -983,13 +1003,21 @@ func (dc *Context) Matrix() Matrix {
     return dc.matrix
 }
 
+func (dc *Context) BaseMatrix() Matrix {
+    if len(dc.stack) == 0 {
+        return dc.matrix
+    } else {
+        return dc.stack[0].matrix
+    }
+}
+
 // Define the visual area using mathematical coordinates (x values increases
 // from left to right, y values increases from bottom to top).
 // func (dc *Context) SetDisplayRange(xmin, xmax, ymin, ymax float64) {
 //     if xmin >= xmax || ymin >= ymax {
 //         log.Fatal("Incorrect definition of visible range!")
 //     }
-//     dc.bounds = Rectangle{Min: Point{xmin, ymin}, Max: Point{xmax, ymax}}
+//     dc.bounds = Rectangle{Min: Point{X: xmin, Y: ymin}, Max: Point{X: xmax, Y: ymax}}
 //     m := Translate(0, float64(dc.height)).Scale(1, -1)
 //     m = m.Scale(float64(dc.width)/(xmax-xmin),
 //         float64(dc.height)/(ymax-ymin))

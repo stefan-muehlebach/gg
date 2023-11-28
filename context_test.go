@@ -15,7 +15,7 @@ var save bool
 var dirName string = "test"
 
 func init() {
-    flag.BoolVar(&save, "save", false, "save PNG output for each test case")
+    flag.BoolVar(&save, "save", true, "save PNG output for each test case")
     os.Mkdir(dirName, 0755)
 }
 
@@ -93,7 +93,7 @@ func TestCircles(t *testing.T) {
         dc.FillStroke()
     }
     saveImage(dc, "TestCircles")
-    checkHash(t, dc, "1f694525d7ff55d99a81646f827168d7")
+    checkHash(t, dc, "f7d9d71b15f21ee0a808489e92f16cc3")
 }
 
 func TestQuadratic(t *testing.T) {
@@ -115,8 +115,28 @@ func TestQuadratic(t *testing.T) {
         dc.Stroke()
     }
     saveImage(dc, "TestQuadratic")
-    checkHash(t, dc, "87eec03808f687bd012a10752c61cdc8")
+    checkHash(t, dc, "e5f6caacbd63600e98d08250071d0e34")
 }
+
+func TestQuadraticSingle(t *testing.T) {
+    dc := NewContext(100, 100)
+    dc.SetFillColor(NewRGB(0.25, 0.25, 0.25))
+    dc.Clear()
+    rnd := rand.New(rand.NewSource(99))
+    x1 := 25.0
+    y1 := 75.0
+    x2 := 50.0
+    y2 := 25.0
+    x3 := 75.0
+    y3 := 75.0
+    dc.MoveTo(x1, y1)
+    dc.QuadraticTo(x2, y2, x3, y3)
+    dc.SetLineWidth(rnd.Float64() * 3)
+    dc.SetStrokeColor(NewRGB(rnd.Float64(), rnd.Float64(), rnd.Float64()))
+    dc.Stroke()
+    saveImage(dc, "TestQuadraticSingle")
+}
+
 
 func TestCubic(t *testing.T) {
     dc := NewContext(100, 100)
@@ -139,8 +159,30 @@ func TestCubic(t *testing.T) {
         dc.Stroke()
     }
     saveImage(dc, "TestCubic")
-    checkHash(t, dc, "ff87a762b42863198c78c923b17033d8")
+    checkHash(t, dc, "6d8ac746291488a6cad99c53e415982e")
 }
+
+func TestCubicSingle(t *testing.T) {
+    dc := NewContext(100, 100)
+    dc.SetFillColor(NewRGB(0.25, 0.25, 0.25))
+    dc.Clear()
+    rnd := rand.New(rand.NewSource(99))
+    x1 := 25.0
+    y1 := 75.0
+    x2 := 25.0
+    y2 := 25.0
+    x3 := 75.0
+    y3 := 25.0
+    x4 := 75.0
+    y4 := 75.0
+    dc.MoveTo(x1, y1)
+    dc.CubicTo(x2, y2, x3, y3, x4, y4)
+    dc.SetLineWidth(rnd.Float64() * 3)
+    dc.SetStrokeColor(NewRGB(rnd.Float64(), rnd.Float64(), rnd.Float64()))
+    dc.Stroke()
+    saveImage(dc, "TestCubicSingle")
+}
+
 
 func TestFill(t *testing.T) {
     dc := NewContext(100, 100)
