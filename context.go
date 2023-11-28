@@ -13,7 +13,7 @@ import (
     "math"
     "strings"
     
-    . "github.com/stefan-muehlebach/gg/geom"
+    "github.com/stefan-muehlebach/gg/geom"
 
     "github.com/golang/freetype/raster"
     "golang.org/x/image/draw"
@@ -60,7 +60,7 @@ var (
 type Context struct {
     width      int
     height     int
-    bounds     Rectangle
+    bounds     geom.Rectangle
     rasterizer *raster.Rasterizer
     im         *image.RGBA
     mask       *image.Alpha
@@ -71,8 +71,8 @@ type Context struct {
     // fillPath       raster.Path
     fillPattern Pattern // and this is the fill color
     fillRule    FillRule
-    start       Point
-    current     Point
+    start       geom.Point
+    current     geom.Point
     hasCurrent  bool
     dashes      []float64
     dashOffset  float64
@@ -81,7 +81,7 @@ type Context struct {
     lineJoin    LineJoin
     fontFace    font.Face
     fontHeight  float64
-    matrix      Matrix // This is the local transformation for this path
+    matrix      geom.Matrix // This is the local transformation for this path
     // baseMatrix     Matrix // This is the transformation of the origin
     // localMatrixInv Matrix
     // baseMatrixInv  Matrix
@@ -108,7 +108,7 @@ func NewContextForRGBA(im *image.RGBA) *Context {
     return &Context{
         width:      w,
         height:     h,
-        bounds:     Rectangle{Max: Point{X: float64(w), Y: float64(h)}},
+        bounds:     geom.Rectangle{Max: geom.Point{X: float64(w), Y: float64(h)}},
         rasterizer: raster.NewRasterizer(w, h),
         im:         im,
         // color:          color.Transparent,
@@ -118,7 +118,7 @@ func NewContextForRGBA(im *image.RGBA) *Context {
         fillRule:      FillRuleWinding,
         fontFace:      basicfont.Face7x13,
         fontHeight:    13,
-        matrix:        Identity(),
+        matrix:        geom.Identity(),
         // baseMatrix:     Identity(),
         // localMatrixInv: Identity(),
         // baseMatrixInv:  Identity(),
@@ -127,11 +127,11 @@ func NewContextForRGBA(im *image.RGBA) *Context {
 
 // GetCurrentPoint will return the current point and if there is a current point.
 // The point will have been transformed by the context's transformation matrix.
-func (dc *Context) GetCurrentPoint() (Point, bool) {
+func (dc *Context) GetCurrentPoint() (geom.Point, bool) {
     if dc.hasCurrent {
         return dc.current, true
     }
-    return Point{}, false
+    return geom.Point{}, false
 }
 
 // Image returns the image that has been drawn by this context.
@@ -150,7 +150,7 @@ func (dc *Context) Height() int {
 }
 
 // Bounds returns the coordinates of the visible range as a rectangle.
-func (dc *Context) Bounds() Rectangle {
+func (dc *Context) Bounds() geom.Rectangle {
     return dc.bounds
 }
 
@@ -316,7 +316,7 @@ func (dc *Context) MoveTo(x, y float64) {
     //     dc.fillPath.Add1(dc.start.Fixed())
     // }
     x, y = dc.TransformPoint(x, y)
-    p := Point{X: x, Y: y}
+    p := geom.Point{X: x, Y: y}
     dc.path.Start(p.Fixed())
     //dc.strokePath.Start(p.Fixed())
     //dc.fillPath.Start(p.Fixed())
@@ -332,7 +332,7 @@ func (dc *Context) LineTo(x, y float64) {
         dc.MoveTo(x, y)
     } else {
         x, y = dc.TransformPoint(x, y)
-        p := Point{X: x, Y: y}
+        p := geom.Point{X: x, Y: y}
         dc.path.Add1(p.Fixed())
         // dc.strokePath.Add1(p.Fixed())
         // dc.fillPath.Add1(p.Fixed())
@@ -349,8 +349,8 @@ func (dc *Context) QuadraticTo(x1, y1, x2, y2 float64) {
     }
     x1, y1 = dc.TransformPoint(x1, y1)
     x2, y2 = dc.TransformPoint(x2, y2)
-    p1 := Point{X: x1, Y: y1}
-    p2 := Point{X: x2, Y: y2}
+    p1 := geom.Point{X: x1, Y: y1}
+    p2 := geom.Point{X: x2, Y: y2}
     dc.path.Add2(p1.Fixed(), p2.Fixed())
     // dc.strokePath.Add2(p1.Fixed(), p2.Fixed())
     // dc.fillPath.Add2(p1.Fixed(), p2.Fixed())
@@ -642,7 +642,7 @@ func (dc *Context) SetPixel(x, y int) {
 func (dc *Context) DrawPoint(x, y, r float64) {
     dc.Push()
     tx, ty := dc.TransformPoint(x, y)
-    dc.matrix = Identity()
+    dc.matrix = geom.Identity()
     // dc.baseMatrix = Identity()
     dc.DrawCircle(tx, ty, r)
     dc.Pop()
@@ -748,7 +748,7 @@ func (dc *Context) DrawImageAnchored(im image.Image, x, y int, ax, ay float64) {
     y -= int(ay * float64(s.Y))
     transformer := draw.BiLinear
     fx, fy := float64(x), float64(y)
-    m := dc.matrix.Translate(Point{X: fx, Y: fy})
+    m := dc.matrix.Translate(geom.Point{X: fx, Y: fy})
     s2d := f64.Aff3{m.M11, m.M12, m.M13, m.M21, m.M22, m.M23}
     if dc.mask == nil {
         transformer.Transform(dc.im, s2d, im, im.Bounds(), draw.Over, nil)
@@ -804,7 +804,7 @@ func (dc *Context) drawString(im *image.RGBA, s string, x, y float64) {
         sr := dr.Sub(dr.Min)
         transformer := draw.ApproxBiLinear
         fx, fy := float64(dr.Min.X), float64(dr.Min.Y)
-        ml := dc.matrix.Translate(Point{X: fx, Y: fy})
+        ml := dc.matrix.Translate(geom.Point{X: fx, Y: fy})
         s2d := f64.Aff3{ml.M11, ml.M12, ml.M13, ml.M21, ml.M22, ml.M23}
         transformer.Transform(d.Dst, s2d, d.Src, sr, draw.Over, &draw.Options{
             SrcMask:  mask,
@@ -910,12 +910,12 @@ func (dc *Context) WordWrap(s string, w float64) []string {
 // Identity resets the current transformation matrix to the identity matrix.
 // This results in no translating, scaling, rotating, or shearing.
 func (dc *Context) Identity() {
-    dc.matrix = Identity()
+    dc.matrix = geom.Identity()
 }
 
 // Translate updates the current matrix with a translation.
 func (dc *Context) Translate(x, y float64) {
-    dc.matrix = dc.matrix.Translate(Point{X: x, Y: y})
+    dc.matrix = dc.matrix.Translate(geom.Point{X: x, Y: y})
     // dc.localMatrixInv = dc.matrix.Invert()
 }
 
@@ -929,7 +929,7 @@ func (dc *Context) Scale(x, y float64) {
 // ScaleAbout updates the current matrix with a scaling factor.
 // Scaling occurs about the specified point.
 func (dc *Context) ScaleAbout(sx, sy, x, y float64) {
-    dc.matrix = dc.matrix.ScaleAbout(Point{X: x, Y: y}, sx, sy)
+    dc.matrix = dc.matrix.ScaleAbout(geom.Point{X: x, Y: y}, sx, sy)
     // dc.Translate(x, y)
     // dc.Scale(sx, sy)
     // dc.Translate(-x, -y)
@@ -945,7 +945,7 @@ func (dc *Context) Rotate(angle float64) {
 // RotateAbout updates the current matrix with a anticlockwise rotation.
 // Rotation occurs about the specified point. Angle is specified in radians.
 func (dc *Context) RotateAbout(angle, x, y float64) {
-    dc.matrix = dc.matrix.RotateAbout(Point{X: x, Y: y}, angle)
+    dc.matrix = dc.matrix.RotateAbout(geom.Point{X: x, Y: y}, angle)
     // dc.Translate(x, y)
     // dc.Rotate(angle)
     // dc.Translate(-x, -y)
@@ -966,7 +966,7 @@ func (dc *Context) RotateAbout(angle, x, y float64) {
 //    dc.Translate(-x, -y)
 //}
 
-func (dc *Context) Multiply(m Matrix) {
+func (dc *Context) Multiply(m geom.Matrix) {
     dc.matrix = dc.matrix.Multiply(m)
 }
 
@@ -995,15 +995,15 @@ func (dc *Context) InvertY() {
     dc.Scale(1, -1)
 }
 
-func (dc *Context) SetMatrix(m Matrix) {
+func (dc *Context) SetMatrix(m geom.Matrix) {
     dc.matrix = m
 }
 
-func (dc *Context) Matrix() Matrix {
+func (dc *Context) Matrix() geom.Matrix {
     return dc.matrix
 }
 
-func (dc *Context) BaseMatrix() Matrix {
+func (dc *Context) BaseMatrix() geom.Matrix {
     if len(dc.stack) == 0 {
         return dc.matrix
     } else {
