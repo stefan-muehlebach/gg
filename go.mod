@@ -1,4 +1,4 @@
-module mju.net/gg
+module github.com/stefan-muehlebach/gg
 
 go 1.21.4
 
