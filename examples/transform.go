@@ -9,7 +9,7 @@ import (
 	"golang.org/x/image/font"
 	"golang.org/x/image/font/gofont/goregular"
 
-	"mju.net/gg"
+	"github.com/stefan-muehlebach/gg"
 )
 
 const (

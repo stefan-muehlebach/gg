@@ -2,7 +2,7 @@ package main
 
 import (
     "image/color"
-	"mju.net/gg"
+	"github.com/stefan-muehlebach/gg"
 	"github.com/golang/freetype/truetype"
 	"golang.org/x/image/font/gofont/goregular"
 )

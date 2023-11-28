@@ -1,7 +1,7 @@
 package main
 
 import (
-	"mju.net/gg"
+	"github.com/stefan-muehlebach/gg"
 )
 
 const (

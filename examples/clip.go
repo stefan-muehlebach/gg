@@ -1,6 +1,6 @@
 package main
 
-import "mju.net/gg"
+import "github.com/stefan-muehlebach/gg"
 
 const (
     outFile = "clip.png"

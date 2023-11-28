@@ -3,7 +3,7 @@ package main
 import (
 	"math"
 
-	"mju.net/gg"
+	"github.com/stefan-muehlebach/gg"
 )
 
 const (

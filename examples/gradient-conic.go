@@ -5,7 +5,7 @@ package main
 import (
 	"image/color"
 
-	"mju.net/gg"
+	"github.com/stefan-muehlebach/gg"
 )
 
 const (

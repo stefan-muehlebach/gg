@@ -5,7 +5,7 @@ import (
 	"math"
 	"math/rand"
 
-	"mju.net/gg"
+	"github.com/stefan-muehlebach/gg"
 )
 
 const (

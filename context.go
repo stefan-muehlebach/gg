@@ -13,7 +13,7 @@ import (
     "math"
     "strings"
     
-    . "mju.net/geom"
+    . "github.com/stefan-muehlebach/gg/geom"
 
     "github.com/golang/freetype/raster"
     "golang.org/x/image/draw"

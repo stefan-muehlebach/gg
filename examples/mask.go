@@ -3,7 +3,7 @@ package main
 import (
 	"log"
 
-	"mju.net/gg"
+	"github.com/stefan-muehlebach/gg"
 )
 
 const (

@@ -3,7 +3,7 @@ package main
 import (
     "image/color"
 	"math"
-	"mju.net/gg"
+	"github.com/stefan-muehlebach/gg"
 )
 
 const (
