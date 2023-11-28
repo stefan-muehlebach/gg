@@ -1,0 +1,11 @@
+func (s BezierSegment) Dir(t float64) (Point) {
+    var q1, q2, q3 Point
+    t2 := t*t
+    
+    q1 = s.P1.Add(s.C1.Mul(-3.0).Add(s.C0.Mul(3.0).Add(s.P0.Mul(-1)))).Mul(t2)
+    q = q.Add(s.P0.Mul(-3.0*t2))
+    q = q.Add(s.C0.Mul(3.0*(t-1.0)*(3.0*t-1.0)))
+    q = q.Add(s.C1.Mul(-3.0*t*(3.0*t-2.0)))
+    q = q.Add(s.P1.Mul(3.0*t*t))
+    return q.Norm()
+}
