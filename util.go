@@ -19,18 +19,19 @@ import (
     "golang.org/x/image/math/fixed"
 )
 
-// Umrechnungsfunktionen zwischen Grad und Bogenmass.
-
+// Konvertiert einen Winkel in Grad nach dem Bogenmass.
 func Radians(degrees float64) float64 {
     return degrees * math.Pi / 180
 }
 
+// Konvertiert einen Winkel vom Bogenmass nach Grad.
 func Degrees(radians float64) float64 {
     return radians * 180 / math.Pi
 }
 
-// Funktionen zum Speichern und Laden von Bildern in den Formaten PNG und JPG
-
+// L"adt das Bild in der Datei path und stellt die Bilddaten als Image im
+// ersten R"uckgabewert zur Verf"ung. Bei einem Fehler ist der zweite
+// R"uckgabewert nicht nil und muss entsprechend behandelt werden.
 func LoadImage(path string) (image.Image, error) {
     file, err := os.Open(path)
     if err != nil {
@@ -112,8 +113,8 @@ func NewRGB(r, g, b float64) (color.Color) {
 
 // Analog zu [NewRGB], jedoch mit a in [0,1] als Alpha-Wert (Deckung der
 // Farbe). a=1 bedeutet volle Deckung und a=0 bedeutet vollständige
-// Transparenz. Die Werte für r, g und b sind als nicht-normalisierte Werte
-// anzugeben!
+// Transparenz. _Beachte_: die Werte für r, g und b müssen nicht normalisiert
+// werden.
 func NewRGBA(r, g, b, a float64) (color.Color) {
     return color.NRGBA{
         uint8(r * 255),
@@ -123,10 +124,14 @@ func NewRGBA(r, g, b, a float64) (color.Color) {
     }
 }
 
+// Analog zu [NewRGB], jedoch sind die Farbwerte als ganze Zahlen in [0,255]
+// anzugeben.
 func NewRGB255(r, g, b int) (color.Color) {
     return NewRGBA255(r, g, b, 255)
 }
 
+// Analog zu [NewRGBA], jedoch sind die Farbwerte und der Alpha-Wert als
+// ganze Zahlen in [0,255] anzugeben.
 func NewRGBA255(r, g, b, a int) (color.Color) {
     return color.NRGBA{uint8(r), uint8(g), uint8(b), uint8(a)}
 }
