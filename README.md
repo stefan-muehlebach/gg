@@ -24,20 +24,22 @@ Look how easy!
 ```go
 package main
 
-import "github.com/fogleman/gg"
+import (
+    "github.com/stefan-muehlebach/gg"
+)
 
 func main() {
     dc := gg.NewContext(1000, 1000)
     dc.DrawCircle(500, 500, 400)
-    dc.SetRGB(0, 0, 0)
+    dc.SetFillColor(gg.NewRGB(0, 0, 0))
     dc.Fill()
-    dc.SavePNG("out.png")
+    dc.SavePNG("circle.png")
 }
 ```
 
 ## Examples
 
-There are [lots of examples](https://github.com/fogleman/gg/tree/master/examples) included. They're mostly for testing the code, but they're good for learning, too.
+There are [lots of examples](https://github.com/stefan-muehlebach/gg/tree/main/examples) included. They're mostly for testing the code, but they're good for learning, too.
 
 ![Examples](http://i.imgur.com/tMFoyzu.png)
 

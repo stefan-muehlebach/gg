@@ -104,10 +104,16 @@ func LoadFontFace(path string, points float64) (font.Face, error) {
 
 // Hilfsfunktionen zum Erstellen von Farben.
 
+// Erzeugt ein neues RGB-Farbobjekt, und verwendet die Werte r, g, b in [0,1]
+// als Intensitätswerte der Farben Rot, Grün und Blau.
 func NewRGB(r, g, b float64) (color.Color) {
     return NewRGBA(r, g, b, 1.0)
 }
 
+// Analog zu [NewRGB], jedoch mit a in [0,1] als Alpha-Wert (Deckung der
+// Farbe). a=1 bedeutet volle Deckung und a=0 bedeutet vollständige
+// Transparenz. Die Werte für r, g und b sind als nicht-normalisierte Werte
+// anzugeben!
 func NewRGBA(r, g, b, a float64) (color.Color) {
     return color.NRGBA{
         uint8(r * 255),
