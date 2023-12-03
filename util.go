@@ -42,6 +42,9 @@ func LoadImage(path string) (image.Image, error) {
     return im, err
 }
 
+// Wie [LoadImage], jedoch ausschliesslich f"ur PNG-Dateien.
+// Bei einem Fehler ist der zweite
+// R"uckgabewert nicht nil und muss entsprechend behandelt werden.
 func LoadPNG(path string) (image.Image, error) {
     file, err := os.Open(path)
     if err != nil {

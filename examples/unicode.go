@@ -6,6 +6,7 @@ import (
 )
 
 const (
+    ttfFile = "Arial-Unicode-MS.ttf"
     outFile = "unicode.png"
 )
 
@@ -17,7 +18,7 @@ func main() {
 	dc.SetFillColor(color.White)
 	dc.Clear()
 	dc.SetStrokeColor(color.Black)
-	if err := dc.LoadFontFace("Ubuntu-Regular.ttf", F); err != nil {
+	if err := dc.LoadFontFace(ttfFile, F); err != nil {
 		panic(err)
 	}
 	for r := 0; r < 256; r++ {

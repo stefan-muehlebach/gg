@@ -5,10 +5,6 @@ import (
     "math"
 )
 
-const (
-    maxValue = (1 << 16) - 1
-)
-
 type Color interface {
     RGBA() (r, g, b, a uint32)
     Bright(t float64) (Color)

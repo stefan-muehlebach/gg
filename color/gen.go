@@ -4,12 +4,12 @@
 
 //go:build ignore
 // +build ignore
-
 package main
 
-// Currently, "go run gen.go" needs to be run manually. This isn't done by the
-// usual "go generate" mechanism as there isn't any other Go code in this
-// directory (excluding sub-directories) to attach a "go:generate" line to.
+// Dieses Programm ist Teil des Packages `gg/color` und erzeugt alle Farben
+// aus `golang.org/x/image/colornames` als HSL-Farben. Das generierte File
+// wird unter `../colornames/colornames.go` abgelegt und kann nun anstelle
+// von `golang.org/x/image/colornames` verwendet werden.
 
 import (
     "fmt"
@@ -35,6 +35,10 @@ func main() {
     
     fmt.Fprintf(fh, "package colornames\n\n")
     
+    fmt.Fprintf(fh, "// ACHTUNG: Dieses File ist Teil von 'gg/color' und wird\n")
+    fmt.Fprintf(fh, "// automatisch erzeugt. Manuelle Anpassungn an dieser\n")
+    fmt.Fprintf(fh, "// Datei werden bei einem erneuten Generieren überschreiben.\n\n")
+    
     fmt.Fprintf(fh, "import (\n")
     fmt.Fprintf(fh, "    \"github.com/stefan-muehlebach/gg/color\"\n")
     fmt.Fprintf(fh, ")\n\n")
@@ -51,9 +55,7 @@ func main() {
     fmt.Fprintf(fh, "var Map = map[string]color.HSL{\n")
     for _, name := range colornames.Names {
         newName  := titleCase.String(name)
-        //newColor := color.HSLModel.Convert(colornames.Map[name])
         fmt.Fprintf(fh, "    %-24s%s,\n", fmt.Sprintf("\"%s\":", newName), newName)
-        //fmt.Fprintf(fh, "    %-24s%#.4v,\n", fmt.Sprintf("\"%s\":", newName), newColor)
     }
     fmt.Fprintf(fh, "}\n\n")
     

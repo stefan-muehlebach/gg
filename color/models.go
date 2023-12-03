@@ -1,4 +1,3 @@
-// models.go
 package color
 
 import (
