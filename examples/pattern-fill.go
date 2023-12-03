@@ -3,7 +3,7 @@ package main
 import "github.com/stefan-muehlebach/gg"
 
 const (
-    outFile = "pattern-fill.png"
+	outFile = "pattern-fill.png"
 )
 
 func main() {

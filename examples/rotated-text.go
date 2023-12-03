@@ -1,14 +1,14 @@
 package main
 
 import (
-    "image/color"
-	"github.com/stefan-muehlebach/gg"
 	"github.com/golang/freetype/truetype"
+	"github.com/stefan-muehlebach/gg"
 	"golang.org/x/image/font/gofont/goregular"
+	"image/color"
 )
 
 const (
-    outFile = "rotated-text.png"
+	outFile = "rotated-text.png"
 )
 
 func main() {

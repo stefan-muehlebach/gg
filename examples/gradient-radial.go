@@ -7,7 +7,7 @@ import (
 )
 
 const (
-    outFile = "gradient-radial.png"
+	outFile = "gradient-radial.png"
 )
 
 func main() {

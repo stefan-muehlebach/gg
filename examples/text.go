@@ -1,12 +1,12 @@
 package main
 
 import (
-    "image/color"
-    "github.com/stefan-muehlebach/gg"
+	"github.com/stefan-muehlebach/gg"
+	"image/color"
 )
 
 const (
-    outFile = "text.png"
+	outFile = "text.png"
 )
 
 func main() {

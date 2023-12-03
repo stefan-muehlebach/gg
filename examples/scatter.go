@@ -1,13 +1,13 @@
 package main
 
 import (
-    "image/color"
-	"math/rand"
 	"github.com/stefan-muehlebach/gg"
+	"image/color"
+	"math/rand"
 )
 
 const (
-    outFile = "scatter.png"
+	outFile = "scatter.png"
 )
 
 func CreatePoints(n int) []gg.Point {

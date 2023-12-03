@@ -3,7 +3,7 @@ package main
 import "github.com/stefan-muehlebach/gg"
 
 const (
-    outFile = "cubic.png"
+	outFile = "cubic.png"
 )
 
 func main() {
@@ -26,8 +26,8 @@ func main() {
 	dc.SetDash(16, 24)
 	dc.SetFillColor(gg.NewRGBA(0, 0, 0, 0.2))
 	dc.SetStrokeColor(gg.NewRGB(0, 0, 0))
-    dc.FillStroke()
-    
+	dc.FillStroke()
+
 	dc.MoveTo(x0, y0)
 	dc.LineTo(x1, y1)
 	dc.LineTo(x2, y2)

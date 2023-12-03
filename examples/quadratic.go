@@ -1,14 +1,13 @@
 package main
 
 import (
-    "image/color"
-    "github.com/stefan-muehlebach/gg"
+	"github.com/stefan-muehlebach/gg"
+	"image/color"
 )
 
 const (
-    outFile = "quadratic.png"
+	outFile = "quadratic.png"
 )
-
 
 func main() {
 	const S = 1000

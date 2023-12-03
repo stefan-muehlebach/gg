@@ -1,13 +1,13 @@
 package main
 
 import (
-    "image/color"
-	"math/rand"
 	"github.com/stefan-muehlebach/gg"
+	"image/color"
+	"math/rand"
 )
 
 const (
-    outFile = "lines.png"
+	outFile = "lines.png"
 )
 
 func main() {

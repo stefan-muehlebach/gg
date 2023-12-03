@@ -1,7 +1,7 @@
 package main
 
 import (
-    "image/color"
+	"image/color"
 	"math"
 	"math/rand"
 
@@ -9,7 +9,7 @@ import (
 )
 
 const (
-    outFile = "stars.png"
+	outFile = "stars.png"
 )
 
 type Point struct {

@@ -3,7 +3,7 @@ package main
 import "github.com/stefan-muehlebach/gg"
 
 const (
-    outFile = "tiling.png"
+	outFile = "tiling.png"
 )
 
 func main() {

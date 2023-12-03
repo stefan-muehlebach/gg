@@ -3,15 +3,14 @@ package main
 import (
 	"log"
 
-	"github.com/stefan-muehlebach/gg"
 	"github.com/golang/freetype/truetype"
+	"github.com/stefan-muehlebach/gg"
 	"golang.org/x/image/font/gofont/goregular"
 )
 
 const (
-    outFile = "gofont.png"
+	outFile = "gofont.png"
 )
-
 
 func main() {
 	font, err := truetype.Parse(goregular.TTF)

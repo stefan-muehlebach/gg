@@ -1,13 +1,13 @@
 package main
 
 import (
-    "image/color"
-    "github.com/stefan-muehlebach/gg"
+	"github.com/stefan-muehlebach/gg"
+	"image/color"
 )
 
 const (
-    ttfFile = "Arial-Unicode-MS.ttf"
-    outFile = "unicode.png"
+	ttfFile = "Arial-Unicode-MS.ttf"
+	outFile = "unicode.png"
 )
 
 func main() {

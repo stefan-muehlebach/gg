@@ -1,3 +1,4 @@
+//go:build ignore
 // +build ignore
 
 package main
@@ -9,7 +10,7 @@ import (
 )
 
 const (
-    outFile = "gradient-conic.png"
+	outFile = "gradient-conic.png"
 )
 
 func main() {

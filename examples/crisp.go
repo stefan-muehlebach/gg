@@ -5,7 +5,7 @@ import (
 )
 
 const (
-    outFile = "crisp.png"
+	outFile = "crisp.png"
 )
 
 func main() {

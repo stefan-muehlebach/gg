@@ -1,14 +1,14 @@
 package main
 
 import (
-    "image/color"
+	"image/color"
 	"math"
 
 	"github.com/stefan-muehlebach/gg"
 )
 
 const (
-    outFile = "star.png"
+	outFile = "star.png"
 )
 
 type Point struct {

@@ -1,14 +1,13 @@
 package main
 
-
 import (
-    "image/color"
-    "math/rand"
-    "github.com/stefan-muehlebach/gg"
+	"github.com/stefan-muehlebach/gg"
+	"image/color"
+	"math/rand"
 )
 
 const (
-    outFile = "beziers.png"
+	outFile = "beziers.png"
 )
 
 func random() float64 {
@@ -21,7 +20,7 @@ func point() (x, y float64) {
 
 func drawCurve(dc *gg.Context) {
 	dc.SetFillColor(gg.NewRGBA(0, 0, 0, 0.1))
-    dc.SetStrokeColor(color.Black)
+	dc.SetStrokeColor(color.Black)
 	dc.SetLineWidth(12)
 	dc.FillStroke()
 }

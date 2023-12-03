@@ -7,9 +7,9 @@ import (
 )
 
 const (
-	W = 1024
-	H = 512
-    outFile = "gradient-text.png"
+	W       = 1024
+	H       = 512
+	outFile = "gradient-text.png"
 )
 
 func main() {

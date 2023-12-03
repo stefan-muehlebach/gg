@@ -7,9 +7,8 @@ import (
 )
 
 const (
-    outFile = "gradient-linear.png"
+	outFile = "gradient-linear.png"
 )
-
 
 func main() {
 	dc := gg.NewContext(500, 400)

@@ -3,7 +3,7 @@ package main
 import "github.com/stefan-muehlebach/gg"
 
 const (
-    outFile = "clip.png"
+	outFile = "clip.png"
 )
 
 func main() {

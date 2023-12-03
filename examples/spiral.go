@@ -1,13 +1,13 @@
 package main
 
 import (
-    "image/color"
-	"math"
 	"github.com/stefan-muehlebach/gg"
+	"image/color"
+	"math"
 )
 
 const (
-    outFile = "spiral.png"
+	outFile = "spiral.png"
 )
 
 func main() {

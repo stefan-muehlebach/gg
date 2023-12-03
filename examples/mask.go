@@ -7,7 +7,7 @@ import (
 )
 
 const (
-    outFile = "mask.png"
+	outFile = "mask.png"
 )
 
 func main() {

@@ -105,9 +105,8 @@ func main() {
 
 	// Zeichnung mit globaler Koordinatentransformation.
 	dc.Push()
-    dc.Translate(width/2, width/2)
-    
-    
+	dc.Translate(width/2, width/2)
+
 	drawRect(dc, 0, 0, width/2, width/2)
 	dc.Rotate(math.Pi / 16.0)
 	drawRect(dc, 0, 0, width/2, width/2)

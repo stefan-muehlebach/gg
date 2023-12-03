@@ -7,7 +7,7 @@ import (
 )
 
 const (
-    outFile = "concat.png"
+	outFile = "concat.png"
 )
 
 func main() {
