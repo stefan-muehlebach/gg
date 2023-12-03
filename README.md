@@ -21,32 +21,32 @@ Der Klassiker unter den Erstlingswerken...
 package main
 
 import (
-    "github.com/stefan-muehlebach/gg"
+	"github.com/stefan-muehlebach/gg"
+	"github.com/stefan-muehlebach/gg/colornames"
 )
 
 func main() {
-    dc := gg.NewContext(512, 512)
-    dc.DrawCircle(256, 256, 224)
-    dc.SetFillColor(gg.NewRGB(0, 0, 0))
-    dc.Fill()
-    dc.SavePNG("circle.png")
+	gc := gg.NewContext(512, 512)
+	gc.DrawCircle(256.0, 256.0, 224.0)
+	gc.SetFillColor(colornames.Black)
+	gc.Fill()
+	gc.SavePNG("circle.png")
 }
 ```
 
 ## Beispiele
 
-Ein wichtiger Bestandteil dieser Sammlung sind die [Beispiele](https://github.com/stefan-muehlebach/gg/tree/main/examples) included.
+Ein wichtiger Bestandteil dieser Sammlung sind die
+[Beispiele](https://github.com/stefan-muehlebach/gg/tree/main/examples).
 Auch wenn sie ursprünglich zum Testen der Software erstellt wurden,
 können sie auch verwendet werden, um die einzelnen Funktionen besser zu
 verstehen.
 
 ![Examples](http://i.imgur.com/tMFoyzu.png)
 
+## Graphische Umgebungen
 
-## Graphische Kontexte
-
-Stehen im Zentrum jeder Anwendung und können nur über wenige Funktionen
-erstellt werden.
+Stehen im Zentrum jeder Anwendung und werden über folgende Funktionen erstellt.
 
 ```go
 NewContext(width, height int) *Context
@@ -114,7 +114,7 @@ LoadFontFace(path string, points float64) error
 ## Farbfunktionen
 
 Für die Erstellung und Veränderung von Farben stehen im Package `gg/color`
-eine Anzahl von neuen Farbtypen (HSL, HSV, etc) zur Verfügung.
+eine Anzahl von neuen Farbtypen (RGBAF, HSL, HSV, etc) zur Verfügung.
 Das Package `gg/colornames` dagegen bietet die Farben aus SVG 1.1 als
 vorbereitete Variablen an.
 
