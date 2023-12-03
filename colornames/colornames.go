@@ -1,9 +1,17 @@
 package colornames
 
+// ACHTUNG: Dieses File ist Teil von 'gg/color' und wird
+// automatisch erzeugt. Manuelle Anpassungn an dieser
+// Datei werden bei einem erneuten Generieren überschreiben.
+
 import (
     "github.com/stefan-muehlebach/gg/color"
 )
 
+// Alle in der SVG 1.1 Spezifikation benannten Farben sind
+// in diesem Package als Variablen definiert. Beachte, dass _nur_ der erste
+// Buchstabe des Variablennamens gross geschrieben ist! Also beispielweise
+// 'Darkolivegreen' statt 'DarkOliveGreen' wie in SVG 1.1!
 var (
     Aliceblue               = color.HSL{H:208, S:1, L:0.9706, A:1}
     Antiquewhite            = color.HSL{H:34.29, S:0.7778, L:0.9118, A:1}
@@ -155,6 +163,7 @@ var (
 )
 
 // Map contains named colors defined in the SVG 1.1 spec.
+
 var Map = map[string]color.HSL{
     "Aliceblue":            Aliceblue,
     "Antiquewhite":         Antiquewhite,
@@ -305,7 +314,10 @@ var Map = map[string]color.HSL{
     "Yellowgreen":          Yellowgreen,
 }
 
-// Names contains the color names defined in the SVG 1.1 spec.
+// Der Slice 'Names' enthält die Namen aller Farben
+// der SVG 1.1 Spezifikation. Auf die Besonderheit betr. Gross-/Kleinschreibung
+// ist weiter oben bereits eingegangen worden. jedes Element dieses Slices
+// findet sich als Schlüssel in der Variable 'Map'.
 var Names = []string{
     "Aliceblue",
     "Antiquewhite",

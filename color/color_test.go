@@ -188,6 +188,13 @@ func init() {
 //             math.Abs(float64(c1.B-c2.B)) <= colorEps
 // }
 
+func BenchmarkRGBAF2RGB(bench *testing.B) {
+    c := RGBAF{rnd.Float64(), rnd.Float64(), rnd.Float64(), rnd.Float64()}
+    for i:=0; i<bench.N; i++ {
+        r, g, b, a = c.RGBA()
+    }
+}
+
 func BenchmarkHSL2RGB(bench *testing.B) {
     c := HSL{360.0*rnd.Float64(), rnd.Float64(), rnd.Float64(), rnd.Float64()}
     for i:=0; i<bench.N; i++ {

@@ -1,3 +1,11 @@
+// Erweiterung des Packages 'image/color' um neue Farbtypen.
+
+// Die bestehende Implementation von Farben in 'image/color' bietet keine
+// Methoden, um Farben heller, resp. dunkler zu schattieren oder um zwischen
+// zwei beliebigen Farben eine lineare Interpolation durchzuführen.
+// Die in diesem Package definierten Farben implementieren alle das
+// Interface 'Color' aus 'image/color'.
+
 package color
 
 import (
@@ -5,18 +13,20 @@ import (
     "math"
 )
 
+// Das Interface Color basiert auf dem gleichnamigen Interface der
+// Standard-Bibliothek, verlangt jedoch Methoden, um eine Farbe aufzuhellen,
+// resp. abzudunkeln, den Alpha-Wert als Fliesskommazahl in [0,1] direkt
+// anzugeben und um zwischen zwei Farben eine lineare Interpolation
+// durchzuführen.
 type Color interface {
     RGBA() (r, g, b, a uint32)
     Bright(t float64) (Color)
     Dark(t float64) (Color)
-    // Bright(l int) (Color)
-    // Dark(l int) (Color)
-    // Transp() (Color)
-    // Opaque() (Color)
     Alpha(a float64) (Color)
     Interpolate(c2 Color, t float64) (Color)
 }
 
+/*
 // RGBAF64 entspricht dem RGBA-Typ aus image/color, verwendet fuer die
 // einzelnen Komponenten jedoch Fliesskommazahlen im Intervall [0,1].
 type RGBAF64 struct {
@@ -38,24 +48,6 @@ func (c RGBAF64) Bright(t float64) (Color) {
 func (c RGBAF64) Dark(t float64) (Color) {
     return c
 }
-
-// func (c RGBAF64) Transp() (Color) {
-//     r := c
-//     r.A = 0.6
-//     r.R *= r.A
-//     r.G *= r.A
-//     r.B *= r.A
-//     return r
-// }
-
-// func (c RGBAF64) Opaque() (Color) {
-//     r := c
-//     r.R /= r.A
-//     r.G /= r.A
-//     r.B /= r.A
-//     r.A = 1.0
-//     return r
-// }
 
 func (c RGBAF64) Alpha(a float64) (Color) {
     r := c
@@ -89,14 +81,18 @@ func (c1 RGBAF64) Less(c2 RGBAF64, key SortField) bool {
         return false
     }
 }
+*/
 
-// NRGBAF64 entspricht dem NRGBA-Typ aus image/color, verwendet fuer die
+// RGBAF entspricht dem NRGBA-Typ aus image/color, verwendet fuer die
 // einzelnen Komponenten jedoch Fliesskommazahlen im Intervall [0,1].
-type NRGBAF64 struct {
+// Beachte: Der Typ in diesem Package heisst RGBA, die Werte R, G, B und A
+// werden jedoch als _nicht_ normierte Werte interpretiert, meine praktischen
+// Erfahrungen haben gezeigt, dass dies intuitiver ist.
+type RGBAF struct {
     R, G, B, A float64
 }
 
-func (c NRGBAF64) RGBA() (r, g, b, a uint32) {
+func (c RGBAF) RGBA() (r, g, b, a uint32) {
     r = uint32(65535.0 * c.R * c.A)
     g = uint32(65535.0 * c.G * c.A)
     b = uint32(65535.0 * c.B * c.A)
@@ -104,43 +100,31 @@ func (c NRGBAF64) RGBA() (r, g, b, a uint32) {
     return
 }
 
-func (c NRGBAF64) Bright(t float64) (Color) {
-    return c
+func (c RGBAF) Bright(t float64) (Color) {
+    u := 1.0-t
+    return RGBAF{u*c.R+t, u*c.G+t, u*c.B+t, c.A}
 }
 
-func (c NRGBAF64) Dark(t float64) (Color) {
-    return c
+func (c RGBAF) Dark(t float64) (Color) {
+    u := 1.0-t
+    return RGBAF{u*c.R, u*c.G, u*c.B, c.A}
 }
 
-// func (c NRGBAF64) Transp() (Color) {
-//     r := c
-//     r.A = 0.6
-//     return r
-// }
-
-// func (c NRGBAF64) Opaque() (Color) {
-//     r := c
-//     r.A = 1.0
-//     return r
-// }
-
-func (c NRGBAF64) Alpha(a float64) (Color) {
-    r := c
-    r.A = a
-    return r
+func (c RGBAF) Alpha(a float64) (Color) {
+    return RGBAF{c.R, c.G, c.B, a}
 }
 
-func (c1 NRGBAF64) Interpolate(col Color, t float64) (Color) {
-    c2 := col.(NRGBAF64)
+func (c1 RGBAF) Interpolate(col Color, t float64) (Color) {
+    c2 := col.(RGBAF)
 
     r := (1-t)*c1.R + t*c2.R
     g := (1-t)*c1.G + t*c2.G
     b := (1-t)*c1.B + t*c2.B
     a := (1-t)*c1.A + t*c2.A
-    return NRGBAF64{r, g, b, a}
+    return RGBAF{r, g, b, a}
 }
 
-func (c1 NRGBAF64) Less(c2 NRGBAF64, key SortField) bool {
+func (c1 RGBAF) Less(c2 RGBAF, key SortField) bool {
     switch key {
     case SortByRed:
         return c1.R < c2.R
@@ -200,18 +184,6 @@ func (c HSV) Dark(t float64) (Color) {
     r.V = (1-t)*c.V
     return r
 }
-
-// func (c HSV) Transp() (Color) {
-//     r := c
-//     r.A = 0.6
-//     return r
-// }
-
-// func (c HSV) Opaque() (Color) {
-//     r := c
-//     r.A = 1.0
-//     return r
-// }
 
 func (c HSV) Alpha(a float64) (Color) {
     r := c
@@ -288,18 +260,6 @@ func (c HSL) Dark(t float64) (Color) {
     r.L = (1-t)*c.L
     return r
 }
-
-// func (c HSL) Transp() (Color) {
-//     r := c
-//     r.A = 0.6
-//     return r
-// }
-
-// func (c HSL) Opaque() (Color) {
-//     r := c
-//     r.A = 1.0
-//     return r
-// }
 
 func (c HSL) Alpha(a float64) (Color) {
     r := c
@@ -379,14 +339,6 @@ func (c HSI) Bright(t float64) (Color) {
 func (c HSI) Dark(t float64) (Color) {
     return c
 }
-
-// func (c HSI) Transp() (Color) {
-//     return c
-// }
-    
-// func (c HSI) Opaque() (Color) {
-//     return c
-// }
 
 func (c HSI) Alpha(a float64) (Color) {
     r := c

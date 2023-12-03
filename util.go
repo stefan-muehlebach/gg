@@ -3,10 +3,8 @@ package gg
 import (
     "fmt"
     "image"
-    "image/color"
     "image/draw"
     "image/jpeg"
-    _ "image/jpeg"
     "image/png"
     "io/ioutil"
     "math"
@@ -106,6 +104,7 @@ func LoadFontFace(path string, points float64) (font.Face, error) {
     return face, nil
 }
 
+/*
 // Hilfsfunktionen zum Erstellen von Farben.
 
 // Erzeugt ein neues RGB-Farbobjekt, und verwendet die Werte r, g, b in [0,1]
@@ -138,6 +137,7 @@ func NewRGB255(r, g, b int) (color.Color) {
 func NewRGBA255(r, g, b, a int) (color.Color) {
     return color.NRGBA{uint8(r), uint8(g), uint8(b), uint8(a)}
 }
+*/
 
 // Interne Funktionen, nicht fuer den oeffentlichen Gebrauch.
 
