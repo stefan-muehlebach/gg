@@ -6,9 +6,9 @@ import (
 )
 
 func main() {
-	const S = 1024
+	const S = 512
 	dc := gg.NewContext(S, S)
-	dc.SetFillColor(color.RGBAF{0, 0, 0, 0.15})
+	dc.SetFillColor(color.RGBAF{0, 0, 0, 0.2})
 	for i := 0; i < 360; i += 15 {
 		dc.Push()
 		dc.RotateAbout(gg.Radians(float64(i)), S/2, S/2)

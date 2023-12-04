@@ -1,9 +1,9 @@
 package main
 
 import (
-	"image/color"
-
 	"github.com/stefan-muehlebach/gg"
+	"github.com/stefan-muehlebach/gg/color"
+	"github.com/stefan-muehlebach/gg/fonts"
 )
 
 const (
@@ -17,7 +17,7 @@ func main() {
 
 	// draw text
 	dc.SetStrokeColor(color.Black)
-	dc.LoadFontFace("Ubuntu-Bold.ttf", 128)
+	dc.SetFontFace(fonts.NewFace(fonts.GoBold, 128))
 	dc.DrawStringAnchored("Gradient Text", W/2, H/2, 0.5, 0.5)
 
 	// get the context as an alpha mask
@@ -29,8 +29,8 @@ func main() {
 
 	// set a gradient
 	g := gg.NewLinearGradient(0, 0, W, H)
-	g.AddColorStop(0, color.RGBA{255, 0, 0, 255})
-	g.AddColorStop(1, color.RGBA{0, 0, 255, 255})
+	g.AddColorStop(0, color.RGBAF{1, 0, 0, 1})
+	g.AddColorStop(1, color.RGBAF{0, 0, 1, 1})
 	dc.SetFillStyle(g)
 
 	// using the mask, fill the context with the gradient

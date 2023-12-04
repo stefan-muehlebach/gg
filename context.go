@@ -632,8 +632,8 @@ func (dc *Context) Clear() {
 }
 
 // SetPixel sets the color of the specified pixel using the current color.
-func (dc *Context) SetPixel(x, y int) {
-    dc.im.Set(x, y, dc.strokePattern.ColorAt(0, 0))
+func (dc *Context) SetPixel(x, y int, c color.Color) {
+    dc.im.Set(x, y, c)
 }
 
 // DrawPoint is like DrawCircle but ensures that a circle of the specified
@@ -735,20 +735,20 @@ func (dc *Context) DrawRegularPolygon(n int, x, y, r, rotation float64) {
 }
 
 // DrawImage draws the specified image at the specified point.
-func (dc *Context) DrawImage(im image.Image, x, y int) {
+func (dc *Context) DrawImage(im image.Image, x, y float64) {
     dc.DrawImageAnchored(im, x, y, 0, 0)
 }
 
 // DrawImageAnchored draws the specified image at the specified anchor point.
 // The anchor point is x - w * ax, y - h * ay, where w, h is the size of the
 // image. Use ax=0.5, ay=0.5 to center the image at the specified point.
-func (dc *Context) DrawImageAnchored(im image.Image, x, y int, ax, ay float64) {
+func (dc *Context) DrawImageAnchored(im image.Image, x, y, ax, ay float64) {
     s := im.Bounds().Size()
-    x -= int(ax * float64(s.X))
-    y -= int(ay * float64(s.Y))
+    x -= ax * float64(s.X)
+    y -= ay * float64(s.Y)
     transformer := draw.BiLinear
-    fx, fy := float64(x), float64(y)
-    m := dc.matrix.Translate(geom.Point{X: fx, Y: fy})
+    // fx, fy := float64(x), float64(y)
+    m := dc.matrix.Translate(geom.Point{X: x, Y: y})
     s2d := f64.Aff3{m.M11, m.M12, m.M13, m.M21, m.M22, m.M23}
     if dc.mask == nil {
         transformer.Transform(dc.im, s2d, im, im.Bounds(), draw.Over, nil)
@@ -905,50 +905,43 @@ func (dc *Context) WordWrap(s string, w float64) []string {
     return wordWrap(dc, s, w)
 }
 
-// Transformation Matrix Operations
+// Koordinatentransformationen
 
-// Identity resets the current transformation matrix to the identity matrix.
-// This results in no translating, scaling, rotating, or shearing.
+// Stellt die Transformationsmatrix auf die Einheitsmatrix.
 func (dc *Context) Identity() {
     dc.matrix = geom.Identity()
 }
 
-// Translate updates the current matrix with a translation.
-func (dc *Context) Translate(x, y float64) {
-    dc.matrix = dc.matrix.Translate(geom.Point{X: x, Y: y})
-    // dc.localMatrixInv = dc.matrix.Invert()
+// Ergänzt die aktuelle Transformation um eine Translation um die angegebenen
+// Werte.
+Translate updates the current matrix with a translation.
+func (dc *Context) Translate(tx, ty float64) {
+    dc.matrix = dc.matrix.Translate(geom.Point{X: tx, Y: ty})
 }
 
-// Scale updates the current matrix with a scaling factor.
-// Scaling occurs about the origin.
-func (dc *Context) Scale(x, y float64) {
-    dc.matrix = dc.matrix.Scale(x, y)
-    // dc.localMatrixInv = dc.matrix.Invert()
+// Ergänzt die atuelle Transformation um eine Skalierung, wobei die Skalierung
+// in X-, resp. Y-Richtung getrennt angegeben werden kann.
+func (dc *Context) Scale(sx, sy float64) {
+    dc.matrix = dc.matrix.Scale(sx, sy)
 }
 
-// ScaleAbout updates the current matrix with a scaling factor.
-// Scaling occurs about the specified point.
+// Ergänzt die atuelle Transformation um eine Skalierung, wobei die Skalierung
+// in X-, resp. Y-Richtung getrennt angegeben werden kann. Der Mittelpunkt
+// der Streckung befindet sich beim Punkt 'x,y'.
 func (dc *Context) ScaleAbout(sx, sy, x, y float64) {
     dc.matrix = dc.matrix.ScaleAbout(geom.Point{X: x, Y: y}, sx, sy)
-    // dc.Translate(x, y)
-    // dc.Scale(sx, sy)
-    // dc.Translate(-x, -y)
 }
 
-// Rotate updates the current matrix with a anticlockwise rotation.
-// Rotation occurs about the origin. Angle is specified in radians.
+// Ergänzt die aktuelle Transformation um eine Rotation im Gegenuhrzeigersinn.
+// Der Winkel ist im Bogenmass anzugeben.
 func (dc *Context) Rotate(angle float64) {
     dc.matrix = dc.matrix.Rotate(angle)
-    // dc.localMatrixInv = dc.matrix.Invert()
 }
 
-// RotateAbout updates the current matrix with a anticlockwise rotation.
-// Rotation occurs about the specified point. Angle is specified in radians.
+// Ergänzt die aktuelle Transformation um eine Rotation im Gegenuhrzeigersinn
+// um einen bestimmten Rotationspunkt. Der Winkel ist im Bogenmass anzugeben.
 func (dc *Context) RotateAbout(angle, x, y float64) {
     dc.matrix = dc.matrix.RotateAbout(geom.Point{X: x, Y: y}, angle)
-    // dc.Translate(x, y)
-    // dc.Rotate(angle)
-    // dc.Translate(-x, -y)
 }
 
 // Shear updates the current matrix with a shearing angle.
@@ -966,16 +959,23 @@ func (dc *Context) RotateAbout(angle, x, y float64) {
 //    dc.Translate(-x, -y)
 //}
 
+// Hängt die Transformation im 'm' der aktuellen Transformationsmatrix an.
+// Die neue Transformation wird also durch Rechtsmultiplikation mit 'm'
+// gebildet.
 func (dc *Context) Multiply(m geom.Matrix) {
     dc.matrix = dc.matrix.Multiply(m)
 }
 
-// TransformPoint multiplies the specified point by the current matrix,
-// returning a transformed position.
+// Transformiert den Punkt '(x,y)' mit der aktuellen Transformatiomsmatrix und
+// Liefert das Resultat als Zahlenpaar. Translationen werden durchgeführt.
+// Vergleiche dazu auch die Methode [TransformVector].
 func (dc *Context) TransformPoint(x, y float64) (tx, ty float64) {
     return dc.matrix.TransformPoint(x, y)
 }
 
+// Transformiert den Punkt '(x,y)' mit der aktuellen Transformatiomsmatrix und
+// Liefert das Resultat als Zahlenpaar. Translationen werden _nicht_
+// durchgeführt. Vergleiche dazu auch die Methode [TransformPoint].
 func (dc *Context) TransformVector(x, y float64) (tx, ty float64) {
     return dc.matrix.TransformVector(x, y)
 }
@@ -990,26 +990,29 @@ func (dc *Context) TransformVector(x, y float64) (tx, ty float64) {
 
 // InvertY flips the Y axis so that Y grows from bottom to top and Y=0 is at
 // the bottom of the image.
-func (dc *Context) InvertY() {
-    dc.Translate(0, float64(dc.height))
-    dc.Scale(1, -1)
-}
+// func (dc *Context) InvertY() {
+//     dc.Translate(0, float64(dc.height))
+//     dc.Scale(1, -1)
+// }
 
+// Überschreibt die aktuelle Transformationsmatrix der Zeichenumgebung mit
+// dem Parameter 'm'.
 func (dc *Context) SetMatrix(m geom.Matrix) {
     dc.matrix = m
 }
 
+// Retourniert die aktuelle Transformationsmatrix.
 func (dc *Context) Matrix() geom.Matrix {
     return dc.matrix
 }
 
-func (dc *Context) BaseMatrix() geom.Matrix {
-    if len(dc.stack) == 0 {
-        return dc.matrix
-    } else {
-        return dc.stack[0].matrix
-    }
-}
+// func (dc *Context) BaseMatrix() geom.Matrix {
+//     if len(dc.stack) == 0 {
+//         return dc.matrix
+//     } else {
+//         return dc.stack[0].matrix
+//     }
+// }
 
 // Define the visual area using mathematical coordinates (x values increases
 // from left to right, y values increases from bottom to top).
@@ -1040,10 +1043,7 @@ func (dc *Context) Pop() {
     s := dc.stack
     x, s := s[len(s)-1], s[:len(s)-1]
     *dc = *x
-    // dc.mask = before.mask
     dc.path = before.path
-    // dc.strokePath = before.strokePath
-    // dc.fillPath = before.fillPath
     dc.start = before.start
     dc.current = before.current
     dc.hasCurrent = before.hasCurrent

@@ -1,17 +1,23 @@
-# Go Graphics
+# Go Graphics for TEKO
 
 `gg` ist eine Sammlung von Typen und Funktionen zur Erstellung von 2D
-Pixel- oder Rasterbildern.
-
-![Stars](http://i.imgur.com/CylQIJt.png)
+Pixel- oder Rasterbildern. Die Sammlung dient im Rahmen des Unterrichtes im
+Fach "Mathematik und SW-Tools" als Werkzeugkasten.
+Sie basiert massgeblich auf dem gleichnamigen
+Paket [gg](https://github.com/fogleman/gg), wurde geringfügig modifiziert
+und um ein paar Unterpakete ergänzt - so finden sich bspw. in 'gg/color'
+Farben (analog 'image/color').
 
 ## Installation
+
+Mit folgedem Befehl wird das Paket in der neusten Version, inkl. aller
+Unterpakete installiert.
 
     go install github.com/stefan-muehlebach/gg@latest
 
 ## Dokumentation
 
-- pkg.go.dev: https://pkg.go.dev/github.com/stefan-muehlebach/gg?tab=doc
+https://pkg.go.dev/github.com/stefan-muehlebach/gg?tab=doc
 
 ## Hello, Circle!
 
@@ -42,8 +48,6 @@ Auch wenn sie ursprünglich zum Testen der Software erstellt wurden,
 können sie auch verwendet werden, um die einzelnen Funktionen besser zu
 verstehen.
 
-![Examples](http://i.imgur.com/tMFoyzu.png)
-
 ## Graphische Umgebungen
 
 Stehen im Zentrum jeder Anwendung und werden über folgende Funktionen erstellt.
@@ -69,9 +73,9 @@ DrawArc(x, y, r, angle1, angle2 float64)
 DrawEllipse(x, y, rx, ry float64)
 DrawEllipticalArc(x, y, rx, ry, angle1, angle2 float64)
 DrawRegularPolygon(n int, x, y, r, rotation float64)
-DrawImage(im image.Image, x, y int)
-DrawImageAnchored(im image.Image, x, y int, ax, ay float64)
-SetPixel(x, y int)
+DrawImage(im image.Image, x, y float64)
+DrawImageAnchored(im image.Image, x, y, ax, ay float64)
+SetPixel(x, y int, c color.Color)
 
 MoveTo(x, y float64)
 LineTo(x, y float64)
@@ -107,7 +111,7 @@ DrawStringWrapped(s string, x, y, ax, ay, width, lineSpacing float64, align Alig
 MeasureString(s string) (w, h float64)
 MeasureMultilineString(s string, lineSpacing float64) (w, h float64)
 WordWrap(s string, w float64) []string
-SetFontFace(fontFace font.Face)
+SetFontFace(face font.Face)
 LoadFontFace(path string, points float64) error
 ```
 
@@ -115,18 +119,18 @@ LoadFontFace(path string, points float64) error
 
 Für die Erstellung und Veränderung von Farben stehen im Package `gg/color`
 eine Anzahl von neuen Farbtypen (RGBAF, HSL, HSV, etc) zur Verfügung.
-Das Package `gg/colornames` dagegen bietet die Farben aus SVG 1.1 als
-vorbereitete Variablen an.
+Im Package `gg/colornames` sind alle Farben aus SVG 1.1 als
+vorbereitete Variablen zu finden.
 
 ```go
-SetLineColor(c color.Color)
+SetStrokeColor(c color.Color)
 SetFillColor(c color.Color)
 ```
 
 ## Optionen für Linen und Flächen
 
 ```go
-SetLineWidth(lineWidth float64)
+SetStrokeWidth(lineWidth float64)
 SetLineCap(lineCap LineCap)
 SetLineJoin(lineJoin LineJoin)
 SetDash(dashes ...float64)
@@ -152,14 +156,20 @@ NewSurfacePattern(im image.Image, op RepeatOp)
 
 ## Koordinatentransformationen
 
+Wie das Koordinatensystem interpretiert werden soll, kann mit diesen
+Funktionen beeinflusst werden.
+
 ```go
 Identity()
-Translate(x, y float64)
-Scale(x, y float64)
-Rotate(angle float64)
+Translate(tx, ty float64)
+Scale(sx, sy float64)
 ScaleAbout(sx, sy, x, y float64)
+Rotate(angle float64)
 RotateAbout(angle, x, y float64)
 TransformPoint(x, y float64) (tx, ty float64)
+
+Matrix() (geom.Matrix)
+SetMatrix(m geom.Matrix)
 ```
 
 Die Funktionen `RotateAbout` und `ScaleAbout` haben ihren Bezugspunkt an der
@@ -167,18 +177,19 @@ Stelle `x`, `y` und nicht beim Ursprung.
 
 ## Stackfunktionen
 
-Die aktuellen Einstellungen können gesichert oder wiederhergestellt werden.
-Der Aufruf ist mehrfach und geschachtelt möglich.
+Die aktuellen Einstellungen (insbesondere die Koordiantentransformationen)
+können auf einem Stack gesichert und wiederhergestellt werden.
+Der Aufruf ist mehrfach und damit geschachtelt möglich.
 
 ```go
 Push()
 Pop()
 ```
 
-## Funktionen für den Zuschnitt 
+## Ausschnittsfunktionen
 
-Mit folgenden Funktionen sind Zeicheoperationen nur in einem bestimmten
-Gebiet zu sehen.
+Mit folgenden Funktionen werden die Zeicheoperationen auf ein bestimtes Gebiet
+beschränkt. Der aktuelle Pfad wird dabei als Rand des Gebietes verwendet.
 
 ```go
 Clip()
@@ -201,8 +212,6 @@ LoadPNG(path string) (image.Image, error)
 SavePNG(path string, im image.Image) error
 ```
 
-![Separator](http://i.imgur.com/fsUvnPB.png)
-
 ## Ein weiteres Beispiel
 
 Das Bild dazu siehst du weiter unten.
@@ -210,12 +219,15 @@ Das Bild dazu siehst du weiter unten.
 ```go
 package main
 
-import "github.com/stefan-muehlebach/gg"
+import (
+    "github.com/stefan-muehlebach/gg"
+    "github.com/stefan-muehlebach/gg/color"
+)
 
 func main() {
-	const S = 1024
+	const S = 512
 	dc := gg.NewContext(S, S)
-	dc.SetFillColor(gg.NewRGBA(0.0, 0.0, 0.0, 0.2))
+	dc.SetFillColor(color.RGBAF{0, 0, 0, 0.2})
 	for i := 0; i < 360; i += 15 {
 		dc.Push()
 		dc.RotateAbout(gg.Radians(float64(i)), S/2, S/2)

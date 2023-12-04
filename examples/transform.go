@@ -3,9 +3,7 @@ package main
 import (
 	"math"
 
-	// "github.com/golang/freetype/truetype"
 	"golang.org/x/image/font"
-	// "golang.org/x/image/font/gofont/goregular"
 
 	"github.com/stefan-muehlebach/gg"
 	"github.com/stefan-muehlebach/gg/color"
@@ -15,8 +13,8 @@ import (
 const (
 	sampleText = "Hello, world!"
 	outFile    = "transform.png"
-	width      = 800
-	height     = 800
+	width      = 512.0
+	height     = 512.0
 )
 
 var (
@@ -74,18 +72,7 @@ func drawGrid(dc *gg.Context, mainTick float64) {
 }
 
 func main() {
-	// font, err := truetype.Parse(goregular.TTF)
-	// if err != nil {
-	// 	panic("")
-	// }
 	face = fonts.NewFace(fonts.GoRegular, 60.0)
-	// 	Size: 60,
-	// 	DPI:  72,
-	// })
-	// face2 = truetype.NewFace(font, &truetype.Options{
-	// 	Size: 60,
-	// 	DPI:  72,
-	// })
 
 	dc = gg.NewContext(width, height)
 
@@ -104,13 +91,13 @@ func main() {
 	dc.Pop()
 
 	// Zeichnung mit globaler Koordinatentransformation.
-	dc.Push()
-	dc.Translate(width/2, width/2)
+	// dc.Push()
+	// dc.Translate(width/2, width/2)
 
-	drawRect(dc, 0, 0, width/2, width/2)
-	dc.Rotate(math.Pi / 16.0)
-	drawRect(dc, 0, 0, width/2, width/2)
-	dc.Pop()
+	// drawRect(dc, 0, 0, width/2, width/2)
+	// dc.Rotate(math.Pi / 16.0)
+	// drawRect(dc, 0, 0, width/2, width/2)
+	// dc.Pop()
 
 	dc.SavePNG(outFile)
 }
