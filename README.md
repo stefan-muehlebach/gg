@@ -21,22 +21,23 @@ https://pkg.go.dev/github.com/stefan-muehlebach/gg?tab=doc
 
 ## Hello, Circle!
 
-Der Klassiker unter den Erstlingswerken...
+Der Klassiker unter den Erstlingswerken. Zwar in einer graphischen aber noch
+recht unbunten Variante.
 
 ```go
 package main
 
 import (
-	"github.com/stefan-muehlebach/gg"
-	"github.com/stefan-muehlebach/gg/colornames"
+    "github.com/stefan-muehlebach/gg"
+    "github.com/stefan-muehlebach/gg/colornames"
 )
 
 func main() {
-	gc := gg.NewContext(512, 512)
-	gc.DrawCircle(256.0, 256.0, 224.0)
-	gc.SetFillColor(colornames.Black)
-	gc.Fill()
-	gc.SavePNG("circle.png")
+    gc := gg.NewContext(512, 512)
+    gc.DrawCircle(256.0, 256.0, 224.0)
+    gc.SetFillColor(colornames.Black)
+    gc.Fill()
+    gc.SavePNG("circle.png")
 }
 ```
 
@@ -225,18 +226,26 @@ import (
 )
 
 func main() {
-	const S = 512
-	dc := gg.NewContext(S, S)
-	dc.SetFillColor(color.RGBAF{0, 0, 0, 0.2})
-	for i := 0; i < 360; i += 15 {
-		dc.Push()
-		dc.RotateAbout(gg.Radians(float64(i)), S/2, S/2)
-		dc.DrawEllipse(S/2, S/2, S*7/16, S/8)
-		dc.Fill()
-		dc.Pop()
-	}
-	dc.SavePNG("ellipses.png")
+    const S = 512
+    dc := gg.NewContext(S, S)
+    dc.SetFillColor(color.RGBAF{0, 0, 0, 0.2})
+    for i := 0; i < 360; i += 15 {
+        dc.Push()
+        dc.RotateAbout(gg.Radians(float64(i)), S/2, S/2)
+        dc.DrawEllipse(S/2, S/2, S*7/16, S/8)
+        dc.Fill()
+        dc.Pop()
+    }
+    dc.SavePNG("ellipses.png")
 }
 ```
 
 ![Ellipses](http://i.imgur.com/J9CBZef.png)
+
+## Hall of fame
+
+Ohne die Unterstützung folgender Personen wäre das Werk nicht, viel später
+oder weniger freudig zustande gekommen.
+
+* Weber, Nicolas - für die allererste Installation dieses Paketes ausserhalb meines Computers.
+
