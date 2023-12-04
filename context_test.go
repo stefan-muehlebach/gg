@@ -69,7 +69,7 @@ func TestLines(t *testing.T) {
         x2 := rnd.Float64() * 100
         y2 := rnd.Float64() * 100
         dc.DrawLine(x1, y1, x2, y2)
-        dc.SetLineWidth(rnd.Float64() * 3)
+        dc.SetStrokeWidth(rnd.Float64() * 3)
         dc.SetStrokeColor(NewRGB(rnd.Float64(), rnd.Float64(), rnd.Float64()))
         dc.Stroke()
     }
@@ -89,7 +89,7 @@ func TestCircles(t *testing.T) {
         dc.DrawCircle(x, y, r)
         dc.SetFillColor(NewRGB(rnd.Float64(), rnd.Float64(), rnd.Float64()))
         dc.SetStrokeColor(NewRGB(rnd.Float64(), rnd.Float64(), rnd.Float64()))
-        dc.SetLineWidth(rnd.Float64() * 3)
+        dc.SetStrokeWidth(rnd.Float64() * 3)
         dc.FillStroke()
     }
     saveImage(dc, "TestCircles")
@@ -110,7 +110,7 @@ func TestQuadratic(t *testing.T) {
         y3 := rnd.Float64() * 100
         dc.MoveTo(x1, y1)
         dc.QuadraticTo(x2, y2, x3, y3)
-        dc.SetLineWidth(rnd.Float64() * 3)
+        dc.SetStrokeWidth(rnd.Float64() * 3)
         dc.SetStrokeColor(NewRGB(rnd.Float64(), rnd.Float64(), rnd.Float64()))
         dc.Stroke()
     }
@@ -131,7 +131,7 @@ func TestQuadraticSingle(t *testing.T) {
     y3 := 75.0
     dc.MoveTo(x1, y1)
     dc.QuadraticTo(x2, y2, x3, y3)
-    dc.SetLineWidth(rnd.Float64() * 3)
+    dc.SetStrokeWidth(rnd.Float64() * 3)
     dc.SetStrokeColor(NewRGB(rnd.Float64(), rnd.Float64(), rnd.Float64()))
     dc.Stroke()
     saveImage(dc, "TestQuadraticSingle")
@@ -154,7 +154,7 @@ func TestCubic(t *testing.T) {
         y4 := rnd.Float64() * 100
         dc.MoveTo(x1, y1)
         dc.CubicTo(x2, y2, x3, y3, x4, y4)
-        dc.SetLineWidth(rnd.Float64() * 3)
+        dc.SetStrokeWidth(rnd.Float64() * 3)
         dc.SetStrokeColor(NewRGB(rnd.Float64(), rnd.Float64(), rnd.Float64()))
         dc.Stroke()
     }
@@ -177,7 +177,7 @@ func TestCubicSingle(t *testing.T) {
     y4 := 75.0
     dc.MoveTo(x1, y1)
     dc.CubicTo(x2, y2, x3, y3, x4, y4)
-    dc.SetLineWidth(rnd.Float64() * 3)
+    dc.SetStrokeWidth(rnd.Float64() * 3)
     dc.SetStrokeColor(NewRGB(rnd.Float64(), rnd.Float64(), rnd.Float64()))
     dc.Stroke()
     saveImage(dc, "TestCubicSingle")
@@ -340,7 +340,7 @@ func TestDashes(t *testing.T) {
         y2 := rnd.Float64() * 100
         dc.SetDash(rnd.Float64()*3+1, rnd.Float64()*3+3)
         dc.DrawLine(x1, y1, x2, y2)
-        dc.SetLineWidth(rnd.Float64() * 3)
+        dc.SetStrokeWidth(rnd.Float64() * 3)
         dc.SetStrokeColor(NewRGB(rnd.Float64(), rnd.Float64(), rnd.Float64()))
         dc.Stroke()
     }

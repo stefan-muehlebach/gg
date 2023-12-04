@@ -1,6 +1,9 @@
 package main
 
-import "github.com/stefan-muehlebach/gg"
+import (
+    "github.com/stefan-muehlebach/gg"
+    "github.com/stefan-muehlebach/gg/color"
+)
 
 const (
 	outFile = "cubic.png"
@@ -9,7 +12,7 @@ const (
 func main() {
 	const S = 1000
 	dc := gg.NewContext(S, S)
-	dc.SetFillColor(gg.NewRGB(1, 1, 1))
+	dc.SetFillColor(color.White)
 	dc.Clear()
 	dc.Translate(S/2, S/2)
 	dc.Scale(40, 40)
@@ -22,19 +25,19 @@ func main() {
 
 	dc.MoveTo(x0, y0)
 	dc.CubicTo(x1, y1, x2, y2, x3, y3)
-	dc.SetLineWidth(8)
+	dc.SetStrokeWidth(8)
 	dc.SetDash(16, 24)
-	dc.SetFillColor(gg.NewRGBA(0, 0, 0, 0.2))
-	dc.SetStrokeColor(gg.NewRGB(0, 0, 0))
+	dc.SetFillColor(color.RGBAF{0, 0, 0, 0.2})
+	dc.SetStrokeColor(color.Black)
 	dc.FillStroke()
 
 	dc.MoveTo(x0, y0)
 	dc.LineTo(x1, y1)
 	dc.LineTo(x2, y2)
 	dc.LineTo(x3, y3)
-	dc.SetLineWidth(2)
+	dc.SetStrokeWidth(2)
 	dc.SetDash(4, 8, 1, 8)
-	dc.SetStrokeColor(gg.NewRGBA(1, 0, 0, 0.4))
+	dc.SetStrokeColor(color.RGBAF{1, 0, 0, 0.4})
 	dc.Stroke()
 
 	dc.SavePNG(outFile)

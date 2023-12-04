@@ -23,7 +23,7 @@ func main() {
 	dc.Stroke()
 
 	dc.SetStrokeStyle(grad)
-	dc.SetLineWidth(4)
+	dc.SetStrokeWidth(4)
 	dc.MoveTo(10, 10)
 	dc.LineTo(410, 10)
 	dc.LineTo(410, 100)

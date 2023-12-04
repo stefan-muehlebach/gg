@@ -18,7 +18,7 @@ import (
 // sind einige Standardfarben auch hier zu finden.
 var (
 	Black       = RGBAF{0.0, 0.0, 0.0, 1.0}
-	White       = RGABF{1.0, 1.0, 1.0, 1.0}
+	White       = RGBAF{1.0, 1.0, 1.0, 1.0}
 	Transparent = RGBAF{0.0, 0.0, 0.0, 0.0}
 	Opaque      = RGBAF{1.0, 1.0, 1.0, 1.0}
 )

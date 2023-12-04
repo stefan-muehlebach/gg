@@ -22,7 +22,7 @@ func main() {
 	dc.DrawLine(0, H/2, W, H/2)
 	dc.DrawRectangle(P, P, W-P-P, H-P-P)
 	dc.SetStrokeColor(color.NRGBA{0, 0, 255, 63})
-	dc.SetLineWidth(3)
+	dc.SetStrokeWidth(3)
 	dc.Stroke()
 	dc.SetStrokeColor(color.Black)
 	if err := dc.LoadFontFace("Ubuntu-Bold.ttf", 18); err != nil {

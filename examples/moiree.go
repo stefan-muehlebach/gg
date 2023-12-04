@@ -23,7 +23,7 @@ func main() {
 	gc := gg.NewContext(Width, Height)
 	gc.SetFillColor(BackColor)
 	gc.Clear()
-	gc.SetLineWidth(GridLineWidth)
+	gc.SetStrokeWidth(GridLineWidth)
 	gc.SetStrokeColor(GridLineColor)
 	xa, ya := MarginSize, MarginSize
 	xb, yb := Width-MarginSize, Height-MarginSize

@@ -39,7 +39,7 @@ func main() {
 		dc.LineTo(1, x)
 	}
 	dc.SetStrokeColor(color.RGBA{0, 0, 0, 63})
-	dc.SetLineWidth(1)
+	dc.SetStrokeWidth(1)
 	dc.Stroke()
 	// draw axes
 	dc.MoveTo(0, 0)
@@ -47,7 +47,7 @@ func main() {
 	dc.MoveTo(0, 0)
 	dc.LineTo(0, 1)
 	dc.SetStrokeColor(color.Black)
-	dc.SetLineWidth(4)
+	dc.SetStrokeWidth(4)
 	dc.Stroke()
 	// draw points
 	dc.SetFillColor(color.NRGBA{0, 0, 255, 127})

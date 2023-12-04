@@ -30,14 +30,14 @@ func main() {
 	dc.LineTo(x3, y3)
 	dc.LineTo(x4, y4)
 	dc.SetStrokeColor(color.RGBA{0xFF, 0x2D, 0x00, 0xff})
-	dc.SetLineWidth(8)
+	dc.SetStrokeWidth(8)
 	dc.Stroke()
 
 	dc.MoveTo(x0, y0)
 	dc.QuadraticTo(x1, y1, x2, y2)
 	dc.QuadraticTo(x3, y3, x4, y4)
 	dc.SetFillColor(color.RGBA{0x3E, 0x60, 0x6F, 0xff})
-	dc.SetLineWidth(16)
+	dc.SetStrokeWidth(16)
 	dc.SetStrokeColor(color.Black)
 	dc.FillStroke()
 
@@ -48,7 +48,7 @@ func main() {
 	dc.DrawCircle(x4, y4, 0.5)
 	dc.SetFillColor(color.White)
 	dc.SetStrokeColor(color.Black)
-	dc.SetLineWidth(4)
+	dc.SetStrokeWidth(4)
 	dc.FillStroke()
 
 	dc.LoadFontFace("Ubuntu-Regular.ttf", 20)

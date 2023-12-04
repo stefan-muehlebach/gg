@@ -1,35 +1,30 @@
 package main
 
 import (
-	"github.com/golang/freetype/truetype"
 	"github.com/stefan-muehlebach/gg"
-	"golang.org/x/image/font/gofont/goregular"
-	"image/color"
+	"github.com/stefan-muehlebach/gg/colornames"
+	"github.com/stefan-muehlebach/gg/font"
 )
 
 const (
 	outFile = "rotated-text.png"
+    size = 512.0
+    fontSize = 40.0
 )
 
 func main() {
 	const S = 400
-	dc := gg.NewContext(S, S)
-	dc.SetFillColor(color.White)
+	dc := gg.NewContext(size, size)
+	dc.SetFillColor(colornames.White)
 	dc.Clear()
-	dc.SetStrokeColor(color.Black)
-	font, err := truetype.Parse(goregular.TTF)
-	if err != nil {
-		panic("")
-	}
-	face := truetype.NewFace(font, &truetype.Options{
-		Size: 40,
-	})
-	dc.SetFontFace(face)
+    
+	dc.SetStrokeColor(colornames.Black)
+    dc.SetFontFace(font.NewFace(font.GoRegular, fontSize))
 	text := "Hello, world!"
 	w, h := dc.MeasureString(text)
-	dc.Rotate(gg.Radians(10))
-	dc.DrawRectangle(100, 180, w, h)
+	dc.RotateAbout(gg.Radians(10), size/2, size/2)
+	dc.DrawRectangle(size/2-w/2, size/2-h/2, w, h)
 	dc.Stroke()
-	dc.DrawStringAnchored(text, 100, 180+h, 0.0, 0.0)
+	dc.DrawStringAnchored(text, size/2, size/2, 0.5, 0.5)
 	dc.SavePNG(outFile)
 }

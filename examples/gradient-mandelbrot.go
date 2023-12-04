@@ -34,7 +34,7 @@ func main() {
 	dc.SetMask(mask)
 	dc.DrawRectangle(0, 0, 1000, 450)
 	dc.SetFillStyle(grad)
-	dc.SetLineWidth(5.0)
+	dc.SetStrokeWidth(5.0)
 	dc.SetStrokeColor(color.Black)
 	dc.FillStroke()
 

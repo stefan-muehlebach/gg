@@ -45,7 +45,7 @@ func main() {
 			p := points[index]
 			dc.LineTo(p.X, p.Y)
 		}
-		dc.SetLineWidth(10)
+		dc.SetStrokeWidth(10)
 		dc.SetStrokeColor(color.RGBA{0xFF, 0xCC, 0x00, 0xff})
 		dc.SetFillColor(color.RGBA{0xFF, 0xE4, 0x3A, 0xff})
 		dc.StrokeFill()

@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/stefan-muehlebach/gg"
+	"github.com/stefan-muehlebach/gg/color"
 )
 
 const (
@@ -15,7 +16,7 @@ func main() {
 	const Major = 100
 
 	dc := gg.NewContext(W, H)
-	dc.SetFillColor(gg.NewRGB(1, 1, 1))
+	dc.SetFillColor(color.White)
 	dc.Clear()
 
 	// minor grid
@@ -27,8 +28,8 @@ func main() {
 		fy := float64(y) + 0.5
 		dc.DrawLine(0, fy, W, fy)
 	}
-	dc.SetLineWidth(1)
-	dc.SetStrokeColor(gg.NewRGBA(0, 0, 0, 0.25))
+	dc.SetStrokeWidth(1)
+	dc.SetStrokeColor(color.RGBAF{0, 0, 0, 0.25})
 	dc.Stroke()
 
 	// major grid
@@ -40,8 +41,8 @@ func main() {
 		fy := float64(y) + 0.5
 		dc.DrawLine(0, fy, W, fy)
 	}
-	dc.SetLineWidth(1)
-	dc.SetStrokeColor(gg.NewRGBA(0, 0, 0, 0.5))
+	dc.SetStrokeWidth(1)
+	dc.SetStrokeColor(color.RGBAF{0, 0, 0, 0.25})
 	dc.Stroke()
 
 	dc.SavePNG(outFile)

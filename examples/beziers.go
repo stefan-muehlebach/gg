@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/stefan-muehlebach/gg"
-	"image/color"
+	"github.com/stefan-muehlebach/gg/color"
 	"math/rand"
 )
 
@@ -19,15 +19,15 @@ func point() (x, y float64) {
 }
 
 func drawCurve(dc *gg.Context) {
-	dc.SetFillColor(gg.NewRGBA(0, 0, 0, 0.1))
+	dc.SetFillColor(color.RGBAF{0, 0, 0, 0.1})
 	dc.SetStrokeColor(color.Black)
-	dc.SetLineWidth(12)
+	dc.SetStrokeWidth(12)
 	dc.FillStroke()
 }
 
 func drawPoints(dc *gg.Context) {
-	dc.SetStrokeColor(gg.NewRGBA(1, 0, 0, 0.5))
-	dc.SetLineWidth(2)
+	dc.SetStrokeColor(color.RGBAF{1, 0, 0, 0.5})
+	dc.SetStrokeWidth(2)
 	dc.Stroke()
 }
 

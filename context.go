@@ -189,7 +189,7 @@ func (dc *Context) SetDashOffset(offset float64) {
     dc.dashOffset = offset
 }
 
-func (dc *Context) SetLineWidth(lineWidth float64) {
+func (dc *Context) SetStrokeWidth(lineWidth float64) {
     dc.lineWidth = lineWidth
 }
 

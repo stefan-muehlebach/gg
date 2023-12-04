@@ -26,7 +26,7 @@ func main() {
 	dc.ClosePath()
 	dc.SetFillColor(color.RGBA{0x3e, 0x60, 0x6f, 0xff})
 	dc.SetStrokeColor(color.RGBA{0x19, 0x34, 0x41, 0x80})
-	dc.SetLineWidth(8)
+	dc.SetStrokeWidth(8)
 	dc.FillStroke()
 	dc.SavePNG(outFile)
 }

@@ -31,7 +31,7 @@ func main() {
 	grad2.AddColorStop(1.00, color.RGBA{255, 0, 0, 255})
 
 	dc.SetStrokeStyle(grad1)
-	dc.SetLineWidth(20)
+	dc.SetStrokeWidth(20)
 	dc.DrawCircle(200, 200, 180)
 	dc.Stroke()
 

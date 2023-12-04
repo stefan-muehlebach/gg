@@ -27,7 +27,7 @@ func main() {
 		a := uint8(127 + rand.Intn(127))
 		w := rand.Float64()*4 + 1
 		dc.SetStrokeColor(color.NRGBA{r, g, b, a})
-		dc.SetLineWidth(w)
+		dc.SetStrokeWidth(w)
 		dc.DrawLine(x1, y1, x2, y2)
 		dc.Stroke()
 	}

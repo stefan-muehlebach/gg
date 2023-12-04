@@ -38,7 +38,7 @@ func main() {
 	dc.SetFillColor(color.RGBA{0, 127, 0, 255})
 	dc.SetFillRule(gg.FillRuleEvenOdd)
 	dc.SetStrokeColor(color.NRGBA{0, 255, 0, 127})
-	dc.SetLineWidth(16)
+	dc.SetStrokeWidth(16)
 	dc.FillStroke()
 	dc.SavePNG(outFile)
 }
