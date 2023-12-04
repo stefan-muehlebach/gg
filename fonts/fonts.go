@@ -1,6 +1,5 @@
-// Einfacher Zugriff auf die Fonts von Go aber auch eine Reihen von OpenSource
-// Schriten.
-
+// Bietet einfachen Zugriff auf die Go-Fonts aber auch auf eine Reihen
+// OpenSource-Schriten.
 package fonts
 
 import (

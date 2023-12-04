@@ -5,8 +5,6 @@
 // zwei beliebigen Farben eine lineare Interpolation durchzuführen.
 // Die in diesem Package definierten Farben implementieren alle das
 // Interface 'Color' aus 'image/color'. Der Name des Packages und die
-//
-
 package color
 
 import (
