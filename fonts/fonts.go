@@ -1,7 +1,7 @@
 // Einfacher Zugriff auf die Fonts von Go aber auch eine Reihen von OpenSource
 // Schriten.
 
-package font
+package fonts
 
 import (
     "log"

@@ -3,7 +3,7 @@ package main
 import (
 	"github.com/stefan-muehlebach/gg"
 	"github.com/stefan-muehlebach/gg/colornames"
-	"github.com/stefan-muehlebach/gg/font"
+	"github.com/stefan-muehlebach/gg/fonts"
 )
 
 const (

@@ -4,12 +4,12 @@ import (
 	"math"
 
 	// "github.com/golang/freetype/truetype"
-	// "golang.org/x/image/font"
+	"golang.org/x/image/font"
 	// "golang.org/x/image/font/gofont/goregular"
 
 	"github.com/stefan-muehlebach/gg"
 	"github.com/stefan-muehlebach/gg/color"
-	"github.com/stefan-muehlebach/gg/font"
+	"github.com/stefan-muehlebach/gg/fonts"
 )
 
 const (
@@ -21,7 +21,7 @@ const (
 
 var (
 	dc          *gg.Context
-	// face, face2 font.Face
+	face, face2 font.Face
 )
 
 func drawRect(dc *gg.Context, mx, my, w, h float64) {
@@ -33,7 +33,7 @@ func drawRect(dc *gg.Context, mx, my, w, h float64) {
 	dc.FillStroke()
 
 	// Schrift laden und Text im Zentrum des Rechtecks zeichnen.
-	dc.SetFontFace(font.NewFace(font.GoRegular, 60.0))
+	dc.SetFontFace(face)
 	dc.SetStrokeColor(color.Black)
 	dc.DrawStringAnchored(sampleText, mx, my, 0.5, 0.5)
 
@@ -78,7 +78,7 @@ func main() {
 	// if err != nil {
 	// 	panic("")
 	// }
-	// face = truetype.NewFace(font, &truetype.Options{
+	face = fonts.NewFace(fonts.GoRegular, 60.0)
 	// 	Size: 60,
 	// 	DPI:  72,
 	// })
