@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/stefan-muehlebach/gg"
-	"image/color"
+	"github.com/stefan-muehlebach/gg/color"
 )
 
 const (

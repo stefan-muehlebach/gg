@@ -1,11 +1,11 @@
 package main
 
 import (
-	"image/color"
 	"math"
 	"math/rand"
 
 	"github.com/stefan-muehlebach/gg"
+	"github.com/stefan-muehlebach/gg/color"
 )
 
 const (
@@ -46,8 +46,8 @@ func main() {
 			dc.LineTo(p.X, p.Y)
 		}
 		dc.SetStrokeWidth(10)
-		dc.SetStrokeColor(color.RGBA{0xFF, 0xCC, 0x00, 0xff})
-		dc.SetFillColor(color.RGBA{0xFF, 0xE4, 0x3A, 0xff})
+		dc.SetStrokeColor(color.RGBAF{1.0, 0.8, 0.0, 1.0})
+		dc.SetFillColor(color.RGBAF{1.0, 0.894, 0.227, 1.0})
 		dc.StrokeFill()
 		dc.Pop()
 	}

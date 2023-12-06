@@ -10,18 +10,18 @@ const (
 )
 
 func main() {
-	const S = 1000
+	const S = 512
 	dc := gg.NewContext(S, S)
 	dc.SetFillColor(color.White)
 	dc.Clear()
 	dc.Translate(S/2, S/2)
-	dc.Scale(40, 40)
+	dc.Scale(20, 20)
 
 	var x0, y0, x1, y1, x2, y2, x3, y3 float64
-	x0, y0 = -10, 0
-	x1, y1 = -8, -8
-	x2, y2 = 8, 8
-	x3, y3 = 10, 0
+	x0, y0 = -10,  0
+	x1, y1 =  -8, -8
+	x2, y2 =   8,  8
+	x3, y3 =  10,  0
 
 	dc.MoveTo(x0, y0)
 	dc.CubicTo(x1, y1, x2, y2, x3, y3)

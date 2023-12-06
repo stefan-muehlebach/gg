@@ -1,10 +1,10 @@
 package main
 
 import (
-	"image/color"
 	"math"
 
 	"github.com/stefan-muehlebach/gg"
+	"github.com/stefan-muehlebach/gg/color"
 )
 
 const (
@@ -35,9 +35,9 @@ func main() {
 		p := points[index]
 		dc.LineTo(p.X, p.Y)
 	}
-	dc.SetFillColor(color.RGBA{0, 127, 0, 255})
+	dc.SetFillColor(color.RGBAF{0, 0.5, 0, 1.0})
 	dc.SetFillRule(gg.FillRuleEvenOdd)
-	dc.SetStrokeColor(color.NRGBA{0, 255, 0, 127})
+	dc.SetStrokeColor(color.RGBAF{0, 1.0, 0, 0.5})
 	dc.SetStrokeWidth(16)
 	dc.FillStroke()
 	dc.SavePNG(outFile)
