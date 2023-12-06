@@ -244,7 +244,7 @@ func colorLerp(c0, c1 color.Color, t float64) color.Color {
 }
 
 func lerp(a, b uint32, t float64) uint8 {
-    // t = -2.0*t*t*t + 3.0*t*t
+	// t = -2.0*t*t*t + 3.0*t*t
 	return uint8(uint32(float64(a)*(1.0-t)+float64(b)*t) >> 8)
 }
 

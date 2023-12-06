@@ -2,7 +2,8 @@ package main
 
 import (
 	"github.com/stefan-muehlebach/gg"
-	"image/color"
+	"github.com/stefan-muehlebach/gg/color"
+	"github.com/stefan-muehlebach/gg/fonts"
 )
 
 const (
@@ -25,7 +26,7 @@ func main() {
 	dc.SetFillColor(color.White)
 	dc.Clear()
 	dc.SetStrokeColor(color.Black)
-	dc.LoadFontFace("Ubuntu-Regular.ttf", 18)
+	dc.SetFontFace(fonts.NewFace(fonts.GoRegular, 18))
 	const h = 24
 	for i, line := range lines {
 		y := H/2 - h*len(lines)/2 + i*h

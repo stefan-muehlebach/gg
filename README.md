@@ -155,7 +155,7 @@ NewConicGradient(cx, cy, deg float64)
 NewSurfacePattern(im image.Image, op RepeatOp)
 ```
 
-## Koordinatentransformationen
+## Koordinatensysteme
 
 Wie das Koordinatensystem interpretiert werden soll, kann mit diesen
 Funktionen beeinflusst werden.

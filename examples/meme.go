@@ -2,7 +2,8 @@ package main
 
 import (
 	"github.com/stefan-muehlebach/gg"
-	"image/color"
+	"github.com/stefan-muehlebach/gg/color"
+	"github.com/stefan-muehlebach/gg/fonts"
 )
 
 const (
@@ -14,9 +15,7 @@ func main() {
 	dc := gg.NewContext(S, S)
 	dc.SetFillColor(color.White)
 	dc.Clear()
-	if err := dc.LoadFontFace("Ubuntu-Regular.ttf", 96); err != nil {
-		panic(err)
-	}
+    dc.SetFontFace(fonts.NewFace(fonts.GoBold, 72))
 	dc.SetStrokeColor(color.Black)
 	s := "ONE DOES NOT SIMPLY"
 	n := 6 // "stroke" size

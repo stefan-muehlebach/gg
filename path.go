@@ -3,8 +3,8 @@ package gg
 import (
 	"log"
 	"math"
-    
-    . "github.com/stefan-muehlebach/gg/geom"
+
+	. "github.com/stefan-muehlebach/gg/geom"
 
 	"github.com/golang/freetype/raster"
 	"golang.org/x/image/math/fixed"
@@ -37,7 +37,7 @@ func flattenPath(p raster.Path) [][]Point {
 			y1 := unfix(p[i+2])
 			x2 := unfix(p[i+3])
 			y2 := unfix(p[i+4])
-            points := []Point{{X: x1, Y: y1}, {X: x2, Y: y2}}
+			points := []Point{{X: x1, Y: y1}, {X: x2, Y: y2}}
 			// points := QuadraticBezier(cx, cy, x1, y1, x2, y2)
 			path = append(path, points...)
 			// cx, cy = x2, y2
@@ -49,7 +49,7 @@ func flattenPath(p raster.Path) [][]Point {
 			y2 := unfix(p[i+4])
 			x3 := unfix(p[i+5])
 			y3 := unfix(p[i+6])
-            points := []Point{{X: x1, Y: y1}, {X: x2, Y: y2}, {X: x3, Y: y3}}
+			points := []Point{{X: x1, Y: y1}, {X: x2, Y: y2}, {X: x3, Y: y3}}
 			// points := CubicBezier(cx, cy, x1, y1, x2, y2, x3, y3)
 			path = append(path, points...)
 			// cx, cy = x3, y3

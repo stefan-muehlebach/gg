@@ -1,8 +1,8 @@
 package gg
 
 import (
-    "math"
-    . "github.com/stefan-muehlebach/gg/geom"
+	. "github.com/stefan-muehlebach/gg/geom"
+	"math"
 )
 
 // func quadratic(x0, y0, x1, y1, x2, y2, t float64) (x, y float64) {

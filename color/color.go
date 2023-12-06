@@ -10,6 +10,7 @@ package color
 import (
 	"log"
 	"math"
+    "image/color"
 )
 
 // Da dieses Package als vollwertiger Ersatz für 'image/color' gedacht ist,
@@ -27,7 +28,8 @@ var (
 // anzugeben und um zwischen zwei Farben eine lineare Interpolation
 // durchzuführen.
 type Color interface {
-	RGBA() (r, g, b, a uint32)
+	// RGBA() (r, g, b, a uint32)
+    color.Color
 	Bright(t float64) Color
 	Dark(t float64) Color
 	Alpha(a float64) Color

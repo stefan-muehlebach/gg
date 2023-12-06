@@ -139,6 +139,8 @@ func (m Matrix) TransformPoint(x, y float64) (float64, float64) {
     return m.M11*x + m.M12*y + m.M13, m.M21*x + m.M22*y + m.M23
 }
 
+// Während TransformPoint eine vollständige Transformation durchführt, wird
+// bei TransformVector die Translation ignoriert.
 func (m Matrix) TransformVector(x, y float64) (float64, float64) {
     return m.M11*x + m.M12*y, m.M21*x + m.M22*y
 }
