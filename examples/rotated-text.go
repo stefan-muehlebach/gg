@@ -7,9 +7,9 @@ import (
 )
 
 const (
-	outFile = "rotated-text.png"
-    size = 512.0
-    fontSize = 40.0
+	outFile  = "rotated-text.png"
+	size     = 512.0
+	fontSize = 40.0
 )
 
 func main() {
@@ -17,9 +17,9 @@ func main() {
 	dc := gg.NewContext(size, size)
 	dc.SetFillColor(colornames.White)
 	dc.Clear()
-    
+
 	dc.SetStrokeColor(colornames.Black)
-    dc.SetFontFace(font.NewFace(font.GoRegular, fontSize))
+	dc.SetFontFace(font.NewFace(font.GoRegular, fontSize))
 	text := "Hello, world!"
 	w, h := dc.MeasureString(text)
 	dc.RotateAbout(gg.Radians(10), size/2, size/2)

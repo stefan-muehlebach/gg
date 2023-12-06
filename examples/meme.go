@@ -15,7 +15,7 @@ func main() {
 	dc := gg.NewContext(S, S)
 	dc.SetFillColor(color.White)
 	dc.Clear()
-    dc.SetFontFace(fonts.NewFace(fonts.GoBold, 72))
+	dc.SetFontFace(fonts.NewFace(fonts.GoBold, 72))
 	dc.SetStrokeColor(color.Black)
 	s := "ONE DOES NOT SIMPLY"
 	n := 6 // "stroke" size

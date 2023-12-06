@@ -7,8 +7,8 @@ import (
 )
 
 const (
-    width, height = 512, 512
-	outFile = "gofont.png"
+	width, height = 512, 512
+	outFile       = "gofont.png"
 )
 
 func main() {

@@ -2,11 +2,11 @@ package main
 
 import (
 	"fmt"
-    "math"
-    "github.com/stefan-muehlebach/gg"
-    "github.com/stefan-muehlebach/gg/colornames"
-    "github.com/stefan-muehlebach/gg/fonts"
-    "github.com/stefan-muehlebach/gg/geom"
+	"github.com/stefan-muehlebach/gg"
+	"github.com/stefan-muehlebach/gg/colornames"
+	"github.com/stefan-muehlebach/gg/fonts"
+	"github.com/stefan-muehlebach/gg/geom"
+	"math"
 )
 
 type LinSpace struct {
@@ -22,7 +22,7 @@ type LinSpaceNode struct {
 func NewLinSpace(startVal, endVal float64) *LinSpace {
 	ls := &LinSpace{}
 	ls.startVal = startVal
-	ls.endVal   = endVal
+	ls.endVal = endVal
 	return ls
 }
 
@@ -68,8 +68,8 @@ func ScaledText(gc *gg.Context) {
 	var path *geom.Path
 
 	path = geom.NewPath()
-	path.MoveTo(geom.Point{Width/2, 5 * Height/6})
-	path.LineTo(geom.Point{Width/2, Height/6})
+	path.MoveTo(geom.Point{Width / 2, 5 * Height / 6})
+	path.LineTo(geom.Point{Width / 2, Height / 6})
 
 	gc.SetFillColor(colornames.Black)
 	gc.Clear()
@@ -96,8 +96,8 @@ func RotatedText(gc *gg.Context) {
 	var path *geom.Path
 
 	path = geom.NewPath()
-	path.MoveTo(geom.Point{Width/5, 2*Height/3})
-	path.BezierTo(geom.Point{Width/5, Height/3}, geom.Point{4*Width/5, Height/3}, geom.Point{4*Width/5, 2*Height/3})
+	path.MoveTo(geom.Point{Width / 5, 2 * Height / 3})
+	path.BezierTo(geom.Point{Width / 5, Height / 3}, geom.Point{4 * Width / 5, Height / 3}, geom.Point{4 * Width / 5, 2 * Height / 3})
 
 	gc.SetFillColor(colornames.Black)
 	gc.Clear()
@@ -109,152 +109,152 @@ func RotatedText(gc *gg.Context) {
 	for pt := range linSpace.Range(8) {
 		gc.Push()
 		rp := path.Point(pt.Value)
-        dir := path.Dir(pt.Value)
-        alpha := dir.Angle()
+		dir := path.Dir(pt.Value)
+		alpha := dir.Angle()
 		// fmt.Printf("t: %.4f, angle: %2.4f, rotPt: %v, dir: (%v): %2.5f\n", pt.T, pt.Value, rp, dir, 180.0*alpha/math.Pi)
 		gc.RotateAbout(alpha+math.Pi/2.0, rp.X, rp.Y)
-        
-        // gc.SetStrokeColor(colornames.White)
-        // gc.DrawLine(rp.X-20.0, rp.Y, rp.X+20.0, rp.Y)
-        // gc.Stroke()
-        // gc.DrawRectangle(rp.X-50.0, rp.Y-50.0, 100.0, 100.0)
-        // gc.Stroke()
-        
+
+		// gc.SetStrokeColor(colornames.White)
+		// gc.DrawLine(rp.X-20.0, rp.Y, rp.X+20.0, rp.Y)
+		// gc.Stroke()
+		// gc.DrawRectangle(rp.X-50.0, rp.Y-50.0, 100.0, 100.0)
+		// gc.Stroke()
+
 		gc.SetFillColor(colornames.Red)
 		gc.DrawPoint(rp.X, rp.Y, 5.0)
 		gc.Fill()
-        
-        	gc.SetStrokeColor(textColor)
+
+		gc.SetStrokeColor(textColor)
 		gc.DrawStringAnchored("KREISE", rp.X, rp.Y, 0.5, 0.5)
 		gc.Pop()
 	}
-    gc.SetStrokeColor(colornames.White)
-    gc.MoveTo(Width/5, 2*Height/3)
-    gc.CubicTo(Width/5, Height/3, 4*Width/5, Height/3, 4*Width/5, 2*Height/3)
-    gc.Stroke()
+	gc.SetStrokeColor(colornames.White)
+	gc.MoveTo(Width/5, 2*Height/3)
+	gc.CubicTo(Width/5, Height/3, 4*Width/5, Height/3, 4*Width/5, 2*Height/3)
+	gc.Stroke()
 }
 
 func PathedText(gc *gg.Context) {
 	var path *geom.Path
-    var p0, c0, c1, p1 geom.Point
+	var p0, c0, c1, p1 geom.Point
 
-    path = geom.NewPath()
+	path = geom.NewPath()
 
-    p0 = geom.Point{Width/6, Height/6}
-    c0 = geom.Point{Width/2, Height/6}
-    c1 = geom.Point{Width/6, Height/2}
-    p1 = geom.Point{Width/2, Height/2}
-	
+	p0 = geom.Point{Width / 6, Height / 6}
+	c0 = geom.Point{Width / 2, Height / 6}
+	c1 = geom.Point{Width / 6, Height / 2}
+	p1 = geom.Point{Width / 2, Height / 2}
+
 	path.MoveTo(p0)
 	path.BezierTo(c0, c1, p1)
-    
-    c0 = geom.Point{2*Width/3, Height/2}
-    c1 = geom.Point{2*Width/3, 2*Height/3}
-    p1 = geom.Point{Width/2, 2*Height/3}
+
+	c0 = geom.Point{2 * Width / 3, Height / 2}
+	c1 = geom.Point{2 * Width / 3, 2 * Height / 3}
+	p1 = geom.Point{Width / 2, 2 * Height / 3}
 
 	path.BezierTo(c0, c1, p1)
 
 	gc.SetFillColor(colornames.Black)
 	gc.Clear()
-    
+
 	face := fonts.NewFace(fonts.Map["SeafordBold"], 96)
 	gc.SetFontFace(face)
-    
-    fmt.Printf("length of path: %f\n", path.ArcLength())
-    fmt.Printf("  spline 1: %f\n", path.Segment(0).ArcLength())
-    fmt.Printf("  spline 2: %f\n", path.Segment(1).ArcLength())
 
-    gc.SetStrokeColor(colornames.Grey)
-    gc.SetStrokeWidth(2.5)
-    gc.MoveTo(path.Start().AsCoord())
-    for i:=0; i<path.Segments(); i++ {
-        segm := path.Segment(i)
-        switch s := segm.(type) {
-        case geom.LinearSegment:
-            gc.LineTo(s.End().AsCoord())
-        // case geom.BezierSegment:
-        //     gc.CubicTo(s.C0.X, s.C0.Y, s.C1.X, s.C1.Y, s.P1.X, s.P1.Y)
-        }            
-    }
-    gc.Stroke()
+	fmt.Printf("length of path: %f\n", path.ArcLength())
+	fmt.Printf("  spline 1: %f\n", path.Segment(0).ArcLength())
+	fmt.Printf("  spline 2: %f\n", path.Segment(1).ArcLength())
+
+	gc.SetStrokeColor(colornames.Grey)
+	gc.SetStrokeWidth(2.5)
+	gc.MoveTo(path.Start().AsCoord())
+	for i := 0; i < path.Segments(); i++ {
+		segm := path.Segment(i)
+		switch s := segm.(type) {
+		case geom.LinearSegment:
+			gc.LineTo(s.End().AsCoord())
+			// case geom.BezierSegment:
+			//     gc.CubicTo(s.C0.X, s.C0.Y, s.C1.X, s.C1.Y, s.P1.X, s.P1.Y)
+		}
+	}
+	gc.Stroke()
 
 	textColor := colornames.White
 	textColor.A = 0.7
 	linSpace := NewLinSpace(0.0, 2.0)
 	for pt := range linSpace.Range(20) {
 		refPt := path.Point(pt.Value)
-        dir := path.Dir(pt.Value).Neg()
-        alpha := dir.Angle() + math.Pi/2.0
-        fmt.Printf("t: %f, val: %f, pt: %v, dir: %v, alpha: %f\n", pt.T, pt.Value, refPt, dir, alpha)
-        
-        endPt := refPt.Add(dir.Mul(20.0))
-        gc.SetStrokeColor(colornames.White)
-        gc.DrawLine(refPt.X, refPt.Y, endPt.X, endPt.Y)
-        gc.Stroke()
+		dir := path.Dir(pt.Value).Neg()
+		alpha := dir.Angle() + math.Pi/2.0
+		fmt.Printf("t: %f, val: %f, pt: %v, dir: %v, alpha: %f\n", pt.T, pt.Value, refPt, dir, alpha)
+
+		endPt := refPt.Add(dir.Mul(20.0))
+		gc.SetStrokeColor(colornames.White)
+		gc.DrawLine(refPt.X, refPt.Y, endPt.X, endPt.Y)
+		gc.Stroke()
 
 		gc.SetFillColor(colornames.Lightgreen)
 		gc.DrawPoint(refPt.X, refPt.Y, 5.0)
 		gc.Fill()
 
 		gc.Push()
-        gc.RotateAbout(alpha, refPt.X, refPt.Y)        
-        
-        // gc.DrawRectangle(refPt.X-50.0, refPt.Y-50.0, 100.0, 100.0)
-        // gc.SetStrokeColor(colornames.White)
-        // gc.Stroke()
-        // 	gc.SetStrokeColor(textColor)
+		gc.RotateAbout(alpha, refPt.X, refPt.Y)
+
+		// gc.DrawRectangle(refPt.X-50.0, refPt.Y-50.0, 100.0, 100.0)
+		// gc.SetStrokeColor(colornames.White)
+		// gc.Stroke()
+		// 	gc.SetStrokeColor(textColor)
 		// gc.DrawStringAnchored("W", refPt.X, refPt.Y, 0.5, 0.5)
 		gc.Pop()
 	}
 }
 
 var (
-	Width  = 2048.0
-    Height = 4096.0
+	Width      = 2048.0
+	Height     = 4096.0
 	bufferSize = 10
 )
 
-func keys[K comparable, V any](m map[K]V) ([]K) {
-    keys := make([]K, 0, len(m))
-    for k := range m {
-        keys = append(keys, k)
-    }
-    return keys
+func keys[K comparable, V any](m map[K]V) []K {
+	keys := make([]K, 0, len(m))
+	for k := range m {
+		keys = append(keys, k)
+	}
+	return keys
 }
 
 func FontSamples(gc *gg.Context) {
-    fontSize := 96.0
-    margin := 40.0
-    lineSize := fontSize + margin/2.0
+	fontSize := 96.0
+	margin := 40.0
+	lineSize := fontSize + margin/2.0
 	textColor := colornames.White
 	textColor.A = 0.7
-    
-    Height = float64(len(fonts.Names))*lineSize + 2*margin
 
-    gc = gg.NewContext(int(Width), int(Height))
+	Height = float64(len(fonts.Names))*lineSize + 2*margin
+
+	gc = gg.NewContext(int(Width), int(Height))
 	gc.SetFillColor(colornames.Black)
 	gc.Clear()
-    for i, fontName := range fonts.Names {
-        // col := i / maxRows
-        // row := i % maxRows
-        x := margin
-        y := margin/2.0 + float64(i+1)*lineSize
-        face := fonts.NewFace(fonts.Map[fontName], fontSize)    
-        	gc.SetFontFace(face)
-    	    gc.SetStrokeColor(textColor)
-        gc.DrawString(fontName, x, y)
-        
-        gc.SetStrokeColor(colornames.Lightyellow)
-        gc.SetStrokeWidth(2.0)
-        gc.MoveTo(x, y-10.0)
-        gc.LineTo(x, y)
-        gc.LineTo(x+10.0, y)
-        // gc.Stroke()
-        gc.MoveTo(x+10.0, y-fontSize)
-        gc.LineTo(x, y-fontSize)
-        gc.LineTo(x, y-fontSize+10.0)
-        gc.Stroke()
-    }
+	for i, fontName := range fonts.Names {
+		// col := i / maxRows
+		// row := i % maxRows
+		x := margin
+		y := margin/2.0 + float64(i+1)*lineSize
+		face := fonts.NewFace(fonts.Map[fontName], fontSize)
+		gc.SetFontFace(face)
+		gc.SetStrokeColor(textColor)
+		gc.DrawString(fontName, x, y)
+
+		gc.SetStrokeColor(colornames.Lightyellow)
+		gc.SetStrokeWidth(2.0)
+		gc.MoveTo(x, y-10.0)
+		gc.LineTo(x, y)
+		gc.LineTo(x+10.0, y)
+		// gc.Stroke()
+		gc.MoveTo(x+10.0, y-fontSize)
+		gc.LineTo(x, y-fontSize)
+		gc.LineTo(x, y-fontSize+10.0)
+		gc.Stroke()
+	}
 	gc.SavePNG("fontmap.png")
 }
 

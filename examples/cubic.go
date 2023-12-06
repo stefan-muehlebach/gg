@@ -1,8 +1,8 @@
 package main
 
 import (
-    "github.com/stefan-muehlebach/gg"
-    "github.com/stefan-muehlebach/gg/color"
+	"github.com/stefan-muehlebach/gg"
+	"github.com/stefan-muehlebach/gg/color"
 )
 
 const (
