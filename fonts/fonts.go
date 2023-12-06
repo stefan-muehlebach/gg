@@ -1,14 +1,16 @@
-// Bietet einfachen Zugriff auf die Go-Fonts aber auch auf eine Reihen
-// OpenSource-Schriten.
+// Bietet einen einfachen Zugriff auf die Go-Fonts aber auch auf eine Reihe
+// von OpenSource-Schriten.
 package fonts
 
 import (
-    "log"
-
     "golang.org/x/image/font"
     "golang.org/x/image/font/opentype"
 )
 
+// Erstellt einen neuen Fontface, der bspw. bei der Methode [SetFontFace]
+// verwendet werden kann. textFont ist ein Pointer auf einen OpenType-Font
+// Siehe auch Array [Names] für eine Liste aller Fonts, die in diesem Package
+// angeboten werden.
 func NewFace(textFont *opentype.Font, size float64) font.Face {
     face, _ := opentype.NewFace(textFont,
         &opentype.FaceOptions{
@@ -17,10 +19,4 @@ func NewFace(textFont *opentype.Font, size float64) font.Face {
             Hinting: font.HintingFull,
         })
     return face
-}
-
-func check(fontName string, err error) {
-    if err != nil {
-        log.Fatalf("error loading font %s: %v", fontName, err)
-    }
 }

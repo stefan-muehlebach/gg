@@ -1,5 +1,4 @@
-// Package gg provides a simple API for rendering 2D graphics in pure Go.
-// Additions by Stefan Muehlebach (stefan.muehlebach@gmx.net) around June 2023.
+// Eine Sammlung von Funktionen um Pixel-, resp. Rasterbilder zu erstellen.
 package gg
 
 import (
@@ -879,21 +878,6 @@ func (dc *Context) RotateAbout(angle, x, y float64) {
 	dc.matrix = dc.matrix.RotateAbout(geom.Point{X: x, Y: y}, angle)
 }
 
-// Shear updates the current matrix with a shearing angle.
-// Shearing occurs about the origin.
-//func (dc *Context) Shear(x, y float64) {
-//    dc.matrix = dc.matrix.Shear(x, y)
-// dc.localMatrixInv = dc.matrix.Invert()
-//}
-
-// ShearAbout updates the current matrix with a shearing angle.
-// Shearing occurs about the specified point.
-//func (dc *Context) ShearAbout(sx, sy, x, y float64) {
-//    dc.Translate(x, y)
-//    dc.Shear(sx, sy)
-//    dc.Translate(-x, -y)
-//}
-
 // Hängt die Transformation im 'm' der aktuellen Transformationsmatrix an.
 // Die neue Transformation wird also durch Rechtsmultiplikation mit 'm'
 // gebildet.
@@ -915,21 +899,6 @@ func (dc *Context) TransformVector(x, y float64) (tx, ty float64) {
 	return dc.matrix.TransformVector(x, y)
 }
 
-// func (dc *Context) InvTransPoint(x, y float64) (tx, ty float64) {
-//     return dc.localMatrixInv.TransformPoint(dc.baseMatrixInv.TransformPoint(x, y))
-// }
-
-// func (dc *Context) InvTransVector(x, y float64) (tx, ty float64) {
-//     return dc.localMatrixInv.TransformVector(dc.baseMatrixInv.TransformVector(x, y))
-// }
-
-// InvertY flips the Y axis so that Y grows from bottom to top and Y=0 is at
-// the bottom of the image.
-// func (dc *Context) InvertY() {
-//     dc.Translate(0, float64(dc.height))
-//     dc.Scale(1, -1)
-// }
-
 // Überschreibt die aktuelle Transformationsmatrix der Zeichenumgebung mit
 // dem Parameter 'm'.
 func (dc *Context) SetMatrix(m geom.Matrix) {
@@ -941,38 +910,16 @@ func (dc *Context) Matrix() geom.Matrix {
 	return dc.matrix
 }
 
-// func (dc *Context) BaseMatrix() geom.Matrix {
-//     if len(dc.stack) == 0 {
-//         return dc.matrix
-//     } else {
-//         return dc.stack[0].matrix
-//     }
-// }
-
-// Define the visual area using mathematical coordinates (x values increases
-// from left to right, y values increases from bottom to top).
-// func (dc *Context) SetDisplayRange(xmin, xmax, ymin, ymax float64) {
-//     if xmin >= xmax || ymin >= ymax {
-//         log.Fatal("Incorrect definition of visible range!")
-//     }
-//     dc.bounds = Rectangle{Min: Point{X: xmin, Y: ymin}, Max: Point{X: xmax, Y: ymax}}
-//     m := Translate(0, float64(dc.height)).Scale(1, -1)
-//     m = m.Scale(float64(dc.width)/(xmax-xmin),
-//         float64(dc.height)/(ymax-ymin))
-//     m = m.Translate((0.0 - xmin), (0.0 - ymin))
-//     dc.SetBaseMatrix(m)
-// }
-
 // Stack
 
-// Push saves the current state of the context for later retrieval. These
-// can be nested.
+// Sichert die aktuellen Einstellungen des graphischen Kontexts auf einem
+// Stack. Siehe auch [Pop].
 func (dc *Context) Push() {
 	x := *dc
 	dc.stack = append(dc.stack, &x)
 }
 
-// Pop restores the last saved context state from the stack.
+// Holt die zuletzt gesicherten Einstellungen vom Stack. Siehe auch [Push].
 func (dc *Context) Pop() {
 	before := *dc
 	s := dc.stack

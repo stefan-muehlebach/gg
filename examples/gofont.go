@@ -1,30 +1,24 @@
 package main
 
 import (
-	"log"
-
-	"github.com/golang/freetype/truetype"
 	"github.com/stefan-muehlebach/gg"
-	"golang.org/x/image/font/gofont/goregular"
+	"github.com/stefan-muehlebach/gg/color"
+	"github.com/stefan-muehlebach/gg/fonts"
 )
 
 const (
+    width, height = 512, 512
 	outFile = "gofont.png"
 )
 
 func main() {
-	font, err := truetype.Parse(goregular.TTF)
-	if err != nil {
-		log.Fatal(err)
-	}
+	face := fonts.NewFace(fonts.GoBold, 48)
 
-	face := truetype.NewFace(font, &truetype.Options{Size: 48})
-
-	dc := gg.NewContext(1024, 1024)
+	dc := gg.NewContext(width, height)
 	dc.SetFontFace(face)
-	dc.SetFillColor(gg.NewRGB(1, 1, 1))
+	dc.SetFillColor(color.White)
 	dc.Clear()
-	dc.SetStrokeColor(gg.NewRGB(0, 0, 0))
-	dc.DrawStringAnchored("Hello, world!", 512, 512, 0.5, 0.5)
+	dc.SetStrokeColor(color.Black)
+	dc.DrawStringAnchored("Hello, world!", width/2, height/2, 0.5, 0.5)
 	dc.SavePNG(outFile)
 }

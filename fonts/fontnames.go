@@ -1,18 +1,22 @@
 package fonts
 
+// WICHTIG: Diese Datei sollte nicht manuell angepasst werden!
+// Sie wird automatisch per Script neu erzeugt. Allfaellige manuelle
+// Anpassungen werden damit ueberschrieben.
+
 import (
     "embed"
     "golang.org/x/image/font/opentype"
-    "golang.org/x/image/font/gofont/gobold"
-    "golang.org/x/image/font/gofont/gobolditalic"
+    "golang.org/x/image/font/gofont/goregular"
     "golang.org/x/image/font/gofont/goitalic"
     "golang.org/x/image/font/gofont/gomedium"
     "golang.org/x/image/font/gofont/gomediumitalic"
+    "golang.org/x/image/font/gofont/gobold"
+    "golang.org/x/image/font/gofont/gobolditalic"
     "golang.org/x/image/font/gofont/gomono"
+    "golang.org/x/image/font/gofont/gomonoitalic"
     "golang.org/x/image/font/gofont/gomonobold"
     "golang.org/x/image/font/gofont/gomonobolditalic"
-    "golang.org/x/image/font/gofont/gomonoitalic"
-    "golang.org/x/image/font/gofont/goregular"
     "golang.org/x/image/font/gofont/gosmallcaps"
     "golang.org/x/image/font/gofont/gosmallcapsitalic"
 )
@@ -21,43 +25,43 @@ import (
 var fontFiles embed.FS
 
 var (
-    elegantebold, _ = fontFiles.ReadFile("FontFiles/Elegante-Bold.ttf")
-    elegante, _ = fontFiles.ReadFile("FontFiles/Elegante.ttf")
-    elzevier, _ = fontFiles.ReadFile("FontFiles/Elzevier.ttf")
-    floralcapitals, _ = fontFiles.ReadFile("FontFiles/FloralCapitals.ttf")
-    garamondbold, _ = fontFiles.ReadFile("FontFiles/Garamond-Bold.otf")
-    garamonditalic, _ = fontFiles.ReadFile("FontFiles/Garamond-Italic.otf")
-    garamond, _ = fontFiles.ReadFile("FontFiles/Garamond.otf")
-    goudyinitialen, _ = fontFiles.ReadFile("FontFiles/GoudyInitialen.ttf")
-    leipzigfrakturbold, _ = fontFiles.ReadFile("FontFiles/LeipzigFraktur-Bold.ttf")
-    leipzigfraktur, _ = fontFiles.ReadFile("FontFiles/LeipzigFraktur.ttf")
-    lucidablackletter, _ = fontFiles.ReadFile("FontFiles/LucidaBlackletter.ttf")
-    lucidabrightdemibolditalic, _ = fontFiles.ReadFile("FontFiles/LucidaBright-Demibold-Italic.ttf")
-    lucidabrightdemibold, _ = fontFiles.ReadFile("FontFiles/LucidaBright-Demibold.ttf")
-    lucidabrightitalic, _ = fontFiles.ReadFile("FontFiles/LucidaBright-Italic.ttf")
-    lucidabright, _ = fontFiles.ReadFile("FontFiles/LucidaBright.ttf")
-    lucidacalligraphyitalic, _ = fontFiles.ReadFile("FontFiles/LucidaCalligraphy-Italic.ttf")
-    lucidaconsole, _ = fontFiles.ReadFile("FontFiles/LucidaConsole.ttf")
-    lucidafaxdemibolditalic, _ = fontFiles.ReadFile("FontFiles/LucidaFax-Demibold-Italic.ttf")
-    lucidafaxdemibold, _ = fontFiles.ReadFile("FontFiles/LucidaFax-Demibold.ttf")
-    lucidafaxitalic, _ = fontFiles.ReadFile("FontFiles/LucidaFax-Italic.ttf")
-    lucidafax, _ = fontFiles.ReadFile("FontFiles/LucidaFax.ttf")
-    lucidahandwritingitalic, _ = fontFiles.ReadFile("FontFiles/LucidaHandwriting-Italic.ttf")
-    lucidasansdemibolditalic, _ = fontFiles.ReadFile("FontFiles/LucidaSans-Demibold-Italic.ttf")
-    lucidasansdemiboldroman, _ = fontFiles.ReadFile("FontFiles/LucidaSans-Demibold-Roman.ttf")
-    lucidasansitalic, _ = fontFiles.ReadFile("FontFiles/LucidaSans-Italic.ttf")
-    lucidasans, _ = fontFiles.ReadFile("FontFiles/LucidaSans.ttf")
-    lucidasanstypewriterboldoblique, _ = fontFiles.ReadFile("FontFiles/LucidaSansTypewriter-Bold-Oblique.ttf")
-    lucidasanstypewriterbold, _ = fontFiles.ReadFile("FontFiles/LucidaSansTypewriter-Bold.ttf")
-    lucidasanstypewriteroblique, _ = fontFiles.ReadFile("FontFiles/LucidaSansTypewriter-Oblique.ttf")
-    lucidasanstypewriter, _ = fontFiles.ReadFile("FontFiles/LucidaSansTypewriter.ttf")
-    mosaicinitialen, _ = fontFiles.ReadFile("FontFiles/MosaicInitialen.ttf")
-    rothenburgdecorative, _ = fontFiles.ReadFile("FontFiles/RothenburgDecorative.ttf")
-    seafordbolditalic, _ = fontFiles.ReadFile("FontFiles/Seaford-Bold-Italic.ttf")
-    seafordbold, _ = fontFiles.ReadFile("FontFiles/Seaford-Bold.ttf")
-    seaforditalic, _ = fontFiles.ReadFile("FontFiles/Seaford-Italic.ttf")
-    seaford, _ = fontFiles.ReadFile("FontFiles/Seaford.ttf")
-    yinit, _ = fontFiles.ReadFile("FontFiles/Yinit.ttf")
+    lucidabright, _ = fontFiles.ReadFile("FontFiles/00-LucidaBright.ttf")
+    lucidabrightitalic, _ = fontFiles.ReadFile("FontFiles/01-LucidaBright-Italic.ttf")
+    lucidabrightdemibold, _ = fontFiles.ReadFile("FontFiles/02-LucidaBright-Demibold.ttf")
+    lucidabrightdemibolditalic, _ = fontFiles.ReadFile("FontFiles/03-LucidaBright-Demibold-Italic.ttf")
+    lucidasans, _ = fontFiles.ReadFile("FontFiles/05-LucidaSans.ttf")
+    lucidasansitalic, _ = fontFiles.ReadFile("FontFiles/06-LucidaSans-Italic.ttf")
+    lucidasansdemiboldroman, _ = fontFiles.ReadFile("FontFiles/07-LucidaSans-Demibold-Roman.ttf")
+    lucidasansdemibolditalic, _ = fontFiles.ReadFile("FontFiles/08-LucidaSans-Demibold-Italic.ttf")
+    lucidasanstypewriter, _ = fontFiles.ReadFile("FontFiles/10-LucidaSansTypewriter.ttf")
+    lucidasanstypewriteroblique, _ = fontFiles.ReadFile("FontFiles/11-LucidaSansTypewriter-Oblique.ttf")
+    lucidasanstypewriterbold, _ = fontFiles.ReadFile("FontFiles/12-LucidaSansTypewriter-Bold.ttf")
+    lucidasanstypewriterboldoblique, _ = fontFiles.ReadFile("FontFiles/13-LucidaSansTypewriter-Bold-Oblique.ttf")
+    lucidafax, _ = fontFiles.ReadFile("FontFiles/15-LucidaFax.ttf")
+    lucidafaxitalic, _ = fontFiles.ReadFile("FontFiles/16-LucidaFax-Italic.ttf")
+    lucidafaxdemibold, _ = fontFiles.ReadFile("FontFiles/17-LucidaFax-Demibold.ttf")
+    lucidafaxdemibolditalic, _ = fontFiles.ReadFile("FontFiles/18-LucidaFax-Demibold-Italic.ttf")
+    lucidaconsole, _ = fontFiles.ReadFile("FontFiles/20-LucidaConsole.ttf")
+    lucidahandwritingitalic, _ = fontFiles.ReadFile("FontFiles/21-LucidaHandwriting-Italic.ttf")
+    lucidacalligraphyitalic, _ = fontFiles.ReadFile("FontFiles/22-LucidaCalligraphy-Italic.ttf")
+    lucidablackletter, _ = fontFiles.ReadFile("FontFiles/23-LucidaBlackletter.ttf")
+    seaford, _ = fontFiles.ReadFile("FontFiles/30-Seaford.ttf")
+    seaforditalic, _ = fontFiles.ReadFile("FontFiles/31-Seaford-Italic.ttf")
+    seafordbold, _ = fontFiles.ReadFile("FontFiles/32-Seaford-Bold.ttf")
+    seafordbolditalic, _ = fontFiles.ReadFile("FontFiles/33-Seaford-Bold-Italic.ttf")
+    garamond, _ = fontFiles.ReadFile("FontFiles/35-Garamond.otf")
+    garamonditalic, _ = fontFiles.ReadFile("FontFiles/36-Garamond-Italic.otf")
+    garamondbold, _ = fontFiles.ReadFile("FontFiles/37-Garamond-Bold.otf")
+    elegante, _ = fontFiles.ReadFile("FontFiles/38-Elegante.ttf")
+    elegantebold, _ = fontFiles.ReadFile("FontFiles/39-Elegante-Bold.ttf")
+    leipzigfraktur, _ = fontFiles.ReadFile("FontFiles/40-LeipzigFraktur.ttf")
+    leipzigfrakturbold, _ = fontFiles.ReadFile("FontFiles/41-LeipzigFraktur-Bold.ttf")
+    rothenburgdecorative, _ = fontFiles.ReadFile("FontFiles/42-RothenburgDecorative.ttf")
+    elzevier, _ = fontFiles.ReadFile("FontFiles/45-Elzevier.ttf")
+    floralcapitals, _ = fontFiles.ReadFile("FontFiles/46-FloralCapitals.ttf")
+    goudyinitialen, _ = fontFiles.ReadFile("FontFiles/47-GoudyInitialen.ttf")
+    mosaicinitialen, _ = fontFiles.ReadFile("FontFiles/48-MosaicInitialen.ttf")
+    yinit, _ = fontFiles.ReadFile("FontFiles/49-Yinit.ttf")
 )
 
 var (
@@ -73,42 +77,42 @@ var (
     GoMonoBoldItalic, _                 = opentype.Parse(gomonobolditalic.TTF)
     GoSmallcaps, _                      = opentype.Parse(gosmallcaps.TTF)
     GoSmallcapsItalic, _                = opentype.Parse(gosmallcapsitalic.TTF)
-    EleganteBold, _                     = opentype.Parse(elegantebold)
+    LucidaBright, _                     = opentype.Parse(lucidabright)
+    LucidaBrightItalic, _               = opentype.Parse(lucidabrightitalic)
+    LucidaBrightDemibold, _             = opentype.Parse(lucidabrightdemibold)
+    LucidaBrightDemiboldItalic, _       = opentype.Parse(lucidabrightdemibolditalic)
+    LucidaSans, _                       = opentype.Parse(lucidasans)
+    LucidaSansItalic, _                 = opentype.Parse(lucidasansitalic)
+    LucidaSansDemiboldRoman, _          = opentype.Parse(lucidasansdemiboldroman)
+    LucidaSansDemiboldItalic, _         = opentype.Parse(lucidasansdemibolditalic)
+    LucidaSansTypewriter, _             = opentype.Parse(lucidasanstypewriter)
+    LucidaSansTypewriterOblique, _      = opentype.Parse(lucidasanstypewriteroblique)
+    LucidaSansTypewriterBold, _         = opentype.Parse(lucidasanstypewriterbold)
+    LucidaSansTypewriterBoldOblique, _  = opentype.Parse(lucidasanstypewriterboldoblique)
+    LucidaFax, _                        = opentype.Parse(lucidafax)
+    LucidaFaxItalic, _                  = opentype.Parse(lucidafaxitalic)
+    LucidaFaxDemibold, _                = opentype.Parse(lucidafaxdemibold)
+    LucidaFaxDemiboldItalic, _          = opentype.Parse(lucidafaxdemibolditalic)
+    LucidaConsole, _                    = opentype.Parse(lucidaconsole)
+    LucidaHandwritingItalic, _          = opentype.Parse(lucidahandwritingitalic)
+    LucidaCalligraphyItalic, _          = opentype.Parse(lucidacalligraphyitalic)
+    LucidaBlackletter, _                = opentype.Parse(lucidablackletter)
+    Seaford, _                          = opentype.Parse(seaford)
+    SeafordItalic, _                    = opentype.Parse(seaforditalic)
+    SeafordBold, _                      = opentype.Parse(seafordbold)
+    SeafordBoldItalic, _                = opentype.Parse(seafordbolditalic)
+    Garamond, _                         = opentype.Parse(garamond)
+    GaramondItalic, _                   = opentype.Parse(garamonditalic)
+    GaramondBold, _                     = opentype.Parse(garamondbold)
     Elegante, _                         = opentype.Parse(elegante)
+    EleganteBold, _                     = opentype.Parse(elegantebold)
+    LeipzigFraktur, _                   = opentype.Parse(leipzigfraktur)
+    LeipzigFrakturBold, _               = opentype.Parse(leipzigfrakturbold)
+    RothenburgDecorative, _             = opentype.Parse(rothenburgdecorative)
     Elzevier, _                         = opentype.Parse(elzevier)
     FloralCapitals, _                   = opentype.Parse(floralcapitals)
-    GaramondBold, _                     = opentype.Parse(garamondbold)
-    GaramondItalic, _                   = opentype.Parse(garamonditalic)
-    Garamond, _                         = opentype.Parse(garamond)
     GoudyInitialen, _                   = opentype.Parse(goudyinitialen)
-    LeipzigFrakturBold, _               = opentype.Parse(leipzigfrakturbold)
-    LeipzigFraktur, _                   = opentype.Parse(leipzigfraktur)
-    LucidaBlackletter, _                = opentype.Parse(lucidablackletter)
-    LucidaBrightDemiboldItalic, _       = opentype.Parse(lucidabrightdemibolditalic)
-    LucidaBrightDemibold, _             = opentype.Parse(lucidabrightdemibold)
-    LucidaBrightItalic, _               = opentype.Parse(lucidabrightitalic)
-    LucidaBright, _                     = opentype.Parse(lucidabright)
-    LucidaCalligraphyItalic, _          = opentype.Parse(lucidacalligraphyitalic)
-    LucidaConsole, _                    = opentype.Parse(lucidaconsole)
-    LucidaFaxDemiboldItalic, _          = opentype.Parse(lucidafaxdemibolditalic)
-    LucidaFaxDemibold, _                = opentype.Parse(lucidafaxdemibold)
-    LucidaFaxItalic, _                  = opentype.Parse(lucidafaxitalic)
-    LucidaFax, _                        = opentype.Parse(lucidafax)
-    LucidaHandwritingItalic, _          = opentype.Parse(lucidahandwritingitalic)
-    LucidaSansDemiboldItalic, _         = opentype.Parse(lucidasansdemibolditalic)
-    LucidaSansDemiboldRoman, _          = opentype.Parse(lucidasansdemiboldroman)
-    LucidaSansItalic, _                 = opentype.Parse(lucidasansitalic)
-    LucidaSans, _                       = opentype.Parse(lucidasans)
-    LucidaSansTypewriterBoldOblique, _  = opentype.Parse(lucidasanstypewriterboldoblique)
-    LucidaSansTypewriterBold, _         = opentype.Parse(lucidasanstypewriterbold)
-    LucidaSansTypewriterOblique, _      = opentype.Parse(lucidasanstypewriteroblique)
-    LucidaSansTypewriter, _             = opentype.Parse(lucidasanstypewriter)
     MosaicInitialen, _                  = opentype.Parse(mosaicinitialen)
-    RothenburgDecorative, _             = opentype.Parse(rothenburgdecorative)
-    SeafordBoldItalic, _                = opentype.Parse(seafordbolditalic)
-    SeafordBold, _                      = opentype.Parse(seafordbold)
-    SeafordItalic, _                    = opentype.Parse(seaforditalic)
-    Seaford, _                          = opentype.Parse(seaford)
     Yinit, _                            = opentype.Parse(yinit)
 )
 
@@ -125,42 +129,42 @@ var Map = map[string]*opentype.Font{
     "GoMonoBoldItalic":                 GoMonoBoldItalic,
     "GoSmallcaps":                      GoSmallcaps,
     "GoSmallcapsItalic":                GoSmallcapsItalic,
-    "EleganteBold":                     EleganteBold,
+    "LucidaBright":                     LucidaBright,
+    "LucidaBrightItalic":               LucidaBrightItalic,
+    "LucidaBrightDemibold":             LucidaBrightDemibold,
+    "LucidaBrightDemiboldItalic":       LucidaBrightDemiboldItalic,
+    "LucidaSans":                       LucidaSans,
+    "LucidaSansItalic":                 LucidaSansItalic,
+    "LucidaSansDemiboldRoman":          LucidaSansDemiboldRoman,
+    "LucidaSansDemiboldItalic":         LucidaSansDemiboldItalic,
+    "LucidaSansTypewriter":             LucidaSansTypewriter,
+    "LucidaSansTypewriterOblique":      LucidaSansTypewriterOblique,
+    "LucidaSansTypewriterBold":         LucidaSansTypewriterBold,
+    "LucidaSansTypewriterBoldOblique":  LucidaSansTypewriterBoldOblique,
+    "LucidaFax":                        LucidaFax,
+    "LucidaFaxItalic":                  LucidaFaxItalic,
+    "LucidaFaxDemibold":                LucidaFaxDemibold,
+    "LucidaFaxDemiboldItalic":          LucidaFaxDemiboldItalic,
+    "LucidaConsole":                    LucidaConsole,
+    "LucidaHandwritingItalic":          LucidaHandwritingItalic,
+    "LucidaCalligraphyItalic":          LucidaCalligraphyItalic,
+    "LucidaBlackletter":                LucidaBlackletter,
+    "Seaford":                          Seaford,
+    "SeafordItalic":                    SeafordItalic,
+    "SeafordBold":                      SeafordBold,
+    "SeafordBoldItalic":                SeafordBoldItalic,
+    "Garamond":                         Garamond,
+    "GaramondItalic":                   GaramondItalic,
+    "GaramondBold":                     GaramondBold,
     "Elegante":                         Elegante,
+    "EleganteBold":                     EleganteBold,
+    "LeipzigFraktur":                   LeipzigFraktur,
+    "LeipzigFrakturBold":               LeipzigFrakturBold,
+    "RothenburgDecorative":             RothenburgDecorative,
     "Elzevier":                         Elzevier,
     "FloralCapitals":                   FloralCapitals,
-    "GaramondBold":                     GaramondBold,
-    "GaramondItalic":                   GaramondItalic,
-    "Garamond":                         Garamond,
     "GoudyInitialen":                   GoudyInitialen,
-    "LeipzigFrakturBold":               LeipzigFrakturBold,
-    "LeipzigFraktur":                   LeipzigFraktur,
-    "LucidaBlackletter":                LucidaBlackletter,
-    "LucidaBrightDemiboldItalic":       LucidaBrightDemiboldItalic,
-    "LucidaBrightDemibold":             LucidaBrightDemibold,
-    "LucidaBrightItalic":               LucidaBrightItalic,
-    "LucidaBright":                     LucidaBright,
-    "LucidaCalligraphyItalic":          LucidaCalligraphyItalic,
-    "LucidaConsole":                    LucidaConsole,
-    "LucidaFaxDemiboldItalic":          LucidaFaxDemiboldItalic,
-    "LucidaFaxDemibold":                LucidaFaxDemibold,
-    "LucidaFaxItalic":                  LucidaFaxItalic,
-    "LucidaFax":                        LucidaFax,
-    "LucidaHandwritingItalic":          LucidaHandwritingItalic,
-    "LucidaSansDemiboldItalic":         LucidaSansDemiboldItalic,
-    "LucidaSansDemiboldRoman":          LucidaSansDemiboldRoman,
-    "LucidaSansItalic":                 LucidaSansItalic,
-    "LucidaSans":                       LucidaSans,
-    "LucidaSansTypewriterBoldOblique":  LucidaSansTypewriterBoldOblique,
-    "LucidaSansTypewriterBold":         LucidaSansTypewriterBold,
-    "LucidaSansTypewriterOblique":      LucidaSansTypewriterOblique,
-    "LucidaSansTypewriter":             LucidaSansTypewriter,
     "MosaicInitialen":                  MosaicInitialen,
-    "RothenburgDecorative":             RothenburgDecorative,
-    "SeafordBoldItalic":                SeafordBoldItalic,
-    "SeafordBold":                      SeafordBold,
-    "SeafordItalic":                    SeafordItalic,
-    "Seaford":                          Seaford,
     "Yinit":                            Yinit,
 }
 
@@ -177,42 +181,42 @@ var Names = []string{
     "GoMonoBoldItalic",
     "GoSmallcaps",
     "GoSmallcapsItalic",
-    "EleganteBold",
+    "LucidaBright",
+    "LucidaBrightItalic",
+    "LucidaBrightDemibold",
+    "LucidaBrightDemiboldItalic",
+    "LucidaSans",
+    "LucidaSansItalic",
+    "LucidaSansDemiboldRoman",
+    "LucidaSansDemiboldItalic",
+    "LucidaSansTypewriter",
+    "LucidaSansTypewriterOblique",
+    "LucidaSansTypewriterBold",
+    "LucidaSansTypewriterBoldOblique",
+    "LucidaFax",
+    "LucidaFaxItalic",
+    "LucidaFaxDemibold",
+    "LucidaFaxDemiboldItalic",
+    "LucidaConsole",
+    "LucidaHandwritingItalic",
+    "LucidaCalligraphyItalic",
+    "LucidaBlackletter",
+    "Seaford",
+    "SeafordItalic",
+    "SeafordBold",
+    "SeafordBoldItalic",
+    "Garamond",
+    "GaramondItalic",
+    "GaramondBold",
     "Elegante",
+    "EleganteBold",
+    "LeipzigFraktur",
+    "LeipzigFrakturBold",
+    "RothenburgDecorative",
     "Elzevier",
     "FloralCapitals",
-    "GaramondBold",
-    "GaramondItalic",
-    "Garamond",
     "GoudyInitialen",
-    "LeipzigFrakturBold",
-    "LeipzigFraktur",
-    "LucidaBlackletter",
-    "LucidaBrightDemiboldItalic",
-    "LucidaBrightDemibold",
-    "LucidaBrightItalic",
-    "LucidaBright",
-    "LucidaCalligraphyItalic",
-    "LucidaConsole",
-    "LucidaFaxDemiboldItalic",
-    "LucidaFaxDemibold",
-    "LucidaFaxItalic",
-    "LucidaFax",
-    "LucidaHandwritingItalic",
-    "LucidaSansDemiboldItalic",
-    "LucidaSansDemiboldRoman",
-    "LucidaSansItalic",
-    "LucidaSans",
-    "LucidaSansTypewriterBoldOblique",
-    "LucidaSansTypewriterBold",
-    "LucidaSansTypewriterOblique",
-    "LucidaSansTypewriter",
     "MosaicInitialen",
-    "RothenburgDecorative",
-    "SeafordBoldItalic",
-    "SeafordBold",
-    "SeafordItalic",
-    "Seaford",
     "Yinit",
 }
 

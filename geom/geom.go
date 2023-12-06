@@ -1,7 +1,7 @@
 // Package mit Typen für grundlegende, geometrische 2D-Operationen.
 //
-// Das Package geht von einer 2 dimensionalen Ebene aus, wo Punkte mittels
-// X- und Y-Koordinaten (beides float64-Werte) bezeichnet werden.
+// Das Package geht von einer 2 dimensionalen Ebene aus, in welcher Punkte
+// mittels X- und Y-Koordinaten (beides float64-Werte) bezeichnet werden.
 // Es gibt zwei Datentypen für geometrische Objekte: Point und Rectangle
 // und daneben den Datentyp Matrix, mit welchem linear affine Transformationen
 // beschrieben und auf die Typen Point und Rectangle angewendet werden können.
@@ -121,13 +121,15 @@
 //   Size() (Point)
 //
 // Die folgenden Methoden dienen dazu, bestimmte Punkte auf dem Rand des
-// Rechtecks einfacher zu ermitteln:
+// Rechtecks einfacher zu ermitteln. Die Bezeichnungen entsprechen dabei
+// den Angaben auf einem virtuellen Kompass. Bspw. bedeutet 'NW' Nordwest,
+// bezeichnet also den linken oberen Punkt des Rechtecks.
 //
 //   NW() (Point)
 //   N() (Point)
 //   NE() (Point)
 //   W() (Point)
-//   Center() (Point)
+//   C() (Point)
 //   E() (Point)
 //   SW() (Point)
 //   S() (Point)
@@ -165,7 +167,7 @@
 //   Scale(sx, sy float64) (Matrix)
 //   ScaleAbout(sp Point, sx, sy float64) (Matrix)
 //
-// # Verknüpfen von Matrizen
+// # Verknüpfungen und Invertierung von Matrizen
 //
 //   Multiply(b Matrix) (Matrix)
 //   Inv() (Matrix)
@@ -173,10 +175,10 @@
 // # Transformation von Matrizen
 //
 //   Translate(d Point) (Matrix)
-//   Rotate(a float64) (Matrix)
-//   RotateAbout(rp Point, a float64) (Matrix)
 //   Scale(sx, sy float64) (Matrix)
 //   ScaleAbout(sp Point, sx, sy float64) (Matrix)
+//   Rotate(a float64) (Matrix)
+//   RotateAbout(rp Point, a float64) (Matrix)
 //
 // # Transformation von Punkten und Rechtecken
 //

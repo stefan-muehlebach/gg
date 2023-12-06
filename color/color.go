@@ -1,5 +1,5 @@
 // Erweiterung des Packages 'image/color' um neue Farbtypen.
-
+//
 // Die bestehende Implementation von Farben in 'image/color' bietet keine
 // Methoden, um Farben heller, resp. dunkler zu schattieren oder um zwischen
 // zwei beliebigen Farben eine lineare Interpolation durchzuführen.
