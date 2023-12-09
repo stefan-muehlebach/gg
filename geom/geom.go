@@ -20,8 +20,8 @@
 //
 // Über die folgenden zwei Funktionen können Punkte erstellt werden:
 //
-//   NewPoint(x, y float64) (Point)
-//   NewPointIMG(p image.Point) (Point)
+//	NewPoint(x, y float64) (Point)
+//	NewPointIMG(p image.Point) (Point)
 //
 // Beide Funktionen sind eigentlich überflüssig: dadurch dass die Felder X und
 // Y in Point exportiert sind, können neue Punkte jederzeit über
@@ -32,22 +32,22 @@
 // Mit den folgenden Methoden werden neue Punkte durch Modifikation bestehender
 // Punkte erzeugt:
 //
-//   Add(q Point) (Point)
-//   AddXY(x, y float64) (Point)
-//   Sub(q Point) (Point)
-//   SubXY(x, y float64) (Point)
-//   Mul(k float64) (Point)
-//   Neg() (Point)
-//   Move(dp Point)           // Pointer receiver! Verschiebt den Punkt selber
+//	Add(q Point) (Point)
+//	AddXY(x, y float64) (Point)
+//	Sub(q Point) (Point)
+//	SubXY(x, y float64) (Point)
+//	Mul(k float64) (Point)
+//	Neg() (Point)
+//	Move(dp Point)           // Pointer receiver! Verschiebt den Punkt selber
 //
 // Die XY-Varianten der Methoden Add und Sub sind entstanden, da es oft
 // einfacher ist zu schreiben:
 //
-//   p2 = p1.AddXY(1, 2)
+//	p2 = p1.AddXY(1, 2)
 //
 // als
 //
-//   p2 = p1.Add(geom.Point{1, 2})
+//	p2 = p1.Add(geom.Point{1, 2})
 //
 // # Abstände
 //
@@ -55,8 +55,8 @@
 // zwei Punkten zur Verfügung. Dist2 liefert den Abstand im Quadrat, verzichtet
 // aus Perf.gründen auf das Anwenden der Wurzel.
 //
-//   Distance(q Point) (float64)
-//   Dist2(q Point) (float64)
+//	Distance(q Point) (float64)
+//	Dist2(q Point) (float64)
 //
 // # Checks
 //
@@ -64,16 +64,16 @@
 // werden, ob der Punkt innerhalb des Rechtecks r liegt. Beachte hierzu, wie
 // die Koordinaten des Typs Rectangle zu verstehen sind.
 //
-//   Eq(q Point) (bool)
-//   In(r Rectangle) (bool)
+//	Eq(q Point) (bool)
+//	In(r Rectangle) (bool)
 //
 // # Weitere Berechnungen
 //
 // Folgende Methoden stehen für weitergehende Berechnungen zur Verfügung:
 //
-//   Interpolate(q Point, t float64) (Point)
-//   Max(q Point) (Point)
-//   Min(q Point) (Point)
+//	Interpolate(q Point, t float64) (Point)
+//	Max(q Point) (Point)
+//	Min(q Point) (Point)
 //
 // # Konvertierung
 //
@@ -81,10 +81,10 @@
 // zur Verfügung. Mit der Methode Set kann man bspw. die Koordinaten von
 // Punkten via Flag oder Kommandozeile einlesen (Getter-Interface in flags).
 //
-//   AsCoord() (x, y float64)
-//   Int() (image.Point)
-//   String() (string)
-//   Set(s string) (error)   // Pointer receiver!
+//	AsCoord() (x, y float64)
+//	Int() (image.Point)
+//	String() (string)
+//	Set(s string) (error)   // Pointer receiver!
 //
 // # Rectangle
 //
@@ -96,61 +96,61 @@
 //
 // # Erzeugen von Rechtecken
 //
-//   NewRectangle(x0, y0, x1, y1 float64) (Rectangle)
-//   NewRectangleWH(x, y, w, h float64) (Rectangle)
-//   NewRectangleCWH(mx, my, w, h float64) (Rectangle)
-//   NewRectangleIMG(r image.Rectangle) (Retangle)
+//	NewRectangle(x0, y0, x1, y1 float64) (Rectangle)
+//	NewRectangleWH(x, y, w, h float64) (Rectangle)
+//	NewRectangleCWH(mx, my, w, h float64) (Rectangle)
+//	NewRectangleIMG(r image.Rectangle) (Retangle)
 //
 // # Modifikation von Rechtecken
 //
-//   Add(p Point) (Rectangle)
-//   Sub(p Point) (Rectangle)
-//   Move(dp Point) (Rectangle)    // Pointer-Receiver
+//	Add(p Point) (Rectangle)
+//	Sub(p Point) (Rectangle)
+//	Move(dp Point) (Rectangle)    // Pointer-Receiver
 //
 // # Checks und Vergleiche
 //
-//   Empty() (bool)
-//   Eq(s Rectangle) (bool)
-//   In(s Rectangle) (bool)
-//   Overlaps(s Rectangle) (bool)
+//	Empty() (bool)
+//	Eq(s Rectangle) (bool)
+//	In(s Rectangle) (bool)
+//	Overlaps(s Rectangle) (bool)
 //
 // # Grössen und spezielle Punkte
 //
-//   Dx() (float64)
-//   Dy() (float64)
-//   Size() (Point)
+//	Dx() (float64)
+//	Dy() (float64)
+//	Size() (Point)
 //
 // Die folgenden Methoden dienen dazu, bestimmte Punkte auf dem Rand des
 // Rechtecks einfacher zu ermitteln. Die Bezeichnungen entsprechen dabei
 // den Angaben auf einem virtuellen Kompass. Bspw. bedeutet 'NW' Nordwest,
 // bezeichnet also den linken oberen Punkt des Rechtecks.
 //
-//   NW() (Point)
-//   N() (Point)
-//   NE() (Point)
-//   W() (Point)
-//   C() (Point)
-//   E() (Point)
-//   SW() (Point)
-//   S() (Point)
-//   SE() (Point)
+//	NW() (Point)
+//	N() (Point)
+//	NE() (Point)
+//	W() (Point)
+//	C() (Point)
+//	E() (Point)
+//	SW() (Point)
+//	S() (Point)
+//	SE() (Point)
 //
 // # Weitere Berechnungen
 //
-//   Intersect(s Rectangle) (Rectangle)
-//   Union(s Rectangle) (Rectangle)
-//   Inset(dx, dy float64) (Rectangle)
-//   PosRel(p Point) (fx, fy float64)
-//   RelPos(fx, fy float64) (Point)
-//   SetInside(p Point) (Point)
-//   Canon() (Rectangle)
+//	Intersect(s Rectangle) (Rectangle)
+//	Union(s Rectangle) (Rectangle)
+//	Inset(dx, dy float64) (Rectangle)
+//	PosRel(p Point) (fx, fy float64)
+//	RelPos(fx, fy float64) (Point)
+//	SetInside(p Point) (Point)
+//	Canon() (Rectangle)
 //
 // # Konvertierung
 //
-//   AsCoord() (x, y, w, h float64)
-//   Int() (image.Rectangle)
-//   String() (string)
-//   Set(s string) (error)
+//	AsCoord() (x, y, w, h float64)
+//	Int() (image.Rectangle)
+//	String() (string)
+//	Set(s string) (error)
 //
 // # Matrizen
 //
@@ -160,34 +160,32 @@
 //
 // # Basis-Matrizen
 //
-//   Identity() (Matrix)
-//   Translate(d Point) (Matrix)
-//   Rotate(a float64) (Matrix)
-//   RotateAbout(rp Point, a float64) (Matrix)
-//   Scale(sx, sy float64) (Matrix)
-//   ScaleAbout(sp Point, sx, sy float64) (Matrix)
+//	Identity() (Matrix)
+//	Translate(d Point) (Matrix)
+//	Rotate(a float64) (Matrix)
+//	RotateAbout(rp Point, a float64) (Matrix)
+//	Scale(sx, sy float64) (Matrix)
+//	ScaleAbout(sp Point, sx, sy float64) (Matrix)
 //
 // # Verknüpfungen und Invertierung von Matrizen
 //
-//   Multiply(b Matrix) (Matrix)
-//   Inv() (Matrix)
+//	Multiply(b Matrix) (Matrix)
+//	Inv() (Matrix)
 //
 // # Transformation von Matrizen
 //
-//   Translate(d Point) (Matrix)
-//   Scale(sx, sy float64) (Matrix)
-//   ScaleAbout(sp Point, sx, sy float64) (Matrix)
-//   Rotate(a float64) (Matrix)
-//   RotateAbout(rp Point, a float64) (Matrix)
+//	Translate(d Point) (Matrix)
+//	Scale(sx, sy float64) (Matrix)
+//	ScaleAbout(sp Point, sx, sy float64) (Matrix)
+//	Rotate(a float64) (Matrix)
+//	RotateAbout(rp Point, a float64) (Matrix)
 //
 // # Transformation von Punkten und Rechtecken
 //
-//   Transform(p Point) (Point)
-//   TransformRect(r Rectangle) (Rectangle)
+//	Transform(p Point) (Point)
+//	TransformRect(r Rectangle) (Rectangle)
 //
 // # Diverse Methoden
 //
-//   String() (string)
-//
+//	String() (string)
 package geom
-
