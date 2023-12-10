@@ -5,7 +5,6 @@ package main
 
 import (
 	"image/color"
-
 	"github.com/stefan-muehlebach/gg"
 )
 
@@ -39,5 +38,5 @@ func main() {
 	dc.DrawCircle(200, 200, 150)
 	dc.Fill()
 
-	dc.SavePNG("gradient-conic.png")
+	dc.SavePNG(outFile)
 }

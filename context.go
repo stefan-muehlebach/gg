@@ -1,3 +1,4 @@
+// Eine Sammlung von Funktionen um Pixel-, resp. Rasterbilder zu erstellen.
 package gg
 
 import (
@@ -56,31 +57,28 @@ var (
 )
 
 type Context struct {
-	width      int
-	height     int
-	bounds     geom.Rectangle
-	rasterizer *raster.Rasterizer
-	im         *image.RGBA
-	mask       *image.Alpha
-	path       raster.Path
-	// color      color.Color // This field should be obsolete, because...
-	// strokePath     raster.Path
-	strokePattern Pattern // this is the stroke color
-	// fillPath       raster.Path
-	fillPattern Pattern // and this is the fill color
-	fillRule    FillRule
-	start       geom.Point
-	current     geom.Point
-	hasCurrent  bool
-	dashes      []float64
-	dashOffset  float64
-	lineWidth   float64
-	lineCap     LineCap
-	lineJoin    LineJoin
-	fontFace    font.Face
-	fontHeight  float64
-	matrix      geom.Matrix
-	stack       []*Context
+	width         int
+	height        int
+	bounds        geom.Rectangle
+	rasterizer    *raster.Rasterizer
+	im            *image.RGBA
+	mask          *image.Alpha
+	path          raster.Path
+	strokePattern Pattern
+	fillPattern   Pattern
+	fillRule      FillRule
+	start         geom.Point
+	current       geom.Point
+	hasCurrent    bool
+	dashes        []float64
+	dashOffset    float64
+	lineWidth     float64
+	lineCap       LineCap
+	lineJoin      LineJoin
+	fontFace      font.Face
+	fontHeight    float64
+	matrix        geom.Matrix
+	stack         []*Context
 }
 
 // NewContext creates a new image.RGBA with the specified width and height
@@ -253,14 +251,9 @@ func (dc *Context) SetStrokeStyle(pattern Pattern) {
 // MoveTo starts a new subpath within the current path starting at the
 // specified point.
 func (dc *Context) MoveTo(x, y float64) {
-	// if dc.hasCurrent {
-	//     dc.fillPath.Add1(dc.start.Fixed())
-	// }
 	x, y = dc.TransformPoint(x, y)
 	p := geom.Point{X: x, Y: y}
 	dc.path.Start(p.Fixed())
-	//dc.strokePath.Start(p.Fixed())
-	//dc.fillPath.Start(p.Fixed())
 	dc.start = p
 	dc.current = p
 	dc.hasCurrent = true
@@ -275,8 +268,6 @@ func (dc *Context) LineTo(x, y float64) {
 		x, y = dc.TransformPoint(x, y)
 		p := geom.Point{X: x, Y: y}
 		dc.path.Add1(p.Fixed())
-		// dc.strokePath.Add1(p.Fixed())
-		// dc.fillPath.Add1(p.Fixed())
 		dc.current = p
 	}
 }
@@ -293,8 +284,6 @@ func (dc *Context) QuadraticTo(x1, y1, x2, y2 float64) {
 	p1 := geom.Point{X: x1, Y: y1}
 	p2 := geom.Point{X: x2, Y: y2}
 	dc.path.Add2(p1.Fixed(), p2.Fixed())
-	// dc.strokePath.Add2(p1.Fixed(), p2.Fixed())
-	// dc.fillPath.Add2(p1.Fixed(), p2.Fixed())
 	dc.current = p2
 }
 
@@ -390,7 +379,6 @@ func (dc *Context) joiner() raster.Joiner {
 
 func (dc *Context) stroke(painter raster.Painter) {
 	path := dc.path
-	// path := dc.strokePath
 	if len(dc.dashes) > 0 {
 		path = dashed(path, dc.dashes, dc.dashOffset)
 	} else {
@@ -401,20 +389,15 @@ func (dc *Context) stroke(painter raster.Painter) {
 	r := dc.rasterizer
 	r.UseNonZeroWinding = true
 	r.Clear()
-	//lw := math.Hypot(dc.TransformVector(dc.lineWidth, 0.0))
-	//r.AddStroke(path, fix(lw), dc.capper(), dc.joiner())
 	r.AddStroke(path, fix(dc.lineWidth), dc.capper(), dc.joiner())
 	r.Rasterize(painter)
 }
 
 func (dc *Context) fill(painter raster.Painter) {
 	path := dc.path
-	// path := dc.fillPath
 	if dc.hasCurrent {
 		path = make(raster.Path, len(dc.path))
 		copy(path, dc.path)
-		// path = make(raster.Path, len(dc.fillPath))
-		// copy(path, dc.fillPath)
 		path.Add1(dc.start.Fixed())
 	}
 	r := dc.rasterizer
@@ -577,7 +560,6 @@ func (dc *Context) DrawPoint(x, y, r float64) {
 	dc.Push()
 	tx, ty := dc.TransformPoint(x, y)
 	dc.matrix = geom.Identity()
-	// dc.baseMatrix = Identity()
 	dc.DrawCircle(tx, ty, r)
 	dc.Pop()
 }
@@ -722,7 +704,6 @@ func (dc *Context) drawString(im *image.RGBA, s string, x, y float64) {
 		Dot:  fixp(x, y),
 	}
 
-	// based on Drawer.DrawString() in golang.org/x/image/font/font.go
 	prevC := rune(-1)
 	for _, c := range s {
 		if prevC >= 0 {
@@ -803,7 +784,6 @@ func (dc *Context) DrawStringWrapped(s string, x, y, ax, ay, width, lineSpacing 
 func (dc *Context) MeasureMultilineString(s string, lineSpacing float64) (width, height float64) {
 	lines := strings.Split(s, "\n")
 
-	// sync h formula with DrawStringWrapped
 	height = float64(len(lines)) * dc.fontHeight * lineSpacing
 	height -= (lineSpacing - 1) * dc.fontHeight
 
@@ -811,10 +791,9 @@ func (dc *Context) MeasureMultilineString(s string, lineSpacing float64) (width,
 		Face: dc.fontFace,
 	}
 
-	// max width from lines
 	for _, line := range lines {
 		adv := d.MeasureString(line)
-		currentWidth := float64(adv >> 6) // from gg.Context.MeasureString
+		currentWidth := float64(adv >> 6)
 		if currentWidth > width {
 			width = currentWidth
 		}

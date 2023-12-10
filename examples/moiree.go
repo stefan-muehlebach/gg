@@ -15,8 +15,8 @@ const (
 )
 
 var (
-	BackColor     = colornames.Midnightblue
-	GridLineColor = colornames.Whitesmoke
+    	BackColor = colornames.Teal.Dark(0.7)
+	GridLineColor = colornames.Lightgray
 )
 
 func main() {
