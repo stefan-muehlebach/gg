@@ -12,12 +12,17 @@ const (
 	outFile = "wrap.png"
 )
 
+var (
+    BackColor = color.RGBAF{0.851, 0.811, 0.733, 1.0}
+    LineColor = color.RGBAF{0.153, 0.157, 0.133, 1.0}
+)
+
 func main() {
 	const W = 1024
 	const H = 1024
 	const P = 16
 	dc := gg.NewContext(W, H)
-	dc.SetFillColor(color.White)
+	dc.SetFillColor(BackColor)
 	dc.Clear()
 	dc.DrawLine(W/2, 0, W/2, H)
 	dc.DrawLine(0, H/2, W, H/2)
@@ -25,9 +30,9 @@ func main() {
 	dc.SetStrokeColor(color.RGBAF{0, 0, 1.0, 0.25})
 	dc.SetStrokeWidth(3)
 	dc.Stroke()
-	dc.SetStrokeColor(color.Black)
-	
-    dc.SetFontFace(fonts.NewFace(fonts.GoBold, 18))
+	dc.SetStrokeColor(LineColor)
+
+	dc.SetFontFace(fonts.NewFace(fonts.GoBold, 18))
 	dc.DrawStringWrapped("UPPER LEFT", P, P, 0, 0, 0, 1.5, gg.AlignLeft)
 	dc.DrawStringWrapped("UPPER RIGHT", W-P, P, 1, 0, 0, 1.5, gg.AlignRight)
 	dc.DrawStringWrapped("BOTTOM LEFT", P, H-P, 0, 1, 0, 1.5, gg.AlignLeft)
@@ -37,7 +42,7 @@ func main() {
 	dc.DrawStringWrapped("LEFT MIDDLE", P, H/2, 0, 0.5, 0, 1.5, gg.AlignLeft)
 	dc.DrawStringWrapped("RIGHT MIDDLE", W-P, H/2, 1, 0.5, 0, 1.5, gg.AlignRight)
 
-    dc.SetFontFace(fonts.NewFace(fonts.GoRegular, 12))
+	dc.SetFontFace(fonts.NewFace(fonts.GoRegular, 12))
 	dc.DrawStringWrapped(TEXT, W/2-P, H/2-P, 1, 1, W/3, 1.75, gg.AlignRight)
 	dc.DrawStringWrapped(TEXT, W/2+P, H/2-P, 0, 1, W/3, 2, gg.AlignLeft)
 	dc.DrawStringWrapped(TEXT, W/2-P, H/2+P, 1, 0, W/3, 2.25, gg.AlignRight)

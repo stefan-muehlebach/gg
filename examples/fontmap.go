@@ -1,63 +1,57 @@
 package main
 
 import (
-    "log"
 	"github.com/stefan-muehlebach/gg"
+	"github.com/stefan-muehlebach/gg/color"
 	"github.com/stefan-muehlebach/gg/colornames"
 	"github.com/stefan-muehlebach/gg/fonts"
 )
 
 var (
-	Width      = 2048.0
-	Height     = 4096.0
-	bufferSize = 10
+    MarginSize = 16.0
+    FontSize   = 48.0
+    LineHeight = 1.3 * FontSize
+    	BackColor  = color.RGBAF{0.851, 0.811, 0.733, 1.0}
+	TextColor  = colornames.Black.Alpha(0.7)
+
+	Width      = 1024.0
+	Height     = 2*MarginSize + FontSize + float64(len(fonts.Names)-1)*LineHeight
 )
 
 func main() {
-	fontSize := 96.0
-	margin := 40.0
-	lineSize := fontSize + margin/2.0
-	textColor := colornames.White.Alpha(0.7)
-	// textColor.A = 0.7
-
-	Height = float64(len(fonts.Names))*lineSize + 2*margin
-
 	gc := gg.NewContext(int(Width), int(Height))
-	gc.SetFillColor(colornames.Black)
+	gc.SetFillColor(BackColor)
 	gc.Clear()
 	for i, fontName := range fonts.Names {
-		// col := i / maxRows
-		// row := i % maxRows
-		x := margin
-		y := margin/2.0 + float64(i+1)*lineSize
-		face := fonts.NewFace(fonts.Map[fontName], fontSize)
+		x := MarginSize
+		y := MarginSize + FontSize + float64(i)*LineHeight
+		face := fonts.NewFace(fonts.Map[fontName], FontSize)
 		gc.SetFontFace(face)
-		gc.SetStrokeColor(textColor)
+		gc.SetStrokeColor(TextColor)
 		gc.DrawString(fontName, x, y)
 
-        w, h := gc.MeasureString(fontName)
-        log.Printf("w, h: %f, %f\n", w, h)
+		w, _ := gc.MeasureString(fontName)
 
-		gc.SetStrokeColor(colornames.Lightyellow)
+		gc.SetStrokeColor(colornames.Crimson)
 		gc.SetStrokeWidth(2.0)
-        
-        // Links unten
+
+		// Links unten
 		gc.MoveTo(x, y-10.0)
 		gc.LineTo(x, y)
 		gc.LineTo(x+10.0, y)
 		// Links oben
-		gc.MoveTo(x+10.0, y-fontSize)
-		gc.LineTo(x, y-fontSize)
-		gc.LineTo(x, y-fontSize+10.0)
-        // Rechts unten
+		gc.MoveTo(x+10.0, y-FontSize)
+		gc.LineTo(x, y-FontSize)
+		gc.LineTo(x, y-FontSize+10.0)
+		// Rechts unten
 		gc.MoveTo(x+w-10.0, y)
 		gc.LineTo(x+w, y)
 		gc.LineTo(x+w, y-10.0)
-        // Rechts oben
-		gc.MoveTo(x+w-10.0, y-fontSize)
-		gc.LineTo(x+w, y-fontSize)
-		gc.LineTo(x+w, y-fontSize+10.0)
-            
+		// Rechts oben
+		gc.MoveTo(x+w-10.0, y-FontSize)
+		gc.LineTo(x+w, y-FontSize)
+		gc.LineTo(x+w, y-FontSize+10.0)
+
 		gc.Stroke()
 	}
 	gc.SavePNG("fontmap.png")

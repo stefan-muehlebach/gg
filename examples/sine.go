@@ -29,5 +29,5 @@ func main() {
 	dc.SetStrokeWidth(8)
 	dc.FillStroke()
 	dc.SavePNG(outFile)
-    
+
 }

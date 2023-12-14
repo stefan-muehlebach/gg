@@ -4,8 +4,8 @@
 package main
 
 import (
-	"image/color"
 	"github.com/stefan-muehlebach/gg"
+	"image/color"
 )
 
 const (

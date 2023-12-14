@@ -21,11 +21,11 @@ func main() {
 		y1 := rand.Float64() * H
 		x2 := rand.Float64() * W
 		y2 := rand.Float64() * H
-		r  := rand.Float64()
-		g  := rand.Float64()
-		b  := rand.Float64()
-		a  := 0.5 + 0.5*rand.Float64()
-		w  := rand.Float64()*4 + 1
+		r := rand.Float64()
+		g := rand.Float64()
+		b := rand.Float64()
+		a := 0.5 + 0.5*rand.Float64()
+		w := rand.Float64()*4 + 1
 		dc.SetStrokeColor(color.RGBAF{r, g, b, a})
 		dc.SetStrokeWidth(w)
 		dc.DrawLine(x1, y1, x2, y2)

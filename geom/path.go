@@ -1,3 +1,18 @@
+// Dieses File enthält weiterführende geomeetrisch Datentypen, wie bspw.
+// Segment, Path, etc. Aktuell können diese im Package 'gg' noch nicht
+// verwendet werden - die Arbeit ist also noch im Aufbau begriffen.
+// Betr. Datentypen, Nomenklatur sowie unterstützte Methoden und Funktionen
+// habe ich mich stark vom Projekt 'Asymptote' inspirieren lassen
+// (Siehe: https://asymptote.sourceforge.io/)
+//
+// Trotz des Namens enthält dieses File nicht nur der Datentyp 'Path', sondern
+// eine Sammlung von aufeinander abgestimmten Typen.
+//
+// Pfade
+// -----
+// Stehen für alle geometrischen Dinge, denen man einen Zeichenstift entlang-
+// führen kann.
+
 package geom
 
 import (
