@@ -4,11 +4,11 @@ import (
 	"crypto/md5"
 	"flag"
 	"fmt"
-	"image/color"
 	"math/rand"
 	"os"
 	"path"
 	"testing"
+    "github.com/stefan-muehlebach/gg/color"
 )
 
 var save bool
@@ -60,7 +60,7 @@ func TestGrid(t *testing.T) {
 
 func TestLines(t *testing.T) {
 	dc := NewContext(100, 100)
-	dc.SetFillColor(NewRGB(0.5, 0.5, 0.5))
+	dc.SetFillColor(color.RGBAF{0.5, 0.5, 0.5, 1.0})
 	dc.Clear()
 	rnd := rand.New(rand.NewSource(99))
 	for i := 0; i < 100; i++ {
@@ -70,11 +70,11 @@ func TestLines(t *testing.T) {
 		y2 := rnd.Float64() * 100
 		dc.DrawLine(x1, y1, x2, y2)
 		dc.SetStrokeWidth(rnd.Float64() * 3)
-		dc.SetStrokeColor(NewRGB(rnd.Float64(), rnd.Float64(), rnd.Float64()))
+		dc.SetStrokeColor(color.RGBAF{rnd.Float64(), rnd.Float64(), rnd.Float64(), 1.0})
 		dc.Stroke()
 	}
 	saveImage(dc, "TestLines")
-	checkHash(t, dc, "1dfa8c19ba801bf5af2e464aa1f46518")
+	checkHash(t, dc, "72735880e6b28b6351ea8f7d51c10193")
 }
 
 func TestCircles(t *testing.T) {
@@ -87,18 +87,18 @@ func TestCircles(t *testing.T) {
 		y := rnd.Float64() * 100
 		r := rnd.Float64()*10 + 5
 		dc.DrawCircle(x, y, r)
-		dc.SetFillColor(NewRGB(rnd.Float64(), rnd.Float64(), rnd.Float64()))
-		dc.SetStrokeColor(NewRGB(rnd.Float64(), rnd.Float64(), rnd.Float64()))
+		dc.SetFillColor(color.RGBAF{rnd.Float64(), rnd.Float64(), rnd.Float64(), 1.0})
+		dc.SetStrokeColor(color.RGBAF{rnd.Float64(), rnd.Float64(), rnd.Float64(), 1.0})
 		dc.SetStrokeWidth(rnd.Float64() * 3)
 		dc.FillStroke()
 	}
 	saveImage(dc, "TestCircles")
-	checkHash(t, dc, "f7d9d71b15f21ee0a808489e92f16cc3")
+	checkHash(t, dc, "26986ecaac3136c56764c3c3c60ac12a")
 }
 
 func TestQuadratic(t *testing.T) {
 	dc := NewContext(100, 100)
-	dc.SetFillColor(NewRGB(0.25, 0.25, 0.25))
+	dc.SetFillColor(color.RGBAF{0.25, 0.25, 0.25, 1.0})
 	dc.Clear()
 	rnd := rand.New(rand.NewSource(99))
 	for i := 0; i < 100; i++ {
@@ -111,16 +111,16 @@ func TestQuadratic(t *testing.T) {
 		dc.MoveTo(x1, y1)
 		dc.QuadraticTo(x2, y2, x3, y3)
 		dc.SetStrokeWidth(rnd.Float64() * 3)
-		dc.SetStrokeColor(NewRGB(rnd.Float64(), rnd.Float64(), rnd.Float64()))
+		dc.SetStrokeColor(color.RGBAF{rnd.Float64(), rnd.Float64(), rnd.Float64(), 1.0})
 		dc.Stroke()
 	}
 	saveImage(dc, "TestQuadratic")
-	checkHash(t, dc, "e5f6caacbd63600e98d08250071d0e34")
+	checkHash(t, dc, "1fb834e5e648f8bbd592f2c07fbf608e")
 }
 
 func TestQuadraticSingle(t *testing.T) {
 	dc := NewContext(100, 100)
-	dc.SetFillColor(NewRGB(0.25, 0.25, 0.25))
+	dc.SetFillColor(color.RGBAF{0.25, 0.25, 0.25, 1.0})
 	dc.Clear()
 	rnd := rand.New(rand.NewSource(99))
 	x1 := 25.0
@@ -132,14 +132,14 @@ func TestQuadraticSingle(t *testing.T) {
 	dc.MoveTo(x1, y1)
 	dc.QuadraticTo(x2, y2, x3, y3)
 	dc.SetStrokeWidth(rnd.Float64() * 3)
-	dc.SetStrokeColor(NewRGB(rnd.Float64(), rnd.Float64(), rnd.Float64()))
+	dc.SetStrokeColor(color.RGBAF{rnd.Float64(), rnd.Float64(), rnd.Float64(), 1.0})
 	dc.Stroke()
 	saveImage(dc, "TestQuadraticSingle")
 }
 
 func TestCubic(t *testing.T) {
 	dc := NewContext(100, 100)
-	dc.SetFillColor(NewRGB(0.75, 0.75, 0.75))
+	dc.SetFillColor(color.RGBAF{0.75, 0.75, 0.75, 1.0})
 	dc.Clear()
 	rnd := rand.New(rand.NewSource(99))
 	for i := 0; i < 100; i++ {
@@ -154,16 +154,16 @@ func TestCubic(t *testing.T) {
 		dc.MoveTo(x1, y1)
 		dc.CubicTo(x2, y2, x3, y3, x4, y4)
 		dc.SetStrokeWidth(rnd.Float64() * 3)
-		dc.SetStrokeColor(NewRGB(rnd.Float64(), rnd.Float64(), rnd.Float64()))
+		dc.SetStrokeColor(color.RGBAF{rnd.Float64(), rnd.Float64(), rnd.Float64(), 1.0})
 		dc.Stroke()
 	}
 	saveImage(dc, "TestCubic")
-	checkHash(t, dc, "6d8ac746291488a6cad99c53e415982e")
+	checkHash(t, dc, "35b720d2ed0de31f58a000e1ea060901")
 }
 
 func TestCubicSingle(t *testing.T) {
 	dc := NewContext(100, 100)
-	dc.SetFillColor(NewRGB(0.25, 0.25, 0.25))
+	dc.SetFillColor(color.RGBAF{0.25, 0.25, 0.25, 1.0})
 	dc.Clear()
 	rnd := rand.New(rand.NewSource(99))
 	x1 := 25.0
@@ -177,7 +177,7 @@ func TestCubicSingle(t *testing.T) {
 	dc.MoveTo(x1, y1)
 	dc.CubicTo(x2, y2, x3, y3, x4, y4)
 	dc.SetStrokeWidth(rnd.Float64() * 3)
-	dc.SetStrokeColor(NewRGB(rnd.Float64(), rnd.Float64(), rnd.Float64()))
+	dc.SetStrokeColor(color.RGBAF{rnd.Float64(), rnd.Float64(), rnd.Float64(), 1.0})
 	dc.Stroke()
 	saveImage(dc, "TestCubicSingle")
 }
@@ -195,16 +195,16 @@ func TestFill(t *testing.T) {
 			dc.LineTo(x, y)
 		}
 		dc.ClosePath()
-		dc.SetFillColor(NewRGB(rnd.Float64(), rnd.Float64(), rnd.Float64()))
+		dc.SetFillColor(color.RGBAF{rnd.Float64(), rnd.Float64(), rnd.Float64(), 1.0})
 		dc.Fill()
 	}
 	saveImage(dc, "TestFill")
-	checkHash(t, dc, "3a2e05e39000f9a0761e67d1049aa486")
+	checkHash(t, dc, "9b7600ba47a8a2a10657dea77a171f3b")
 }
 
 func TestClip(t *testing.T) {
 	dc := NewContext(100, 100)
-	dc.SetFillColor(NewRGB(1, 1, 1))
+	dc.SetFillColor(color.RGBAF{1, 1, 1, 1.0})
 	dc.Clear()
 	dc.DrawCircle(50, 50, 40)
 	dc.Clip()
@@ -214,17 +214,17 @@ func TestClip(t *testing.T) {
 		y := rnd.Float64() * 100
 		r := rnd.Float64()*10 + 5
 		dc.DrawCircle(x, y, r)
-		dc.SetFillColor(NewRGBA(rnd.Float64(), rnd.Float64(), rnd.Float64(), rnd.Float64()))
+		dc.SetFillColor(color.RGBAF{rnd.Float64(), rnd.Float64(), rnd.Float64(), rnd.Float64()})
 		dc.Fill()
 	}
 	saveImage(dc, "TestClip")
-	checkHash(t, dc, "bb4dd1b0fbbfb82fa27862cbea015582")
+	checkHash(t, dc, "508f01f35249c17fb06b43a0ba819faa")
 }
 
 func TestPushPop(t *testing.T) {
 	const S = 100
 	dc := NewContext(S, S)
-	dc.SetFillColor(NewRGBA(0, 0, 0, 0.1))
+	dc.SetFillColor(color.RGBAF{0, 0, 0, 0.1})
 	for i := 0; i < 360; i += 15 {
 		dc.Push()
 		dc.RotateAbout(Radians(float64(i)), S/2, S/2)
@@ -233,7 +233,7 @@ func TestPushPop(t *testing.T) {
 		dc.Pop()
 	}
 	saveImage(dc, "TestPushPop")
-	checkHash(t, dc, "98813dcbd31ca163aed034743cdb1918")
+	checkHash(t, dc, "bb36bd0b91b2f10e9e55bad88e18f437")
 }
 
 func TestDrawStringWrapped(t *testing.T) {
@@ -270,12 +270,11 @@ func TestSetPixel(t *testing.T) {
 	dc := NewContext(100, 100)
 	dc.SetFillColor(color.Black)
 	dc.Clear()
-	dc.SetStrokeColor(NewRGB(0, 1, 0))
 	i := 0
 	for y := 0; y < 100; y++ {
 		for x := 0; x < 100; x++ {
 			if i%31 == 0 {
-				dc.SetPixel(x, y)
+				dc.SetPixel(x, y, color.RGBAF{0, 1, 0, 1.0})
 			}
 			i++
 		}
@@ -288,7 +287,7 @@ func TestDrawPoint(t *testing.T) {
 	dc := NewContext(100, 100)
 	dc.SetFillColor(color.Black)
 	dc.Clear()
-	dc.SetFillColor(NewRGB(0, 1, 0))
+	dc.SetFillColor(color.RGBAF{0, 1, 0, 1.0})
 	dc.Scale(10, 10)
 	for y := 0; y <= 10; y++ {
 		for x := 0; x <= 10; x++ {
@@ -303,9 +302,9 @@ func TestDrawPoint(t *testing.T) {
 func TestLinearGradient(t *testing.T) {
 	dc := NewContext(100, 100)
 	g := NewLinearGradient(0, 0, 100, 100)
-	g.AddColorStop(0, color.RGBA{0, 255, 0, 255})
-	g.AddColorStop(1, color.RGBA{0, 0, 255, 255})
-	g.AddColorStop(0.5, color.RGBA{255, 0, 0, 255})
+	g.AddColorStop(0, color.RGBAF{0, 1, 0, 1})
+	g.AddColorStop(1, color.RGBAF{0, 0, 1, 1})
+	g.AddColorStop(0.5, color.RGBAF{1, 0, 0, 1})
 	dc.SetFillStyle(g)
 	dc.DrawRectangle(0, 0, 100, 100)
 	dc.Fill()
@@ -316,9 +315,9 @@ func TestLinearGradient(t *testing.T) {
 func TestRadialGradient(t *testing.T) {
 	dc := NewContext(100, 100)
 	g := NewRadialGradient(30, 50, 0, 70, 50, 50)
-	g.AddColorStop(0, color.RGBA{0, 255, 0, 255})
-	g.AddColorStop(1, color.RGBA{0, 0, 255, 255})
-	g.AddColorStop(0.5, color.RGBA{255, 0, 0, 255})
+	g.AddColorStop(0, color.RGBAF{0, 1, 0, 1})
+	g.AddColorStop(1, color.RGBAF{0, 0, 1, 1})
+	g.AddColorStop(0.5, color.RGBAF{1, 0, 0, 1})
 	dc.SetFillStyle(g)
 	dc.DrawRectangle(0, 0, 100, 100)
 	dc.Fill()
@@ -339,11 +338,11 @@ func TestDashes(t *testing.T) {
 		dc.SetDash(rnd.Float64()*3+1, rnd.Float64()*3+3)
 		dc.DrawLine(x1, y1, x2, y2)
 		dc.SetStrokeWidth(rnd.Float64() * 3)
-		dc.SetStrokeColor(NewRGB(rnd.Float64(), rnd.Float64(), rnd.Float64()))
+		dc.SetStrokeColor(color.RGBAF{rnd.Float64(), rnd.Float64(), rnd.Float64(), 1.0})
 		dc.Stroke()
 	}
 	saveImage(dc, "TestDashes")
-	checkHash(t, dc, "2c4c6e23ae4219f1dbfd8c3ea5a8be68")
+	checkHash(t, dc, "89669e7e03a08ca9fc7ba589a310f427")
 }
 
 func BenchmarkCircles(b *testing.B) {

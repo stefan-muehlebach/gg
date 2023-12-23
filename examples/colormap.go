@@ -67,8 +67,8 @@ func colorMapRGBAF() {
 	gc := gg.NewContext(int(Width), int(Height))
 	gc.SetFontFace(face)
 	gc.SetStrokeWidth(0.0)
-	gc.SetFillColor(colornames.White)
-	gc.Clear()
+	// gc.SetFillColor(colornames.White)
+	// gc.Clear()
 
 	for i, namedColor := range ColorList {
 		row := i % Rows

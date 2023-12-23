@@ -8,22 +8,11 @@ import (
 // Modelle für die neuen Farbtypen, d.h. für die Konvertierung eines beliebigen
 // color.Color-Wertes in den jewiligen Farbtyp.
 var (
-	//RGBAF64Model  color.Model = color.ModelFunc(rgbaf64Model)
 	RGBAFModel color.Model = color.ModelFunc(rgbafModel)
 	HSVModel   color.Model = color.ModelFunc(hsvModel)
 	HSLModel   color.Model = color.ModelFunc(hslModel)
 	HSIModel   color.Model = color.ModelFunc(hsiModel)
 )
-
-/*
-func rgbaf64Model(c color.Color) color.Color {
-    if _, ok := c.(RGBAF64); ok {
-        return c
-    }
-    r, g, b, a := c.RGBA()
-    return RGBAF64{float64(r)/65535.0, float64(g)/65535.0, float64(b)/65535.0, float64(a)/65535.0}
-}
-*/
 
 func rgbafModel(c color.Color) color.Color {
 	if _, ok := c.(RGBAF); ok {

@@ -38,6 +38,22 @@ func CompRGBA(c1, c2 color.RGBA) bool {
 	return true
 }
 
+func CompRGBAF(c1, c2 RGBAF) bool {
+    if math.Abs(c1.R-c2.R) > floatEps {
+        return false
+    }
+    if math.Abs(c1.G-c2.G) > floatEps {
+        return false
+    }
+    if math.Abs(c1.B-c2.B) > floatEps {
+        return false
+    }
+    if math.Abs(c1.A-c2.A) > floatEps {
+        return false
+    }
+    return true
+}
+
 func CompHSV(c1, c2 HSV) bool {
 	if math.Abs(c1.H-c2.H) > floatEps {
 		return false
@@ -89,9 +105,12 @@ func CompHSI(c1, c2 HSI) bool {
 var (
 	R, G, B, A uint8
 	r, g, b, a uint32
+    rf, gf, bf, af float64
 	h, s, v, l float64
+    
+    convColor color.Color
 
-	rgbColorList = []color.RGBA{
+	rgbaColorList = []color.RGBA{
 		color.RGBA{0, 0, 0, 255},
 		color.RGBA{255, 255, 255, 255},
 		color.RGBA{255, 0, 0, 255},
@@ -108,6 +127,25 @@ var (
 		color.RGBA{128, 0, 128, 255},
 		color.RGBA{0, 128, 128, 255},
 		color.RGBA{0, 0, 128, 255},
+	}
+
+	rgbafColorList = []RGBAF{
+		RGBAF{0, 0, 0, 1.0},
+		RGBAF{1.0, 1.0, 1.0, 1.0},
+		RGBAF{1.0, 0, 0, 1.0},
+		RGBAF{0, 1.0, 0, 1.0},
+		RGBAF{0, 0, 1.0, 1.0},
+		RGBAF{1.0, 1.0, 0, 1.0},
+		RGBAF{0, 1.0, 1.0, 1.0},
+		RGBAF{1.0, 0, 1.0, 1.0},
+		RGBAF{0.75, 0.75, 0.75, 1.0},
+		RGBAF{0.5, 0.5, 0.5, 1.0},
+		RGBAF{0.5, 0, 0, 1.0},
+		RGBAF{0.5, 0.5, 0, 1.0},
+		RGBAF{0, 0.5, 0, 1.0},
+		RGBAF{0.5, 0, 0.5, 1.0},
+		RGBAF{0, 0.5, 0.5, 1.0},
+		RGBAF{0, 0, 0.5, 1.0},
 	}
 
 	hsvColorList = []HSV{
@@ -186,47 +224,65 @@ func init() {
 //             math.Abs(float64(c1.B-c2.B)) <= colorEps
 // }
 
-func BenchmarkRGBAF2RGB(bench *testing.B) {
+func BenchmarkRGBAF2RGBA(bench *testing.B) {
 	c := RGBAF{rnd.Float64(), rnd.Float64(), rnd.Float64(), rnd.Float64()}
 	for i := 0; i < bench.N; i++ {
 		r, g, b, a = c.RGBA()
 	}
 }
+func BenchmarkRGBA2RGBAF(bench *testing.B) {
+	c := color.RGBA{uint8(rnd.Intn(256)), uint8(rnd.Intn(256)), uint8(rnd.Intn(256)), uint8(rnd.Intn(256))}
+	for i := 0; i < bench.N; i++ {
+		convColor = RGBAFModel.Convert(c)
+	}
+}
 
-func BenchmarkHSL2RGB(bench *testing.B) {
+func BenchmarkHSL2RGBA(bench *testing.B) {
 	c := HSL{360.0 * rnd.Float64(), rnd.Float64(), rnd.Float64(), rnd.Float64()}
 	for i := 0; i < bench.N; i++ {
 		r, g, b, a = c.RGBA()
 	}
 }
+func BenchmarkRGBA2HSL(bench *testing.B) {
+	c := color.RGBA{uint8(rnd.Intn(256)), uint8(rnd.Intn(256)), uint8(rnd.Intn(256)), uint8(rnd.Intn(256))}
+	for i := 0; i < bench.N; i++ {
+		convColor = HSLModel.Convert(c)
+	}
+}
 
-func BenchmarkHSV2RGB(bench *testing.B) {
+func BenchmarkHSV2RGBA(bench *testing.B) {
 	c := HSV{360.0 * rnd.Float64(), rnd.Float64(), rnd.Float64(), rnd.Float64()}
 	for i := 0; i < bench.N; i++ {
 		r, g, b, a = c.RGBA()
 	}
 }
+func BenchmarkRGBA2HSV(bench *testing.B) {
+	c := color.RGBA{uint8(rnd.Intn(256)), uint8(rnd.Intn(256)), uint8(rnd.Intn(256)), uint8(rnd.Intn(256))}
+	for i := 0; i < bench.N; i++ {
+		convColor = HSVModel.Convert(c)
+	}
+}
 
-func BenchmarkHSI2RGB(bench *testing.B) {
+func BenchmarkHSI2RGBA(bench *testing.B) {
 	c := HSI{360.0 * rnd.Float64(), rnd.Float64(), rnd.Float64(), rnd.Float64()}
 	for i := 0; i < bench.N; i++ {
 		r, g, b, a = c.RGBA()
 	}
 }
+func BenchmarkRGBA2HSI(bench *testing.B) {
+	c := color.RGBA{uint8(rnd.Intn(256)), uint8(rnd.Intn(256)), uint8(rnd.Intn(256)), uint8(rnd.Intn(256))}
+	for i := 0; i < bench.N; i++ {
+		convColor = HSIModel.Convert(c)
+	}
+}
 
-// func BenchmarkHSV(bench *testing.B) {
-//     c := Color{R, G, B, A}
-//     for i:=0; i<bench.N; i++ {
-//         h, s, v = c.HSV()
-//     }
-// }
-
-// func BenchmarkHSL(bench *testing.B) {
-//     c := Color{R, G, B, A}
-//     for i:=0; i<bench.N; i++ {
-//         h, s, l = c.HSL()
-//     }
-// }
+func ExampleRGBAF() {
+    r1, g1, b1 := 1.0, 0.5, 0.25
+    c1 := RGBAF{r1, g1, b1, 1.0}
+    fmt.Printf("%v", c1)
+    // Output:
+    // {1 0.5 0.25 1}
+}
 
 func ExampleHSV() {
 	h1, s1, v1 := 0.0, 1.0, 1.0
@@ -252,18 +308,39 @@ func ExampleHSI() {
 	// {0 0.5 0.1 1}
 }
 
+func TestRGBAF(test *testing.T) {
+	for i := range rgbaColorList {
+		rgbaColor   := rgbaColorList[i]
+		rgbafColor := rgbafColorList[i]
+
+		convRgbaColor := color.RGBAModel.Convert(rgbafColor).(color.RGBA)
+		convRgbafColor := RGBAFModel.Convert(rgbaColor).(RGBAF)
+
+		if !CompRGBA(rgbaColor, convRgbaColor) {
+			test.Errorf("[%d]\n", i)
+			test.Errorf("  want: %#v\n", rgbaColor)
+			test.Errorf("  got : %#v\n", convRgbaColor)
+		}
+		if !CompRGBAF(rgbafColor, convRgbafColor) {
+			test.Errorf("[%d]\n", i)
+			test.Errorf("  want: %#v\n", rgbafColor)
+			test.Errorf("  got : %#v\n", convRgbafColor)
+		}
+	}
+}
+
 func TestHSV(test *testing.T) {
-	for i := range rgbColorList {
-		rgbColor := rgbColorList[i]
+	for i := range rgbaColorList {
+		rgbaColor := rgbaColorList[i]
 		hsvColor := hsvColorList[i]
 
-		convRgbColor := color.RGBAModel.Convert(hsvColor).(color.RGBA)
-		convHsvColor := HSVModel.Convert(rgbColor).(HSV)
+		convRgbaColor := color.RGBAModel.Convert(hsvColor).(color.RGBA)
+		convHsvColor := HSVModel.Convert(rgbaColor).(HSV)
 
-		if !CompRGBA(rgbColor, convRgbColor) {
+		if !CompRGBA(rgbaColor, convRgbaColor) {
 			test.Errorf("[%d]\n", i)
-			test.Errorf("  want: %#v\n", rgbColor)
-			test.Errorf("  got : %#v\n", convRgbColor)
+			test.Errorf("  want: %#v\n", rgbaColor)
+			test.Errorf("  got : %#v\n", convRgbaColor)
 		}
 		if !CompHSV(hsvColor, convHsvColor) {
 			test.Errorf("[%d]\n", i)
@@ -274,17 +351,17 @@ func TestHSV(test *testing.T) {
 }
 
 func TestHSL(test *testing.T) {
-	for i := range rgbColorList {
-		rgbColor := rgbColorList[i]
+	for i := range rgbaColorList {
+		rgbaColor := rgbaColorList[i]
 		hslColor := hslColorList[i]
 
-		convRgbColor := color.RGBAModel.Convert(hslColor).(color.RGBA)
-		convHslColor := HSLModel.Convert(rgbColor).(HSL)
+		convRgbaColor := color.RGBAModel.Convert(hslColor).(color.RGBA)
+		convHslColor := HSLModel.Convert(rgbaColor).(HSL)
 
-		if !CompRGBA(rgbColor, convRgbColor) {
+		if !CompRGBA(rgbaColor, convRgbaColor) {
 			test.Errorf("[%d]\n", i)
-			test.Errorf("  want: %#v\n", rgbColor)
-			test.Errorf("  got : %#v\n", convRgbColor)
+			test.Errorf("  want: %#v\n", rgbaColor)
+			test.Errorf("  got : %#v\n", convRgbaColor)
 		}
 		if !CompHSL(hslColor, convHslColor) {
 			test.Errorf("[%d]\n", i)
@@ -295,17 +372,17 @@ func TestHSL(test *testing.T) {
 }
 
 func TestHSI(test *testing.T) {
-	for i := range rgbColorList {
-		rgbColor := rgbColorList[i]
+	for i := range rgbaColorList {
+		rgbaColor := rgbaColorList[i]
 		hsiColor := hsiColorList[i]
 
-		convRgbColor := color.RGBAModel.Convert(hsiColor).(color.RGBA)
-		convHsiColor := HSIModel.Convert(rgbColor).(HSI)
+		convRgbaColor := color.RGBAModel.Convert(hsiColor).(color.RGBA)
+		convHsiColor := HSIModel.Convert(rgbaColor).(HSI)
 
-		if !CompRGBA(rgbColor, convRgbColor) {
+		if !CompRGBA(rgbaColor, convRgbaColor) {
 			test.Errorf("[%d]\n", i)
-			test.Errorf("  want: %#v\n", rgbColor)
-			test.Errorf("  got : %#v\n", convRgbColor)
+			test.Errorf("  want: %#v\n", rgbaColor)
+			test.Errorf("  got : %#v\n", convRgbaColor)
 		}
 		if !CompHSI(hsiColor, convHsiColor) {
 			test.Errorf("[%d]\n", i)

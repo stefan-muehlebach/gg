@@ -27,9 +27,9 @@ func Degrees(radians float64) float64 {
 	return radians * 180 / math.Pi
 }
 
-// L"adt das Bild in der Datei path und stellt die Bilddaten als Image im
-// ersten R"uckgabewert zur Verf"ung. Bei einem Fehler ist der zweite
-// R"uckgabewert nicht nil und muss entsprechend behandelt werden.
+// Läadt das Bild in der Datei path und stellt die Bilddaten als Image im
+// ersten Rückgabewert zur Verfügung. Bei einem Fehler ist der zweite
+// Rückgabewert nicht nil und muss entsprechend behandelt werden.
 func LoadImage(path string) (image.Image, error) {
 	file, err := os.Open(path)
 	if err != nil {
@@ -40,9 +40,9 @@ func LoadImage(path string) (image.Image, error) {
 	return im, err
 }
 
-// Wie [LoadImage], jedoch ausschliesslich f"ur PNG-Dateien.
-// Bei einem Fehler ist der zweite
-// R"uckgabewert nicht nil und muss entsprechend behandelt werden.
+// Wie [LoadImage], jedoch ausschliesslich für PNG-Dateien.
+// Bei einem Fehler ist der zweite Rückgabewert nicht nil und muss
+// entsprechend behandelt werden.
 func LoadPNG(path string) (image.Image, error) {
 	file, err := os.Open(path)
 	if err != nil {
@@ -103,41 +103,6 @@ func LoadFontFace(path string, points float64) (font.Face, error) {
 	})
 	return face, nil
 }
-
-/*
-// Hilfsfunktionen zum Erstellen von Farben.
-
-// Erzeugt ein neues RGB-Farbobjekt, und verwendet die Werte r, g, b in [0,1]
-// als Intensitätswerte der Farben Rot, Grün und Blau.
-func NewRGB(r, g, b float64) (color.Color) {
-    return NewRGBA(r, g, b, 1.0)
-}
-
-// Analog zu [NewRGB], jedoch mit a in [0,1] als Alpha-Wert (Deckung der
-// Farbe). a=1 bedeutet volle Deckung und a=0 bedeutet vollständige
-// Transparenz. _Beachte_: die Werte für r, g und b müssen nicht normalisiert
-// werden.
-func NewRGBA(r, g, b, a float64) (color.Color) {
-    return color.NRGBA{
-        uint8(r * 255),
-        uint8(g * 255),
-        uint8(b * 255),
-        uint8(a * 255),
-    }
-}
-
-// Analog zu [NewRGB], jedoch sind die Farbwerte als ganze Zahlen in [0,255]
-// anzugeben.
-func NewRGB255(r, g, b int) (color.Color) {
-    return NewRGBA255(r, g, b, 255)
-}
-
-// Analog zu [NewRGBA], jedoch sind die Farbwerte und der Alpha-Wert als
-// ganze Zahlen in [0,255] anzugeben.
-func NewRGBA255(r, g, b, a int) (color.Color) {
-    return color.NRGBA{uint8(r), uint8(g), uint8(b), uint8(a)}
-}
-*/
 
 // Interne Funktionen, nicht fuer den oeffentlichen Gebrauch.
 

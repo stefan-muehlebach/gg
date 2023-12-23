@@ -28,7 +28,6 @@ var (
 // anzugeben und um zwischen zwei Farben eine lineare Interpolation
 // durchzuführen.
 type Color interface {
-	// RGBA() (r, g, b, a uint32)
     color.Color
 	Bright(t float64) Color
 	Dark(t float64) Color
@@ -36,63 +35,16 @@ type Color interface {
 	Interpolate(c2 Color, t float64) Color
 }
 
-/*
-// RGBAF64 entspricht dem RGBA-Typ aus image/color, verwendet fuer die
-// einzelnen Komponenten jedoch Fliesskommazahlen im Intervall [0,1].
-type RGBAF64 struct {
-    R, G, B, A float64
-}
-
-func (c RGBAF64) RGBA() (r, g, b, a uint32) {
-    r = uint32(65535.0 * c.R)
-    g = uint32(65535.0 * c.G)
-    b = uint32(65535.0 * c.B)
-    a = uint32(65535.0 * c.A)
-    return
-}
-
-func (c RGBAF64) Bright(t float64) (Color) {
-    return c
-}
-
-func (c RGBAF64) Dark(t float64) (Color) {
-    return c
-}
-
-func (c RGBAF64) Alpha(a float64) (Color) {
-    r := c
-    r.R *= a/r.A
-    r.G *= a/r.A
-    r.B *= a/r.A
-    r.A  = a
-    return r
-}
-
-func (c1 RGBAF64) Interpolate(col Color, t float64) (Color) {
-    c2 := col.(RGBAF64)
-
-    r := (1-t)*c1.R + t*c2.R
-    g := (1-t)*c1.G + t*c2.G
-    b := (1-t)*c1.B + t*c2.B
-    a := (1-t)*c1.A + t*c2.A
-    return RGBAF64{r, g, b, a}
-}
-
-func (c1 RGBAF64) Less(c2 RGBAF64, key SortField) bool {
-    switch key {
-    case SortByRed:
-        return c1.R < c2.R
-    case SortByGreen:
-        return c1.G < c2.G
-    case SortByBlue:
-        return c1.B < c2.B
-    default:
-        log.Fatalf("invalid sort field specified: '%v'", key)
-        return false
+func setIn(v, a, b float64) (float64) {
+    if v < a {
+        return a
     }
+    if v > b {
+        return b
+    }
+    return v
 }
-*/
-
+    
 // RGBAF entspricht dem NRGBA-Typ aus image/color, verwendet fuer die
 // einzelnen Komponenten jedoch Fliesskommazahlen im Intervall [0,1].
 // Beachte: Der Typ in diesem Package heisst RGBA, die Werte R, G, B und A
@@ -111,20 +63,24 @@ func (c RGBAF) RGBA() (r, g, b, a uint32) {
 }
 
 func (c RGBAF) Bright(t float64) Color {
+    t = setIn(t, 0, 1)
 	u := 1.0 - t
 	return RGBAF{u*c.R + t, u*c.G + t, u*c.B + t, c.A}
 }
 
 func (c RGBAF) Dark(t float64) Color {
+    t = setIn(t, 0, 1)
 	u := 1.0 - t
 	return RGBAF{u * c.R, u * c.G, u * c.B, c.A}
 }
 
 func (c RGBAF) Alpha(a float64) Color {
+    a = setIn(a, 0, 1)
 	return RGBAF{c.R, c.G, c.B, a}
 }
 
 func (c1 RGBAF) Interpolate(col Color, t float64) Color {
+    t = setIn(t, 0, 1)
 	c2 := col.(RGBAF)
 
 	r := (1-t)*c1.R + t*c2.R
@@ -180,28 +136,29 @@ func (c HSV) RGBA() (r, g, b, a uint32) {
 }
 
 func (c HSV) Bright(t float64) Color {
-	// t := 0.2 * float64(level)
+    t = setIn(t, 0, 1)
+    u := 1-t
 	r := c
-	r.S = (1 - t) * c.S
-	r.V = (1-t)*c.V + t*1.0
+	r.S = u*c.S
+	r.V = u*c.V + t
 	return r
 }
 
 func (c HSV) Dark(t float64) Color {
-	// t := 0.2 * float64(level)
+    t = setIn(t, 0, 1)
+    u := 1-t
 	r := c
-	r.S = (1-t)*c.S + t*1.0
-	r.V = (1 - t) * c.V
+	r.V = u*c.V
 	return r
 }
 
 func (c HSV) Alpha(a float64) Color {
-	r := c
-	r.A = a
-	return r
+    a = setIn(a, 0, 1)
+	return HSV{c.H, c.S, c.V, a}
 }
 
 func (c1 HSV) Interpolate(col Color, t float64) Color {
+    t = setIn(t, 0, 1)
 	c2 := col.(HSV)
 
 	h := (1-t)*c1.H + t*c2.H
@@ -258,26 +215,26 @@ func (c HSL) RGBA() (r, g, b, a uint32) {
 }
 
 func (c HSL) Bright(t float64) Color {
-	// t := 0.2 * float64(level)
+    t = setIn(t, 0, 1)
 	r := c
 	r.L = (1-t)*c.L + t*1.0
 	return r
 }
 
 func (c HSL) Dark(t float64) Color {
-	// t := 0.2 * float64(level)
+    t = setIn(t, 0, 1)
 	r := c
 	r.L = (1 - t) * c.L
 	return r
 }
 
 func (c HSL) Alpha(a float64) Color {
-	r := c
-	r.A = a
-	return r
+    a = setIn(a, 0, 1)
+	return HSL{c.H, c.S, c.L, a}
 }
 
 func (c1 HSL) Interpolate(col Color, t float64) Color {
+    t = setIn(t, 0, 1)
 	c2 := col.(HSL)
 	h := (1-t)*c1.H + t*c2.H
 	s := (1-t)*c1.S + t*c2.S
@@ -306,57 +263,55 @@ type HSI struct {
 }
 
 func (c HSI) RGBA() (r, g, b, a uint32) {
-	red, green, blue := 0.0, 0.0, 0.0
-
+    Z := 1.0 - math.Abs(math.Mod(c.H/60.0, 2.0)-1.0)
+    C := (3 * c.I * c.S) / (1 + Z)
+    X := C * Z
+	m := c.I * (1 - c.S)
+	R, G, B := 0.0, 0.0, 0.0
 	switch {
-	case c.H == 0.0:
-		red = c.I + 2*c.I*c.S
-		green = c.I - c.I*c.S
-		blue = c.I - c.I*c.S
+	case c.H < 60.0:
+		R, G, B = C, X, 0.0
 	case c.H < 120.0:
-		red = c.I + c.I*c.S*math.Cos(c.H*math.Pi/180.0)/math.Cos((60-c.H)*math.Pi/180.0)
-		green = c.I + c.I*c.S*(1.0-math.Cos(c.H*math.Pi/180.0)/math.Cos((60-c.H)*math.Pi/180.0))
-		blue = c.I - c.I*c.S
-	case c.H == 120.0:
-		red = c.I - c.I*c.S
-		green = c.I + 2*c.I*c.S
-		blue = c.I - c.I*c.S
+		R, G, B = X, C, 0.0
+	case c.H < 180.0:
+		R, G, B = 0.0, C, X
 	case c.H < 240.0:
-		red = c.I - c.I*c.S
-		green = c.I + c.I*c.S*math.Cos((c.H-120.0)*math.Pi/180.0)/math.Cos((180.0-c.H)*math.Pi/180.0)
-		blue = c.I + c.I*c.S*(1.0-math.Cos((c.H-120.0)*math.Pi/180.0)/math.Cos((180.0-c.H)*math.Pi/180.0))
-	case c.H == 240.0:
-		red = c.I - c.I*c.S
-		green = c.I - c.I*c.S
-		blue = c.I + 2*c.I*c.S
+		R, G, B = 0.0, X, C
+	case c.H < 300.0:
+		R, G, B = X, 0.0, C
 	case c.H < 360.0:
-		red = c.I + c.I*c.S*(1.0-math.Cos((c.H-240.0)*math.Pi/180.0)/math.Cos((300.0-c.H)*math.Pi/180.0))
-		green = c.I - c.I*c.S
-		blue = c.I + c.I*c.S*math.Cos((c.H-240.0)*math.Pi/180.0)/math.Cos((300.0-c.H)*math.Pi/180.0)
+		R, G, B = C, 0.0, X
 	}
-
-	r = uint32(65535.0 * red * c.A)
-	g = uint32(65535.0 * green * c.A)
-	b = uint32(65535.0 * blue * c.A)
+    R += m
+    G += m
+    B += m
+    if R > 1.0 { R = 1.0 }
+    if G > 1.0 { G = 1.0 }
+    if B > 1.0 { B = 1.0 }
+	r = uint32(65535.0 * R * c.A)
+	g = uint32(65535.0 * G * c.A)
+	b = uint32(65535.0 * B * c.A)
 	a = uint32(65535.0 * c.A)
 	return
 }
 
 func (c HSI) Bright(t float64) Color {
+    t = setIn(t, 0, 1)
 	return c
 }
 
 func (c HSI) Dark(t float64) Color {
+    t = setIn(t, 0, 1)
 	return c
 }
 
 func (c HSI) Alpha(a float64) Color {
-	r := c
-	r.A = a
-	return r
+    a = setIn(a, 0, 1)
+	return HSI{c.H, c.S, c.I, a}
 }
 
 func (c1 HSI) Interpolate(col Color, t float64) Color {
+    t = setIn(t, 0, 1)
 	c2 := col.(HSI)
 	h := (1-t)*c1.H + t*c2.H
 	s := (1-t)*c1.S + t*c2.S
