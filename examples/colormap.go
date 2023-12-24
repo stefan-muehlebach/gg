@@ -1,13 +1,13 @@
 package main
 
 import (
+	"math"
+	"regexp"
+
 	"github.com/stefan-muehlebach/gg"
 	"github.com/stefan-muehlebach/gg/color"
 	"github.com/stefan-muehlebach/gg/colornames"
 	"github.com/stefan-muehlebach/gg/fonts"
-	"math"
-	"regexp"
-	"sort"
 )
 
 type NamedColor struct {
@@ -15,29 +15,42 @@ type NamedColor struct {
 	color color.Color
 }
 
+type NamedGroup struct {
+	name string
+	list []NamedColor
+}
+
 var (
-	ColorList     []NamedColor
-	NumFadeSteps  int     = 9
-	FadeStep      float64 = 1.0 / float64(NumFadeSteps+1)
-	Padding       float64 = 10
-	SampleWidth   float64 = 250
-	UniformHeight float64 = 50.0
-	FadeHeight    float64 = 20.0
-	FadeWidth     float64 = SampleWidth / float64(NumFadeSteps)
-	SampleHeight  float64 = 2.0*FadeHeight + UniformHeight
+	SampleWidth   = 250.0
+	SampleHeight  = 2.0*FadeHeight + UniformHeight
+	UniformHeight = 50.0
+	FadeHeight    = 20.0
+	NumFadeSteps  = 9
+	FadeStep      = 1.0 / float64(NumFadeSteps+1)
+	FadeWidth     = SampleWidth / float64(NumFadeSteps)
+
+	Padding       = 10.0
+
+	TextFontSize  = 20.0
+	TextFont      = fonts.LucidaBrightDemibold
+	TextFontFace  = fonts.NewFace(TextFont, TextFontSize)
+	TitleFontSize = 40.0
+	TitleFont     = fonts.LucidaBrightDemibold
+	TitleFontFace = fonts.NewFace(TitleFont, TitleFontSize)
 )
 
-func DrawColorSample(gc *gg.Context, col, row int, color color.Color, name string) {
-	gc.SetFillColor(color)
-	gc.DrawRectangle(float64(col)*(SampleWidth+Padding), float64(row)*(SampleHeight+Padding)+FadeHeight, SampleWidth, UniformHeight)
+func DrawColorSample(gc *gg.Context, x0, y0 float64, namedCol NamedColor) {
+	gc.SetFillColor(namedCol.color)
+	gc.DrawRectangle(x0, y0+FadeHeight, SampleWidth, UniformHeight)
 	gc.Fill()
+	col := color.RGBAFModel.Convert(namedCol.color).(color.RGBAF)
 
 	for l := 0; l < NumFadeSteps; l++ {
 		t := FadeStep * float64(l+1)
-		colBright := color.Bright(1.0 - t)
-		colDark := color.Dark(t)
-		x := float64(col)*(SampleWidth+Padding) + float64(l)*FadeWidth
-		y := float64(row) * (SampleHeight + Padding)
+		colBright := col.Bright(1.0 - t)
+		colDark := col.Dark(t)
+		x := x0 + float64(l)*FadeWidth
+		y := y0
 		gc.SetFillColor(colBright)
 		gc.DrawRectangle(x, y, FadeWidth, FadeHeight)
 		gc.Fill()
@@ -46,55 +59,97 @@ func DrawColorSample(gc *gg.Context, col, row int, color color.Color, name strin
 		gc.DrawRectangle(x, y, FadeWidth, FadeHeight)
 		gc.Fill()
 	}
-	r, g, b, _ := color.RGBA()
-	mean := (r + g + b) / 3
-	if mean > 3*(math.MaxInt16/2) {
+	r, g, b, _ := col.RGBA()
+	max := max3(r, g, b)
+	min := min3(r, g, b)
+	mid := (max + min) / 2
+	if mid >= math.MaxInt16 {
 		gc.SetStrokeColor(colornames.Black)
 	} else {
-		gc.SetStrokeColor(colornames.Whitesmoke)
+		gc.SetStrokeColor(colornames.WhiteSmoke)
 	}
-	gc.DrawStringAnchored(name, float64(col)*(SampleWidth+Padding)+SampleWidth/2.0, float64(row)*(SampleHeight+Padding)+SampleHeight/2.0, 0.5, 0.5)
+	gc.SetFontFace(TextFontFace)
+	gc.DrawStringAnchored(namedCol.name, x0+SampleWidth/2.0, y0+SampleHeight/2.0, 0.5, 0.5)
 }
 
-func colorMapRGBAF() {
-	Columns := 5
-	Rows := len(ColorList) / Columns
-	face := fonts.NewFace(fonts.LucidaBrightDemibold, 20.0)
+func DrawColorMap(groupList []NamedGroup) {
+	Columns := 6
+	numSlots := len(groupList)
+	for _, namedGroup := range groupList {
+		numSlots += len(namedGroup.list)
+	}
+	Rows := numSlots/Columns + 1
 
-	Width := float64(Columns)*SampleWidth + float64(Columns-1)*Padding
-	Height := float64(Rows)*SampleHeight + float64(Rows-1)*Padding
+	Width := float64(Columns)*(SampleWidth+Padding) - Padding
+	Height := float64(Rows)*(SampleHeight+Padding) - Padding
 
 	gc := gg.NewContext(int(Width), int(Height))
-	gc.SetFontFace(face)
 	gc.SetStrokeWidth(0.0)
-	// gc.SetFillColor(colornames.White)
-	// gc.Clear()
+	gc.SetFillColor(colornames.White)
+	gc.Clear()
 
-	for i, namedColor := range ColorList {
-		row := i % Rows
-		col := i / Rows
-
-		color := color.RGBAFModel.Convert(namedColor.color).(color.RGBAF)
-		DrawColorSample(gc, col, row, color, namedColor.name)
+	slotIndex := 0
+	for _, namedGroup := range groupList {
+		for j, namedColor := range namedGroup.list {
+			if j == 0 {
+                for Rows - (slotIndex % Rows) < 3 {
+                    slotIndex += 1
+                }
+				x0 := float64(slotIndex / Rows) * (SampleWidth + Padding)
+				y0 := float64(slotIndex % Rows) * (SampleHeight + Padding)   
+				gc.SetFontFace(TitleFontFace)
+				gc.SetStrokeColor(colornames.Black)
+				gc.DrawStringAnchored(namedGroup.name, x0+SampleWidth/2, y0+SampleHeight/2, 0.5, 0.5)
+				slotIndex += 1
+			}
+        		x0 := float64(slotIndex / Rows) * (SampleWidth + Padding)
+			y0 := float64(slotIndex % Rows) * (SampleHeight + Padding)   
+			DrawColorSample(gc, x0, y0, namedColor)
+			slotIndex += 1
+		}
 	}
 	gc.SavePNG("colormap.png")
 }
 
-func main() {
-	ColorList = make([]NamedColor, 0)
-	for _, name := range colornames.Names {
-		if ok, _ := regexp.MatchString("[Gg]ray", name); ok {
-			continue
-		}
-		ColorList = append(ColorList, NamedColor{name, colornames.Map[name]})
+func max(a, b uint32) uint32 {
+	if a > b {
+		return a
+	} else {
+		return b
 	}
-	sort.Slice(ColorList, func(i, j int) bool {
-		c1 := color.HSLModel.Convert(ColorList[i].color).(color.HSL)
-		c2 := color.HSLModel.Convert(ColorList[j].color).(color.HSL)
-		return c1.Less(c2, color.SortByHue) ||
-			(!c2.Less(c1, color.SortByHue) && c1.Less(c2, color.SortBySaturation)) ||
-			(!c2.Less(c1, color.SortByHue) && !c2.Less(c1, color.SortBySaturation) && c1.Less(c2, color.SortByLightness))
-	})
+}
+func max3(a, b, c uint32) uint32 {
+	return max(a, max(b, c))
+}
 
-	colorMapRGBAF()
+func min(a, b uint32) uint32 {
+	if a < b {
+		return a
+	} else {
+		return b
+	}
+}
+func min3(a, b, c uint32) uint32 {
+	return min(a, min(b, c))
+}
+
+func main() {
+	var groupIndex colornames.ColorGroup
+    var groupList []NamedGroup
+
+	groupList = make([]NamedGroup, colornames.NumColorGroups)
+	for i := range groupList {
+		groupList[i].list = make([]NamedColor, 0)
+	}
+
+	for groupIndex = 0; groupIndex < colornames.NumColorGroups; groupIndex++ {
+		groupList[groupIndex].name = groupIndex.String()
+		for _, colorName := range colornames.Groups[groupIndex] {
+			if ok, _ := regexp.MatchString("[Gg]rey", colorName); ok {
+				continue
+			}
+			groupList[groupIndex].list = append(groupList[groupIndex].list, NamedColor{colorName, colornames.Map[colorName]})
+		}
+	}
+	DrawColorMap(groupList)
 }

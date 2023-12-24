@@ -13,6 +13,7 @@ const (
     Browns
     Whites
     Grays
+    NumColorGroups
 )
 
 func (g ColorGroup) String() (string) {
