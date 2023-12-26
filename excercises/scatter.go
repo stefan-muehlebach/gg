@@ -12,12 +12,12 @@ import (
 )
 
 const (
-	Width, Height = 1024, 1024
-	Padding       = 64
+	Width, Height = 512.0, 512.0
+	Padding       = 24
 	OutFileName   = "scatter.png"
 	NumPoints     = 1000
-	TitleFontSize = 24.0
-	TextFontSize  = 18.0
+	TitleFontSize = 12.0
+	TextFontSize  = 10.0
 )
 
 var (
@@ -43,7 +43,7 @@ func main() {
 	dc.Translate(0.0, -Height)
 	dc.SetFillColor(BackColor)
 	dc.Clear()
-	points := CreatePoints(1000)
+	points := CreatePoints(NumPoints)
 	dc.Translate(Padding, Padding)
 	dc.Scale(Width-Padding*2, Height-Padding*2)
 	// draw minor grid
@@ -68,7 +68,7 @@ func main() {
 	// draw points
 	dc.SetFillColor(colornames.Blue.Alpha(0.5))
 	for _, p := range points {
-		dc.DrawPoint(p.X, p.Y, 3.0)
+		dc.DrawPoint(p.X, p.Y, 1.5)
 		dc.Fill()
 	}
 	// draw text

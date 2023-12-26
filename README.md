@@ -13,7 +13,7 @@ Farben (analog 'image/color').
 Mit folgedem Befehl wird das Paket in der neusten Version, inkl. aller
 Unterpakete installiert.
 
-    go install github.com/stefan-muehlebach/gg@latest
+    go get -u github.com/stefan-muehlebach/gg
 
 ## Dokumentation
 
