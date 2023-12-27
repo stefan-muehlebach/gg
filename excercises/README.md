@@ -21,16 +21,9 @@ Die Programme habe alle
 
 ## List der Aufgaben
 
-![Irrgarten](irrgarten.png)
-![Spirale](spirale.png)
-![Schachbrett](chessboard.png)
-![Moiree](moiree.png)
-![Quadrate](vertigo.png)
-
-
-![Bauhaus](bauhaus.png)
-
-
+![Irrgarten](irrgarten.png)    ![Spirale](spirale.png)
+![Schachbrett](chessboard.png) ![Moiree](moiree.png)
+![Quadrate](vertigo.png)       ![Bauhaus](bauhaus.png)
 
 ![](divided-circle.png)
 ![](graph.png)
