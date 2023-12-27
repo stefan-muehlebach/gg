@@ -66,6 +66,7 @@ func (p Point) Neg() Point {
 }
 
 // Prüft, ob p und q exakt die gleichen Koordinaten haben.
+// Ev. sollte hier auch ein Zahlenvergleich mit eps gemacht werden.
 func (p Point) Eq(q Point) bool {
 	return p == q
 }
@@ -94,7 +95,7 @@ func (p Point) Abs() float64 {
 	return math.Sqrt(p.X*p.X + p.Y*p.Y)
 }
 
-func (p Point) Norm() Point {
+func (p Point) Normalize() Point {
 	l := p.Abs()
 	if l == 0.0 {
 		return p

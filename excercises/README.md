@@ -15,25 +15,30 @@ Programmiertechniken, lässt sich der Aufwand massiv verkleinern.
 Dieser Abschnitt erklärt, wie die Programme zur Erzeugung von PNG-Dateien
 grundsätzlich aufgebaut sind, welche Einstellungen (Grössen, Farben, etc) zu
 verwenden sind und zeigt Schritt für Schritt wie ein einfaches Bild erstellt
-werden kann
+werden kann.
+
+Die Programme habe alle
 
 ## List der Aufgaben
 
-![](irrgarten.png)
-![](chessboard.png)
-![](spirale.png)
-![](moiree.png)
+![Irrgarten](irrgarten.png)
+![Spirale](spirale.png)
+![Schachbrett](chessboard.png)
+![Moiree](moiree.png)
+![Quadrate](vertigo.png)
 
 
 ![Bauhaus](bauhaus.png)
+
+
+
 ![](divided-circle.png)
 ![](graph.png)
-![](raster-image.png)
-![](scatter.png)
 ![](text-transform.png)
 ![](farn.png)
 ![](raster.png)
-![](vertigo.png)
 ![](color-cells.png)
-![](flower-of-life.png)
 ![](relief.png)
+
+![](raster-image.png)
+![](flower-of-life.png)

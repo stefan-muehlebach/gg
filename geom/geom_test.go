@@ -9,6 +9,11 @@ import (
 	"time"
 )
 
+// Über diese Konstante kann der Vergleich von Fliesskommazahlen beeinflusst
+// werden. Die Zahlen im Format IEEE 754 zeichnen sich insbesondere in
+// Zusammenhang mit Geometrie durch eine nervige 'Unschärfe' aus, d.h. zwei
+// Zahlen sollten gem. Konstruktion gleich sein (d.h. a == b ist true) - aber
+// sie liegen oft um ein paar wenige 1.0e-10's auseinader.
 const (
 	eps = 1.0e-12
 )
@@ -47,6 +52,14 @@ var (
 
 func init() {
 
+}
+
+func eq(a, b float64) (bool) {
+    if math.Abs(a-b) < eps {
+        return true
+    } else {
+        return false
+    }
 }
 
 //----------------------------------------------------------------------------
@@ -164,9 +177,9 @@ func TestPointSet(t *testing.T) {
 		if (p0.X == 0.0) && (p0.Y == 0.0) {
 			continue
 		}
-		pNorm := p0.Norm()
+		pNorm := p0.Normalize()
 		lNorm := pNorm.Abs()
-		if math.Abs(1.0-lNorm) > eps {
+		if !eq(lNorm, 1.0) {
 			t.Errorf("length of normalized vector %v should be 1.0, is %f", pNorm, lNorm)
 		}
 	}
@@ -573,6 +586,10 @@ func BenchmarkRandRectangle(b *testing.B) {
 	}
 }
 
+// Die folgenden Benchmarks haben nur indirekt mit dem geom-Package zu tun.
+// Es sind Messungen der grundlegenden Verknüpfungen von Fliesskommazahlen.
+// Ggf. sind beim Compilieren alle Optimierungsmöglichkeiten zu unterbinden,
+// ansonsten hat Go Mühe, diese super-kurzen Operationen zu messen.
 func BenchmarkIEEE754(b *testing.B) {
 	x = rand.Float64()
 	y = rand.Float64()

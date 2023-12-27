@@ -49,7 +49,7 @@ func (s LinearSegment) Point(t float64) Point {
 }
 
 func (s LinearSegment) Dir(t float64) Point {
-	return s.P1.Sub(s.P0).Norm()
+	return s.P1.Sub(s.P0).Normalize()
 }
 
 func (s LinearSegment) ArcLength() float64 {
@@ -101,7 +101,7 @@ func (s CubicSegment) Dir(t float64) Point {
 	q3 = s.C0.Sub(s.P0)
 	q = q1.Add(q2.Add(q3)).Mul(3.0)
 
-	return q.Norm()
+	return q.Normalize()
 }
 
 func (s CubicSegment) ArcLength() float64 {
