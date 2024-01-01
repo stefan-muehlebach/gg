@@ -12,8 +12,8 @@ import (
 
 const (
 	Width, Height = 512.0, 512.0
-	MarginSize    = 24.0
-	NumDivisions  = 113
+	MarginSize    = Width / 32.0
+	NumDivisions  = 97
 	LineWidth     = 1.5
 	FontSize      = 14.0
 )
@@ -26,9 +26,9 @@ type GraphData struct {
 
 var (
 	GraphList = []GraphData{
-		{54, 0.4, colornames.Blue.Dark(0.5)},
+		//{54, 0.4, colornames.Blue.Dark(0.5)},
 		{44, 0.4, colornames.Green.Dark(0.7)},
-		{33, 0.4, colornames.Red.Dark(0.7)},
+		//{33, 0.4, colornames.Red.Dark(0.7)},
 	}
 	BackColor = color.RGBAF{0.851, 0.811, 0.733, 1.0}
 	LineColor = color.RGBAF{0.153, 0.157, 0.133, 1.0}

@@ -73,7 +73,7 @@ func DrawColorSample(gc *gg.Context, x0, y0 float64, namedCol NamedColor) {
 }
 
 func DrawColorMap(groupList []NamedGroup) {
-	Columns := 6
+	Columns := 5
 	numSlots := len(groupList)
 	for _, namedGroup := range groupList {
 		numSlots += len(namedGroup.list)
@@ -96,14 +96,14 @@ func DrawColorMap(groupList []NamedGroup) {
                     slotIndex += 1
                 }
 				x0 := float64(slotIndex / Rows) * (SampleWidth + Padding)
-				y0 := float64(slotIndex % Rows) * (SampleHeight + Padding)   
+				y0 := float64(slotIndex % Rows) * (SampleHeight + Padding)
 				gc.SetFontFace(TitleFontFace)
 				gc.SetStrokeColor(colornames.Black)
 				gc.DrawStringAnchored(namedGroup.name, x0+SampleWidth/2, y0+SampleHeight/2, 0.5, 0.5)
 				slotIndex += 1
 			}
         		x0 := float64(slotIndex / Rows) * (SampleWidth + Padding)
-			y0 := float64(slotIndex % Rows) * (SampleHeight + Padding)   
+			y0 := float64(slotIndex % Rows) * (SampleHeight + Padding)
 			DrawColorSample(gc, x0, y0, namedColor)
 			slotIndex += 1
 		}

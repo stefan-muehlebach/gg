@@ -1,14 +1,17 @@
 # Go Graphics (for TEKO)
 
-`gg` is a library of types and functions for rendering 2D graphics in pure
-Go. This package is based on the well known package
-[gg](https://github.com/fogleman/gg) (@fogleman: thanks mate - well done!)
-As the development of the original package appears to be dead or suspended
-(according to the unanswered issues) I took the opportunity to modify it
-for my own purposes.
+`gg` ist ein Package mit Typen und Funktionen für die Erstellung von 2D
+Pixelbilder in Go. Es basiert weitgehend auf dem gleichnamigen Package
+[gg](https://github.com/fogleman/gg). Ich habe einige kleinere Anpassungen
+am bestehenden Package gemacht, die Farb- und Schriftverwaltung sowie die
+geometrischen Funktionen stark ausgebaut und in Unterpackages verschoben,
+so dass diese auch unabhängig verwendet werden können.
 
-The changes I made will be described in this README
-
+Ausserdem finden sich zus
+ Reihe von Programmen
+gestellt, die
+ich jeweils als Aufgaben im Unterricht verwende (siehe Verzeichnis
+[Aufgaben](https://github.com/stefan-muehlebach/gg/tree/main/excercises)).
 
 
 Pixel- oder Rasterbildern. Die Sammlung dient im Rahmen des Unterrichtes im

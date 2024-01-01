@@ -17,15 +17,15 @@ const (
 var (
 	BackColor = color.RGBAF{0.851, 0.811, 0.733, 1.0}
 
-	// color1 = colornames.Crimson
-	// color2 = colornames.Darkgreen
-	// color3 = colornames.Navy
-	//    color4 = colornames.White
-
-	color1 = colornames.Red
-	color2 = colornames.Yellow
-	color3 = colornames.Cyan
+	color1 = colornames.Crimson
+	color2 = colornames.Gold
+	color3 = colornames.LightSeaGreen
 	color4 = colornames.Black
+
+	//color1 = colornames.Red
+	//color2 = colornames.Yellow
+	//color3 = colornames.Cyan
+	//color4 = colornames.Black
 
 	// color1 = colornames.Cyan
 	// color2 = colornames.Yellow

@@ -2,6 +2,10 @@
 package gg
 
 import (
+	"fmt"
+	"encoding/base64"
+	"log"
+	"bytes"
 	"errors"
 	"image"
 	"image/color"
@@ -166,6 +170,17 @@ func (dc *Context) EncodePNG(w io.Writer) error {
 // Default parameters are used if a nil *jpeg.Options is passed.
 func (dc *Context) EncodeJPG(w io.Writer, o *jpeg.Options) error {
 	return jpeg.Encode(w, dc.im, o)
+}
+
+// Diese Methode dient aktuell ausschliesslich dazu, die Bilder auch auf
+// "Better Go Playground" anzeigen zu können,
+func (dc *Context) DisplayOnWebsite() {
+    var buf bytes.Buffer
+    err := png.Encode(&buf, dc.im)
+    if err != nil {
+        log.Fatal(err)
+    }
+    fmt.Println("IMAGE:" + base64.StdEncoding.EncodeToString(buf.Bytes()))
 }
 
 // SetDash sets the current dash pattern to use. Call with zero arguments to

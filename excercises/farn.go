@@ -2,11 +2,9 @@ package main
 
 import (
 	"github.com/stefan-muehlebach/gg/colornames"
-	// "github.com/stefan-muehlebach/gg/colornames"
 	"github.com/stefan-muehlebach/gg"
 	"github.com/stefan-muehlebach/gg/color"
 	"github.com/stefan-muehlebach/gg/geom"
-	// "log"
 	"math/rand"
 )
 
@@ -67,4 +65,5 @@ func main() {
 
 	}
 	gc.SavePNG(OutFileName)
+    gc.DisplayOnWebsite()
 }

@@ -12,7 +12,7 @@ import (
 
 const (
 	Width, Height = 512.0, 512.0
-	MarginSize    = 24.0
+	MarginSize    = Width / 32.0
 	CanvasSize    = Width - 2*MarginSize
 	BorderSize    = 20.0
 	FieldSize     = (Width - 2*MarginSize - 2*BorderSize) / 8.0
