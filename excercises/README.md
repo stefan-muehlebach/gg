@@ -23,7 +23,7 @@ Die Vorlagen sind immer quadratisch und als Breite empfiehlt sich eine Zahl
 zwischen 300 und 1000. Am Schönsten sind natürlich 2er Potenzen wie 256, 512
 oder 1024.
 
-![TicTacToe](tictactoe01.png)
+![TicTacToe](tictactoe.png)
 
 ```go
 package main
@@ -65,7 +65,7 @@ func main() {
 }
 ```
 Wenn man das Programm ausführt, erscheint im aktuellen Verzeichnis die Datei
-`tictactoe01.png` mit dem gewünschten Output.
+`tictactoe.png` mit dem gewünschten Output.
 Grundsätzlich könnte man alle Aufgaben auf diese Weise lösen - was jedoch
 überhaupt nicht die Intention ist!
 
