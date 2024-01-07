@@ -5,21 +5,6 @@ import (
 	"github.com/stefan-muehlebach/gg/colornames"
 )
 
-const (
-	ImageSize  = 256.0
-	MarginSize = ImageSize / 20
-	CanvasSize = ImageSize - 2*MarginSize
-    FieldSize  = CanvasSize / 3
-    LineWidth  = 5.0
-
-	OutFileName = "squares.png"
-)
-
-var (
-	BackColor = colornames.Beige
-	LineColor = colornames.DarkSlateGrey
-)
-
 func main() {
 	gc := gg.NewContext(256, 256)
 	gc.SetFillColor(colornames.Beige)
