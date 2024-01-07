@@ -16,11 +16,11 @@ Go-Programm nachzuzeichnen. Dabei gilt es auf Folgendes zu achten:
 Anhand eines Beispiels möchte ich zeigen, wie diese Anweisungen zu verstehen
 sind.
 
-![TicTacToe](squares.png)
 
-| Title | Explanation |
-|-------|-------------|
-| Mal schauen | Was es denn hier so geben könnte. |
+
+| Vorlage | Erklärungen |
+|---------|-------------|
+| ![TicTacToe](squares.png) | Was es denn hier so geben könnte. |
 
 
 
