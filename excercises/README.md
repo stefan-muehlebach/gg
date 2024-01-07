@@ -234,13 +234,22 @@ grundsätzlich aufgebaut sind, welche Einstellungen (Grössen, Farben, etc) zu
 verwenden sind und zeigt Schritt für Schritt wie ein einfaches Bild erstellt
 werden kann.
 
-Die Programme habe alle
+## Liste der Aufgaben
 
-## List der Aufgaben
+### Irrgarten
 
-![Irrgarten](irrgarten.png)    ![Spirale](spirale.png)
-![Schachbrett](chessboard.png) ![Moiree](moiree.png)
-![Quadrate](vertigo.png)       ![Bauhaus](bauhaus.png)
+![Irrgarten](irrgarten.png)
+
+### Spirale
+
+![Spirale](spirale.png)
+
+### Schachbrett
+
+![Schachbrett](chessboard.png)
+![Moiree](moiree.png)
+![Quadrate](vertigo.png)
+![Bauhaus](bauhaus.png)
 
 ![](divided-circle.png)
 ![](graph.png)
