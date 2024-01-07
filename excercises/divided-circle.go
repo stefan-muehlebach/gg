@@ -11,11 +11,18 @@ import (
 )
 
 const (
-	Width, Height = 512.0, 512.0
+    // Breite und Höhe des Bildes in Pixel
+	Width, Height = 1024.0, 1024.0
+    // Freizulassender Rand
 	MarginSize    = Width / 32.0
-	NumDivisions  = 97
-	LineWidth     = 1.5
-	FontSize      = 14.0
+    // Anzahl Punkte auf dem Kreisrand. Von dieser Zahl hängt das Muster
+    // massgeblich ab. Primzahlen versprechen meist gute Muster.
+	NumDivisions  = 101
+    // Grösse der Punkte.
+    PointSize     = 4.0
+    // Grösse der Beschriftungen. Hier muss man etwas experimentieren, bis
+    // die ideale Einstellung gefunden ist.
+	FontSize      = 24.0
 )
 
 type GraphData struct {
@@ -25,13 +32,18 @@ type GraphData struct {
 }
 
 var (
-	GraphList = []GraphData{
-		//{54, 0.4, colornames.Blue.Dark(0.5)},
-		{44, 0.4, colornames.Green.Dark(0.7)},
-		//{33, 0.4, colornames.Red.Dark(0.7)},
-	}
+    // BackColor und LineColor sind die Standardfarben für den Hintergrund
+    // (das Papier) und den Vordergrund.
 	BackColor = color.RGBAF{0.851, 0.811, 0.733, 1.0}
 	LineColor = color.RGBAF{0.153, 0.157, 0.133, 1.0}
+
+	GraphList = []GraphData{
+		{34, 1.5, colornames.DarkViolet.Bright(0.2)},
+		{26, 1.5, colornames.DarkBlue.Bright(0.1)},
+		{22, 1.5, colornames.DarkGreen},
+		{14, 1.5, colornames.DarkOliveGreen.Dark(0.1)},
+		{10, 1.5, colornames.DarkOrange.Dark(0.2)},
+	}
 )
 
 func DrawLines(gc *gg.Context, pl []geom.Point, data GraphData) {
@@ -50,6 +62,14 @@ func DrawLines(gc *gg.Context, pl []geom.Point, data GraphData) {
 		if idx0 == 0 {
 			break
 		}
+	}
+}
+
+func DrawPointList(gc *gg.Context, pl []geom.Point) {
+	gc.SetFillColor(LineColor)
+	for _, p := range pl {
+		gc.DrawPoint(p.X, p.Y, PointSize)
+		gc.Fill()
 	}
 }
 
@@ -73,11 +93,6 @@ func main() {
 	gc := gg.NewContext(Width, Height)
 	gc.SetFillColor(BackColor)
 	gc.Clear()
-	gc.SetFillColor(LineColor)
-	for _, p := range pointList {
-		gc.DrawPoint(p.X, p.Y, 3.0)
-		gc.Fill()
-	}
 
 	face := fonts.NewFace(fonts.GoMedium, FontSize)
 	str := fmt.Sprintf("n = %d", NumDivisions)
@@ -93,6 +108,8 @@ func main() {
 		gc.SetStrokeColor(data.color)
 		gc.DrawStringAnchored(str, textPos.X, textPos.Y, 0.0, 1.0)
 	}
+
+    DrawPointList(gc, pointList)
 
 	gc.SavePNG("divided-circle.png")
 }

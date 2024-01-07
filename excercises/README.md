@@ -1,6 +1,15 @@
 # Graphische Trainingseinheiten
 
-Dieses Verzeichnis enthält (Stand 24.12.2023) 16 Bilder, welche mit Hilfe
+In diesem Verzeichnis sind mehrere Aufgaben enthalten, die graphisch
+implementiert werden müssen. Zu den einzelnen Aufgaben gibt es nur wenige
+Erklärungen in schriftlicher Form, die zentrale Aufgabenstellung ist die
+Bildvorlage. Das Ziel ist, jedes gezeigte Bild mit einem eigenständigen
+Go-Programm nachzuzeichnen. Dabei gilt es auf Folgendes zu achten:
+
+* Ist der Code so sparsam/ökonomisch wie möglich?
+  Sind Wiederholungen im Bild durch Schlaufen implementiert?
+
+(Stand 24.12.2023) 16 Bilder, welche mit Hilfe
 von Go und [gg](https://github.com/stefan-muehlebach/gg) _und so wenig Code
 wie möglich_ nachzubilden sind.
 Mit entsprechendem Aufwand können alle Bilder durch ein Go-Programm in
