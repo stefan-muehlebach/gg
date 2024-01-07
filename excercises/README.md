@@ -22,7 +22,7 @@ Die Vorlagen sind immer quadratisch und als Breite empfiehlt sich eine Zahl
 zwischen 300 und 1000 - am Schönsten sind natürlich 2er Potenzen wie 256, 512
 oder 1024.
 
-![TicTacToe](squares.png)
+![TicTacToe](tictactoe01.png)
 
 ```go
 package main
