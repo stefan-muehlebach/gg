@@ -6,8 +6,23 @@ Erklärungen in schriftlicher Form, die zentrale Aufgabenstellung ist die
 Bildvorlage. Das Ziel ist, jedes gezeigte Bild mit einem eigenständigen
 Go-Programm nachzuzeichnen. Dabei gilt es auf Folgendes zu achten:
 
-* Ist der Code so sparsam/ökonomisch wie möglich?
-  Sind Wiederholungen im Bild durch Schlaufen implementiert?
+* Wird die Vorlage gezeichnet?
+* Ist der Code so sparsam/kurz/ökonomisch wie möglich?
+* Sind alle Redundanzen eliminiert?
+* Wurden zur Steuerung, resp. Modifikation des Bildes Parameter eingesetzt?
+
+## Gitterlinien
+
+Anhand eines Beispiels möchte ich zeigen, wie diese Anweisungen zu verstehen
+sind.
+
+![TicTacToe](squares.png)
+
+
+
+
+
+Sind Wiederholungen im Bild durch Schlaufen implementiert?
 
 (Stand 24.12.2023) 16 Bilder, welche mit Hilfe
 von Go und [gg](https://github.com/stefan-muehlebach/gg) _und so wenig Code
