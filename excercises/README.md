@@ -6,7 +6,8 @@ Erklärungen in schriftlicher Form, die zentrale Aufgabenstellung ist die
 Bildvorlage. Das Ziel ist, jedes gezeigte Bild mit einem eigenständigen
 Go-Programm nachzuzeichnen. Dabei gilt es auf Folgendes zu achten:
 
-* Wird die Vorlage gezeichnet?
+* Wie stark gleichen sich die beiden Bilder (die Vorlage und das selbst
+  erstellte?
 * Ist der Code so sparsam/kurz/ökonomisch wie möglich?
 * Sind alle Redundanzen eliminiert?
 * Wurden zur Steuerung, resp. Modifikation des Bildes Parameter eingesetzt?
@@ -19,7 +20,7 @@ mehrere Go-Programme erstellen. In jeder Iteration wird der Code kompakter,
 generischer und besser.
 
 Die Vorlagen sind immer quadratisch und als Breite empfiehlt sich eine Zahl
-zwischen 300 und 1000 - am Schönsten sind natürlich 2er Potenzen wie 256, 512
+zwischen 300 und 1000. Am Schönsten sind natürlich 2er Potenzen wie 256, 512
 oder 1024.
 
 ![TicTacToe](tictactoe01.png)
@@ -33,9 +34,9 @@ import (
 )
 
 func main() {
-	gc := gg.NewContext(256, 256)
-	gc.SetFillColor(colornames.Beige)
-	gc.Clear()
+    gc := gg.NewContext(256, 256)
+    gc.SetFillColor(colornames.Beige)
+    gc.Clear()
 
     gc.SetStrokeColor(colornames.DarkSlateGray)
     gc.SetStrokeWidth(7.0)
@@ -60,9 +61,15 @@ func main() {
     gc.DrawLine(188, 150, 232, 106)
     gc.Stroke()
 
-	gc.SavePNG("tictactoe01.png")
+    gc.SavePNG("tictactoe01.png")
 }
 ```
+Wenn man das Programm ausführt, erscheint im aktuellen Verzeichnis die Datei
+`tictactoe01.png` mit dem gewünschten Output.
+Grundsätzlich könnte man alle Aufgaben auf diese Weise lösen - was jedoch
+überhaupt nicht meine Intention ist!
+
+Es gibt ein paar Mängel im obigen Programm
 
 
 
