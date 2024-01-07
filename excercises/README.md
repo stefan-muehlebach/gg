@@ -18,9 +18,9 @@ sind.
 
 
 
-| Vorlage | Erklärungen |
-|---------|-------------|
-| ![TicTacToe](squares.png) | Was es denn hier so geben könnte. |
+| Vorlage                   | Erklärungen                                     |
+|:-------------------------:|:------------------------------------------------|
+| ![TicTacToe](squares.png) | Was es denn hier so geben könnte.               |
 
 
 
