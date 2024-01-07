@@ -11,16 +11,27 @@ Go-Programm nachzuzeichnen. Dabei gilt es auf Folgendes zu achten:
 * Sind alle Redundanzen eliminiert?
 * Wurden zur Steuerung, resp. Modifikation des Bildes Parameter eingesetzt?
 
-## Gitterlinien
+## TicTacToe
 
-Anhand eines Beispiels möchte ich zeigen, wie diese Anweisungen zu verstehen
-sind.
+Anhand eines Beispiels möchte ich zeigen, wie ich mir das genau vorstelle.
+Für das folgende Bild (ein angefangenes TicTacToe) werde ich nacheinander
+mehrere Go-Programme erstellen. In jeder Iteration wird der Code kompakter,
+generischer und besser.
 
+![TicTacToe](squares.png)
 
+```go
+package main
 
-| Vorlage                   | Erklärungen                                     |
-|:-------------------------:|:------------------------------------------------|
-| ![TicTacToe](squares.png) | Was es denn hier so geben könnte.               |
+import (
+	"github.com/stefan-muehlebach/gg"
+	"github.com/stefan-muehlebach/gg/colornames"
+)
+
+func main() {
+
+}
+```
 
 
 
