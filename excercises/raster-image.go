@@ -21,8 +21,8 @@ const (
 )
 
 const (
-    Width, Height = 2048, 2048
-    MarginSize    = 96
+    Width, Height = 512, 512
+    MarginSize    = 20
     FieldSize     = Width - 2*MarginSize
     DefInFile     = "skull.png"
     DefOutFile    = "raster-image.png"

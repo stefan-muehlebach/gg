@@ -18,7 +18,7 @@ const (
 )
 
 const (
-	Width, Height = 2048.0, 2048.0
+	Width, Height = 512.0, 512.0
 	MarginSize    = Width / 16.0
 	CanvasSize    = Width - 2*MarginSize
 	NumPointsX    = 25

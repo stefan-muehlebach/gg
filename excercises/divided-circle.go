@@ -12,17 +12,17 @@ import (
 
 const (
     // Breite und Höhe des Bildes in Pixel
-	Width, Height = 1024.0, 1024.0
+	Width, Height = 512.0, 512.0
     // Freizulassender Rand
-	MarginSize    = Width / 32.0
+	MarginSize    = 20.0
     // Anzahl Punkte auf dem Kreisrand. Von dieser Zahl hängt das Muster
     // massgeblich ab. Primzahlen versprechen meist gute Muster.
 	NumDivisions  = 101
     // Grösse der Punkte.
-    PointSize     = 4.0
+    PointSize     = 2.0
     // Grösse der Beschriftungen. Hier muss man etwas experimentieren, bis
     // die ideale Einstellung gefunden ist.
-	FontSize      = 24.0
+	FontSize      = 12.0
 )
 
 type GraphData struct {
@@ -38,11 +38,11 @@ var (
 	LineColor = color.RGBAF{0.153, 0.157, 0.133, 1.0}
 
 	GraphList = []GraphData{
-		{34, 1.5, colornames.DarkViolet.Bright(0.2)},
-		{26, 1.5, colornames.DarkBlue.Bright(0.1)},
-		{22, 1.5, colornames.DarkGreen},
-		{14, 1.5, colornames.DarkOliveGreen.Dark(0.1)},
-		{10, 1.5, colornames.DarkOrange.Dark(0.2)},
+		{44, 1.0, colornames.DarkViolet.Bright(0.2)},
+		{36, 1.0, colornames.DarkBlue.Bright(0.1)},
+		{32, 1.0, colornames.DarkGreen},
+		{24, 1.0, colornames.DarkOliveGreen.Dark(0.1)},
+		{20, 1.0, colornames.DarkOrange.Dark(0.2)},
 	}
 )
 

@@ -247,17 +247,48 @@ werden kann.
 ### Schachbrett
 
 ![Schachbrett](chessboard.png)
+
+### Moirée (optische Täuschung)
+
 ![Moiree](moiree.png)
+
+### Verschachtelte Quadrate
+
 ![Quadrate](vertigo.png)
+
+### Bauhaus-Muster
+
 ![Bauhaus](bauhaus.png)
 
-![](divided-circle.png)
-![](graph.png)
-![](text-transform.png)
-![](farn.png)
-![](raster.png)
-![](color-cells.png)
-![](relief.png)
+### Prim-Kreise
 
-![](raster-image.png)
-![](flower-of-life.png)
+![Prim-Kreise](divided-circle.png)
+
+### 3D Kugel
+
+![3D Kugel](graph.png)
+
+### Text Transformationen
+
+![Text Transformationen](text-transform.png)
+
+### Farn-Fraktal
+
+![Farn-Fraktal](farn.png)
+
+### Raster oder Halbtonbilder
+
+![](raster-0.png) ![](raster-1.png) ![](raster-2.png)
+![](raster-image-0.png) ![](raster-image-1.png)
+
+### Farbzellen
+
+![Farbzellen](color-cells.png)
+
+### Relief mit Zufallszahlen
+
+![Relief](relief.png)
+
+### Die Blume des Lebens
+
+![Blume des Lebens](flower-of-life.png)
