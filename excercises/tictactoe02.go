@@ -6,7 +6,11 @@ import (
 )
 
 var (
-	ImageSize     = 256
+	ImageSize     = 256.0
+	MarginSize     = 20.0
+	OuterFieldSize = 67.0
+	InnerFieldSize = 82.0
+
 	BackColor     = colornames.Beige
 	LineColor     = colornames.DarkSlateGray
 	Player1Color  = colornames.DarkGreen
@@ -14,20 +18,28 @@ var (
 	GridLineWidth = 7.0
 	IconLineWidth = 10.0
 	PNGFileName   = "tictactoe.png"
+
+	GridPos1 = MarginSize + OuterFieldSize
+	GridPos2 = GridPos1 + InnerFieldSize
 )
 
+func DrawGrid(gc *gg.Context) {
+	gc.SetStrokeColor(LineColor)
+	gc.SetStrokeWidth(GridLineWidth)
+	gc.DrawLine(MarginSize, GridPos1, ImageSize-MarginSize, GridPos1)
+	gc.DrawLine(MarginSize, GridPos2, ImageSize-MarginSize, GridPos2)
+	gc.DrawLine(GridPos1, MarginSize, GridPos1, ImageSize-MarginSize)
+	gc.DrawLine(GridPos2, MarginSize, GridPos2, ImageSize-MarginSize)
+	gc.Stroke()
+}
+
+
 func main() {
-	gc := gg.NewContext(ImageSize, ImageSize)
+	gc := gg.NewContext(int(ImageSize), int(ImageSize))
 	gc.SetFillColor(BackColor)
 	gc.Clear()
 
-	gc.SetStrokeColor(LineColor)
-	gc.SetStrokeWidth(GridLineWidth)
-	gc.DrawLine(20, 87, 236, 87)
-	gc.DrawLine(20, 169, 236, 169)
-	gc.DrawLine(87, 20, 87, 236)
-	gc.DrawLine(169, 20, 169, 236)
-	gc.Stroke()
+	DrawGrid(gc)
 
 	gc.SetStrokeColor(Player2Color)
 	gc.SetStrokeWidth(IconLineWidth)

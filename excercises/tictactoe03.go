@@ -17,8 +17,8 @@ const (
 var (
 	ImageSize      = 256.0
 	MarginSize     = 20.0
-	IconSize       = 52.0
-	IconPadding    = 15.0
+	SymbolSize     = 52.0
+	SymbolPadding  = 15.0
 	OuterFieldSize = 67.0
 	InnerFieldSize = 82.0
 	BackColor      = colornames.Beige
@@ -26,7 +26,7 @@ var (
 	Player1Color   = colornames.DarkGreen
 	Player2Color   = colornames.DarkRed
 	GridLineWidth  = 7.0
-	IconLineWidth  = 10.0
+	SymbolLineWidth  = 10.0
 	PNGFileName    = "tictactoe.png"
 
 	gc       *gg.Context
@@ -34,7 +34,7 @@ var (
 	GridPos2 = GridPos1 + InnerFieldSize
 )
 
-func DrawGrid() {
+func DrawGrid(gc *gg.Context) {
 	gc.SetStrokeColor(LineColor)
 	gc.SetStrokeWidth(GridLineWidth)
 	gc.DrawLine(MarginSize, GridPos1, ImageSize-MarginSize, GridPos1)
@@ -44,38 +44,39 @@ func DrawGrid() {
 	gc.Stroke()
 }
 
-func DrawIcon(col, row int, player PlayerType) {
-	x := MarginSize + IconSize/2 + float64(col)*(IconSize+2*IconPadding)
-	y := MarginSize + IconSize/2 + float64(row)*(IconSize+2*IconPadding)
-	dx := (IconSize / 2) * math.Sqrt(3) / 2
+func DrawSymbol(gc *gg.Context, col, row int, player PlayerType) {
+	x := MarginSize + SymbolSize/2 + float64(col)*(SymbolSize+2*SymbolPadding)
+	y := MarginSize + SymbolSize/2 + float64(row)*(SymbolSize+2*SymbolPadding)
+	dx := (SymbolSize / 2) * math.Sqrt(3) / 2
 	switch player {
 	case Player1:
 		gc.SetStrokeColor(Player1Color)
-		gc.SetStrokeWidth(IconLineWidth)
+		gc.SetStrokeWidth(SymbolLineWidth)
 		gc.DrawLine(x-dx, y-dx, x+dx, y+dx)
 		gc.DrawLine(x-dx, y+dx, x+dx, y-dx)
 		gc.Stroke()
 	case Player2:
 		gc.SetStrokeColor(Player2Color)
-		gc.SetStrokeWidth(IconLineWidth)
-		gc.DrawCircle(x, y, IconSize/2)
+		gc.SetStrokeWidth(SymbolLineWidth)
+		gc.DrawCircle(x, y, SymbolSize/2)
 		gc.Stroke()
 	}
 }
 
 func main() {
-	gc = gg.NewContext(int(ImageSize), int(ImageSize))
+	gc := gg.NewContext(int(ImageSize), int(ImageSize))
 	gc.SetFillColor(BackColor)
 	gc.Clear()
 
-	DrawGrid()
+	DrawGrid(gc)
 
-	DrawIcon(0, 0, Player2)
-	DrawIcon(2, 2, Player2)
+	DrawSymbol(gc, 0, 0, Player2)
+	DrawSymbol(gc, 2, 0, Player2)
+	DrawSymbol(gc, 2, 2, Player2)
 
-	DrawIcon(0, 1, Player1)
-	DrawIcon(1, 1, Player1)
-	DrawIcon(2, 1, Player1)
+	DrawSymbol(gc, 0, 1, Player1)
+	DrawSymbol(gc, 1, 1, Player1)
+	DrawSymbol(gc, 2, 1, Player1)
 
 	gc.SavePNG(PNGFileName)
 }

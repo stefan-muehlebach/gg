@@ -149,6 +149,107 @@ eine Funktion namens 'DrawGrid' ausgelagert werden. Wählt man den Namen
 einer solcher Funktionen geschickt, kann man sogar auf erklärenden Kommentar
 verzichten.
 
+In der folgenden Version habe ich weitere Parameter definiert, welche zum
+Zeichnen des "Spielfeldes" verwendet werden. Manchmal lohnt es sich, gewisse
+Zwischenresultate in eigenen Variablen zu führen (im Beispiel sind dies
+'GridPos1' und 'GridPos2') um so den Code übersichtlicher zu gestalten.
+Und wie angekündigt wird das Spielfeld in einer eigenen Funktion gepinselt.
+
+```go
+package main
+
+import (
+	"github.com/stefan-muehlebach/gg"
+	"github.com/stefan-muehlebach/gg/colornames"
+)
+
+var (
+	ImageSize     = 256.0
+	MarginSize     = 20.0
+	OuterFieldSize = 67.0
+	InnerFieldSize = 82.0
+
+	BackColor     = colornames.Beige
+	LineColor     = colornames.DarkSlateGray
+	Player1Color  = colornames.DarkGreen
+	Player2Color  = colornames.DarkRed
+	GridLineWidth = 7.0
+	IconLineWidth = 10.0
+	PNGFileName   = "tictactoe.png"
+
+	GridPos1 = MarginSize + OuterFieldSize
+	GridPos2 = GridPos1 + InnerFieldSize
+)
+
+func DrawGrid(gc *gg.Context) {
+	gc.SetStrokeColor(LineColor)
+	gc.SetStrokeWidth(GridLineWidth)
+	gc.DrawLine(MarginSize, GridPos1, ImageSize-MarginSize, GridPos1)
+	gc.DrawLine(MarginSize, GridPos2, ImageSize-MarginSize, GridPos2)
+	gc.DrawLine(GridPos1, MarginSize, GridPos1, ImageSize-MarginSize)
+	gc.DrawLine(GridPos2, MarginSize, GridPos2, ImageSize-MarginSize)
+	gc.Stroke()
+}
+
+
+func main() {
+	gc := gg.NewContext(int(ImageSize), int(ImageSize))
+	gc.SetFillColor(BackColor)
+	gc.Clear()
+
+	DrawGrid(gc)
+
+	gc.SetStrokeColor(Player2Color)
+	gc.SetStrokeWidth(IconLineWidth)
+	gc.DrawCircle(46, 46, 26)
+	gc.DrawCircle(210, 210, 26)
+	gc.Stroke()
+
+	gc.SetStrokeColor(Player1Color)
+	gc.DrawLine(106, 106, 150, 150)
+	gc.DrawLine(106, 150, 150, 106)
+	gc.DrawLine(24, 106, 68, 150)
+	gc.DrawLine(24, 150, 68, 106)
+	gc.DrawLine(188, 106, 232, 150)
+	gc.DrawLine(188, 150, 232, 106)
+	gc.Stroke()
+
+	gc.SavePNG(PNGFileName)
+}
+```
+
+Halten wir also fest:
+
+> Die Parametrisierung kann und soll man sehr weit treiben. Nicht nur einfache
+> statische Werte lassen sich damit verwalten, sondern auch abhängige
+> Zwischenresultate. Der Code gewinnt damit an Lesbarkeit.
+> Ist der Ablauf des Programmes in klare Abschnitte unterteilbar, dann ist
+> es meistens von Vorteil, diese in eigenen Funktionen zu implementieren.
+
+Im letzten - und auch anspruchvollsten - Schritt nehmen wir uns den noch
+verbleibenden Befehlen an. Sie alle haben mit der Darstellung der Symbole
+(Kreuz, Kreis) auf dem Spielfeld zu tun. Um dem Programm eine zusätzliche
+Flexibilität zu geben, schlage ich folgendes vor:
+
+- Die Funktion zum Setzen der Spielersymbole soll sich nicht auf das Bild
+  aus der Vorlage fixieren, sondern die Möglichkeit bieten, die beiden Symbole
+  in irgendeines der 9 vorhanden Felder zu setzen.
+- Die Funktion soll nicht mit Pixelkoordinaten arbeiten, sondern mit Spalten-,
+  resp. Zeilennummern (es gibt sowohl 3 Spalten als auch 3 Zeilen, welche von
+  links oben mit 0, 1, 2 bezeichnet werden).
+- Auch die Angabe zum Spielersymbol soll abstrahiert werden, so dass man
+  einfach angeben muss, ob für den Spieler 1 oder Spieler 2 etwas gezeichnet
+  werden soll.
+
+Das Profil dieser Funktion sollte in etwa so aussehen:
+
+```go
+func DrawSymbol(gc *gg.Context, col, row int, player PlayerType) {
+    ...
+}
+```
+
+
 ```go
 package main
 
@@ -169,8 +270,8 @@ const (
 var (
 	ImageSize      = 256.0
 	MarginSize     = 20.0
-	IconSize       = 52.0
-	IconPadding    = 15.0
+	SymbolSize     = 52.0
+	SymbolPadding  = 15.0
 	OuterFieldSize = 67.0
 	InnerFieldSize = 82.0
 	BackColor      = colornames.Beige
@@ -178,7 +279,7 @@ var (
 	Player1Color   = colornames.DarkGreen
 	Player2Color   = colornames.DarkRed
 	GridLineWidth  = 7.0
-	IconLineWidth  = 10.0
+	SymbolLineWidth  = 10.0
 	PNGFileName    = "tictactoe.png"
 
 	gc       *gg.Context
@@ -186,7 +287,7 @@ var (
 	GridPos2 = GridPos1 + InnerFieldSize
 )
 
-func DrawGrid() {
+func DrawGrid(gc *gg.Context) {
 	gc.SetStrokeColor(LineColor)
 	gc.SetStrokeWidth(GridLineWidth)
 	gc.DrawLine(MarginSize, GridPos1, ImageSize-MarginSize, GridPos1)
@@ -196,39 +297,39 @@ func DrawGrid() {
 	gc.Stroke()
 }
 
-func DrawIcon(col, row int, player PlayerType) {
-	x := MarginSize + IconSize/2 + float64(col)*(IconSize+2*IconPadding)
-	y := MarginSize + IconSize/2 + float64(row)*(IconSize+2*IconPadding)
-	dx := (IconSize / 2) * math.Sqrt(3) / 2
+func DrawSymbol(gc *gg.Context, col, row int, player PlayerType) {
+	x := MarginSize + SymbolSize/2 + float64(col)*(SymbolSize+2*SymbolPadding)
+	y := MarginSize + SymbolSize/2 + float64(row)*(SymbolSize+2*SymbolPadding)
+	dx := (SymbolSize / 2) * math.Sqrt(3) / 2
 	switch player {
 	case Player1:
 		gc.SetStrokeColor(Player1Color)
-		gc.SetStrokeWidth(IconLineWidth)
+		gc.SetStrokeWidth(SymbolLineWidth)
 		gc.DrawLine(x-dx, y-dx, x+dx, y+dx)
 		gc.DrawLine(x-dx, y+dx, x+dx, y-dx)
 		gc.Stroke()
 	case Player2:
 		gc.SetStrokeColor(Player2Color)
-		gc.SetStrokeWidth(IconLineWidth)
-		gc.DrawCircle(x, y, IconSize/2)
+		gc.SetStrokeWidth(SymbolLineWidth)
+		gc.DrawCircle(x, y, SymbolSize/2)
 		gc.Stroke()
 	}
 }
 
 func main() {
-	gc = gg.NewContext(int(ImageSize), int(ImageSize))
+	gc := gg.NewContext(int(ImageSize), int(ImageSize))
 	gc.SetFillColor(BackColor)
 	gc.Clear()
 
-	DrawGrid()
+	DrawGrid(gc)
 
-	DrawIcon(0, 0, Player2)
-	DrawIcon(2, 0, Player2)
-	DrawIcon(2, 2, Player2)
+	DrawSymbol(gc, 0, 0, Player2)
+	DrawSymbol(gc, 2, 0, Player2)
+	DrawSymbol(gc, 2, 2, Player2)
 
-	DrawIcon(0, 1, Player1)
-	DrawIcon(1, 1, Player1)
-	DrawIcon(2, 1, Player1)
+	DrawSymbol(gc, 0, 1, Player1)
+	DrawSymbol(gc, 1, 1, Player1)
+	DrawSymbol(gc, 2, 1, Player1)
 
 	gc.SavePNG(PNGFileName)
 }
