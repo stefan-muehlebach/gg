@@ -1,6 +1,9 @@
 package main
 
 import (
+	"fmt"
+	"math"
+
 	"github.com/stefan-muehlebach/gg"
 	"github.com/stefan-muehlebach/gg/color"
 	"github.com/stefan-muehlebach/gg/colornames"
@@ -12,87 +15,176 @@ import (
 )
 
 const (
-	Width, Height = 512.0, 512.0
-	Padding       = 24
+	ImageSize     = 1024.0
+	Padding       = 20
+	NumPoints     = 40
+    NumNeigbours  = 3
+	TextFontSize  = 16.0
 	OutFileName   = "triangulation.png"
-	NumPoints     = 30
-	TitleFontSize = 12.0
-	TextFontSize  = 10.0
 )
 
 var (
 	BackColor = color.RGBAF{0.851, 0.811, 0.733, 1.0}
 	LineColor = color.RGBAF{0.153, 0.157, 0.133, 1.0}
-	TitleFont = fonts.GoBold
 	TextFont  = fonts.GoRegular
+    TextColor = colornames.DarkSlateGray
 )
 
 type PointList struct {
-    points []geom.Point
-    sortOnX, sortOnY []int
+	points []geom.Point
+}
+
+func NewPointList() *PointList {
+	pl := &PointList{}
+	pl.points = make([]geom.Point, 0)
+	return pl
+}
+
+func (pl *PointList) AddPoint(x, y float64) {
+	pl.points = append(pl.points, geom.Point{x, y})
+}
+
+func (pl *PointList) FindNearest(idxA int, lowerDist float64) (int, float64) {
+	var idxB int = -1
+	var minDist float64 = math.MaxFloat64
+
+	ptA := pl.points[idxA]
+	for j, ptB := range pl.points {
+		if j == idxA {
+			continue
+		}
+		d := ptA.Distance(ptB)
+		if d <= lowerDist {
+			continue
+		}
+		if d < minDist {
+			idxB = j
+			minDist = d
+		}
+	}
+	return idxB, minDist
+}
+
+func (pl *PointList) Draw(gc *gg.Context) {
+    face := fonts.NewFace(TextFont, TextFontSize)
+    matrix := gc.Matrix()
+
+    gc.SetFontFace(face)
+	gc.SetStrokeColor(colornames.Crimson)
+	gc.SetFillColor(colornames.Crimson)
+	for _, pt := range pl.points {
+		gc.DrawPoint(pt.X, pt.Y, 1.5)
+		gc.FillStroke()
+    }
+    gc.Push()
+    gc.Identity()
+    gc.SetStrokeColor(TextColor)
+	for i, pt := range pl.points {
+        ptNew := matrix.Transform(pt)
+        // fmt.Printf("%v > %v\n", pt, ptNew)
+        gc.DrawString(fmt.Sprintf("%d", i), ptNew.X+4, ptNew.Y-4)
+	}
+    gc.Pop()
 }
 
 type Edge struct {
-    from, to int
+	from, to int
 }
 
-func CreatePoints(n int) []geom.Point {
-	points := make([]geom.Point, n)
-	for i := 0; i < n; i++ {
-		x := 2.0*rand.Float64() - 1.0
-		y := 2.0*rand.Float64() - 1.0
-		points[i] = geom.Point{x, y}
+type EdgeList struct {
+	edges []Edge
+	pl    *PointList
+}
+
+func NewEdgeList(pl *PointList) *EdgeList {
+	el := &EdgeList{}
+	el.edges = make([]Edge, 0)
+	el.pl = pl
+	return el
+}
+
+func (el *EdgeList) AddEdge(from, to int) {
+	el.edges = append(el.edges, Edge{from, to})
+}
+
+func (el *EdgeList) Length(edge int) (float64) {
+    p0 := el.pl.points[el.edges[edge].from]
+    p1 := el.pl.points[el.edges[edge].to]
+    return p0.Distance(p1)
+}
+
+func (el *EdgeList) Search(from, to int) bool {
+	for _, edge := range el.edges {
+		if edge.from == from && edge.to == to {
+			return true
+		}
 	}
-	return points
+	return false
 }
 
-func CreateEdges(points []geom.Point) []Edge {
-    edges := make([]Edge, 0)
-    for i := range points {
-        from := i
-        to := (i+1) % len(points)
-         e := Edge{from, to}
-        edges = append(edges, e)
-    }
-    return edges
+func (el *EdgeList) Draw(gc *gg.Context) {
+	gc.SetStrokeColor(LineColor.Alpha(0.3))
+	gc.SetStrokeWidth(2.0)
+	for _, e := range el.edges {
+		p0 := el.pl.points[e.from]
+		p1 := el.pl.points[e.to]
+		gc.DrawLine(p0.X, p0.Y, p1.X, p1.Y)
+		gc.Stroke()
+	}
+}
+
+func DrawOrientation(gc *gg.Context) {
+	gc.SetStrokeColor(colornames.Silver)
+	gc.SetStrokeWidth(1.0)
+	gc.DrawLine(-1, 1, 1, -1)
+	gc.DrawLine(-1, -1, 1, 1)
+	gc.DrawRectangle(-1, -1, 2, 2)
+	gc.DrawCircle(0, 0, 1)
+	gc.Stroke()
 }
 
 func main() {
-	dc := gg.NewContext(Width, Height)
+	rand.Seed(321_654_000)
+	dc := gg.NewContext(ImageSize, ImageSize)
 	dc.SetFillColor(BackColor)
 	dc.Clear()
 
-	dc.Translate(Padding, Height-Padding)
-	dc.Scale((Width-2*Padding)/2.0, -(Height-2*Padding)/2.0)
+	dc.Translate(Padding, ImageSize-Padding)
+	dc.Scale((ImageSize-2*Padding)/2.0, -(ImageSize-2*Padding)/2.0)
 	dc.Translate(1, 1)
 
-	points := CreatePoints(NumPoints)
-    edges := CreateEdges(points)
-    
-    dc.SetStrokeColor(colornames.Silver)
-    dc.SetStrokeWidth(1.0)
-    dc.DrawLine(-1, 1, 1, -1)
-    dc.DrawLine(-1, -1, 1, 1)
-    dc.DrawRectangle(-1, -1, 2, 2)
-    dc.DrawCircle(0, 0, 1)
-    dc.Stroke()
-
-	// draw points
-	dc.SetStrokeColor(colornames.Crimson)
-	dc.SetFillColor(colornames.Crimson)
-	for _, p := range points {
-		dc.DrawPoint(p.X, p.Y, 1.5)
-		dc.FillStroke()
+	pointList := NewPointList()
+	for i := 0; i < NumPoints; i++ {
+		x := 2.0*rand.Float64() - 1.0
+		y := 2.0*rand.Float64() - 1.0
+		pointList.AddPoint(x, y)
 	}
-    
-    dc.SetStrokeColor(color.Black.Alpha(0.3))
-    dc.SetStrokeWidth(2.0)
-    for _, e := range edges {
-        x0, y0 := points[e.from].AsCoord()
-        x1, y1 := points[e.to].AsCoord()
-        dc.DrawLine(x0, y0, x1, y1)
-        dc.Stroke()
-    }
+	edgeList := NewEdgeList(pointList)
+
+	for from := range pointList.points {
+		dist := 0.0
+		to := -1
+		for i := 0; i < NumNeigbours; i++ {
+            // fmt.Printf("%d: finding neighbour %d with more then %f distance\n",
+                    // from, i, dist)
+			if to, dist = pointList.FindNearest(from, dist); to < 0 {
+                // fmt.Printf("  > break with %d, %f\n", to, dist)
+				break
+			}
+            // fmt.Printf("  > %d found with a distance of %f\n", to, dist)
+			if edgeList.Search(to, from) {
+				continue
+			}
+			edgeList.AddEdge(from, to)
+		}
+	}
+
+	DrawOrientation(dc)
+
+	edgeList.Draw(dc)
+	pointList.Draw(dc)
+
+	// fmt.Printf("edges: %v\n", edgeList.edges)
 
 	dc.SavePNG(OutFileName)
 }

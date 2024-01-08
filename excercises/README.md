@@ -19,11 +19,9 @@ Für das folgende Bild (ein angefangenes TicTacToe) werde ich nacheinander
 mehrere Go-Programme erstellen. In jeder Iteration wird der Code kompakter,
 generischer und besser.
 
-Die Vorlagen sind immer quadratisch und als Breite empfiehlt sich eine Zahl
-zwischen 300 und 1000. Am Schönsten sind natürlich 2er Potenzen wie 256, 512
-oder 1024.
-
 ![TicTacToe](tictactoe.png)
+
+Das erste Beispiel implementiert das Bild _straight-forward_:
 
 ```go
 package main
@@ -69,17 +67,22 @@ Wenn man das Programm ausführt, erscheint im aktuellen Verzeichnis die Datei
 Grundsätzlich könnte man alle Aufgaben auf diese Weise lösen - was jedoch
 überhaupt nicht die Intention ist!
 
-Ein erstes Problem sind die vielen Angaben (wie Farben, Grössen, Dateinamen)
-welche quer über den Code verteilt und direkt (d.h. literal) verwendet werden.
-Möchte man bspw. während der Entwicklung die Farben anpassen, dann muss man
-einerseits den gesamten Code nach Farben durchforsten und andererseits einige
-Farben (Player1Color, Player2Color) an mehreren Orten angeben.
+Ein erstes Problem sind die vielen Angaben zu Farben, Grössen, Dateinamen
+welche quer über den Code verteilt und direkt (d.h. _literal_) verwendet
+werden. Möchte man bspw. während der Entwicklung die Farben anpassen, dann
+muss man einerseits den gesamten Code nach Farben durchforsten und andererseits
+einige Farben (Player1Color, Player2Color) an mehreren Orten angeben.
 
-Fassen wir also in einem ersten Verbesserungsschritt Parameter in einem
+Fassen wir also in einem ersten Verbesserungsschritt einige Parameter in einem
 separaten Variabel-Block vor der main-Funktion zusammen. Damit sind sie auch
 visuell gut abgehoben. Bei der Wahl der Variablen-Namen darf man sich ruhig
 etwas Zeit lassen und ggf. im weiteren Verlauf des Projektes eine Umbenennung
 durchführen.
+
+Halten wir also fest:
+
+> Auf eine gute Trennung von Code und Daten (in unserem Beispiel sind das
+  die Variablen mit den Zeichenparameter) achten.
 
 ```go
 package main

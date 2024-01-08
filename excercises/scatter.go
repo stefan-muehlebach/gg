@@ -27,7 +27,7 @@ var (
 	TextFont  = fonts.GoRegular
 )
 
-func CreatePoints(n int) []geom.Point {
+func NewPointList(n int) []geom.Point {
 	points := make([]geom.Point, n)
 	for i := 0; i < n; i++ {
 		x := 0.5 + rand.NormFloat64()*0.1
@@ -43,7 +43,7 @@ func main() {
 	dc.Translate(0.0, -Height)
 	dc.SetFillColor(BackColor)
 	dc.Clear()
-	points := CreatePoints(NumPoints)
+	points := NewPointList(NumPoints)
 	dc.Translate(Padding, Padding)
 	dc.Scale(Width-Padding*2, Height-Padding*2)
 	// draw minor grid
