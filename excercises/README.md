@@ -136,7 +136,7 @@ Halten wir also fest:
 > die Variablen mit den Zeichenparameter) achten. Dies vereinfacht eine
 > nachträgliche Anpassung der Parameter.
 > Konsistente und im besten Fall selbsterklärende Konstanten- und
-> Variablennamen wählen. Also besser 'ImageSize' als 'imgsz'.
+> Variablennamen wählen. Also besser `ImageSize` als `imgsz`.
 
 In der ersten Bereinigung haben wir uns den statischen Werten angenommen.
 Im nächsten Schritt wird der Code dahingehend untersucht,
