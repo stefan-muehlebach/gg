@@ -145,14 +145,14 @@ Kandidaten, um in eine separate Funktion augelagert zu werden.
 
 Funktionen sind ausserdem ein Werkzeug, um den Code zu strukturieren.
 Beispielsweise können alle Befehle, welche das "Spielfeld" zeichnen, in
-eine Funktion namens 'DrawGrid' ausgelagert werden. Wählt man den Namen
+eine Funktion namens `DrawGrid` ausgelagert werden. Wählt man den Namen
 einer solcher Funktionen geschickt, kann man sogar auf erklärenden Kommentar
 verzichten.
 
 In der folgenden Version habe ich weitere Parameter definiert, welche zum
 Zeichnen des "Spielfeldes" verwendet werden. Manchmal lohnt es sich, gewisse
 Zwischenresultate in eigenen Variablen zu führen (im Beispiel sind dies
-'GridPos1' und 'GridPos2') um so den Code übersichtlicher zu gestalten.
+`GridPos1` und `GridPos2`) um so den Code übersichtlicher zu gestalten.
 Und wie angekündigt wird das Spielfeld in einer eigenen Funktion gepinselt.
 
 ```go
@@ -249,7 +249,7 @@ func DrawSymbol(gc *gg.Context, col, row int, player PlayerType) {
 }
 ```
 
-Der Typ 'PlayerType' gilt es noch zu erstellen. In vielen Programmiersprachen
+Der Typ `PlayerType` gilt es noch zu erstellen. In vielen Programmiersprachen
 verwendet man in Fällen, wo es eine überschaubare und abgeschlossene Anzahl
 von _Dingen_ gibt, eigene Typen und darauf aufbauend einen klaren Satz von
 Konstanten. Siehe folgendes Beispiel:
@@ -263,8 +263,8 @@ const (
 )
 ```
 
-Der Typ 'PlayerType' ist eigentlich ein Integer-Typ. Und mit 'Player1' sowie
-'Player2' gibt es genau diese zwei Konstanten, die dafür verwendet werden
+Der Typ `PlayerType` ist eigentlich ein Integer-Typ. Und mit `Player1` sowie
+`Player2` gibt es genau diese zwei Konstanten, die dafür verwendet werden
 können - andere Zahlen sind nicht zulässig.
 
 ```go
