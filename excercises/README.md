@@ -282,7 +282,6 @@ var (
 	SymbolLineWidth  = 10.0
 	PNGFileName    = "tictactoe.png"
 
-	gc       *gg.Context
 	GridPos1 = MarginSize + OuterFieldSize
 	GridPos2 = GridPos1 + InnerFieldSize
 )
