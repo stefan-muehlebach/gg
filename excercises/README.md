@@ -249,6 +249,23 @@ func DrawSymbol(gc *gg.Context, col, row int, player PlayerType) {
 }
 ```
 
+Der Typ 'PlayerType' gilt es noch zu erstellen. In vielen Programmiersprachen
+verwendet man in Fällen, wo es eine überschaubare und abgeschlossene Anzahl
+von _Dingen_ gibt, eigene Typen und darauf aufbauend einen klaren Satz von
+Konstanten. Siehe folgendes Beispiel:
+
+```go
+type PlayerType int
+
+const (
+    Player1 PlayerType = iota
+    Player2
+)
+```
+
+Der Typ 'PlayerType' ist eigentlich ein Integer-Typ. Und mit 'Player1' sowie
+'Player2' gibt es genau diese zwei Konstanten, die dafür verwendet werden
+können - andere Zahlen sind nicht zulässig.
 
 ```go
 package main
