@@ -79,11 +79,6 @@ visuell gut abgehoben. Bei der Wahl der Variablen-Namen darf man sich ruhig
 etwas Zeit lassen und ggf. im weiteren Verlauf des Projektes eine Umbenennung
 durchführen.
 
-Halten wir also fest:
-
-> Auf eine gute Trennung von Code und Daten (in unserem Beispiel sind das
-  die Variablen mit den Zeichenparameter) achten.
-
 ```go
 package main
 
@@ -134,6 +129,23 @@ func main() {
 	gc.SavePNG(PNGFileName)
 }
 ```
+
+Halten wir also fest:
+
+> Auf eine saubere Trennung von Code und Daten (in unserem Beispiel sind das
+> die Variablen mit den Zeichenparameter) achten. Dies vereinfacht eine
+> nachträgliche Anpassung der Parameter.
+> Konsistente und im besten Fall selbsterklärende Konstanten- und
+> Variablennamen wählen. Also besser 'ImageSize' als 'imgsz'.
+
+In der ersten Bereinigung haben wir uns den statischen Werten in unserem
+Programm angenommen. Im nächsten Schritt, wird der Code dahingehend untersucht,
+ob bestimmte Muster mehrfach verwendet werden und ob bestimmte Code-Teile
+zusammengefasst und in Funktionen ausgelagert werden können.
+
+So können alle Befehle, welche das "Spielfeld" zeichnen, in eine Funktionen
+namens 'DrawGrid' ausgelagert werden. Wählt man den Namen solcher Funktionen
+sprechend, kann sogar teilweise auf erklärenden Kommentar verzichtet werden.
 
 ```go
 package main
@@ -295,3 +307,46 @@ werden kann.
 ### Die Blume des Lebens
 
 ![Blume des Lebens](flower-of-life.png)
+
+
+```mermaid
+graph TD;
+    A-->B;
+    A-->C;
+    B-->D;
+    C-->D;
+```
+
+```stl
+solid cube_corner
+  facet normal 0.0 -1.0 0.0
+    outer loop
+      vertex 0.0 0.0 0.0
+      vertex 1.0 0.0 0.0
+      vertex 0.0 0.0 1.0
+    endloop
+  endfacet
+  facet normal 0.0 0.0 -1.0
+    outer loop
+      vertex 0.0 0.0 0.0
+      vertex 0.0 1.0 0.0
+      vertex 1.0 0.0 0.0
+    endloop
+  endfacet
+  facet normal -1.0 0.0 0.0
+    outer loop
+      vertex 0.0 0.0 0.0
+      vertex 0.0 0.0 1.0
+      vertex 0.0 1.0 0.0
+    endloop
+  endfacet
+  facet normal 0.577 0.577 0.577
+    outer loop
+      vertex 1.0 0.0 0.0
+      vertex 0.0 1.0 0.0
+      vertex 0.0 0.0 1.0
+    endloop
+  endfacet
+endsolid
+```
+
