@@ -71,7 +71,7 @@ Ein erstes Problem sind die vielen Angaben zu Farben, Grössen, Dateinamen
 welche quer über den Code verteilt und direkt (d.h. _literal_) verwendet
 werden. Möchte man bspw. während der Entwicklung die Farben anpassen, dann
 muss man einerseits den gesamten Code nach Farben durchforsten und andererseits
-einige Farben (Player1Color, Player2Color) an mehreren Orten angeben.
+einige Farben (`Player1Color`, `Player2Color`) an mehreren Orten angeben.
 
 Fassen wir also in einem ersten Verbesserungsschritt einige Parameter in einem
 separaten Variabel-Block vor der main-Funktion zusammen. Damit sind sie auch

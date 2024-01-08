@@ -13,7 +13,8 @@ TARGETS = bauhaus \
           scatter \
           spirale \
           text-transform \
-          vertigo
+          vertigo \
+          fadengraphik
 
 PNG_FILES = $(TARGETS:=.png)
 
@@ -23,7 +24,6 @@ png: $(PNG_FILES)
 
 clean:
 	rm $(TARGETS)
-	rm $(PNG_FILES)
 
 .SUFFIXES: .go .png
 

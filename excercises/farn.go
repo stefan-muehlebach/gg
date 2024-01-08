@@ -65,5 +65,4 @@ func main() {
 
 	}
 	gc.SavePNG(OutFileName)
-    gc.DisplayOnWebsite()
 }
