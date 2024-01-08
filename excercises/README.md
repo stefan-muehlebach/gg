@@ -138,14 +138,16 @@ Halten wir also fest:
 > Konsistente und im besten Fall selbsterklärende Konstanten- und
 > Variablennamen wählen. Also besser 'ImageSize' als 'imgsz'.
 
-In der ersten Bereinigung haben wir uns den statischen Werten in unserem
-Programm angenommen. Im nächsten Schritt, wird der Code dahingehend untersucht,
-ob bestimmte Muster mehrfach verwendet werden und ob bestimmte Code-Teile
-zusammengefasst und in Funktionen ausgelagert werden können.
+In der ersten Bereinigung haben wir uns den statischen Werten angenommen.
+Im nächsten Schritt wird der Code dahingehend untersucht,
+ob bestimmte Befehle oder Befehlsmuster mehrfach vorkommen. Dies sind dann
+Kandidaten, um in eine separate Funktion augelagert zu werden.
 
-So können alle Befehle, welche das "Spielfeld" zeichnen, in eine Funktionen
-namens 'DrawGrid' ausgelagert werden. Wählt man den Namen solcher Funktionen
-sprechend, kann sogar teilweise auf erklärenden Kommentar verzichtet werden.
+Funktionen sind ausserdem ein Werkzeug, um den Code zu strukturieren.
+Beispielsweise können alle Befehle, welche das "Spielfeld" zeichnen, in
+eine Funktion namens 'DrawGrid' ausgelagert werden. Wählt man den Namen
+einer solcher Funktionen geschickt, kann man sogar auf erklärenden Kommentar
+verzichten.
 
 ```go
 package main
@@ -279,6 +281,10 @@ werden kann.
 
 ![Prim-Kreise](divided-circle.png)
 
+### Kardioide
+
+![Kardioide](fadengraphik.png)
+
 ### 3D Kugel
 
 ![3D Kugel](graph.png)
@@ -307,77 +313,3 @@ werden kann.
 ### Die Blume des Lebens
 
 ![Blume des Lebens](flower-of-life.png)
-
-
-```mermaid
-graph TD;
-    A-->B;
-    A-->C;
-    B-->D;
-    C-->D;
-```
-
-```stl
-solid cube_corner
-  facet normal 0.0 -1.0 0.0
-    outer loop
-      vertex 0.0 0.0 0.0
-      vertex 1.0 0.0 0.0
-      vertex 0.0 0.0 1.0
-    endloop
-  endfacet
-  facet normal 0.0 0.0 -1.0
-    outer loop
-      vertex 0.0 0.0 0.0
-      vertex 0.0 1.0 0.0
-      vertex 1.0 0.0 0.0
-    endloop
-  endfacet
-  facet normal -1.0 0.0 0.0
-    outer loop
-      vertex 0.0 0.0 0.0
-      vertex 0.0 0.0 1.0
-      vertex 0.0 1.0 0.0
-    endloop
-  endfacet
-  facet normal 0.577 0.577 0.577
-    outer loop
-      vertex 1.0 0.0 0.0
-      vertex 0.0 1.0 0.0
-      vertex 0.0 0.0 1.0
-    endloop
-  endfacet
-endsolid
-
-solid my_cube
-  facet normal 0 0 1
-    outer loop
-      vertex 10 10 0
-      vertex 15 10 0
-      vertex 15 15 0
-    endloop
-  endfacet
-  facet normal 0 0 1
-    outer loop
-      vertex 10 10 0
-      vertex 15 15 0
-      vertex 10 15 0
-    endloop
-  endfacet
-  facet normal -1 0 0
-    outer loop
-      vertex 10 10 0
-      vertex 15 10 0
-      vertex 15 10 5
-    endloop
-  endfacet
-  facet normal -1 0 0
-    outer loop
-      vertex 10 10 0
-      vertex 15 10 5
-      vertex 10 10 5
-    endloop
-  endfacet
-endsolid
-```
-

@@ -38,11 +38,14 @@ var (
 	// BackColor und LineColor sind die Standardfarben für den Hintergrund
 	// (das Papier) und den Vordergrund.
 	// BackColor = color.RGBAF{0.851, 0.811, 0.733, 1.0}
-	BackColor = colornames.DarkRed.Dark(0.6)
+	// BackColor = colornames.DarkRed.Dark(0.6)
+	// LineColor = color.RGBAF{0.153, 0.157, 0.133, 1.0}
+
+	BackColor = color.RGBAF{0.851, 0.811, 0.733, 1.0}
 	LineColor = color.RGBAF{0.153, 0.157, 0.133, 1.0}
 
 	ThreadList = []ThreadData{
-		{1.0, colornames.LemonChiffon},
+		{1.0, colornames.DarkSlateBlue.Dark(0.4)},
 		{1.0, colornames.DarkViolet.Bright(0.2)},
 		{1.0, colornames.DarkBlue.Bright(0.1)},
 		{1.0, colornames.DarkGreen},
