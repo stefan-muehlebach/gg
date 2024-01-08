@@ -350,14 +350,14 @@ solid cube_corner
 endsolid
 
 solid my_cube
-  facet normal 0 0 -1
+  facet normal 0 0 1
     outer loop
       vertex 10 10 0
       vertex 15 10 0
       vertex 15 15 0
     endloop
   endfacet
-  facet normal 0 0 -1
+  facet normal 0 0 1
     outer loop
       vertex 10 10 0
       vertex 15 15 0
