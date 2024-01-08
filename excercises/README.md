@@ -352,10 +352,10 @@ endsolid
 solid my_cube
   facet normal 0 0 1
     outer loop
-      vertex 0 0 0
-      vertex 1 0 0
-      vertex 1 1 0
-      vertex 0 1 0
+      vertex 10 10 0
+      vertex 11 10 0
+      vertex 11 11 0
+      vertex 10 11 0
     endloop
   endfacet
 endsolid
