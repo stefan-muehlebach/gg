@@ -71,7 +71,6 @@ func main() {
 	DrawGrid()
 
 	DrawIcon(0, 0, Player2)
-	DrawIcon(2, 0, Player2)
 	DrawIcon(2, 2, Player2)
 
 	DrawIcon(0, 1, Player1)
