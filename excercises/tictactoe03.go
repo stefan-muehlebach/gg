@@ -70,7 +70,6 @@ func main() {
 	DrawGrid(gc)
 
 	DrawSymbol(gc, 0, 0, Player2)
-	DrawSymbol(gc, 2, 0, Player2)
 	DrawSymbol(gc, 2, 2, Player2)
 
 	DrawSymbol(gc, 0, 1, Player1)

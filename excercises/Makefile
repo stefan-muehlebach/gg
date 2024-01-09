@@ -10,7 +10,6 @@ TARGETS = bauhaus \
           raster \
           raster-image \
           relief \
-          scatter \
           spirale \
           text-transform \
           vertigo \
