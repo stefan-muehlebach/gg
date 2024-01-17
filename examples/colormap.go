@@ -1,7 +1,7 @@
 package main
 
 import (
-	"math"
+	// "math"
 	"regexp"
 
 	"github.com/stefan-muehlebach/gg"
@@ -21,18 +21,20 @@ type NamedGroup struct {
 }
 
 var (
+  	Columns       = 7
+
 	SampleWidth   = 250.0
 	SampleHeight  = 2.0*FadeHeight + UniformHeight
-	UniformHeight = 50.0
+	UniformHeight = 70.0
 	FadeHeight    = 20.0
 	NumFadeSteps  = 9
 	FadeStep      = 1.0 / float64(NumFadeSteps+1)
 	FadeWidth     = SampleWidth / float64(NumFadeSteps)
 
-	Padding       = 10.0
+	Padding       = 5.0
 
 	TextFontSize  = 20.0
-	TextFont      = fonts.LucidaBrightDemibold
+	TextFont      = fonts.LucidaSansDemiboldRoman
 	TextFontFace  = fonts.NewFace(TextFont, TextFontSize)
 	TitleFontSize = 40.0
 	TitleFont     = fonts.LucidaBrightDemibold
@@ -43,7 +45,7 @@ func DrawColorSample(gc *gg.Context, x0, y0 float64, namedCol NamedColor) {
 	gc.SetFillColor(namedCol.color)
 	gc.DrawRectangle(x0, y0+FadeHeight, SampleWidth, UniformHeight)
 	gc.Fill()
-	col := color.RGBAFModel.Convert(namedCol.color).(color.RGBAF)
+	col := color.HSPModel.Convert(namedCol.color).(color.HSP)
 
 	for l := 0; l < NumFadeSteps; l++ {
 		t := FadeStep * float64(l+1)
@@ -59,21 +61,16 @@ func DrawColorSample(gc *gg.Context, x0, y0 float64, namedCol NamedColor) {
 		gc.DrawRectangle(x, y, FadeWidth, FadeHeight)
 		gc.Fill()
 	}
-	r, g, b, _ := col.RGBA()
-	max := max3(r, g, b)
-	min := min3(r, g, b)
-	mid := (max + min) / 2
-	if mid >= math.MaxInt16 {
-		gc.SetStrokeColor(colornames.Black)
-	} else {
+	if col.P < 0.6 {
 		gc.SetStrokeColor(colornames.WhiteSmoke)
+	} else {
+		gc.SetStrokeColor(colornames.Black)
 	}
 	gc.SetFontFace(TextFontFace)
 	gc.DrawStringAnchored(namedCol.name, x0+SampleWidth/2.0, y0+SampleHeight/2.0, 0.5, 0.5)
 }
 
 func DrawColorMap(groupList []NamedGroup) {
-	Columns := 5
 	numSlots := len(groupList)
 	for _, namedGroup := range groupList {
 		numSlots += len(namedGroup.list)
@@ -111,27 +108,27 @@ func DrawColorMap(groupList []NamedGroup) {
 	gc.SavePNG("colormap.png")
 }
 
-func max(a, b uint32) uint32 {
-	if a > b {
-		return a
-	} else {
-		return b
-	}
-}
-func max3(a, b, c uint32) uint32 {
-	return max(a, max(b, c))
-}
+// func max(a, b uint32) uint32 {
+// 	if a > b {
+// 		return a
+// 	} else {
+// 		return b
+// 	}
+// }
+// func max3(a, b, c uint32) uint32 {
+// 	return max(a, max(b, c))
+// }
 
-func min(a, b uint32) uint32 {
-	if a < b {
-		return a
-	} else {
-		return b
-	}
-}
-func min3(a, b, c uint32) uint32 {
-	return min(a, min(b, c))
-}
+// func min(a, b uint32) uint32 {
+// 	if a < b {
+// 		return a
+// 	} else {
+// 		return b
+// 	}
+// }
+// func min3(a, b, c uint32) uint32 {
+// 	return min(a, min(b, c))
+// }
 
 func main() {
 	var groupIndex colornames.ColorGroup

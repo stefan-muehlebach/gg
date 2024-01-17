@@ -1,5 +1,8 @@
 // Erweiterung des Packages 'image/color' um neue Farbtypen.
 //
+// Dieses Package versteht sich als Ersatz von 'image/color' in Zusammenhang
+
+// Im Wesentlichen
 // Die bestehende Implementation von Farben in 'image/color' bietet keine
 // Methoden, um Farben heller, resp. dunkler zu schattieren oder um zwischen
 // zwei beliebigen Farben eine lineare Interpolation durchzuführen.
@@ -8,9 +11,9 @@
 package color
 
 import (
+	"image/color"
 	"log"
 	"math"
-    "image/color"
 )
 
 // Da dieses Package als vollwertiger Ersatz für 'image/color' gedacht ist,
@@ -28,23 +31,23 @@ var (
 // anzugeben und um zwischen zwei Farben eine lineare Interpolation
 // durchzuführen.
 type Color interface {
-    color.Color
+	color.Color
 	Bright(t float64) Color
 	Dark(t float64) Color
 	Alpha(a float64) Color
 	Interpolate(c2 Color, t float64) Color
 }
 
-func setIn(v, a, b float64) (float64) {
-    if v < a {
-        return a
-    }
-    if v > b {
-        return b
-    }
-    return v
+func setIn(v, a, b float64) float64 {
+	if v < a {
+		return a
+	}
+	if v > b {
+		return b
+	}
+	return v
 }
-    
+
 // RGBAF entspricht dem NRGBA-Typ aus image/color, verwendet fuer die
 // einzelnen Komponenten jedoch Fliesskommazahlen im Intervall [0,1].
 // Beachte: Der Typ in diesem Package heisst RGBA, die Werte R, G, B und A
@@ -63,24 +66,24 @@ func (c RGBAF) RGBA() (r, g, b, a uint32) {
 }
 
 func (c RGBAF) Bright(t float64) Color {
-    t = setIn(t, 0, 1)
+	t = setIn(t, 0, 1)
 	u := 1.0 - t
 	return RGBAF{u*c.R + t, u*c.G + t, u*c.B + t, c.A}
 }
 
 func (c RGBAF) Dark(t float64) Color {
-    t = setIn(t, 0, 1)
+	t = setIn(t, 0, 1)
 	u := 1.0 - t
 	return RGBAF{u * c.R, u * c.G, u * c.B, c.A}
 }
 
 func (c RGBAF) Alpha(a float64) Color {
-    a = setIn(a, 0, 1)
+	a = setIn(a, 0, 1)
 	return RGBAF{c.R, c.G, c.B, a}
 }
 
 func (c1 RGBAF) Interpolate(col Color, t float64) Color {
-    t = setIn(t, 0, 1)
+	t = setIn(t, 0, 1)
 	c2 := col.(RGBAF)
 
 	r := (1-t)*c1.R + t*c2.R
@@ -102,6 +105,129 @@ func (c1 RGBAF) Less(c2 RGBAF, key SortField) bool {
 		log.Fatalf("invalid sort field specified: '%v'", key)
 		return false
 	}
+}
+
+// Der neue Farbtyp HSP mit 'P' fuer perceived brightness.
+const (
+	perRed   = 0.241
+	perGreen = 0.691
+	perBlue  = 0.068
+)
+
+type HSP struct {
+	H, S, P, A float64
+}
+
+func (c HSP) RGBA() (r, g, b, a uint32) {
+	var part, minOverMax, h float64
+
+	R, G, B := 0.0, 0.0, 0.0
+	h = c.H / 360.0
+
+	minOverMax = 1. - c.S
+
+	if minOverMax > 0. {
+		if h < 1./6. { //  R>G>B
+			h = 6. * (h - 0./6.)
+			part = 1. + h*(1./minOverMax-1.)
+			B = c.P / math.Sqrt(perRed/minOverMax/minOverMax+perGreen*part*part+perBlue)
+			R = (B) / minOverMax
+			G = (B) + h*((R)-(B))
+		} else if h < 2./6. { //  G>R>B
+			h = 6. * (-h + 2./6.)
+			part = 1. + h*(1./minOverMax-1.)
+			B = c.P / math.Sqrt(perGreen/minOverMax/minOverMax+perRed*part*part+perBlue)
+			G = (B) / minOverMax
+			R = (B) + h*((G)-(B))
+		} else if h < 3./6. { //  G>B>R
+			h = 6. * (h - 2./6.)
+			part = 1. + h*(1./minOverMax-1.)
+			R = c.P / math.Sqrt(perGreen/minOverMax/minOverMax+perBlue*part*part+perRed)
+			G = (R) / minOverMax
+			B = (R) + h*((G)-(R))
+		} else if h < 4./6. { //  B>G>R
+			h = 6. * (-h + 4./6.)
+			part = 1. + h*(1./minOverMax-1.)
+			R = c.P / math.Sqrt(perBlue/minOverMax/minOverMax+perGreen*part*part+perRed)
+			B = (R) / minOverMax
+			G = (R) + h*((B)-(R))
+		} else if h < 5./6. { //  B>R>G
+			h = 6. * (h - 4./6.)
+			part = 1. + h*(1./minOverMax-1.)
+			G = c.P / math.Sqrt(perBlue/minOverMax/minOverMax+perRed*part*part+perGreen)
+			B = (G) / minOverMax
+			R = (G) + h*((B)-(G))
+		} else { //  R>B>G
+			h = 6. * (-h + 6./6.)
+			part = 1. + h*(1./minOverMax-1.)
+			G = c.P / math.Sqrt(perRed/minOverMax/minOverMax+perBlue*part*part+perGreen)
+			R = (G) / minOverMax
+			B = (G) + h*((R)-(G))
+		}
+	} else {
+		if h < 1./6. { //  R>G>B
+			h = 6. * (h - 0./6.)
+			R = math.Sqrt(c.P * c.P / (perRed + perGreen*h*h))
+			G = (R) * h
+			B = 0.
+		} else if h < 2./6. { //  G>R>B
+			h = 6. * (-h + 2./6.)
+			G = math.Sqrt(c.P * c.P / (perGreen + perRed*h*h))
+			R = (G) * h
+			B = 0.
+		} else if h < 3./6. { //  G>B>R
+			h = 6. * (h - 2./6.)
+			G = math.Sqrt(c.P * c.P / (perGreen + perBlue*h*h))
+			B = (G) * h
+			R = 0.
+		} else if h < 4./6. { //  B>G>R
+			h = 6. * (-h + 4./6.)
+			B = math.Sqrt(c.P * c.P / (perBlue + perGreen*h*h))
+			G = (B) * h
+			R = 0.
+		} else if h < 5./6. { //  B>R>G
+			h = 6. * (h - 4./6.)
+			B = math.Sqrt(c.P * c.P / (perBlue + perRed*h*h))
+			R = (B) * h
+			G = 0.
+		} else { //  R>B>G
+			h = 6. * (-h + 6./6.)
+			R = math.Sqrt(c.P * c.P / (perRed + perBlue*h*h))
+			B = (R) * h
+			G = 0.
+		}
+	}
+    R, G, B = min(R, 1.0), min(G, 1.0), min(B, 1.0)
+	r = uint32(65535.0 * R * c.A)
+	g = uint32(65535.0 * G * c.A)
+	b = uint32(65535.0 * B * c.A)
+	a = uint32(65535.0 * c.A)
+	return
+}
+
+func (c HSP) Bright(t float64) Color {
+	t = setIn(t, 0, 1)
+	u := 1 - t
+	r := c
+    r.P = u * r.P + t * 1.0
+	return r
+}
+
+func (c HSP) Dark(t float64) Color {
+	t = setIn(t, 0, 1)
+	u := 1 - t
+	r := c
+	r.P = u * r.P + t * 0.0
+	return r
+}
+
+func (c HSP) Alpha(a float64) Color {
+	a = setIn(a, 0, 1)
+	return HSP{c.H, c.S, c.P, a}
+}
+
+func (c1 HSP) Interpolate(col Color, t float64) Color {
+    return c1
 }
 
 // Beim Typ HSV werden die Werte fuer Hue, Saturation und Value gespeichert.
@@ -136,29 +262,29 @@ func (c HSV) RGBA() (r, g, b, a uint32) {
 }
 
 func (c HSV) Bright(t float64) Color {
-    t = setIn(t, 0, 1)
-    u := 1-t
+	t = setIn(t, 0, 1)
+	u := 1 - t
 	r := c
-	r.S = u*c.S
+	r.S = u * c.S
 	r.V = u*c.V + t
 	return r
 }
 
 func (c HSV) Dark(t float64) Color {
-    t = setIn(t, 0, 1)
-    u := 1-t
+	t = setIn(t, 0, 1)
+	u := 1 - t
 	r := c
-	r.V = u*c.V
+	r.V = u * c.V
 	return r
 }
 
 func (c HSV) Alpha(a float64) Color {
-    a = setIn(a, 0, 1)
+	a = setIn(a, 0, 1)
 	return HSV{c.H, c.S, c.V, a}
 }
 
 func (c1 HSV) Interpolate(col Color, t float64) Color {
-    t = setIn(t, 0, 1)
+	t = setIn(t, 0, 1)
 	c2 := col.(HSV)
 
 	h := (1-t)*c1.H + t*c2.H
@@ -215,26 +341,26 @@ func (c HSL) RGBA() (r, g, b, a uint32) {
 }
 
 func (c HSL) Bright(t float64) Color {
-    t = setIn(t, 0, 1)
+	t = setIn(t, 0, 1)
 	r := c
 	r.L = (1-t)*c.L + t*1.0
 	return r
 }
 
 func (c HSL) Dark(t float64) Color {
-    t = setIn(t, 0, 1)
+	t = setIn(t, 0, 1)
 	r := c
 	r.L = (1 - t) * c.L
 	return r
 }
 
 func (c HSL) Alpha(a float64) Color {
-    a = setIn(a, 0, 1)
+	a = setIn(a, 0, 1)
 	return HSL{c.H, c.S, c.L, a}
 }
 
 func (c1 HSL) Interpolate(col Color, t float64) Color {
-    t = setIn(t, 0, 1)
+	t = setIn(t, 0, 1)
 	c2 := col.(HSL)
 	h := (1-t)*c1.H + t*c2.H
 	s := (1-t)*c1.S + t*c2.S
@@ -263,9 +389,9 @@ type HSI struct {
 }
 
 func (c HSI) RGBA() (r, g, b, a uint32) {
-    Z := 1.0 - math.Abs(math.Mod(c.H/60.0, 2.0)-1.0)
-    C := (3 * c.I * c.S) / (1 + Z)
-    X := C * Z
+	Z := 1.0 - math.Abs(math.Mod(c.H/60.0, 2.0)-1.0)
+	C := (3 * c.I * c.S) / (1 + Z)
+	X := C * Z
 	m := c.I * (1 - c.S)
 	R, G, B := 0.0, 0.0, 0.0
 	switch {
@@ -282,12 +408,18 @@ func (c HSI) RGBA() (r, g, b, a uint32) {
 	case c.H < 360.0:
 		R, G, B = C, 0.0, X
 	}
-    R += m
-    G += m
-    B += m
-    if R > 1.0 { R = 1.0 }
-    if G > 1.0 { G = 1.0 }
-    if B > 1.0 { B = 1.0 }
+	R += m
+	G += m
+	B += m
+	if R > 1.0 {
+		R = 1.0
+	}
+	if G > 1.0 {
+		G = 1.0
+	}
+	if B > 1.0 {
+		B = 1.0
+	}
 	r = uint32(65535.0 * R * c.A)
 	g = uint32(65535.0 * G * c.A)
 	b = uint32(65535.0 * B * c.A)
@@ -296,22 +428,22 @@ func (c HSI) RGBA() (r, g, b, a uint32) {
 }
 
 func (c HSI) Bright(t float64) Color {
-    t = setIn(t, 0, 1)
+	t = setIn(t, 0, 1)
 	return c
 }
 
 func (c HSI) Dark(t float64) Color {
-    t = setIn(t, 0, 1)
+	t = setIn(t, 0, 1)
 	return c
 }
 
 func (c HSI) Alpha(a float64) Color {
-    a = setIn(a, 0, 1)
+	a = setIn(a, 0, 1)
 	return HSI{c.H, c.S, c.I, a}
 }
 
 func (c1 HSI) Interpolate(col Color, t float64) Color {
-    t = setIn(t, 0, 1)
+	t = setIn(t, 0, 1)
 	c2 := col.(HSI)
 	h := (1-t)*c1.H + t*c2.H
 	s := (1-t)*c1.S + t*c2.S

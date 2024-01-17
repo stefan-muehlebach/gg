@@ -3,6 +3,7 @@ package color
 import (
 	"fmt"
 	"image/color"
+    // "log"
 	"math"
 	"math/rand"
 	"testing"
@@ -106,8 +107,8 @@ var (
 	R, G, B, A uint8
 	r, g, b, a uint32
     rf, gf, bf, af float64
-	h, s, v, l float64
-    
+	h, s, v, p, l float64
+
     convColor color.Color
 
 	rgbaColorList = []color.RGBA{
@@ -127,6 +128,7 @@ var (
 		color.RGBA{128, 0, 128, 255},
 		color.RGBA{0, 128, 128, 255},
 		color.RGBA{0, 0, 128, 255},
+		color.RGBA{0, 0, 0, 255},
 	}
 
 	rgbafColorList = []RGBAF{
@@ -146,7 +148,28 @@ var (
 		RGBAF{0.5, 0, 0.5, 1.0},
 		RGBAF{0, 0.5, 0.5, 1.0},
 		RGBAF{0, 0, 0.5, 1.0},
+		RGBAF{0, 0, 0, 1.0},
 	}
+
+    hspColorList = []HSP{
+        HSP{H:0, S:0, P:0, A:1},
+        HSP{H:0, S:0, P:1, A:1},
+        HSP{H:0, S:1, P:0.49092, A:1},
+        HSP{H:120, S:1, P:0.83126, A:1},
+        HSP{H:240, S:1, P:0.26077, A:1},
+        HSP{H:60, S:1, P:0.9654, A:1},
+        HSP{H:180, S:1, P:0.87121, A:1},
+        HSP{H:300, S:1, P:0.55588, A:1},
+        HSP{H:0, S:0, P:0.74902, A:1},
+        HSP{H:0, S:0, P:0.50196, A:1},
+        HSP{H:0, S:1, P:0.24642, A:1},
+        HSP{H:60, S:1, P:0.48459, A:1},
+        HSP{H:120, S:1, P:0.41726, A:1},
+        HSP{H:300, S:1, P:0.27903, A:1},
+        HSP{H:180, S:1, P:0.43731, A:1},
+        HSP{H:240, S:1, P:0.1309, A:1},
+        HSP{H:0, S:1, P:1, A:1},
+    }
 
 	hsvColorList = []HSV{
 		HSV{0, 0, 0, 1},
@@ -284,6 +307,14 @@ func ExampleRGBAF() {
     // {1 0.5 0.25 1}
 }
 
+func ExampleHSP() {
+	h1, s1, p1 := 0.0, 1.0, 1.0
+	c1 := HSP{h1, s1, p1, 1.0}
+	fmt.Printf("%v", c1)
+	// Output:
+	// {0 1 1 1}
+}
+
 func ExampleHSV() {
 	h1, s1, v1 := 0.0, 1.0, 1.0
 	c1 := HSV{h1, s1, v1, 1.0}
@@ -326,6 +357,23 @@ func TestRGBAF(test *testing.T) {
 			test.Errorf("  want: %#v\n", rgbafColor)
 			test.Errorf("  got : %#v\n", convRgbafColor)
 		}
+	}
+}
+
+func TestHSP(test *testing.T) {
+	for i := range rgbafColorList {
+		rgbafColor := rgbafColorList[i]
+		hspColor := hspColorList[i]
+
+		convRgbafColor := RGBAFModel.Convert(hspColor).(RGBAF)
+		convHspColor := HSPModel.Convert(rgbafColor).(HSP)
+
+		if !CompRGBAF(rgbafColor, convRgbafColor) {
+			test.Errorf("[%d]\n", i)
+			test.Errorf("  want: %#v\n", rgbafColor)
+			test.Errorf("  got : %#v\n", convRgbafColor)
+		}
+        test.Logf("%#v  vs  %#v\n", hspColor, convHspColor)
 	}
 }
 

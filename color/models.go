@@ -9,6 +9,7 @@ import (
 // color.Color-Wertes in den jewiligen Farbtyp.
 var (
 	RGBAFModel color.Model = color.ModelFunc(rgbafModel)
+    HSPModel   color.Model = color.ModelFunc(hspModel)
 	HSVModel   color.Model = color.ModelFunc(hsvModel)
 	HSLModel   color.Model = color.ModelFunc(hslModel)
 	HSIModel   color.Model = color.ModelFunc(hsiModel)
@@ -30,6 +31,52 @@ func rgbafModel(c color.Color) color.Color {
 	b = (b * 0xffff) / a
 	return RGBAF{float64(r) / 65535.0, float64(g) / 65535.0, float64(b) / 65535.0, float64(a) / 65535.0}
 }
+
+func hspModel(c color.Color) color.Color {
+	if _, ok := c.(HSP); ok {
+		return c
+	}
+	red, green, blue, alpha := c.RGBA()
+	if alpha == 0 {
+		return HSP{0.0, 0.0, 0.0, 0.0}
+	}
+	r := float64((red*0xffff)/alpha) / 65535.0
+	g := float64((green*0xffff)/alpha) / 65535.0
+	b := float64((blue*0xffff)/alpha) / 65535.0
+	a := float64(alpha) / 65535.0
+
+	h, s, p := 0.0, 0.0, 0.0
+
+	max := max(r, g, b)
+	min := min(r, g, b)
+	d := max - min
+
+	switch max {
+	case min:
+		h = 0.0
+	case r:
+		h = (g-b) / d
+		if h < 0.0 {
+			h += 6.0
+		}
+	case g:
+		h = 2.0 + (b-r)/d
+	case b:
+		h = 4.0 + (r-g)/d
+	}
+	h *= 60.0
+
+	if max == 0.0 {
+		s = 0.0
+	} else {
+		s = d / max
+	}
+
+    p = math.Sqrt(r*r*perRed + g*g*perGreen + b*b*perBlue)
+
+	return HSP{h, s, p, a}
+}
+
 
 func hsvModel(c color.Color) color.Color {
 	if _, ok := c.(HSV); ok {
