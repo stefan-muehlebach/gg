@@ -8,20 +8,23 @@ Go-Programm nachzuzeichnen. Dabei gilt es auf Folgendes zu achten:
 
 * Wie stark gleichen sich die beiden Bilder (die Vorlage und das selbst
   erstellte)?
-* Ist der Code so sparsam/kurz/ökonomisch wie möglich?
-* Sind alle Redundanzen eliminiert?
-* Wurden zur Steuerung, resp. Modifikation des Bildes Parameter eingesetzt?
+* Ist der Code so sparsam/kurz/ökonomisch wie möglich aufgebaut.
+* Sind Redundanzen eliminiert?
+* Wurden Parameter eingeführt mit denen sich das Aussehen des Bildes
+  steuern lässt (gute Kandidaten für Parameter sind bspw. die verwendeten
+  Farben oder die Breite von Linien)?
 
 ## TicTacToe
 
 Anhand eines Beispiels möchte ich zeigen, wie ich mir das genau vorstelle.
 Für das folgende Bild (ein angefangenes TicTacToe) werde ich nacheinander
-mehrere Go-Programme erstellen. In jeder Iteration wird der Code kompakter,
-generischer und besser.
+mehrere Lösungen zeigen. In jeder Iteration wird der Code kompakter,
+generischer und dadurch besser.
 
 ![TicTacToe](tictactoe.png)
 
-Das erste Beispiel implementiert das Bild _straight-forward_:
+Das erste Beispiel implementiert das Bild _straight-forward_, d.h. alle
+benötigten Zeichenbefehle werden hintereinader ausgeführt und gut ist.
 
 ```go
 package main
@@ -350,16 +353,6 @@ func main() {
 	gc.SavePNG(PNGFileName)
 }
 ```
-
-(Stand 24.12.2023) 16 Bilder, welche mit Hilfe
-von Go und [gg](https://github.com/stefan-muehlebach/gg) _und so wenig Code
-wie möglich_ nachzubilden sind.
-Mit entsprechendem Aufwand können alle Bilder durch ein Go-Programm in
-Form einer laaaaaaangen Liste von Zeichenbfehlen erstellt werden - das ist
-jedoch nicht das Ziel!
-Allen Graphiken liegt ein bestimmter algorithmischer Aufbau zugrunde.
-Das heisst, mit geschickter Verwendung von Schlaufen, Iterationen und weiteren
-Programmiertechniken, lässt sich der Aufwand massiv verkleinern.
 
 ## Erste und wichtigste Schritte
 

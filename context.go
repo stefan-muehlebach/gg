@@ -173,8 +173,9 @@ func (dc *Context) EncodeJPG(w io.Writer, o *jpeg.Options) error {
 }
 
 // Diese Methode dient aktuell ausschliesslich dazu, die Bilder auch auf
-// "Better Go Playground" anzeigen zu können,
-func (dc *Context) DisplayOnWebsite() {
+// "Better Go Playground" anzeigen zu können. Ob dieses Kunststück auch auf
+// weiteren Web-Umgebungen gelingt, kann ich nicht sagen.
+func (dc *Context) EncodeHTML() {
     var buf bytes.Buffer
     err := png.Encode(&buf, dc.im)
     if err != nil {
