@@ -834,7 +834,7 @@ func (dc *Context) WordWrap(s string, w float64) []string {
 	return wordWrap(dc, s, w)
 }
 
-// Koordinatentransformationen
+// Anpassung der Koordinatentransformationen.
 
 // Stellt die Transformationsmatrix auf die Einheitsmatrix.
 func (dc *Context) Identity() {
@@ -893,15 +893,18 @@ func (dc *Context) TransformVector(x, y float64) (tx, ty float64) {
 	return dc.matrix.TransformVector(x, y)
 }
 
+// Liefert die aktuelle Transformationsmatrix. Die Transformation dieses
+// Kontexts kann entweder über eine Reihe von Methoden ('Rotate()',
+// 'Scale()', etc.) oder direkt durch Auslesen, Anpassen und mittels
+// 'SetMatrix()' Zurückschreiben der Matrix verändert werden.
+func (dc *Context) Matrix() geom.Matrix {
+	return dc.matrix
+}
+
 // Überschreibt die aktuelle Transformationsmatrix der Zeichenumgebung mit
 // dem Parameter 'm'.
 func (dc *Context) SetMatrix(m geom.Matrix) {
 	dc.matrix = m
-}
-
-// Retourniert die aktuelle Transformationsmatrix.
-func (dc *Context) Matrix() geom.Matrix {
-	return dc.matrix
 }
 
 // Stack
