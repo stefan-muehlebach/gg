@@ -2,16 +2,16 @@
 package gg
 
 import (
-	"fmt"
-	"encoding/base64"
-	"log"
 	"bytes"
+	"encoding/base64"
 	"errors"
+	"fmt"
 	"image"
 	"image/color"
 	"image/jpeg"
 	"image/png"
 	"io"
+	"log"
 	_ "log"
 	"math"
 	"strings"
@@ -176,12 +176,12 @@ func (dc *Context) EncodeJPG(w io.Writer, o *jpeg.Options) error {
 // "Better Go Playground" anzeigen zu können. Ob dieses Kunststück auch auf
 // weiteren Web-Umgebungen gelingt, kann ich nicht sagen.
 func (dc *Context) EncodeHTML() {
-    var buf bytes.Buffer
-    err := png.Encode(&buf, dc.im)
-    if err != nil {
-        log.Fatal(err)
-    }
-    fmt.Println("IMAGE:" + base64.StdEncoding.EncodeToString(buf.Bytes()))
+	var buf bytes.Buffer
+	err := png.Encode(&buf, dc.im)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println("IMAGE:" + base64.StdEncoding.EncodeToString(buf.Bytes()))
 }
 
 // SetDash sets the current dash pattern to use. Call with zero arguments to
