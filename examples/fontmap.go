@@ -8,14 +8,14 @@ import (
 )
 
 var (
-    MarginSize = 16.0
-    FontSize   = 48.0
-    LineHeight = 1.3 * FontSize
-    	BackColor  = color.RGBAF{0.851, 0.811, 0.733, 1.0}
+	MarginSize = 16.0
+	FontSize   = 48.0
+	LineHeight = 1.3 * FontSize
+	BackColor  = color.RGBAF{0.851, 0.811, 0.733, 1.0}
 	TextColor  = colornames.Black.Alpha(0.7)
 
-	Width      = 1024.0
-	Height     = 2*MarginSize + FontSize + float64(len(fonts.Names)-1)*LineHeight
+	Width  = 1024.0
+	Height = 2*MarginSize + FontSize + float64(len(fonts.Names)-1)*LineHeight
 )
 
 func main() {
@@ -56,3 +56,4 @@ func main() {
 	}
 	gc.SavePNG("fontmap.png")
 }
+

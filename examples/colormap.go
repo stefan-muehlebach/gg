@@ -21,7 +21,7 @@ type NamedGroup struct {
 }
 
 var (
-  	Columns       = 7
+	Columns = 7
 
 	SampleWidth   = 250.0
 	UniformHeight = 70.0
@@ -31,7 +31,7 @@ var (
 	FadeStep      = 1.0 / float64(NumFadeSteps+1)
 	FadeWidth     = SampleWidth / float64(NumFadeSteps)
 
-	Padding       = 5.0
+	Padding = 5.0
 
 	TextFont      = fonts.LucidaSansDemiboldRoman
 	TextFontSize  = 20.0
@@ -89,18 +89,18 @@ func DrawColorMap(groupList []NamedGroup) {
 	for _, namedGroup := range groupList {
 		for j, namedColor := range namedGroup.list {
 			if j == 0 {
-                for Rows - (slotIndex % Rows) < 3 {
-                    slotIndex += 1
-                }
-				x0 := float64(slotIndex / Rows) * (SampleWidth + Padding)
-				y0 := float64(slotIndex % Rows) * (SampleHeight + Padding)
+				for Rows-(slotIndex%Rows) < 3 {
+					slotIndex += 1
+				}
+				x0 := float64(slotIndex/Rows) * (SampleWidth + Padding)
+				y0 := float64(slotIndex%Rows) * (SampleHeight + Padding)
 				gc.SetFontFace(TitleFontFace)
 				gc.SetStrokeColor(colornames.Black)
 				gc.DrawStringAnchored(namedGroup.name, x0+SampleWidth/2, y0+SampleHeight/2, 0.5, 0.5)
 				slotIndex += 1
 			}
-        		x0 := float64(slotIndex / Rows) * (SampleWidth + Padding)
-			y0 := float64(slotIndex % Rows) * (SampleHeight + Padding)
+			x0 := float64(slotIndex/Rows) * (SampleWidth + Padding)
+			y0 := float64(slotIndex%Rows) * (SampleHeight + Padding)
 			DrawColorSample(gc, x0, y0, namedColor)
 			slotIndex += 1
 		}
@@ -110,7 +110,7 @@ func DrawColorMap(groupList []NamedGroup) {
 
 func main() {
 	var groupIndex colornames.ColorGroup
-    var groupList []NamedGroup
+	var groupList []NamedGroup
 
 	groupList = make([]NamedGroup, colornames.NumColorGroups)
 	for i := range groupList {
@@ -128,3 +128,4 @@ func main() {
 	}
 	DrawColorMap(groupList)
 }
+
