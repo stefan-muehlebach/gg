@@ -93,8 +93,8 @@ func hsvModel(c color.Color) color.Color {
 
 	h, s, v := 0.0, 0.0, 0.0
 
-	max := math.Max(r, math.Max(g, b))
-	min := math.Min(r, math.Min(g, b))
+	max := max(r, g, b)
+	min := min(r, g, b)
 	d := max - min
 
 	switch max {
@@ -138,8 +138,8 @@ func hslModel(c color.Color) color.Color {
 
 	h, s, l := 0.0, 0.0, 0.0
 
-	max := math.Max(r, math.Max(g, b))
-	min := math.Min(r, math.Min(g, b))
+	max := max(r, g, b)
+	min := min(r, g, b)
 	d := max - min
 
 	switch max {
@@ -183,16 +183,31 @@ func hsiModel(c color.Color) color.Color {
 
 	h, s, i := 0.0, 0.0, 0.0
 
+	max := max(r, g, b)
+	min := min(r, g, b)
+	d := max - min
+
+	switch max {
+	case min:
+		h = 0.0
+	case r:
+		h = (g - b) / d
+		if h < 0.0 {
+			h += 6.0
+		}
+	case g:
+		h = 2.0 + (b-r)/d
+	case b:
+		h = 4.0 + (r-g)/d
+	}
+	h *= 60.0
+
 	i = (r + g + b) / 3.0
-	m := math.Min(r, math.Min(g, b))
+
 	if i > 0.0 {
-		s = 1.0 - m/i
+		s = 1.0 - min/i
 	} else {
 		s = 0.0
-	}
-	h = (180.0 / math.Pi) * math.Acos((r-0.5*g-0.5*b)/math.Sqrt(r*r+g*g+b*b-r*g-r*b-g*b))
-	if b > g {
-		h = 360.0 - h
 	}
 
 	return HSI{h, s, i, a}

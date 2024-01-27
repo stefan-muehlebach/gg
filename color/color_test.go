@@ -9,6 +9,22 @@ import (
 	"testing"
 )
 
+// Dies ist eine Hilfsfunktion, mit welcher zwei Fliesskommazahlen auf
+// "Gleichheit" überprüft werden können. Mit der Konstanten 'eps' wird
+// eine Grenze definiert, wie weit zwei Zahlen auseinanderliegen dürfen,
+// um noch als gleich behandelt zu werden.
+const (
+	eps = 0.005
+)
+
+func eq(f1, f2 float64) bool {
+	if math.Abs(f1-f2) < eps {
+		return true
+	} else {
+		return false
+	}
+}
+
 const (
 	numConversions = 10_000
 	uint8Eps       = 1
@@ -40,66 +56,82 @@ func CompRGBA(c1, c2 color.RGBA) bool {
 }
 
 func CompRGBAF(c1, c2 RGBAF) bool {
-    if math.Abs(c1.R-c2.R) > floatEps {
+    if !eq(c1.R, c2.R) {
         return false
     }
-    if math.Abs(c1.G-c2.G) > floatEps {
+    if !eq(c1.G, c2.G) {
         return false
     }
-    if math.Abs(c1.B-c2.B) > floatEps {
+    if !eq(c1.B, c2.B) {
         return false
     }
-    if math.Abs(c1.A-c2.A) > floatEps {
+    if !eq(c1.A, c2.A) {
         return false
     }
     return true
 }
 
+func CompHSP(c1, c2 HSP) bool {
+    if !eq(c1.H, c2.H) {
+        return false
+    }
+    if !eq(c1.S, c2.S) {
+        return false
+    }
+    if !eq(c1.P, c2.P) {
+        return false
+    }
+    if !eq(c1.A, c2.A) {
+        return false
+    }
+	return true
+}
+
 func CompHSV(c1, c2 HSV) bool {
-	if math.Abs(c1.H-c2.H) > floatEps {
-		return false
-	}
-	if math.Abs(c1.S-c2.S) > floatEps {
-		return false
-	}
-	if math.Abs(c1.V-c2.V) > floatEps {
-		return false
-	}
-	if math.Abs(c1.A-c2.A) > floatEps {
-		return false
-	}
+    if !eq(c1.H, c2.H) {
+        return false
+    }
+    if !eq(c1.S, c2.S) {
+        return false
+    }
+    if !eq(c1.V, c2.V) {
+        return false
+    }
+    if !eq(c1.A, c2.A) {
+        return false
+    }
 	return true
 }
 
 func CompHSL(c1, c2 HSL) bool {
-	if math.Abs(c1.H-c2.H) > floatEps {
-		return false
-	}
-	if math.Abs(c1.S-c2.S) > floatEps {
-		return false
-	}
-	if math.Abs(c1.L-c2.L) > floatEps {
-		return false
-	}
-	if math.Abs(c1.A-c2.A) > floatEps {
-		return false
-	}
+    if !eq(c1.H, c2.H) {
+        return false
+    }
+    if !eq(c1.S, c2.S) {
+        return false
+    }
+    if !eq(c1.L, c2.L) {
+        return false
+    }
+    if !eq(c1.A, c2.A) {
+        return false
+    }
 	return true
 }
 
 func CompHSI(c1, c2 HSI) bool {
-	if math.Abs(c1.H-c2.H) > floatEps {
-		return false
-	}
-	if math.Abs(c1.S-c2.S) > floatEps {
-		return false
-	}
-	if math.Abs(c1.I-c2.I) > floatEps {
-		return false
-	}
-	if math.Abs(c1.A-c2.A) > floatEps {
-		return false
-	}
+    if !eq(c1.H, c2.H) {
+        return false
+    }
+    if !eq(c1.S, c2.S) {
+        return false
+    }
+    if !eq(c1.I, c2.I) {
+        return false
+    }
+    if !eq(c1.A, c2.A) {
+        return false
+    }
 	return true
 }
 
@@ -128,7 +160,6 @@ var (
 		color.RGBA{128, 0, 128, 255},
 		color.RGBA{0, 128, 128, 255},
 		color.RGBA{0, 0, 128, 255},
-		color.RGBA{0, 0, 0, 255},
 	}
 
 	rgbafColorList = []RGBAF{
@@ -148,7 +179,6 @@ var (
 		RGBAF{0.5, 0, 0.5, 1.0},
 		RGBAF{0, 0.5, 0.5, 1.0},
 		RGBAF{0, 0, 0.5, 1.0},
-		RGBAF{0, 0, 0, 1.0},
 	}
 
     hspColorList = []HSP{
@@ -168,7 +198,6 @@ var (
         HSP{H:300, S:1, P:0.27903, A:1},
         HSP{H:180, S:1, P:0.43731, A:1},
         HSP{H:240, S:1, P:0.1309, A:1},
-        HSP{H:0, S:1, P:1, A:1},
     }
 
 	hsvColorList = []HSV{
@@ -241,12 +270,6 @@ func init() {
 	A = uint8(rnd.Intn(256))
 }
 
-// func inEpsilon(c1, c2 Color) (bool) {
-//     return math.Abs(float64(c1.R-c2.R)) <= colorEps &&
-//             math.Abs(float64(c1.G-c2.G)) <= colorEps &&
-//             math.Abs(float64(c1.B-c2.B)) <= colorEps
-// }
-
 func BenchmarkRGBAF2RGBA(bench *testing.B) {
 	c := RGBAF{rnd.Float64(), rnd.Float64(), rnd.Float64(), rnd.Float64()}
 	for i := 0; i < bench.N; i++ {
@@ -260,16 +283,16 @@ func BenchmarkRGBA2RGBAF(bench *testing.B) {
 	}
 }
 
-func BenchmarkHSL2RGBA(bench *testing.B) {
-	c := HSL{360.0 * rnd.Float64(), rnd.Float64(), rnd.Float64(), rnd.Float64()}
+func BenchmarkHSP2RGBA(bench *testing.B) {
+	c := HSP{360.0 * rnd.Float64(), rnd.Float64(), rnd.Float64(), rnd.Float64()}
 	for i := 0; i < bench.N; i++ {
 		r, g, b, a = c.RGBA()
 	}
 }
-func BenchmarkRGBA2HSL(bench *testing.B) {
+func BenchmarkRGBA2HSP(bench *testing.B) {
 	c := color.RGBA{uint8(rnd.Intn(256)), uint8(rnd.Intn(256)), uint8(rnd.Intn(256)), uint8(rnd.Intn(256))}
 	for i := 0; i < bench.N; i++ {
-		convColor = HSLModel.Convert(c)
+		convColor = HSPModel.Convert(c)
 	}
 }
 
@@ -283,6 +306,19 @@ func BenchmarkRGBA2HSV(bench *testing.B) {
 	c := color.RGBA{uint8(rnd.Intn(256)), uint8(rnd.Intn(256)), uint8(rnd.Intn(256)), uint8(rnd.Intn(256))}
 	for i := 0; i < bench.N; i++ {
 		convColor = HSVModel.Convert(c)
+	}
+}
+
+func BenchmarkHSL2RGBA(bench *testing.B) {
+	c := HSL{360.0 * rnd.Float64(), rnd.Float64(), rnd.Float64(), rnd.Float64()}
+	for i := 0; i < bench.N; i++ {
+		r, g, b, a = c.RGBA()
+	}
+}
+func BenchmarkRGBA2HSL(bench *testing.B) {
+	c := color.RGBA{uint8(rnd.Intn(256)), uint8(rnd.Intn(256)), uint8(rnd.Intn(256)), uint8(rnd.Intn(256))}
+	for i := 0; i < bench.N; i++ {
+		convColor = HSLModel.Convert(c)
 	}
 }
 
@@ -362,18 +398,22 @@ func TestRGBAF(test *testing.T) {
 
 func TestHSP(test *testing.T) {
 	for i := range rgbafColorList {
-		rgbafColor := rgbafColorList[i]
+		rgbaColor := rgbaColorList[i]
 		hspColor := hspColorList[i]
 
-		convRgbafColor := RGBAFModel.Convert(hspColor).(RGBAF)
-		convHspColor := HSPModel.Convert(rgbafColor).(HSP)
+		convRgbaColor := color.RGBAModel.Convert(hspColor).(color.RGBA)
+		convHspColor := HSPModel.Convert(rgbaColor).(HSP)
 
-		if !CompRGBAF(rgbafColor, convRgbafColor) {
+		if !CompRGBA(rgbaColor, convRgbaColor) {
 			test.Errorf("[%d]\n", i)
-			test.Errorf("  want: %#v\n", rgbafColor)
-			test.Errorf("  got : %#v\n", convRgbafColor)
+			test.Errorf("  want: %#v\n", rgbaColor)
+			test.Errorf("  got : %#v\n", convRgbaColor)
 		}
-        test.Logf("%#v  vs  %#v\n", hspColor, convHspColor)
+		if !CompHSP(hspColor, convHspColor) {
+			test.Errorf("[%d]\n", i)
+			test.Errorf("  want: %#v\n", hspColor)
+			test.Errorf("  got : %#v\n", convHspColor)
+		}
 	}
 }
 

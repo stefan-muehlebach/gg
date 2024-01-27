@@ -24,20 +24,20 @@ var (
   	Columns       = 7
 
 	SampleWidth   = 250.0
-	SampleHeight  = 2.0*FadeHeight + UniformHeight
 	UniformHeight = 70.0
 	FadeHeight    = 20.0
+	SampleHeight  = 2.0*FadeHeight + UniformHeight
 	NumFadeSteps  = 9
 	FadeStep      = 1.0 / float64(NumFadeSteps+1)
 	FadeWidth     = SampleWidth / float64(NumFadeSteps)
 
 	Padding       = 5.0
 
-	TextFontSize  = 20.0
 	TextFont      = fonts.LucidaSansDemiboldRoman
+	TextFontSize  = 20.0
 	TextFontFace  = fonts.NewFace(TextFont, TextFontSize)
-	TitleFontSize = 40.0
 	TitleFont     = fonts.LucidaBrightDemibold
+	TitleFontSize = 40.0
 	TitleFontFace = fonts.NewFace(TitleFont, TitleFontSize)
 )
 
@@ -107,28 +107,6 @@ func DrawColorMap(groupList []NamedGroup) {
 	}
 	gc.SavePNG("colormap.png")
 }
-
-// func max(a, b uint32) uint32 {
-// 	if a > b {
-// 		return a
-// 	} else {
-// 		return b
-// 	}
-// }
-// func max3(a, b, c uint32) uint32 {
-// 	return max(a, max(b, c))
-// }
-
-// func min(a, b uint32) uint32 {
-// 	if a < b {
-// 		return a
-// 	} else {
-// 		return b
-// 	}
-// }
-// func min3(a, b, c uint32) uint32 {
-// 	return min(a, min(b, c))
-// }
 
 func main() {
 	var groupIndex colornames.ColorGroup

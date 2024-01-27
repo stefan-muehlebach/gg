@@ -1,7 +1,8 @@
 // Erweiterung des Packages 'image/color' um neue Farbtypen.
 //
-// Dieses Package versteht sich als Ersatz von 'image/color' in Zusammenhang
-
+// Dieses Package versteht sich als Erweiterung von 'image/color'
+// in Zusammenhang mit dem Package 'gg'.
+//
 // Im Wesentlichen
 // Die bestehende Implementation von Farben in 'image/color' bietet keine
 // Methoden, um Farben heller, resp. dunkler zu schattieren oder um zwischen
@@ -16,8 +17,8 @@ import (
 	"math"
 )
 
-// Da dieses Package als vollwertiger Ersatz für 'image/color' gedacht ist,
-// sind einige Standardfarben auch hier zu finden.
+// Da dieses Package anstelle von 'image/color' verwendet werden kann,
+// sind einige Standardfarben auch hier definiert.
 var (
 	Black       = RGBAF{0.0, 0.0, 0.0, 1.0}
 	White       = RGBAF{1.0, 1.0, 1.0, 1.0}
@@ -36,16 +37,6 @@ type Color interface {
 	Dark(t float64) Color
 	Alpha(a float64) Color
 	Interpolate(c2 Color, t float64) Color
-}
-
-func setIn(v, a, b float64) float64 {
-	if v < a {
-		return a
-	}
-	if v > b {
-		return b
-	}
-	return v
 }
 
 // RGBAF entspricht dem NRGBA-Typ aus image/color, verwendet fuer die
@@ -197,7 +188,7 @@ func (c HSP) RGBA() (r, g, b, a uint32) {
 			G = 0.
 		}
 	}
-    R, G, B = min(R, 1.0), min(G, 1.0), min(B, 1.0)
+	R, G, B = min(R, 1.0), min(G, 1.0), min(B, 1.0)
 	r = uint32(65535.0 * R * c.A)
 	g = uint32(65535.0 * G * c.A)
 	b = uint32(65535.0 * B * c.A)
@@ -207,17 +198,16 @@ func (c HSP) RGBA() (r, g, b, a uint32) {
 
 func (c HSP) Bright(t float64) Color {
 	t = setIn(t, 0, 1)
-	u := 1 - t
 	r := c
-    r.P = u * r.P + t * 1.0
+    r.S = (1-t)*c.S
+	r.P = (1-t)*c.P + t
 	return r
 }
 
 func (c HSP) Dark(t float64) Color {
 	t = setIn(t, 0, 1)
-	u := 1 - t
 	r := c
-	r.P = u * r.P + t * 0.0
+	r.P = (1-t)*c.P
 	return r
 }
 
@@ -227,7 +217,7 @@ func (c HSP) Alpha(a float64) Color {
 }
 
 func (c1 HSP) Interpolate(col Color, t float64) Color {
-    return c1
+	return c1
 }
 
 // Beim Typ HSV werden die Werte fuer Hue, Saturation und Value gespeichert.
@@ -263,18 +253,16 @@ func (c HSV) RGBA() (r, g, b, a uint32) {
 
 func (c HSV) Bright(t float64) Color {
 	t = setIn(t, 0, 1)
-	u := 1 - t
 	r := c
-	r.S = u * c.S
-	r.V = u*c.V + t
+	r.S = (1-t)*c.S
+	r.V = (1-t)*c.V + t
 	return r
 }
 
 func (c HSV) Dark(t float64) Color {
 	t = setIn(t, 0, 1)
-	u := 1 - t
 	r := c
-	r.V = u * c.V
+	r.V = (1-t)*c.V
 	return r
 }
 
@@ -343,14 +331,14 @@ func (c HSL) RGBA() (r, g, b, a uint32) {
 func (c HSL) Bright(t float64) Color {
 	t = setIn(t, 0, 1)
 	r := c
-	r.L = (1-t)*c.L + t*1.0
+	r.L = (1-t)*c.L + t
 	return r
 }
 
 func (c HSL) Dark(t float64) Color {
 	t = setIn(t, 0, 1)
 	r := c
-	r.L = (1 - t) * c.L
+	r.L = (1-t)*c.L
 	return r
 }
 
@@ -465,3 +453,20 @@ func (c1 HSI) Less(c2 HSI, key SortField) bool {
 		return false
 	}
 }
+
+// Hilfsfunktion, mit welcher sichergestellt werden kann, dass der Wert v
+// zwingend zwischen a und b zu liegen kommt. Falls a groesser ist als b,
+// dann wird v unveraendert zurueckgegeben.
+func setIn(v, a, b float64) float64 {
+    if a > b {
+        return v
+    }
+	if v < a {
+		return a
+	}
+	if v > b {
+		return b
+	}
+	return v
+}
+
