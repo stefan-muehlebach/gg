@@ -1,5 +1,9 @@
 package colornames
 
+import (
+	"errors"
+)
+
 type ColorGroup int
 
 const (
@@ -41,6 +45,32 @@ func (g ColorGroup) String() (string) {
     default:
         return "(unknown group)"
     }
+}
+
+func (g *ColorGroup) Set(str string) (error) {
+    switch str {
+    case "Purples":
+        *g = Purples
+    case "Pinks":
+        *g = Pinks
+    case "Blues":
+        *g = Blues
+    case "Reds":
+        *g = Reds
+    case "Greens":
+        *g = Greens
+    case "Yellows":
+        *g = Yellows
+    case "Browns":
+        *g = Browns
+    case "Whites":
+        *g = Whites
+    case "Grays":
+        *g = Grays
+    default:
+        return errors.New("Unknown color group: " + str)
+    }
+    return nil
 }
 
 // In diesem File werden die Farben aus colornames.go nach Farbton in

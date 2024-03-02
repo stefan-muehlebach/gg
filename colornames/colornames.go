@@ -9,9 +9,7 @@ import (
 )
 
 // Alle in der SVG 1.1 Spezifikation benannten Farben sind
-// in diesem Package als Variablen definiert. Beachte, dass _nur_ der erste
-// Buchstabe des Variablennamens gross geschrieben ist! Also beispielweise
-// 'Darkolivegreen' statt 'DarkOliveGreen' wie in SVG 1.1!
+// in diesem Package als Variablen definiert.
 var (
     AliceBlue               = color.RGBAF{R:0.9412, G:0.9725, B:1, A:1}
     AntiqueWhite            = color.RGBAF{R:0.9804, G:0.9216, B:0.8431, A:1}
