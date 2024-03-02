@@ -3,7 +3,6 @@ package color
 import (
 	"fmt"
 	"image/color"
-    // "log"
 	"math"
 	"math/rand"
 	"testing"
@@ -56,92 +55,92 @@ func CompRGBA(c1, c2 color.RGBA) bool {
 }
 
 func CompRGBAF(c1, c2 RGBAF) bool {
-    if !eq(c1.R, c2.R) {
-        return false
-    }
-    if !eq(c1.G, c2.G) {
-        return false
-    }
-    if !eq(c1.B, c2.B) {
-        return false
-    }
-    if !eq(c1.A, c2.A) {
-        return false
-    }
-    return true
+	if !eq(c1.R, c2.R) {
+		return false
+	}
+	if !eq(c1.G, c2.G) {
+		return false
+	}
+	if !eq(c1.B, c2.B) {
+		return false
+	}
+	if !eq(c1.A, c2.A) {
+		return false
+	}
+	return true
 }
 
 func CompHSP(c1, c2 HSP) bool {
-    if !eq(c1.H, c2.H) {
-        return false
-    }
-    if !eq(c1.S, c2.S) {
-        return false
-    }
-    if !eq(c1.P, c2.P) {
-        return false
-    }
-    if !eq(c1.A, c2.A) {
-        return false
-    }
+	if !eq(c1.H, c2.H) {
+		return false
+	}
+	if !eq(c1.S, c2.S) {
+		return false
+	}
+	if !eq(c1.P, c2.P) {
+		return false
+	}
+	if !eq(c1.A, c2.A) {
+		return false
+	}
 	return true
 }
 
 func CompHSV(c1, c2 HSV) bool {
-    if !eq(c1.H, c2.H) {
-        return false
-    }
-    if !eq(c1.S, c2.S) {
-        return false
-    }
-    if !eq(c1.V, c2.V) {
-        return false
-    }
-    if !eq(c1.A, c2.A) {
-        return false
-    }
+	if !eq(c1.H, c2.H) {
+		return false
+	}
+	if !eq(c1.S, c2.S) {
+		return false
+	}
+	if !eq(c1.V, c2.V) {
+		return false
+	}
+	if !eq(c1.A, c2.A) {
+		return false
+	}
 	return true
 }
 
 func CompHSL(c1, c2 HSL) bool {
-    if !eq(c1.H, c2.H) {
-        return false
-    }
-    if !eq(c1.S, c2.S) {
-        return false
-    }
-    if !eq(c1.L, c2.L) {
-        return false
-    }
-    if !eq(c1.A, c2.A) {
-        return false
-    }
+	if !eq(c1.H, c2.H) {
+		return false
+	}
+	if !eq(c1.S, c2.S) {
+		return false
+	}
+	if !eq(c1.L, c2.L) {
+		return false
+	}
+	if !eq(c1.A, c2.A) {
+		return false
+	}
 	return true
 }
 
 func CompHSI(c1, c2 HSI) bool {
-    if !eq(c1.H, c2.H) {
-        return false
-    }
-    if !eq(c1.S, c2.S) {
-        return false
-    }
-    if !eq(c1.I, c2.I) {
-        return false
-    }
-    if !eq(c1.A, c2.A) {
-        return false
-    }
+	if !eq(c1.H, c2.H) {
+		return false
+	}
+	if !eq(c1.S, c2.S) {
+		return false
+	}
+	if !eq(c1.I, c2.I) {
+		return false
+	}
+	if !eq(c1.A, c2.A) {
+		return false
+	}
 	return true
 }
 
 var (
-	R, G, B, A uint8
-	r, g, b, a uint32
-    rf, gf, bf, af float64
-	h, s, v, p, l float64
+	R, G, B, A     uint8
+	r, g, b, a     uint32
+	rf, gf, bf, af float64
+	h, s, v, p, l  float64
 
-    convColor color.Color
+	convColor color.Color
 
 	rgbaColorList = []color.RGBA{
 		color.RGBA{0, 0, 0, 255},
@@ -181,24 +180,24 @@ var (
 		RGBAF{0, 0, 0.5, 1.0},
 	}
 
-    hspColorList = []HSP{
-        HSP{H:0, S:0, P:0, A:1},
-        HSP{H:0, S:0, P:1, A:1},
-        HSP{H:0, S:1, P:0.49092, A:1},
-        HSP{H:120, S:1, P:0.83126, A:1},
-        HSP{H:240, S:1, P:0.26077, A:1},
-        HSP{H:60, S:1, P:0.9654, A:1},
-        HSP{H:180, S:1, P:0.87121, A:1},
-        HSP{H:300, S:1, P:0.55588, A:1},
-        HSP{H:0, S:0, P:0.74902, A:1},
-        HSP{H:0, S:0, P:0.50196, A:1},
-        HSP{H:0, S:1, P:0.24642, A:1},
-        HSP{H:60, S:1, P:0.48459, A:1},
-        HSP{H:120, S:1, P:0.41726, A:1},
-        HSP{H:300, S:1, P:0.27903, A:1},
-        HSP{H:180, S:1, P:0.43731, A:1},
-        HSP{H:240, S:1, P:0.1309, A:1},
-    }
+	hspColorList = []HSP{
+		HSP{H: 0, S: 0, P: 0, A: 1},
+		HSP{H: 0, S: 0, P: 1, A: 1},
+		HSP{H: 0, S: 1, P: 0.49092, A: 1},
+		HSP{H: 120, S: 1, P: 0.83126, A: 1},
+		HSP{H: 240, S: 1, P: 0.26077, A: 1},
+		HSP{H: 60, S: 1, P: 0.9654, A: 1},
+		HSP{H: 180, S: 1, P: 0.87121, A: 1},
+		HSP{H: 300, S: 1, P: 0.55588, A: 1},
+		HSP{H: 0, S: 0, P: 0.74902, A: 1},
+		HSP{H: 0, S: 0, P: 0.50196, A: 1},
+		HSP{H: 0, S: 1, P: 0.24642, A: 1},
+		HSP{H: 60, S: 1, P: 0.48459, A: 1},
+		HSP{H: 120, S: 1, P: 0.41726, A: 1},
+		HSP{H: 300, S: 1, P: 0.27903, A: 1},
+		HSP{H: 180, S: 1, P: 0.43731, A: 1},
+		HSP{H: 240, S: 1, P: 0.1309, A: 1},
+	}
 
 	hsvColorList = []HSV{
 		HSV{0, 0, 0, 1},
@@ -336,11 +335,11 @@ func BenchmarkRGBA2HSI(bench *testing.B) {
 }
 
 func ExampleRGBAF() {
-    r1, g1, b1 := 1.0, 0.5, 0.25
-    c1 := RGBAF{r1, g1, b1, 1.0}
-    fmt.Printf("%v", c1)
-    // Output:
-    // {1 0.5 0.25 1}
+	r1, g1, b1 := 1.0, 0.5, 0.25
+	c1 := RGBAF{r1, g1, b1, 1.0}
+	fmt.Printf("%v", c1)
+	// Output:
+	// {1 0.5 0.25 1}
 }
 
 func ExampleHSP() {
@@ -377,7 +376,7 @@ func ExampleHSI() {
 
 func TestRGBAF(test *testing.T) {
 	for i := range rgbaColorList {
-		rgbaColor   := rgbaColorList[i]
+		rgbaColor := rgbaColorList[i]
 		rgbafColor := rgbafColorList[i]
 
 		convRgbaColor := color.RGBAModel.Convert(rgbafColor).(color.RGBA)
