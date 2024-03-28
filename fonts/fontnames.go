@@ -43,8 +43,9 @@ var (
     lucidafaxdemibolditalic, _ = fontFiles.ReadFile("FontFiles/18-LucidaFax-Demibold-Italic.ttf")
     lucidaconsole, _ = fontFiles.ReadFile("FontFiles/20-LucidaConsole.ttf")
     lucidahandwritingitalic, _ = fontFiles.ReadFile("FontFiles/21-LucidaHandwriting-Italic.ttf")
-    lucidacalligraphyitalic, _ = fontFiles.ReadFile("FontFiles/22-LucidaCalligraphy-Italic.ttf")
-    lucidablackletter, _ = fontFiles.ReadFile("FontFiles/23-LucidaBlackletter.ttf")
+    lucidacalligraphy, _ = fontFiles.ReadFile("FontFiles/22-LucidaCalligraphy.ttf")
+    lucidacalligraphybold, _ = fontFiles.ReadFile("FontFiles/23-LucidaCalligraphy-Bold.ttf")
+    lucidablackletter, _ = fontFiles.ReadFile("FontFiles/24-LucidaBlackletter.ttf")
     seaford, _ = fontFiles.ReadFile("FontFiles/30-Seaford.ttf")
     seaforditalic, _ = fontFiles.ReadFile("FontFiles/31-Seaford-Italic.ttf")
     seafordbold, _ = fontFiles.ReadFile("FontFiles/32-Seaford-Bold.ttf")
@@ -95,7 +96,8 @@ var (
     LucidaFaxDemiboldItalic, _          = opentype.Parse(lucidafaxdemibolditalic)
     LucidaConsole, _                    = opentype.Parse(lucidaconsole)
     LucidaHandwritingItalic, _          = opentype.Parse(lucidahandwritingitalic)
-    LucidaCalligraphyItalic, _          = opentype.Parse(lucidacalligraphyitalic)
+    LucidaCalligraphy, _                = opentype.Parse(lucidacalligraphy)
+    LucidaCalligraphyBold, _            = opentype.Parse(lucidacalligraphybold)
     LucidaBlackletter, _                = opentype.Parse(lucidablackletter)
     Seaford, _                          = opentype.Parse(seaford)
     SeafordItalic, _                    = opentype.Parse(seaforditalic)
@@ -147,7 +149,8 @@ var Map = map[string]*opentype.Font{
     "LucidaFaxDemiboldItalic":          LucidaFaxDemiboldItalic,
     "LucidaConsole":                    LucidaConsole,
     "LucidaHandwritingItalic":          LucidaHandwritingItalic,
-    "LucidaCalligraphyItalic":          LucidaCalligraphyItalic,
+    "LucidaCalligraphy":                LucidaCalligraphy,
+    "LucidaCalligraphyBold":            LucidaCalligraphyBold,
     "LucidaBlackletter":                LucidaBlackletter,
     "Seaford":                          Seaford,
     "SeafordItalic":                    SeafordItalic,
@@ -199,7 +202,8 @@ var Names = []string{
     "LucidaFaxDemiboldItalic",
     "LucidaConsole",
     "LucidaHandwritingItalic",
-    "LucidaCalligraphyItalic",
+    "LucidaCalligraphy",
+    "LucidaCalligraphyBold",
     "LucidaBlackletter",
     "Seaford",
     "SeafordItalic",
