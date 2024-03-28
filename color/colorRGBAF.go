@@ -62,6 +62,11 @@ func (c1 RGBAF) Less(c2 RGBAF, key SortField) bool {
 	}
 }
 
+func (c *RGBAF) UnmarshalText(text []byte) error {
+    log.Printf("UnmarshalColor: %s", text)
+    return nil
+}
+
 // Modell fuer den neuen Farbtyp, d.h. fuer die Konvertierung von einer
 // beliebigen Farbe nach RGBAF.
 var (

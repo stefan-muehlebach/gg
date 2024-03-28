@@ -43,6 +43,15 @@ func (f *Font) MarshalText() ([]byte, error) {
             return []byte(k), nil
         }
     }
-    return []byte{}, errors.New("Fontname not found")
+    return []byte{}, errors.New("Font not found")
+}
+
+func (f *Font) UnmarshalText(text []byte) error {
+    key := string(text)
+    if val, ok := Map[key]; ok {
+        f = val
+        return nil
+    }
+    return errors.New("Fontname not found")
 }
 
