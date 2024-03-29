@@ -23,6 +23,24 @@ func Parse(data []byte) (*Font, error) {
     return (*Font)(f), err
 }
 
+func (f *Font) MarshalText() ([]byte, error) {
+    for key, val := range Map {
+        if val == f {
+            return []byte(key), nil
+        }
+    }
+    return []byte{}, errors.New("Font not found")
+}
+
+func (f *Font) UnmarshalText(text []byte) error {
+    key := string(text)
+    if val, ok := Map[key]; ok {
+        *f = *val
+        return nil
+    }
+    return errors.New("Fontname not found")
+}
+
 // Erstellt einen neuen Fontface, der bspw. bei der Methode [SetFontFace]
 // verwendet werden kann. textFont ist ein Pointer auf einen OpenType-Font
 // Siehe auch Array [Names] für eine Liste aller Fonts, die in diesem Package
@@ -35,23 +53,5 @@ func NewFace(textFont *Font, size float64) font.Face {
             Hinting: font.HintingFull,
         })
     return face
-}
-
-func (f *Font) MarshalText() ([]byte, error) {
-    for k, v := range Map {
-        if v == f {
-            return []byte(k), nil
-        }
-    }
-    return []byte{}, errors.New("Font not found")
-}
-
-func (f *Font) UnmarshalText(text []byte) error {
-    key := string(text)
-    if val, ok := Map[key]; ok {
-        f = val
-        return nil
-    }
-    return errors.New("Fontname not found")
 }
 
