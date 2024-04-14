@@ -25,7 +25,7 @@ func Parse(data []byte) (*Font, error) {
 
 func (f *Font) MarshalText() ([]byte, error) {
     for key, val := range Map {
-        if val == f {
+        if (*Font)(val) == f {
             return []byte(key), nil
         }
     }
@@ -35,7 +35,7 @@ func (f *Font) MarshalText() ([]byte, error) {
 func (f *Font) UnmarshalText(text []byte) error {
     key := string(text)
     if val, ok := Map[key]; ok {
-        *f = *val
+        *f = (Font)(*val)
         return nil
     }
     return errors.New("Fontname not found")
