@@ -10,12 +10,6 @@ import (
     "golang.org/x/image/font/opentype"
 )
 
-/*
-type Font struct {
-    *opentype.Font
-}
-*/
-
 type Font opentype.Font
 
 func Parse(data []byte) (*Font, error) {

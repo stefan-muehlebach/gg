@@ -6,7 +6,7 @@ import (
 )
 
 var (
-	ImageSize     = 256.0
+	ImageSize      = 256.0
 	MarginSize     = 20.0
 	OuterFieldSize = 67.0
 	InnerFieldSize = 82.0
@@ -17,7 +17,7 @@ var (
 	Player2Color  = colornames.DarkRed
 	GridLineWidth = 7.0
 	IconLineWidth = 10.0
-	PNGFileName   = "tictactoe.png"
+	PNGFileName   = "tictactoe02.png"
 
 	GridPos1 = MarginSize + OuterFieldSize
 	GridPos2 = GridPos1 + InnerFieldSize
@@ -32,7 +32,6 @@ func DrawGrid(gc *gg.Context) {
 	gc.DrawLine(GridPos2, MarginSize, GridPos2, ImageSize-MarginSize)
 	gc.Stroke()
 }
-
 
 func main() {
 	gc := gg.NewContext(int(ImageSize), int(ImageSize))

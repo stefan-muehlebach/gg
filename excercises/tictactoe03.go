@@ -15,19 +15,19 @@ const (
 )
 
 var (
-	ImageSize      = 256.0
-	MarginSize     = 20.0
-	SymbolSize     = 52.0
-	SymbolPadding  = 15.0
-	OuterFieldSize = 67.0
-	InnerFieldSize = 82.0
-	BackColor      = colornames.Beige
-	LineColor      = colornames.DarkSlateGray
-	Player1Color   = colornames.DarkGreen
-	Player2Color   = colornames.DarkRed
-	GridLineWidth  = 7.0
-	SymbolLineWidth  = 10.0
-	PNGFileName    = "tictactoe.png"
+	ImageSize       = 256.0
+	MarginSize      = 20.0
+	SymbolSize      = 52.0
+	SymbolPadding   = 15.0
+	OuterFieldSize  = 67.0
+	InnerFieldSize  = 82.0
+	BackColor       = colornames.Beige
+	LineColor       = colornames.DarkSlateGray
+	Player1Color    = colornames.DarkGreen
+	Player2Color    = colornames.DarkRed
+	GridLineWidth   = 7.0
+	SymbolLineWidth = 10.0
+	PNGFileName     = "tictactoe03.png"
 
 	GridPos1 = MarginSize + OuterFieldSize
 	GridPos2 = GridPos1 + InnerFieldSize

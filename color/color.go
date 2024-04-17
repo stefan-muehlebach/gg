@@ -1,3 +1,5 @@
+//go:generate go run gen.go
+
 // Erweiterung des Packages 'image/color' um neue Farbtypen.
 //
 // Dieses Package versteht sich als Erweiterung von 'image/color'
