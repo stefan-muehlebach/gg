@@ -2,6 +2,7 @@ TARGETS = bauhaus \
           chessboard \
           color-cells \
           divided-circle \
+          fadengraphik \
           farn \
           flower-of-life \
           graph \
@@ -11,9 +12,11 @@ TARGETS = bauhaus \
           raster-image \
           relief \
           spirale \
+          tictactoe01 \
+          tictactoe02 \
+          tictactoe03 \
           text-transform \
-          vertigo \
-          fadengraphik
+          vertigo
 
 PNG_FILES = $(TARGETS:=.png)
 
@@ -22,7 +25,8 @@ all: $(TARGETS)
 png: $(PNG_FILES)
 
 clean:
-	rm $(TARGETS)
+	rm -f $(TARGETS)
+	rm -f $(PNG_FILES)
 
 .SUFFIXES: .go .png
 

@@ -26,7 +26,7 @@ const (
 	// die ideale Einstellung gefunden ist.
 	FontSize = 24.0
 
-	OutFileName = "fadengraphik.png"
+	OutFileName = "kardioide.png"
 )
 
 type ThreadData struct {

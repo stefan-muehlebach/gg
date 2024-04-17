@@ -102,7 +102,7 @@ var (
 	Player2Color  = colornames.DarkRed
 	GridLineWidth = 7.0
 	IconLineWidth = 10.0
-	PNGFileName   = "tictactoe.png"
+	PNGFileName   = "tictactoe01.png"
 )
 
 func main() {
@@ -395,7 +395,7 @@ werden kann.
 
 ### Kardioide
 
-![Kardioide](fadengraphik.png)
+![Kardioide](kardioide.png)
 
 ### 3D Kugel
 
@@ -412,7 +412,7 @@ werden kann.
 ### Raster oder Halbtonbilder
 
 ![](raster-0.png) ![](raster-1.png) ![](raster-2.png)
-![](raster-image-0.png) ![](raster-image-1.png)
+![](raster-skull.png) ![](raster-letter.png) ![](raster-bern.png)
 
 ### Farbzellen
 
