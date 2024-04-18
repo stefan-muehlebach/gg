@@ -81,7 +81,7 @@ type Context struct {
 	lineJoin      LineJoin
 	fontFace      font.Face
 	fontHeight    float64
-	matrix        geom.Matrix
+	matrix        *geom.Matrix
 	stack         []*Context
 }
 
@@ -681,7 +681,8 @@ func (dc *Context) DrawImageAnchored(im image.Image, x, y, ax, ay float64) {
 	transformer := draw.BiLinear
 	// fx, fy := float64(x), float64(y)
 	m := dc.matrix.Translate(geom.Point{X: x, Y: y})
-	s2d := f64.Aff3{m.M11, m.M12, m.M13, m.M21, m.M22, m.M23}
+	s2d := f64.Aff3(*m)
+	// s2d := f64.Aff3{m.M11, m.M12, m.M13, m.M21, m.M22, m.M23}
 	if dc.mask == nil {
 		transformer.Transform(dc.im, s2d, im, im.Bounds(), draw.Over, nil)
 	} else {
@@ -736,7 +737,8 @@ func (dc *Context) drawString(im *image.RGBA, s string, x, y float64) {
 		transformer := draw.ApproxBiLinear
 		fx, fy := float64(dr.Min.X), float64(dr.Min.Y)
 		ml := dc.matrix.Translate(geom.Point{X: fx, Y: fy})
-		s2d := f64.Aff3{ml.M11, ml.M12, ml.M13, ml.M21, ml.M22, ml.M23}
+		s2d := f64.Aff3(*ml)
+		// s2d := f64.Aff3{ml.M11, ml.M12, ml.M13, ml.M21, ml.M22, ml.M23}
 		transformer.Transform(d.Dst, s2d, d.Src, sr, draw.Over, &draw.Options{
 			SrcMask:  mask,
 			SrcMaskP: maskp,
@@ -875,7 +877,7 @@ func (dc *Context) RotateAbout(angle, x, y float64) {
 // Hängt die Transformation im 'm' der aktuellen Transformationsmatrix an.
 // Die neue Transformation wird also durch Rechtsmultiplikation mit 'm'
 // gebildet.
-func (dc *Context) Multiply(m geom.Matrix) {
+func (dc *Context) Multiply(m *geom.Matrix) {
 	dc.matrix = dc.matrix.Multiply(m)
 }
 
@@ -897,13 +899,13 @@ func (dc *Context) TransformVector(x, y float64) (tx, ty float64) {
 // Kontexts kann entweder über eine Reihe von Methoden ('Rotate()',
 // 'Scale()', etc.) oder direkt durch Auslesen, Anpassen und mittels
 // 'SetMatrix()' Zurückschreiben der Matrix verändert werden.
-func (dc *Context) Matrix() geom.Matrix {
+func (dc *Context) Matrix() *geom.Matrix {
 	return dc.matrix
 }
 
 // Überschreibt die aktuelle Transformationsmatrix der Zeichenumgebung mit
 // dem Parameter 'm'.
-func (dc *Context) SetMatrix(m geom.Matrix) {
+func (dc *Context) SetMatrix(m *geom.Matrix) {
 	dc.matrix = m
 }
 
