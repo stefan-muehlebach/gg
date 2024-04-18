@@ -54,16 +54,16 @@ func main() {
     fh, err := os.OpenFile(fontFile, os.O_RDWR | os.O_CREATE | os.O_TRUNC, 0644)
     check(err)
     defer fh.Close()
-    
+
     fmt.Fprintf(fh, "package fonts\n\n")
-    
+
     fmt.Fprintf(fh, `// WICHTIG: Diese Datei sollte nicht manuell angepasst werden!
 // Sie wird automatisch per Script neu erzeugt. Allfaellige manuelle
 // Anpassungen werden damit ueberschrieben.`)
 
     fmt.Fprintf(fh, "\n\nimport (\n")
     fmt.Fprintf(fh, "    \"embed\"\n")
-    fmt.Fprintf(fh, "    \"golang.org/x/image/font/opentype\"\n")
+    // fmt.Fprintf(fh, "    \"golang.org/x/image/font/opentype\"\n")
     for _, goFont := range goFontList {
         pkgName := strings.ToLower(goFont)
         fmt.Fprintf(fh, "    \"golang.org/x/image/font/gofont/%s\"\n", pkgName)
@@ -87,15 +87,18 @@ func main() {
     fmt.Fprintf(fh, "var (\n")
     for _, name := range goFontList {
         varName  := strings.ToLower(name)
-        fmt.Fprintf(fh, "    %-35s = opentype.Parse(%s.TTF)\n", fmt.Sprintf("%s, _", name), varName)
+        fmt.Fprintf(fh, "    %-35s = Parse(%s.TTF)\n", fmt.Sprintf("%s", name), varName)
+        // fmt.Fprintf(fh, "    %-35s = opentype.Parse(%s.TTF)\n", fmt.Sprintf("%s, _", name), varName)
     }
     for _, name := range ttfFontList {
         varName  := strings.ToLower(name)
-        fmt.Fprintf(fh, "    %-35s = opentype.Parse(%s)\n", fmt.Sprintf("%s, _", name), varName)
+        fmt.Fprintf(fh, "    %-35s = Parse(%s)\n", fmt.Sprintf("%s", name), varName)
+        // fmt.Fprintf(fh, "    %-35s = opentype.Parse(%s)\n", fmt.Sprintf("%s, _", name), varName)
     }
     fmt.Fprintf(fh, ")\n\n")
 
-    fmt.Fprintf(fh, "var Map = map[string]*opentype.Font{\n")
+    fmt.Fprintf(fh, "var Map = map[string]*Font{\n")
+    // fmt.Fprintf(fh, "var Map = map[string]*opentype.Font{\n")
     for _, name := range goFontList {
         fmt.Fprintf(fh, "    %-35s %s,\n", fmt.Sprintf("\"%s\":", name), name)
     }

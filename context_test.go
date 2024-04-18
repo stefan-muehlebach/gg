@@ -8,7 +8,8 @@ import (
 	"os"
 	"path"
 	"testing"
-    "github.com/stefan-muehlebach/gg/color"
+
+	"github.com/stefan-muehlebach/gg/color"
 )
 
 var save bool
@@ -237,13 +238,25 @@ func TestPushPop(t *testing.T) {
 }
 
 func TestDrawStringWrapped(t *testing.T) {
-	dc := NewContext(100, 100)
-	dc.SetFillColor(color.White)
-	dc.Clear()
-	dc.SetStrokeColor(color.Black)
-	dc.DrawStringWrapped("Hello, world! How are you?", 50, 50, 0.5, 0.5, 90, 1.5, AlignCenter)
-	saveImage(dc, "TestDrawStringWrapped")
-	checkHash(t, dc, "8d92f6aae9e8b38563f171abd00893f8")
+	gc := NewContext(100, 100)
+    DrawStringWrapped(gc, 1)
+	saveImage(gc, "TestDrawStringWrapped")
+	checkHash(t, gc, "8d92f6aae9e8b38563f171abd00893f8")
+}
+
+func BenchmarkDrawStringWrapped(b *testing.B) {
+	gc := NewContext(100, 100)
+    b.ResetTimer()
+    DrawStringWrapped(gc, b.N)
+}
+
+func DrawStringWrapped(gc *Context, num int) {
+	for range num {
+		gc.SetFillColor(color.White)
+		gc.Clear()
+		gc.SetStrokeColor(color.Black)
+		gc.DrawStringWrapped("Hello, world! How are you?", 50, 50, 0.5, 0.5, 90, 1.5, AlignCenter)
+	}
 }
 
 func TestDrawImage(t *testing.T) {
@@ -300,52 +313,86 @@ func TestDrawPoint(t *testing.T) {
 }
 
 func TestLinearGradient(t *testing.T) {
-	dc := NewContext(100, 100)
-	g := NewLinearGradient(0, 0, 100, 100)
-	g.AddColorStop(0, color.RGBAF{0, 1, 0, 1})
-	g.AddColorStop(1, color.RGBAF{0, 0, 1, 1})
-	g.AddColorStop(0.5, color.RGBAF{1, 0, 0, 1})
-	dc.SetFillStyle(g)
-	dc.DrawRectangle(0, 0, 100, 100)
-	dc.Fill()
-	saveImage(dc, "TestLinearGradient")
-	checkHash(t, dc, "75eb9385c1219b1d5bb6f4c961802c7a")
+	gc := NewContext(100, 100)
+	DrawLinearGradient(gc, 1)
+	saveImage(gc, "TestLinearGradient")
+	checkHash(t, gc, "75eb9385c1219b1d5bb6f4c961802c7a")
+}
+
+func BenchmarkLinearGradient(b *testing.B) {
+	gc := NewContext(100, 100)
+	b.ResetTimer()
+	DrawLinearGradient(gc, b.N)
+}
+
+func DrawLinearGradient(gc *Context, num int) {
+	for range num {
+		g := NewLinearGradient(0, 0, 100, 100)
+		g.AddColorStop(0.0, color.RGBAF{0, 1, 0, 1})
+		g.AddColorStop(0.5, color.RGBAF{1, 0, 0, 1})
+		g.AddColorStop(1.0, color.RGBAF{0, 0, 1, 1})
+		gc.SetFillStyle(g)
+		gc.DrawRectangle(0, 0, 100, 100)
+		gc.Fill()
+	}
 }
 
 func TestRadialGradient(t *testing.T) {
-	dc := NewContext(100, 100)
-	g := NewRadialGradient(30, 50, 0, 70, 50, 50)
-	g.AddColorStop(0, color.RGBAF{0, 1, 0, 1})
-	g.AddColorStop(1, color.RGBAF{0, 0, 1, 1})
-	g.AddColorStop(0.5, color.RGBAF{1, 0, 0, 1})
-	dc.SetFillStyle(g)
-	dc.DrawRectangle(0, 0, 100, 100)
-	dc.Fill()
-	saveImage(dc, "TestRadialGradient")
-	checkHash(t, dc, "f170f39c3f35c29de11e00428532489d")
+	gc := NewContext(100, 100)
+	DrawRadialGradient(gc, 1)
+	saveImage(gc, "TestRadialGradient")
+	checkHash(t, gc, "f170f39c3f35c29de11e00428532489d")
+}
+
+func BenchmarkRadialGradient(b *testing.B) {
+	gc := NewContext(100, 100)
+	b.ResetTimer()
+	DrawRadialGradient(gc, b.N)
+}
+
+func DrawRadialGradient(gc *Context, num int) {
+	for range num {
+		g := NewRadialGradient(30, 50, 0, 70, 50, 50)
+		g.AddColorStop(0.0, color.RGBAF{0, 1, 0, 1})
+		g.AddColorStop(0.5, color.RGBAF{1, 0, 0, 1})
+		g.AddColorStop(1.0, color.RGBAF{0, 0, 1, 1})
+		gc.SetFillStyle(g)
+		gc.DrawRectangle(0, 0, 100, 100)
+		gc.Fill()
+	}
 }
 
 func TestDashes(t *testing.T) {
-	dc := NewContext(100, 100)
-	dc.SetFillColor(color.White)
-	dc.Clear()
+	gc := NewContext(100, 100)
+	DrawDashes(gc, 100)
+	saveImage(gc, "TestDashes")
+	checkHash(t, gc, "89669e7e03a08ca9fc7ba589a310f427")
+}
+
+func BenchmarkDashes(b *testing.B) {
+	gc := NewContext(100, 100)
+	b.ResetTimer()
+	DrawDashes(gc, b.N)
+}
+
+func DrawDashes(gc *Context, num int) {
+	gc.SetFillColor(color.White)
+	gc.Clear()
 	rnd := rand.New(rand.NewSource(99))
-	for i := 0; i < 100; i++ {
+	for range num {
 		x1 := rnd.Float64() * 100
 		y1 := rnd.Float64() * 100
 		x2 := rnd.Float64() * 100
 		y2 := rnd.Float64() * 100
-		dc.SetDash(rnd.Float64()*3+1, rnd.Float64()*3+3)
-		dc.DrawLine(x1, y1, x2, y2)
-		dc.SetStrokeWidth(rnd.Float64() * 3)
-		dc.SetStrokeColor(color.RGBAF{rnd.Float64(), rnd.Float64(), rnd.Float64(), 1.0})
-		dc.Stroke()
+		gc.SetDash(rnd.Float64()*3+1, rnd.Float64()*3+3)
+		gc.DrawLine(x1, y1, x2, y2)
+		gc.SetStrokeWidth(rnd.Float64() * 3)
+		gc.SetStrokeColor(color.RGBAF{rnd.Float64(), rnd.Float64(), rnd.Float64(), 1.0})
+		gc.Stroke()
 	}
-	saveImage(dc, "TestDashes")
-	checkHash(t, dc, "89669e7e03a08ca9fc7ba589a310f427")
 }
 
-func BenchmarkCircles(b *testing.B) {
+func BenchmarkScreenCoordSystem(b *testing.B) {
 	dc := NewContext(1000, 1000)
 	dc.SetFillColor(color.White)
 	dc.Clear()
@@ -362,10 +409,10 @@ func BenchmarkCircles(b *testing.B) {
 		dc.Fill()
 	}
 	b.StopTimer()
-	saveImage(dc, "BenchmarkCircles")
+	// saveImage(dc, "BenchmarkCircles")
 }
 
-func BenchmarkMathCircles(b *testing.B) {
+func BenchmarkMathCoordSystem(b *testing.B) {
 	dc := NewContext(1000, 1000)
 	dc.Translate(500, 500)
 	dc.Scale(500, -500)
@@ -384,5 +431,5 @@ func BenchmarkMathCircles(b *testing.B) {
 		dc.Fill()
 	}
 	b.StopTimer()
-	saveImage(dc, "BenchmarkMathCircles")
+	// saveImage(dc, "BenchmarkMathCircles")
 }
