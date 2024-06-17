@@ -52,8 +52,10 @@
 // # Abstände
 //
 // Zwei Methoden stehen zur Bestimmung des euklidischen Abstandes zwischen
-// zwei Punkten zur Verfügung. Dist2 liefert den Abstand im Quadrat, verzichtet
-// aus Perf.gründen auf das Anwenden der Wurzel.
+// zwei Punkten zur Verfügung. Dist2 liefert den Abstand _im Quadrat_,
+// verzichtet aus Perf.gründen auf das Anwenden der Wurzel. Will man aber nur
+// Abstände nur miteinander _vergleichen_, so reicht Dist2, denn:
+// wenn a > b, dann ist auch a^2 > b^2 und umgekehrt.
 //
 //	Distance(q Point) (float64)
 //	Dist2(q Point) (float64)

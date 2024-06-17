@@ -6,10 +6,14 @@ import (
 	"sort"
 )
 
+// Mit sog. 'color stops' werden die Farbwerte für bestimmte Stellen des
+// Farbverlaufs definiert. Jeder Stop
+
 type stop struct {
 	pos   float64
 	color color.Color
 }
+
 
 type stops []stop
 

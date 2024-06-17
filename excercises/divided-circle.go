@@ -11,18 +11,18 @@ import (
 )
 
 const (
-    // Breite und Höhe des Bildes in Pixel
+	// Breite und Höhe des Bildes in Pixel
 	Width, Height = 512.0, 512.0
-    // Freizulassender Rand
-	MarginSize    = 20.0
-    // Anzahl Punkte auf dem Kreisrand. Von dieser Zahl hängt das Muster
-    // massgeblich ab. Primzahlen versprechen meist gute Muster.
-	NumDivisions  = 101
-    // Grösse der Punkte.
-    PointSize     = 2.0
-    // Grösse der Beschriftungen. Hier muss man etwas experimentieren, bis
-    // die ideale Einstellung gefunden ist.
-	FontSize      = 12.0
+	// Freizulassender Rand
+	MarginSize = 20.0
+	// Anzahl Punkte auf dem Kreisrand. Von dieser Zahl hängt das Muster
+	// massgeblich ab. Primzahlen versprechen meist gute Muster.
+	NumDivisions = 101
+	// Grösse der Punkte.
+	PointSize = 2.0
+	// Grösse der Beschriftungen. Hier muss man etwas experimentieren, bis
+	// die ideale Einstellung gefunden ist.
+	FontSize = 12.0
 )
 
 type GraphData struct {
@@ -32,8 +32,8 @@ type GraphData struct {
 }
 
 var (
-    // BackColor und LineColor sind die Standardfarben für den Hintergrund
-    // (das Papier) und den Vordergrund.
+	// BackColor und LineColor sind die Standardfarben für den Hintergrund
+	// (das Papier) und den Vordergrund.
 	BackColor = color.RGBAF{0.851, 0.811, 0.733, 1.0}
 	LineColor = color.RGBAF{0.153, 0.157, 0.133, 1.0}
 
@@ -80,7 +80,6 @@ func main() {
 
 	pointList = make([]geom.Point, NumDivisions)
 	step = (2.0 * math.Pi) / float64(NumDivisions)
-	angle = 0.0
 	radius = Width/2 - MarginSize
 	mp = geom.Point{Width / 2, Height / 2}
 
@@ -109,7 +108,7 @@ func main() {
 		gc.DrawStringAnchored(str, textPos.X, textPos.Y, 0.0, 1.0)
 	}
 
-    DrawPointList(gc, pointList)
+	DrawPointList(gc, pointList)
 
 	gc.SavePNG("divided-circle.png")
 }

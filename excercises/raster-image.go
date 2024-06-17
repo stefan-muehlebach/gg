@@ -1,8 +1,8 @@
 package main
 
 import (
+	"flag"
 	"fmt"
-    "flag"
 	"image"
 	gocolor "image/color"
 	"log"
@@ -128,10 +128,10 @@ func RasterImage(gc *gg.Context, fileName string, format RasterFormat) {
 
 func main() {
 	var inFileName, outFileName string
-    var format RasterFormat
+	var format RasterFormat
 
-    flag.IntVar((*int)(&format), "format", int(DefFormat), "Raster Format")
-    flag.Parse()
+	flag.IntVar((*int)(&format), "format", int(DefFormat), "Raster Format")
+	flag.Parse()
 
 	switch len(os.Args) {
 	case 1:

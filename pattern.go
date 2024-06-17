@@ -25,18 +25,22 @@ type solidPattern struct {
 	color color.Color
 }
 
-func (p *solidPattern) ColorAt(x, y int) color.Color {
-	return p.color
-}
-
 func NewSolidPattern(color color.Color) Pattern {
 	return &solidPattern{color: color}
+}
+
+func (p *solidPattern) ColorAt(x, y int) color.Color {
+	return p.color
 }
 
 // Surface Pattern
 type surfacePattern struct {
 	im image.Image
 	op RepeatOp
+}
+
+func NewSurfacePattern(im image.Image, op RepeatOp) Pattern {
+	return &surfacePattern{im: im, op: op}
 }
 
 func (p *surfacePattern) ColorAt(x, y int) color.Color {
@@ -60,14 +64,15 @@ func (p *surfacePattern) ColorAt(x, y int) color.Color {
 	return p.im.At(x, y)
 }
 
-func NewSurfacePattern(im image.Image, op RepeatOp) Pattern {
-	return &surfacePattern{im: im, op: op}
-}
-
+// Interner Typ für das Zeichnen mit Pattern, resp. Gradienten
 type patternPainter struct {
 	im   *image.RGBA
 	mask *image.Alpha
 	p    Pattern
+}
+
+func newPatternPainter(im *image.RGBA, mask *image.Alpha, p Pattern) *patternPainter {
+	return &patternPainter{im, mask, p}
 }
 
 // Paint satisfies the Painter interface.
@@ -116,8 +121,4 @@ func (r *patternPainter) Paint(ss []raster.Span, done bool) {
 			r.im.Pix[i+3] = uint8((da*a + ca*ma) / m >> 8)
 		}
 	}
-}
-
-func newPatternPainter(im *image.RGBA, mask *image.Alpha, p Pattern) *patternPainter {
-	return &patternPainter{im, mask, p}
 }

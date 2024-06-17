@@ -1,3 +1,5 @@
+// Code generated  DO NOT EDIT.
+
 package fonts
 
 // WICHTIG: Diese Datei sollte nicht manuell angepasst werden!
@@ -62,6 +64,24 @@ var (
     goudyinitialen, _ = fontFiles.ReadFile("FontFiles/47-GoudyInitialen.ttf")
     mosaicinitialen, _ = fontFiles.ReadFile("FontFiles/48-MosaicInitialen.ttf")
     yinit, _ = fontFiles.ReadFile("FontFiles/49-Yinit.ttf")
+    worksansthin, _ = fontFiles.ReadFile("FontFiles/50-WorkSans-Thin.ttf")
+    worksansextralight, _ = fontFiles.ReadFile("FontFiles/51-WorkSans-ExtraLight.ttf")
+    worksanslight, _ = fontFiles.ReadFile("FontFiles/52-WorkSans-Light.ttf")
+    worksansregular, _ = fontFiles.ReadFile("FontFiles/53-WorkSans-Regular.ttf")
+    worksansmedium, _ = fontFiles.ReadFile("FontFiles/54-WorkSans-Medium.ttf")
+    worksanssemibold, _ = fontFiles.ReadFile("FontFiles/55-WorkSans-SemiBold.ttf")
+    worksansbold, _ = fontFiles.ReadFile("FontFiles/56-WorkSans-Bold.ttf")
+    worksansextrabold, _ = fontFiles.ReadFile("FontFiles/57-WorkSans-ExtraBold.ttf")
+    worksansblack, _ = fontFiles.ReadFile("FontFiles/58-WorkSans-Black.ttf")
+    worksansthinitalic, _ = fontFiles.ReadFile("FontFiles/60-WorkSans-ThinItalic.ttf")
+    worksansextralightitalic, _ = fontFiles.ReadFile("FontFiles/61-WorkSans-ExtraLightItalic.ttf")
+    worksanslightitalic, _ = fontFiles.ReadFile("FontFiles/62-WorkSans-LightItalic.ttf")
+    worksansitalic, _ = fontFiles.ReadFile("FontFiles/63-WorkSans-Italic.ttf")
+    worksansmediumitalic, _ = fontFiles.ReadFile("FontFiles/64-WorkSans-MediumItalic.ttf")
+    worksanssemibolditalic, _ = fontFiles.ReadFile("FontFiles/65-WorkSans-SemiBoldItalic.ttf")
+    worksansbolditalic, _ = fontFiles.ReadFile("FontFiles/66-WorkSans-BoldItalic.ttf")
+    worksansextrabolditalic, _ = fontFiles.ReadFile("FontFiles/67-WorkSans-ExtraBoldItalic.ttf")
+    worksansblackitalic, _ = fontFiles.ReadFile("FontFiles/68-WorkSans-BlackItalic.ttf")
 )
 
 var (
@@ -115,59 +135,95 @@ var (
     GoudyInitialen                      = Parse(goudyinitialen)
     MosaicInitialen                     = Parse(mosaicinitialen)
     Yinit                               = Parse(yinit)
+    WorkSansThin                        = Parse(worksansthin)
+    WorkSansExtraLight                  = Parse(worksansextralight)
+    WorkSansLight                       = Parse(worksanslight)
+    WorkSansRegular                     = Parse(worksansregular)
+    WorkSansMedium                      = Parse(worksansmedium)
+    WorkSansSemiBold                    = Parse(worksanssemibold)
+    WorkSansBold                        = Parse(worksansbold)
+    WorkSansExtraBold                   = Parse(worksansextrabold)
+    WorkSansBlack                       = Parse(worksansblack)
+    WorkSansThinItalic                  = Parse(worksansthinitalic)
+    WorkSansExtraLightItalic            = Parse(worksansextralightitalic)
+    WorkSansLightItalic                 = Parse(worksanslightitalic)
+    WorkSansItalic                      = Parse(worksansitalic)
+    WorkSansMediumItalic                = Parse(worksansmediumitalic)
+    WorkSansSemiBoldItalic              = Parse(worksanssemibolditalic)
+    WorkSansBoldItalic                  = Parse(worksansbolditalic)
+    WorkSansExtraBoldItalic             = Parse(worksansextrabolditalic)
+    WorkSansBlackItalic                 = Parse(worksansblackitalic)
 )
 
 var Map = map[string]*Font{
-    "GoRegular":                        GoRegular,
-    "GoItalic":                         GoItalic,
-    "GoMedium":                         GoMedium,
-    "GoMediumItalic":                   GoMediumItalic,
-    "GoBold":                           GoBold,
-    "GoBoldItalic":                     GoBoldItalic,
-    "GoMono":                           GoMono,
-    "GoMonoItalic":                     GoMonoItalic,
-    "GoMonoBold":                       GoMonoBold,
-    "GoMonoBoldItalic":                 GoMonoBoldItalic,
-    "GoSmallcaps":                      GoSmallcaps,
-    "GoSmallcapsItalic":                GoSmallcapsItalic,
-    "LucidaBright":                     LucidaBright,
-    "LucidaBrightItalic":               LucidaBrightItalic,
-    "LucidaBrightDemibold":             LucidaBrightDemibold,
-    "LucidaBrightDemiboldItalic":       LucidaBrightDemiboldItalic,
-    "LucidaSans":                       LucidaSans,
-    "LucidaSansItalic":                 LucidaSansItalic,
-    "LucidaSansDemiboldRoman":          LucidaSansDemiboldRoman,
-    "LucidaSansDemiboldItalic":         LucidaSansDemiboldItalic,
-    "LucidaSansTypewriter":             LucidaSansTypewriter,
-    "LucidaSansTypewriterOblique":      LucidaSansTypewriterOblique,
-    "LucidaSansTypewriterBold":         LucidaSansTypewriterBold,
-    "LucidaSansTypewriterBoldOblique":  LucidaSansTypewriterBoldOblique,
-    "LucidaFax":                        LucidaFax,
-    "LucidaFaxItalic":                  LucidaFaxItalic,
-    "LucidaFaxDemibold":                LucidaFaxDemibold,
-    "LucidaFaxDemiboldItalic":          LucidaFaxDemiboldItalic,
-    "LucidaConsole":                    LucidaConsole,
-    "LucidaHandwritingItalic":          LucidaHandwritingItalic,
-    "LucidaCalligraphy":                LucidaCalligraphy,
-    "LucidaCalligraphyBold":            LucidaCalligraphyBold,
-    "LucidaBlackletter":                LucidaBlackletter,
-    "Seaford":                          Seaford,
-    "SeafordItalic":                    SeafordItalic,
-    "SeafordBold":                      SeafordBold,
-    "SeafordBoldItalic":                SeafordBoldItalic,
-    "Garamond":                         Garamond,
-    "GaramondItalic":                   GaramondItalic,
-    "GaramondBold":                     GaramondBold,
-    "Elegante":                         Elegante,
-    "EleganteBold":                     EleganteBold,
-    "LeipzigFraktur":                   LeipzigFraktur,
-    "LeipzigFrakturBold":               LeipzigFrakturBold,
-    "RothenburgDecorative":             RothenburgDecorative,
-    "Elzevier":                         Elzevier,
-    "FloralCapitals":                   FloralCapitals,
-    "GoudyInitialen":                   GoudyInitialen,
-    "MosaicInitialen":                  MosaicInitialen,
-    "Yinit":                            Yinit,
+    "GoRegular": GoRegular,
+    "GoItalic": GoItalic,
+    "GoMedium": GoMedium,
+    "GoMediumItalic": GoMediumItalic,
+    "GoBold": GoBold,
+    "GoBoldItalic": GoBoldItalic,
+    "GoMono": GoMono,
+    "GoMonoItalic": GoMonoItalic,
+    "GoMonoBold": GoMonoBold,
+    "GoMonoBoldItalic": GoMonoBoldItalic,
+    "GoSmallcaps": GoSmallcaps,
+    "GoSmallcapsItalic": GoSmallcapsItalic,
+    "LucidaBright": LucidaBright,
+    "LucidaBrightItalic": LucidaBrightItalic,
+    "LucidaBrightDemibold": LucidaBrightDemibold,
+    "LucidaBrightDemiboldItalic": LucidaBrightDemiboldItalic,
+    "LucidaSans": LucidaSans,
+    "LucidaSansItalic": LucidaSansItalic,
+    "LucidaSansDemiboldRoman": LucidaSansDemiboldRoman,
+    "LucidaSansDemiboldItalic": LucidaSansDemiboldItalic,
+    "LucidaSansTypewriter": LucidaSansTypewriter,
+    "LucidaSansTypewriterOblique": LucidaSansTypewriterOblique,
+    "LucidaSansTypewriterBold": LucidaSansTypewriterBold,
+    "LucidaSansTypewriterBoldOblique": LucidaSansTypewriterBoldOblique,
+    "LucidaFax": LucidaFax,
+    "LucidaFaxItalic": LucidaFaxItalic,
+    "LucidaFaxDemibold": LucidaFaxDemibold,
+    "LucidaFaxDemiboldItalic": LucidaFaxDemiboldItalic,
+    "LucidaConsole": LucidaConsole,
+    "LucidaHandwritingItalic": LucidaHandwritingItalic,
+    "LucidaCalligraphy": LucidaCalligraphy,
+    "LucidaCalligraphyBold": LucidaCalligraphyBold,
+    "LucidaBlackletter": LucidaBlackletter,
+    "Seaford": Seaford,
+    "SeafordItalic": SeafordItalic,
+    "SeafordBold": SeafordBold,
+    "SeafordBoldItalic": SeafordBoldItalic,
+    "Garamond": Garamond,
+    "GaramondItalic": GaramondItalic,
+    "GaramondBold": GaramondBold,
+    "Elegante": Elegante,
+    "EleganteBold": EleganteBold,
+    "LeipzigFraktur": LeipzigFraktur,
+    "LeipzigFrakturBold": LeipzigFrakturBold,
+    "RothenburgDecorative": RothenburgDecorative,
+    "Elzevier": Elzevier,
+    "FloralCapitals": FloralCapitals,
+    "GoudyInitialen": GoudyInitialen,
+    "MosaicInitialen": MosaicInitialen,
+    "Yinit": Yinit,
+    "WorkSansThin": WorkSansThin,
+    "WorkSansExtraLight": WorkSansExtraLight,
+    "WorkSansLight": WorkSansLight,
+    "WorkSansRegular": WorkSansRegular,
+    "WorkSansMedium": WorkSansMedium,
+    "WorkSansSemiBold": WorkSansSemiBold,
+    "WorkSansBold": WorkSansBold,
+    "WorkSansExtraBold": WorkSansExtraBold,
+    "WorkSansBlack": WorkSansBlack,
+    "WorkSansThinItalic": WorkSansThinItalic,
+    "WorkSansExtraLightItalic": WorkSansExtraLightItalic,
+    "WorkSansLightItalic": WorkSansLightItalic,
+    "WorkSansItalic": WorkSansItalic,
+    "WorkSansMediumItalic": WorkSansMediumItalic,
+    "WorkSansSemiBoldItalic": WorkSansSemiBoldItalic,
+    "WorkSansBoldItalic": WorkSansBoldItalic,
+    "WorkSansExtraBoldItalic": WorkSansExtraBoldItalic,
+    "WorkSansBlackItalic": WorkSansBlackItalic,
 }
 
 var Names = []string{
@@ -221,5 +277,22 @@ var Names = []string{
     "GoudyInitialen",
     "MosaicInitialen",
     "Yinit",
+    "WorkSansThin",
+    "WorkSansExtraLight",
+    "WorkSansLight",
+    "WorkSansRegular",
+    "WorkSansMedium",
+    "WorkSansSemiBold",
+    "WorkSansBold",
+    "WorkSansExtraBold",
+    "WorkSansBlack",
+    "WorkSansThinItalic",
+    "WorkSansExtraLightItalic",
+    "WorkSansLightItalic",
+    "WorkSansItalic",
+    "WorkSansMediumItalic",
+    "WorkSansSemiBoldItalic",
+    "WorkSansBoldItalic",
+    "WorkSansExtraBoldItalic",
+    "WorkSansBlackItalic",
 }
-

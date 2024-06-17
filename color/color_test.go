@@ -6,6 +6,8 @@ import (
 	"math"
 	"math/rand"
 	"testing"
+
+	"github.com/stefan-muehlebach/gg"
 )
 
 // Dies ist eine Hilfsfunktion, mit welcher zwei Fliesskommazahlen auf
@@ -143,117 +145,117 @@ var (
 	convColor color.Color
 
 	rgbaColorList = []color.RGBA{
-		color.RGBA{0, 0, 0, 255},
-		color.RGBA{255, 255, 255, 255},
-		color.RGBA{255, 0, 0, 255},
-		color.RGBA{0, 255, 0, 255},
-		color.RGBA{0, 0, 255, 255},
-		color.RGBA{255, 255, 0, 255},
-		color.RGBA{0, 255, 255, 255},
-		color.RGBA{255, 0, 255, 255},
-		color.RGBA{191, 191, 191, 255},
-		color.RGBA{128, 128, 128, 255},
-		color.RGBA{128, 0, 0, 255},
-		color.RGBA{128, 128, 0, 255},
-		color.RGBA{0, 128, 0, 255},
-		color.RGBA{128, 0, 128, 255},
-		color.RGBA{0, 128, 128, 255},
-		color.RGBA{0, 0, 128, 255},
+		{0, 0, 0, 255},
+		{255, 255, 255, 255},
+		{255, 0, 0, 255},
+		{0, 255, 0, 255},
+		{0, 0, 255, 255},
+		{255, 255, 0, 255},
+		{0, 255, 255, 255},
+		{255, 0, 255, 255},
+		{191, 191, 191, 255},
+		{128, 128, 128, 255},
+		{128, 0, 0, 255},
+		{128, 128, 0, 255},
+		{0, 128, 0, 255},
+		{128, 0, 128, 255},
+		{0, 128, 128, 255},
+		{0, 0, 128, 255},
 	}
 
 	rgbafColorList = []RGBAF{
-		RGBAF{0, 0, 0, 1.0},
-		RGBAF{1.0, 1.0, 1.0, 1.0},
-		RGBAF{1.0, 0, 0, 1.0},
-		RGBAF{0, 1.0, 0, 1.0},
-		RGBAF{0, 0, 1.0, 1.0},
-		RGBAF{1.0, 1.0, 0, 1.0},
-		RGBAF{0, 1.0, 1.0, 1.0},
-		RGBAF{1.0, 0, 1.0, 1.0},
-		RGBAF{0.75, 0.75, 0.75, 1.0},
-		RGBAF{0.5, 0.5, 0.5, 1.0},
-		RGBAF{0.5, 0, 0, 1.0},
-		RGBAF{0.5, 0.5, 0, 1.0},
-		RGBAF{0, 0.5, 0, 1.0},
-		RGBAF{0.5, 0, 0.5, 1.0},
-		RGBAF{0, 0.5, 0.5, 1.0},
-		RGBAF{0, 0, 0.5, 1.0},
+		{0, 0, 0, 1.0},
+		{1.0, 1.0, 1.0, 1.0},
+		{1.0, 0, 0, 1.0},
+		{0, 1.0, 0, 1.0},
+		{0, 0, 1.0, 1.0},
+		{1.0, 1.0, 0, 1.0},
+		{0, 1.0, 1.0, 1.0},
+		{1.0, 0, 1.0, 1.0},
+		{0.75, 0.75, 0.75, 1.0},
+		{0.5, 0.5, 0.5, 1.0},
+		{0.5, 0, 0, 1.0},
+		{0.5, 0.5, 0, 1.0},
+		{0, 0.5, 0, 1.0},
+		{0.5, 0, 0.5, 1.0},
+		{0, 0.5, 0.5, 1.0},
+		{0, 0, 0.5, 1.0},
 	}
 
 	hspColorList = []HSP{
-		HSP{H: 0, S: 0, P: 0, A: 1},
-		HSP{H: 0, S: 0, P: 1, A: 1},
-		HSP{H: 0, S: 1, P: 0.49092, A: 1},
-		HSP{H: 120, S: 1, P: 0.83126, A: 1},
-		HSP{H: 240, S: 1, P: 0.26077, A: 1},
-		HSP{H: 60, S: 1, P: 0.9654, A: 1},
-		HSP{H: 180, S: 1, P: 0.87121, A: 1},
-		HSP{H: 300, S: 1, P: 0.55588, A: 1},
-		HSP{H: 0, S: 0, P: 0.74902, A: 1},
-		HSP{H: 0, S: 0, P: 0.50196, A: 1},
-		HSP{H: 0, S: 1, P: 0.24642, A: 1},
-		HSP{H: 60, S: 1, P: 0.48459, A: 1},
-		HSP{H: 120, S: 1, P: 0.41726, A: 1},
-		HSP{H: 300, S: 1, P: 0.27903, A: 1},
-		HSP{H: 180, S: 1, P: 0.43731, A: 1},
-		HSP{H: 240, S: 1, P: 0.1309, A: 1},
+		{H: 0, S: 0, P: 0, A: 1},
+		{H: 0, S: 0, P: 1, A: 1},
+		{H: 0, S: 1, P: 0.49092, A: 1},
+		{H: 120, S: 1, P: 0.83126, A: 1},
+		{H: 240, S: 1, P: 0.26077, A: 1},
+		{H: 60, S: 1, P: 0.9654, A: 1},
+		{H: 180, S: 1, P: 0.87121, A: 1},
+		{H: 300, S: 1, P: 0.55588, A: 1},
+		{H: 0, S: 0, P: 0.74902, A: 1},
+		{H: 0, S: 0, P: 0.50196, A: 1},
+		{H: 0, S: 1, P: 0.24642, A: 1},
+		{H: 60, S: 1, P: 0.48459, A: 1},
+		{H: 120, S: 1, P: 0.41726, A: 1},
+		{H: 300, S: 1, P: 0.27903, A: 1},
+		{H: 180, S: 1, P: 0.43731, A: 1},
+		{H: 240, S: 1, P: 0.1309, A: 1},
 	}
 
 	hsvColorList = []HSV{
-		HSV{0, 0, 0, 1},
-		HSV{0, 0, 1, 1},
-		HSV{0, 1, 1, 1},
-		HSV{120, 1, 1, 1},
-		HSV{240, 1, 1, 1},
-		HSV{60, 1, 1, 1},
-		HSV{180, 1, 1, 1},
-		HSV{300, 1, 1, 1},
-		HSV{0, 0, 0.75, 1},
-		HSV{0, 0, 0.5, 1},
-		HSV{0, 1, 0.5, 1},
-		HSV{60, 1, 0.5, 1},
-		HSV{120, 1, 0.5, 1},
-		HSV{300, 1, 0.5, 1},
-		HSV{180, 1, 0.5, 1},
-		HSV{240, 1, 0.5, 1},
+		{0, 0, 0, 1},
+		{0, 0, 1, 1},
+		{0, 1, 1, 1},
+		{120, 1, 1, 1},
+		{240, 1, 1, 1},
+		{60, 1, 1, 1},
+		{180, 1, 1, 1},
+		{300, 1, 1, 1},
+		{0, 0, 0.75, 1},
+		{0, 0, 0.5, 1},
+		{0, 1, 0.5, 1},
+		{60, 1, 0.5, 1},
+		{120, 1, 0.5, 1},
+		{300, 1, 0.5, 1},
+		{180, 1, 0.5, 1},
+		{240, 1, 0.5, 1},
 	}
 
 	hslColorList = []HSL{
-		HSL{0, 0, 0, 1},
-		HSL{0, 0, 1, 1},
-		HSL{0, 1, 0.5, 1},
-		HSL{120, 1, 0.5, 1},
-		HSL{240, 1, 0.5, 1},
-		HSL{60, 1, 0.5, 1},
-		HSL{180, 1, 0.5, 1},
-		HSL{300, 1, 0.5, 1},
-		HSL{0, 0, 0.75, 1},
-		HSL{0, 0, 0.5, 1},
-		HSL{0, 1, 0.25, 1},
-		HSL{60, 1, 0.25, 1},
-		HSL{120, 1, 0.25, 1},
-		HSL{300, 1, 0.25, 1},
-		HSL{180, 1, 0.25, 1},
-		HSL{240, 1, 0.25, 1},
+		{0, 0, 0, 1},
+		{0, 0, 1, 1},
+		{0, 1, 0.5, 1},
+		{120, 1, 0.5, 1},
+		{240, 1, 0.5, 1},
+		{60, 1, 0.5, 1},
+		{180, 1, 0.5, 1},
+		{300, 1, 0.5, 1},
+		{0, 0, 0.75, 1},
+		{0, 0, 0.5, 1},
+		{0, 1, 0.25, 1},
+		{60, 1, 0.25, 1},
+		{120, 1, 0.25, 1},
+		{300, 1, 0.25, 1},
+		{180, 1, 0.25, 1},
+		{240, 1, 0.25, 1},
 	}
 
 	hsiColorList = []HSI{
-		HSI{0, 0, 0, 1},
-		HSI{0, 0, 1, 1},
-		HSI{0, 1, 0.333, 1},
-		HSI{120, 1, 0.333, 1},
-		HSI{240, 1, 0.333, 1},
-		HSI{60, 1, 0.666, 1},
-		HSI{180, 1, 0.666, 1},
-		HSI{300, 1, 0.666, 1},
-		HSI{0, 0, 0.749, 1},
-		HSI{0, 0, 0.502, 1},
-		HSI{0, 1, 0.167, 1},
-		HSI{60, 1, 0.335, 1},
-		HSI{120, 1, 0.167, 1},
-		HSI{300, 1, 0.335, 1},
-		HSI{180, 1, 0.335, 1},
-		HSI{240, 1, 0.167, 1},
+		{0, 0, 0, 1},
+		{0, 0, 1, 1},
+		{0, 1, 0.333, 1},
+		{120, 1, 0.333, 1},
+		{240, 1, 0.333, 1},
+		{60, 1, 0.666, 1},
+		{180, 1, 0.666, 1},
+		{300, 1, 0.666, 1},
+		{0, 0, 0.749, 1},
+		{0, 0, 0.502, 1},
+		{0, 1, 0.167, 1},
+		{60, 1, 0.335, 1},
+		{120, 1, 0.167, 1},
+		{300, 1, 0.335, 1},
+		{180, 1, 0.335, 1},
+		{240, 1, 0.167, 1},
 	}
 
 	rnd *rand.Rand
@@ -372,6 +374,75 @@ func ExampleHSI() {
 	fmt.Printf("%v", c1)
 	// Output:
 	// {0 0.5 0.1 1}
+}
+
+func TestFade(test *testing.T) {
+	padding := 10
+	fieldSize := 256
+	fileName := "color_fade.png"
+
+	width := 4*fieldSize + 5*padding
+	height := fieldSize + 2*padding
+
+	gc := gg.NewContext(width, height)
+
+	xOff := padding
+	yOff := padding + fieldSize
+	hsvColor := HSV{1.0, 0.0, 0.0, 1.0}
+	for j := range fieldSize {
+		row := yOff - j
+		hsvColor.V = float64(j) / 255.0
+		for i := range j+1 {
+			col := xOff + i
+			hsvColor.S = float64(i) / float64(j+1)
+			gc.SetPixel(col, row, hsvColor)
+		}
+	}
+
+	xOff += fieldSize + padding
+	hsiColor := HSI{1.0, 0.0, 0.0, 1.0}
+	for j := range fieldSize {
+		row := yOff - j
+		hsiColor.I = float64(j) / 255.0
+		for i := range j+1 {
+			col := xOff + i
+			hsiColor.S = float64(i) / float64(j+1)
+			gc.SetPixel(col, row, hsiColor)
+		}
+	}
+
+	xOff += fieldSize + padding
+	hslColor := HSL{1.0, 0.0, 0.0, 1.0}
+	for j := range fieldSize {
+		row := yOff - j
+		hslColor.L = float64(j) / 255.0
+		max := 2 * j
+		if max >= 256 {
+			max -= 2 * (max % 256)
+		}
+		for i := range max + 1 {
+			col := xOff + i
+			hslColor.S = float64(i) / float64(max+1)
+			gc.SetPixel(col, row, hslColor)
+		}
+	}
+
+	xOff += fieldSize + padding
+	hspColor := HSP{1.0, 0.0, 0.0, 1.0}
+	for j := range fieldSize {
+		row := yOff - j
+		hspColor.P = float64(j) / 255.0
+		for i := range j+1 {
+			col := xOff + i
+			hspColor.S = float64(i) / float64(j+1)
+			gc.SetPixel(col, row, hspColor)
+		}
+	}
+
+	err := gc.SavePNG(fileName)
+	if err != nil {
+		test.Error(err)
+	}
 }
 
 func TestRGBAF(test *testing.T) {

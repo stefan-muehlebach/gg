@@ -1,9 +1,9 @@
 package main
 
 import (
-	"github.com/stefan-muehlebach/gg/colornames"
 	"github.com/stefan-muehlebach/gg"
 	"github.com/stefan-muehlebach/gg/color"
+	"github.com/stefan-muehlebach/gg/colornames"
 	"github.com/stefan-muehlebach/gg/geom"
 	"math/rand"
 )
@@ -14,8 +14,8 @@ const (
 	GraphSize     = Width - 2*MarginSize
 	OutFileName   = "farn.png"
 
-	xMin, xMax = -5.5,  5.5
-	yMin, yMax =  0.0, 11.0
+	xMin, xMax = -5.5, 5.5
+	yMin, yMax = 0.0, 11.0
 
 	numPoints = 100_000
 )

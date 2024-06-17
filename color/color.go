@@ -20,8 +20,6 @@ import (
 // Da dieses Package anstelle von 'image/color' verwendet werden kann,
 // sind einige Standardfarben auch hier definiert.
 var (
-	Black       = RGBAF{0.0, 0.0, 0.0, 1.0}
-	White       = RGBAF{1.0, 1.0, 1.0, 1.0}
 	Transparent = RGBAF{0.0, 0.0, 0.0, 0.0}
 	Opaque      = RGBAF{1.0, 1.0, 1.0, 1.0}
 )

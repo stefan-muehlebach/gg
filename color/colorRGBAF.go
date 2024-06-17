@@ -7,7 +7,7 @@ import (
 
 // RGBAF entspricht dem NRGBA-Typ aus image/color, verwendet fuer die
 // einzelnen Komponenten jedoch Fliesskommazahlen im Intervall [0,1].
-// Beachte: Der Typ in diesem Package heisst RGBA, die Werte R, G, B und A
+// Beachte: Der Typ in diesem Package heisst FRGBA, die Werte R, G, B und A
 // werden jedoch als _nicht_ normierte Werte interpretiert, meine praktischen
 // Erfahrungen haben gezeigt, dass dies intuitiver ist.
 type RGBAF struct {
@@ -77,7 +77,7 @@ func rgbafModel(c color.Color) color.Color {
 		return RGBAF{float64(r) / 65535.0, float64(g) / 65535.0, float64(b) / 65535.0, float64(a) / 65535.0}
 	}
 	if a == 0 {
-		return RGBAF{0.0, 0.0, 0.0, 0.0}
+		return RGBAF{}
 	}
 	r = (r * 0xffff) / a
 	g = (g * 0xffff) / a

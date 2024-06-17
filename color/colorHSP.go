@@ -5,13 +5,13 @@ import (
 	"math"
 )
 
-// Der neue Farbtyp HSP mit 'P' fuer "perceived brightness".
 const (
 	perRed   = 0.241
 	perGreen = 0.691
 	perBlue  = 0.068
 )
 
+// Der neue Farbtyp HSP mit 'P' fuer "perceived brightness".
 type HSP struct {
 	H, S, P, A float64
 }
@@ -106,7 +106,7 @@ func (c HSP) RGBA() (r, g, b, a uint32) {
 func (c HSP) Bright(t float64) Color {
 	t = setIn(t, 0, 1)
 	r := c
-	r.S = (1 - t) * c.S
+	r.S = (1-t)* c.S
 	r.P = (1-t)*c.P + t
 	return r
 }

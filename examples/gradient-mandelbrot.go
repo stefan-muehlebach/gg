@@ -47,8 +47,8 @@ func main() {
 	grad4.AddColorStop(0.78, color.RGBAF{0.2978, 0.1382, 0.75, 1.0})
 	grad4.AddColorStop(1.0, color.RGBAF{0.6595, 0.0, 0.0, 1.0})
 
-	for row:=0; row<4; row++ {
-		for col:=0; col<8; col++ {
+	for row := 0; row < 4; row++ {
+		for col := 0; col < 8; col++ {
 			x := float64(marginSize + col*(marginSize+108))
 			y := float64(marginSize + row*(marginSize+108))
 			dc.DrawRectangle(x, y, 108, 108)

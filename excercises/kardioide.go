@@ -23,7 +23,7 @@ const (
 var (
 	BackColor = color.RGBAF{0.851, 0.811, 0.733, 1.0}
 	LineColor = colornames.DarkSlateBlue.Dark(0.4)
-    LineWidth = 1.0
+	LineWidth = 1.0
 )
 
 func CircularPointList(midPoint geom.Point, radius, startAngle, endAngle float64, n int) []geom.Point {
@@ -43,21 +43,21 @@ func CircularPointList(midPoint geom.Point, radius, startAngle, endAngle float64
 func Cardioide(gc *gg.Context, pl []geom.Point, f int) {
 	gc.SetStrokeWidth(LineWidth)
 	gc.SetStrokeColor(LineColor)
-    for i, p1 := range pl[1:] {
-	// for i := 1; i < len(pl); i++ {
+	for i, p1 := range pl[1:] {
+		// for i := 1; i < len(pl); i++ {
 		// p1 := pl[i]
-		j := (f * (i+1)) % (len(pl))
+		j := (f * (i + 1)) % (len(pl))
 		p2 := pl[j]
 		gc.DrawLine(p1.X, p1.Y, p2.X, p2.Y)
 	}
-    	gc.Stroke()
+	gc.Stroke()
 }
 
 func main() {
 	var pointList []geom.Point
 
 	pointList = make([]geom.Point, 0)
-	pointList = append(pointList, CircularPointList(geom.Point{Width/2, Height/2}, Width/2-MarginSize, 0, 2*math.Pi, NumPoints)...)
+	pointList = append(pointList, CircularPointList(geom.Point{Width / 2, Height / 2}, Width/2-MarginSize, 0, 2*math.Pi, NumPoints)...)
 
 	gc := gg.NewContext(Width, Height)
 	gc.SetFillColor(BackColor)

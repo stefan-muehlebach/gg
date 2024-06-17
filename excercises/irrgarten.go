@@ -14,7 +14,7 @@ const (
 	NumRaster     = 21
 	RasterSize    = CanvasSize / NumRaster
 	LineWidth     = 3.0
-    OutFileName = "irrgarten.png"
+	OutFileName   = "irrgarten.png"
 )
 
 var (

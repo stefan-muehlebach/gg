@@ -51,12 +51,14 @@ func (c HSI) RGBA() (r, g, b, a uint32) {
 }
 
 func (c HSI) Bright(t float64) Color {
-	t = setIn(t, 0, 1)
+	// Nicht realisiert, TO DO!
+	// t = setIn(t, 0, 1)
 	return c
 }
 
 func (c HSI) Dark(t float64) Color {
-	t = setIn(t, 0, 1)
+	// Nicht realisiert, TO DO!
+	// t = setIn(t, 0, 1)
 	return c
 }
 

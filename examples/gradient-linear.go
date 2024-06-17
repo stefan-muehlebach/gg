@@ -6,10 +6,11 @@ import (
 )
 
 const (
-    width, height = 512, 512
-    marginSize = 24
-    canvasSize = width - 2*marginSize
-	outFile = "gradient-linear.png")
+	width, height = 512, 512
+	marginSize    = 24
+	canvasSize    = width - 2*marginSize
+	outFile       = "gradient-linear.png"
+)
 
 func main() {
 	dc := gg.NewContext(512, 512)

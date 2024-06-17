@@ -26,8 +26,8 @@ var (
 	points                                 []Point
 	rectangles                             []Rectangle
 	isIn                                   bool
-    
-    	rectList = []Rectangle{
+
+	rectList = []Rectangle{
 		Rect(0, 0, 10, 10),
 		Rect(10, 0, 20, 10),
 		Rect(1, 2, 3, 4),
@@ -39,14 +39,14 @@ var (
 		Rect(8, 8, 8, 8),
 		Rect(88, 88, 88, 88),
 		Rect(6, 5, 4, 3),
-        Rectangle{Point{-1, -1}, Point{1, 1}},
-        Rectangle{Point{-1,  1}, Point{1, -1}},
-        Rectangle{Point{ 1,  1}, Point{-1, -1}},
-        Rectangle{Point{ 1, -1}, Point{-1, 1}},
-        Rectangle{Point{-1,  0}, Point{1, 0}},
-        Rectangle{Point{1,  0}, Point{-1, 0}},
-        Rectangle{Point{0,  -1}, Point{0, 1}},
-        Rectangle{Point{0,  1}, Point{0, -1}},
+		{Point{-1, -1}, Point{1, 1}},
+		{Point{-1, 1}, Point{1, -1}},
+		{Point{1, 1}, Point{-1, -1}},
+		{Point{1, -1}, Point{-1, 1}},
+		{Point{-1, 0}, Point{1, 0}},
+		{Point{1, 0}, Point{-1, 0}},
+		{Point{0, -1}, Point{0, 1}},
+		{Point{0, 1}, Point{0, -1}},
 	}
 )
 
@@ -54,12 +54,12 @@ func init() {
 
 }
 
-func eq(a, b float64) (bool) {
-    if math.Abs(a-b) < eps {
-        return true
-    } else {
-        return false
-    }
+func eq(a, b float64) bool {
+	if math.Abs(a-b) < eps {
+		return true
+	} else {
+		return false
+	}
 }
 
 //----------------------------------------------------------------------------
@@ -304,14 +304,14 @@ func TestRectangleRelPos(t *testing.T) {
 		{-0.5, -0.5},
 	}
 	posList := []Point{
-		Point{-3.0, -2.0},
-		Point{4.0, -2.0},
-		Point{-3.0, 3.0},
-		Point{4.0, 3.0},
-		Point{-10.0, -7.0},
-		Point{11.0, 8.0},
-		Point{0.5, 0.5},
-		Point{-6.5, -4.5},
+		{-3.0, -2.0},
+		{4.0, -2.0},
+		{-3.0, 3.0},
+		{4.0, 3.0},
+		{-10.0, -7.0},
+		{11.0, 8.0},
+		{0.5, 0.5},
+		{-6.5, -4.5},
 	}
 
 	for i, rel := range relList {
@@ -330,30 +330,30 @@ func TestRectangleRelPos(t *testing.T) {
 
 func TestRectangleSetInside(t *testing.T) {
 	r0 = Rect(-3, -2, 4, 3)
-    posList := [][]Point{
-        {Point{-4, -3}, Point{-3, -2}},
-        {Point{-4, -2}, Point{-3, -2}},
-        {Point{-4,  3}, Point{-3,  3}},
-        {Point{-4,  4}, Point{-3,  3}},
-        {Point{-3, -3}, Point{-3, -2}},
-        {Point{-3, -2}, Point{-3, -2}},
-        {Point{-3,  3}, Point{-3,  3}},
-        {Point{-3,  4}, Point{-3,  3}},
-        {Point{ 0, -3}, Point{ 0, -2}},
-        {Point{ 0, -2}, Point{ 0, -2}},
-        {Point{ 0,  3}, Point{ 0,  3}},
-        {Point{ 0,  4}, Point{ 0,  3}},
-        {Point{ 4, -3}, Point{ 4, -2}},
-        {Point{ 4, -2}, Point{ 4, -2}},
-        {Point{ 4,  3}, Point{ 4,  3}},
-        {Point{ 4,  4}, Point{ 4,  3}},
-    }
-    for _, pos := range posList {
-        p0 = r0.SetInside(pos[0])
-        if !p0.Eq(pos[1]) {
-            t.Errorf("SetInside of %v failed: got %v want %v", pos[0], p0, pos[1])
-        }
-    }
+	posList := [][]Point{
+		{Point{-4, -3}, Point{-3, -2}},
+		{Point{-4, -2}, Point{-3, -2}},
+		{Point{-4, 3}, Point{-3, 3}},
+		{Point{-4, 4}, Point{-3, 3}},
+		{Point{-3, -3}, Point{-3, -2}},
+		{Point{-3, -2}, Point{-3, -2}},
+		{Point{-3, 3}, Point{-3, 3}},
+		{Point{-3, 4}, Point{-3, 3}},
+		{Point{0, -3}, Point{0, -2}},
+		{Point{0, -2}, Point{0, -2}},
+		{Point{0, 3}, Point{0, 3}},
+		{Point{0, 4}, Point{0, 3}},
+		{Point{4, -3}, Point{4, -2}},
+		{Point{4, -2}, Point{4, -2}},
+		{Point{4, 3}, Point{4, 3}},
+		{Point{4, 4}, Point{4, 3}},
+	}
+	for _, pos := range posList {
+		p0 = r0.SetInside(pos[0])
+		if !p0.Eq(pos[1]) {
+			t.Errorf("SetInside of %v failed: got %v want %v", pos[0], p0, pos[1])
+		}
+	}
 }
 
 //----------------------------------------------------------------------------

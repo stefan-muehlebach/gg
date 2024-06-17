@@ -17,19 +17,19 @@ import (
 	"golang.org/x/image/math/fixed"
 )
 
-// Konvertiert einen Winkel in Grad nach dem Bogenmass.
+// Konvertiert einen Winkel von Grad (Altgrad) nach Bogenmass.
 func Radians(degrees float64) float64 {
 	return degrees * math.Pi / 180
 }
 
-// Konvertiert einen Winkel vom Bogenmass nach Grad.
+// Konvertiert einen Winkel vom Bogenmass nach Grad (Altgrad).
 func Degrees(radians float64) float64 {
 	return radians * 180 / math.Pi
 }
 
-// Läadt das Bild in der Datei path und stellt die Bilddaten als Image im
-// ersten Rückgabewert zur Verfügung. Bei einem Fehler ist der zweite
-// Rückgabewert nicht nil und muss entsprechend behandelt werden.
+// Läadt das Bild aus der Datei path und stellt die Bilddaten als Image im
+// ersten Rückgabewert zur Verfügung. Es werden die Formate PNG, GIF und JPEG
+// unterstützt, resp. alle Formate, welche dem Package [image] bekannt sind.
 func LoadImage(path string) (image.Image, error) {
 	file, err := os.Open(path)
 	if err != nil {
@@ -41,8 +41,6 @@ func LoadImage(path string) (image.Image, error) {
 }
 
 // Wie [LoadImage], jedoch ausschliesslich für PNG-Dateien.
-// Bei einem Fehler ist der zweite Rückgabewert nicht nil und muss
-// entsprechend behandelt werden.
 func LoadPNG(path string) (image.Image, error) {
 	file, err := os.Open(path)
 	if err != nil {
@@ -52,6 +50,7 @@ func LoadPNG(path string) (image.Image, error) {
 	return png.Decode(file)
 }
 
+// Speichert das Bild in [im] im PNG-Format in der Datei [path].
 func SavePNG(path string, im image.Image) error {
 	file, err := os.Create(path)
 	if err != nil {
@@ -61,6 +60,7 @@ func SavePNG(path string, im image.Image) error {
 	return png.Encode(file, im)
 }
 
+// Wie [LoadImage], jedoch ausschliesslich für JPEG-Dateien.
 func LoadJPG(path string) (image.Image, error) {
 	file, err := os.Open(path)
 	if err != nil {
@@ -70,6 +70,9 @@ func LoadJPG(path string) (image.Image, error) {
 	return jpeg.Decode(file)
 }
 
+// Speichert das Bild in [im] im JPEG-Format in der Datei [path]. Mit
+// [qualitiy] kann die Qualität des Bildes festgelegt werden: 1 - niedrige
+// Qualität (hohe Kompression) bis 100 - hohe Qualität (keine Kompression)
 func SaveJPG(path string, im image.Image, quality int) error {
 	file, err := os.Create(path)
 	if err != nil {

@@ -57,7 +57,7 @@ func RasterGradient(gc *gg.Context, format RasterFormat) {
 		//     return geom.Point{MarginSize + float64(col) * PointGapX,
 		//         MarginSize + float64(row) * PointGapY}, true
 		// }
-    case DiamondRasterFormat:
+	case DiamondRasterFormat:
 		NumPointsY = 2*NumPointsX - 1
 		PointGapX = CanvasSize / float64(NumPointsX-1)
 		PointGapY = CanvasSize / float64(NumPointsY-1)

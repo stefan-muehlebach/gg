@@ -239,15 +239,15 @@ func TestPushPop(t *testing.T) {
 
 func TestDrawStringWrapped(t *testing.T) {
 	gc := NewContext(100, 100)
-    DrawStringWrapped(gc, 1)
+	DrawStringWrapped(gc, 1)
 	saveImage(gc, "TestDrawStringWrapped")
 	checkHash(t, gc, "8d92f6aae9e8b38563f171abd00893f8")
 }
 
 func BenchmarkDrawStringWrapped(b *testing.B) {
 	gc := NewContext(100, 100)
-    b.ResetTimer()
-    DrawStringWrapped(gc, b.N)
+	b.ResetTimer()
+	DrawStringWrapped(gc, b.N)
 }
 
 func DrawStringWrapped(gc *Context, num int) {
