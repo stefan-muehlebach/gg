@@ -2,15 +2,15 @@ package main
 
 import (
 	"github.com/stefan-muehlebach/gg"
-	"github.com/stefan-muehlebach/gg/colornames"
+	"github.com/stefan-muehlebach/gg/color"
 )
 
 func main() {
 	gc := gg.NewContext(256, 256)
-	gc.SetFillColor(colornames.Beige)
+	gc.SetFillColor(color.Beige)
 	gc.Clear()
 
-	gc.SetStrokeColor(colornames.DarkSlateGray)
+	gc.SetStrokeColor(color.DarkSlateGray)
 	gc.SetStrokeWidth(7.0)
 	gc.DrawLine(20, 87, 236, 87)
 	gc.DrawLine(20, 169, 236, 169)
@@ -18,13 +18,13 @@ func main() {
 	gc.DrawLine(169, 20, 169, 236)
 	gc.Stroke()
 
-	gc.SetStrokeColor(colornames.DarkRed)
+	gc.SetStrokeColor(color.DarkRed)
 	gc.SetStrokeWidth(10.0)
 	gc.DrawCircle(46, 46, 26)
 	gc.DrawCircle(210, 210, 26)
 	gc.Stroke()
 
-	gc.SetStrokeColor(colornames.DarkGreen)
+	gc.SetStrokeColor(color.DarkGreen)
 	gc.DrawLine(106, 106, 150, 150)
 	gc.DrawLine(106, 150, 150, 106)
 	gc.DrawLine(24, 106, 68, 150)

@@ -9,11 +9,11 @@ package main
 
 // Dieses Programm ist Teil des Packages `gg/color` und erzeugt alle Farben
 // aus `golang.org/x/image/colornames` als RGBAF-Farben. Das generierte File
-// wird unter `../colornames/colornames.go` abgelegt und kann nun anstelle
-// von `golang.org/x/image/colornames` verwendet werden.
+// wird unter `colornames.go` abgelegt und kann nun anstelle von
+// `golang.org/x/image/colornames` verwendet werden.
 
 import (
-	"image/color"
+	"fmt"
 	"log"
 	"os"
 	"strings"
@@ -23,17 +23,13 @@ import (
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
 
-	col "github.com/stefan-muehlebach/gg/color"
+	"github.com/stefan-muehlebach/gg/color"
 )
 
 const (
 	colornamesTemplate = `// Code generated  DO NOT EDIT.
 
-package colornames
-
-import (
-    "github.com/stefan-muehlebach/gg/color"
-)
+package color
 
 // ACHTUNG: Dieses File ist Teil von 'gg/color' und wird
 // automatisch erzeugt. Manuelle Anpassungn an dieser
@@ -43,21 +39,37 @@ import (
 // in diesem Package als Variablen definiert.
 var (
 {{- range $i, $row := .}}
-    {{printf "%-24s = %#.4v" $row.Name $row.Color}}
+    {{printf "%-24s = %s" $row.Name $row.Color}}
 {{- end}}
 )
 
+// Diese Farben tauchen im Style-Guide von Google zur Kommunikation von Go
+// auf und werden bspw. im GUI-Package 'adagui' fuer die Farben der
+// Bedienelemente verwendet.
+var (
+	GoGopherBlue             = RGBAF{R:0.004, G:0.678, B:0.847, A:1}
+	GoLightBlue              = RGBAF{R:0.369, G:0.788, B:0.890, A:1}
+	GoAqua                   = RGBAF{R:0.000, G:0.635, B:0.622, A:1}
+	GoBlack                  = RGBAF{R:0.000, G:0.000, B:0.000, A:1}
+	GoFuchsia                = RGBAF{R:0.808, G:0.188, B:0.384, A:1}
+	GoYellow                 = RGBAF{R:0.992, G:0.867, B:0.000, A:1}
+	GoTeal                   = RGBAF{R:0.000, G:0.520, B:0.553, A:1}
+	GoDimGray                = RGBAF{R:0.333, G:0.341, B:0.349, A:1}
+	GoIndigo                 = RGBAF{R:0.251, G:0.169, B:0.337, A:1}
+	GoLightGray              = RGBAF{R:0.859, G:0.851, B:0.839, A:1}
+)
+
 // Map contains named colors defined in the SVG 1.1 spec.
-var Map = map[string]color.RGBAF{
+var Map = map[string]RGBAF{
 {{- range $i, $row := .}}
     {{printf "\"%s\": %[1]s," $row.Name}}
 {{- end}}
 }
 
-// Der Slice 'Names' enthält die Namen aller Farben
-// der SVG 1.1 Spezifikation. Auf die Besonderheit betr. Gross-/Kleinschreibung
-// ist weiter oben bereits eingegangen worden. jedes Element dieses Slices
-// findet sich als Schlüssel in der Variable 'Map'.
+// Der Slice 'Names' enthält die Namen aller Farben der SVG 1.1 Spezifikation.
+// Auf die Besonderheit betr. Gross-/Kleinschreibung ist weiter oben bereits
+// eingegangen worden. Jedes Element dieses Slices findet sich als Schlüssel
+// in der Variable 'Map'.
 var Names = []string{
 {{- range $i, $row := .}}
     {{printf "\"%s\"," $row.Name}}
@@ -113,7 +125,7 @@ var (
 
 type TemplateType struct {
 	Name  string
-	Color color.Color
+	Color string
 }
 
 func main() {
@@ -135,13 +147,15 @@ func main() {
 
 	colorList := make([]TemplateType, len(colornames.Names))
 	for i, name := range colornames.Names {
+		colorDef := fmt.Sprintf("%#.4v", color.RGBAFModel.Convert(colornames.Map[name]))
+		colorDef, _ = strings.CutPrefix(colorDef, "color.")
 		colorList[i] = TemplateType{
 			replacer.Replace(titleCase.String(name)),
-			col.RGBAFModel.Convert(colornames.Map[name]),
+			colorDef,
 		}
 	}
 
-	fh, err := os.Create("../colornames/colornames.go")
+	fh, err := os.Create("colornames.go")
 	if err != nil {
 		log.Fatalf("creating file: %v", err)
 	}

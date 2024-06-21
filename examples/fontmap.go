@@ -3,7 +3,6 @@ package main
 import (
 	"github.com/stefan-muehlebach/gg"
 	"github.com/stefan-muehlebach/gg/color"
-	"github.com/stefan-muehlebach/gg/colornames"
 	"github.com/stefan-muehlebach/gg/fonts"
 )
 
@@ -12,7 +11,7 @@ var (
 	FontSize   = 48.0
 	LineHeight = 1.3 * FontSize
 	BackColor  = color.RGBAF{0.851, 0.811, 0.733, 1.0}
-	TextColor  = colornames.Black.Alpha(0.7)
+	TextColor  = color.Black.Alpha(0.7)
 
 	Width  = 1024.0
 	Height = 2*MarginSize + FontSize + float64(len(fonts.Names)-1)*LineHeight
@@ -32,7 +31,7 @@ func main() {
 
 		w, _ := gc.MeasureString(fontName)
 
-		gc.SetStrokeColor(colornames.Crimson)
+		gc.SetStrokeColor(color.Crimson)
 		gc.SetStrokeWidth(2.0)
 
 		// Links unten

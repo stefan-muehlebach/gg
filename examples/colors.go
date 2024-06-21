@@ -28,11 +28,41 @@ func main() {
 	gc.SetStrokeWidth(LineWidth)
 	x1, x2, y := MarginSize+ColorColumnWidth/2.0, Width-MarginSize-ColorColumnWidth/2.0, MarginSize+ColorColumnWidth/2.0
 	gc.DrawLine(x1, y, x2, y)
-	gc.SetStrokeColor(color.White.Alpha(0.5))
+	gc.SetStrokeColor(color.White.Alpha(0.333))
 	gc.Stroke()
 	y += LineWidth
 	gc.DrawLine(x1, y, x2, y)
-	gc.SetStrokeColor(color.RGBAF{0.5, 0.5, 0.5, 0.5})
+	gc.SetStrokeColor(color.RGBAF{0.5, 0.5, 0.5, 0.333})
+	gc.Stroke()
+	y += LineWidth
+	gc.DrawLine(x1, y, x2, y)
+	gc.SetStrokeColor(color.Black.Alpha(0.333))
+	gc.Stroke()
+
+	y += 2 * LineWidth
+	gc.DrawLine(x1, y, x2, y)
+	gc.SetStrokeColor(color.White.Alpha(0.666))
+	gc.Stroke()
+	y += LineWidth
+	gc.DrawLine(x1, y, x2, y)
+	gc.SetStrokeColor(color.RGBAF{0.5, 0.5, 0.5, 0.666})
+	gc.Stroke()
+	y += LineWidth
+	gc.DrawLine(x1, y, x2, y)
+	gc.SetStrokeColor(color.Black.Alpha(0.666))
+	gc.Stroke()
+
+	y += 2 * LineWidth
+	gc.DrawLine(x1, y, x2, y)
+	gc.SetStrokeColor(color.White)
+	gc.Stroke()
+	y += LineWidth
+	gc.DrawLine(x1, y, x2, y)
+	gc.SetStrokeColor(color.RGBAF{0.5, 0.5, 0.5, 1.0})
+	gc.Stroke()
+	y += LineWidth
+	gc.DrawLine(x1, y, x2, y)
+	gc.SetStrokeColor(color.Black)
 	gc.Stroke()
 
 	gc.SavePNG("colors.png")

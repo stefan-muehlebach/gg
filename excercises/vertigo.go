@@ -3,7 +3,6 @@ package main
 import (
 	"github.com/stefan-muehlebach/gg"
 	"github.com/stefan-muehlebach/gg/color"
-	"github.com/stefan-muehlebach/gg/colornames"
 	"github.com/stefan-muehlebach/gg/geom"
 )
 
@@ -19,8 +18,8 @@ const (
 var (
 	BackColor  = color.RGBAF{0.851, 0.811, 0.733, 1.0}
 	LineColor  = color.RGBAF{0.153, 0.157, 0.133, 1.0}
-	LineColor1 = colornames.Navy
-	LineColor2 = colornames.DarkRed
+	LineColor1 = color.Navy
+	LineColor2 = color.DarkRed
 )
 
 func main() {

@@ -3,7 +3,6 @@ package main
 import (
 	"github.com/stefan-muehlebach/gg"
 	"github.com/stefan-muehlebach/gg/color"
-	"github.com/stefan-muehlebach/gg/colornames"
 	"github.com/stefan-muehlebach/gg/geom"
 )
 
@@ -20,7 +19,7 @@ const (
 var (
 	BackColor  = color.RGBAF{0.851, 0.811, 0.733, 1.0}
 	LineColor  = color.RGBAF{0.153, 0.157, 0.133, 1.0}
-	WhiteColor = colornames.Ivory
+	WhiteColor = color.Ivory
 	BlackColor = color.RGBAF{0.153, 0.157, 0.133, 1.0}
 	TextColor  = color.RGBAF{0.153, 0.157, 0.133, 1.0}
 	DirList    = []geom.Point{

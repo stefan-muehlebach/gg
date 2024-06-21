@@ -3,7 +3,6 @@ package main
 import (
 	"github.com/stefan-muehlebach/gg"
 	"github.com/stefan-muehlebach/gg/color"
-	"github.com/stefan-muehlebach/gg/colornames"
 	"github.com/stefan-muehlebach/gg/fonts"
 	"math/rand"
 )
@@ -23,9 +22,9 @@ var (
 	BackColor  = color.RGBAF{0.851, 0.811, 0.733, 1.0}
 	TextFont   = fonts.GoBold
 	ConfigList = []ConfigData{
-		{colornames.Blue.Dark(0.5).Alpha(0.5), -80, 18.0},
-		{colornames.Green.Dark(0.7).Alpha(0.6), -250, 24.0},
-		{colornames.Red.Dark(0.7).Alpha(0.7), -300, 32.0},
+		{color.Blue.Dark(0.5).Alpha(0.5), -80, 18.0},
+		{color.Green.Dark(0.7).Alpha(0.6), -250, 24.0},
+		{color.Red.Dark(0.7).Alpha(0.7), -300, 32.0},
 	}
 )
 

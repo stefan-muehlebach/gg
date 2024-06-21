@@ -42,13 +42,13 @@ package main
 
 import (
     "github.com/stefan-muehlebach/gg"
-    "github.com/stefan-muehlebach/gg/colornames"
+    "github.com/stefan-muehlebach/gg/color"
 )
 
 func main() {
     gc := gg.NewContext(512, 512)
     gc.DrawCircle(256.0, 256.0, 224.0)
-    gc.SetFillColor(colornames.Black)
+    gc.SetFillColor(color.Black)
     gc.Fill()
     gc.SavePNG("circle.png")
 }
@@ -133,7 +133,7 @@ LoadFontFace(path string, points float64) error
 
 Für die Erstellung und Veränderung von Farben stehen im Package `gg/color`
 eine Anzahl von neuen Farbtypen (RGBAF, HSL, HSV, etc) zur Verfügung.
-Im Package `gg/colornames` sind alle Farben aus SVG 1.1 als
+Im Package `gg/color` sind alle Farben aus SVG 1.1 als
 vorbereitete Variablen zu finden.
 
 ```go

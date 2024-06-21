@@ -5,7 +5,6 @@ import (
 
 	"github.com/stefan-muehlebach/gg"
 	"github.com/stefan-muehlebach/gg/color"
-	"github.com/stefan-muehlebach/gg/colornames"
 	"github.com/stefan-muehlebach/gg/geom"
 )
 
@@ -22,7 +21,7 @@ const (
 
 var (
 	BackColor = color.RGBAF{0.851, 0.811, 0.733, 1.0}
-	LineColor = colornames.DarkSlateBlue.Dark(0.4)
+	LineColor = color.DarkSlateBlue.Dark(0.4)
 	LineWidth = 1.0
 )
 

@@ -23,13 +23,11 @@ func (c RGBAF) RGBA() (r, g, b, a uint32) {
 }
 
 func (c RGBAF) Bright(t float64) Color {
-	t = setIn(t, 0, 1)
-	return RGBAF{(1-t)*c.R + t, (1-t)*c.G + t, (1-t)*c.B + t, c.A}
+    return c.Interpolate(White, t)
 }
 
 func (c RGBAF) Dark(t float64) Color {
-	t = setIn(t, 0, 1)
-	return RGBAF{(1 - t) * c.R, (1 - t) * c.G, (1 - t) * c.B, c.A}
+    return c.Interpolate(Black, t)
 }
 
 func (c RGBAF) Alpha(a float64) Color {
@@ -38,13 +36,12 @@ func (c RGBAF) Alpha(a float64) Color {
 }
 
 func (c1 RGBAF) Interpolate(col Color, t float64) Color {
-	t = setIn(t, 0, 1)
-	c2 := col.(RGBAF)
-
-	r := (1-t)*c1.R + t*c2.R
-	g := (1-t)*c1.G + t*c2.G
-	b := (1-t)*c1.B + t*c2.B
-	a := (1-t)*c1.A + t*c2.A
+	t = ipf(setIn(t, 0, 1))
+	c2 := RGBAFModel.Convert(col).(RGBAF)
+	r := (1.0-t)*c1.R + t*c2.R
+	g := (1.0-t)*c1.G + t*c2.G
+	b := (1.0-t)*c1.B + t*c2.B
+	a := (1.0-t)*c1.A + t*c2.A
 	return RGBAF{r, g, b, a}
 }
 

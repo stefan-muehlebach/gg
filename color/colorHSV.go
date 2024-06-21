@@ -38,18 +38,22 @@ func (c HSV) RGBA() (r, g, b, a uint32) {
 }
 
 func (c HSV) Bright(t float64) Color {
-	t = setIn(t, 0, 1)
-	r := c
-	r.S = (1 - t) * c.S
-	r.V = (1-t)*c.V + t
-	return r
+    white := HSV{c.H, 0.0, 1.0, 1.0}
+    return c.Interpolate(white, t)
+	// t = setIn(t, 0, 1)
+	// r := c
+	// r.S = (1 - t) * c.S
+	// r.V = (1-t)*c.V + t
+	// return r
 }
 
 func (c HSV) Dark(t float64) Color {
-	t = setIn(t, 0, 1)
-	r := c
-	r.V = (1 - t) * c.V
-	return r
+    black := HSV{c.H, 0.0, 0.0, 1.0}
+    return c.Interpolate(black, t)
+	// t = setIn(t, 0, 1)
+	// r := c
+	// r.V = (1 - t) * c.V
+	// return r
 }
 
 func (c HSV) Alpha(a float64) Color {
@@ -58,13 +62,12 @@ func (c HSV) Alpha(a float64) Color {
 }
 
 func (c1 HSV) Interpolate(col Color, t float64) Color {
-	t = setIn(t, 0, 1)
-	c2 := col.(HSV)
-
-	h := (1-t)*c1.H + t*c2.H
-	s := (1-t)*c1.S + t*c2.S
-	v := (1-t)*c1.V + t*c2.V
-	a := (1-t)*c1.A + t*c2.A
+	t = ipf(setIn(t, 0, 1))
+	c2 := HSVModel.Convert(col).(HSV)
+	h := (1.0-t)*c1.H + t*c2.H
+	s := (1.0-t)*c1.S + t*c2.S
+	v := (1.0-t)*c1.V + t*c2.V
+	a := (1.0-t)*c1.A + t*c2.A
 	return HSV{h, s, v, a}
 }
 

@@ -104,17 +104,17 @@ func (c HSP) RGBA() (r, g, b, a uint32) {
 }
 
 func (c HSP) Bright(t float64) Color {
-	t = setIn(t, 0, 1)
+	t = ipf(setIn(t, 0, 1))
 	r := c
-	r.S = (1-t)* c.S
-	r.P = (1-t)*c.P + t
+	r.S = (1.0 - t) * c.S
+	r.P = (1.0-t)*c.P + t
 	return r
 }
 
 func (c HSP) Dark(t float64) Color {
-	t = setIn(t, 0, 1)
+	t = ipf(setIn(t, 0, 1))
 	r := c
-	r.P = (1 - t) * c.P
+	r.P = (1.0 - t) * c.P
 	return r
 }
 
@@ -124,7 +124,13 @@ func (c HSP) Alpha(a float64) Color {
 }
 
 func (c1 HSP) Interpolate(col Color, t float64) Color {
-	return c1
+	t = ipf(setIn(t, 0, 1))
+	c2 := HSPModel.Convert(col).(HSP)
+	h := (1.0-t)*c1.H + t*c2.H
+	s := (1.0-t)*c1.S + t*c2.S
+	p := (1.0-t)*c1.P + t*c2.P
+	a := (1.0-t)*c1.A + t*c2.A
+	return HSP{h, s, p, a}
 }
 
 // Modell fuer den neuen Farbtyp, d.h. fuer die Konvertierung von einer

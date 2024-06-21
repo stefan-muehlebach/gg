@@ -3,7 +3,6 @@ package main
 import (
 	"github.com/stefan-muehlebach/gg"
 	"github.com/stefan-muehlebach/gg/color"
-	"github.com/stefan-muehlebach/gg/colornames"
 	"github.com/stefan-muehlebach/gg/geom"
 	"math/rand"
 )
@@ -51,7 +50,7 @@ func main() {
 	gc := gg.NewContext(Width, Height)
 	gc.SetFillColor(BackColor)
 	gc.Clear()
-	gc.SetFillColor(colornames.DarkGreen)
+	gc.SetFillColor(color.DarkGreen)
 	pt := geom.Point{0.0, 0.0}
 	for i := 0; i < numPoints; i++ {
 		rnd := rand.Float64()

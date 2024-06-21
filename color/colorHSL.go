@@ -39,17 +39,21 @@ func (c HSL) RGBA() (r, g, b, a uint32) {
 }
 
 func (c HSL) Bright(t float64) Color {
-	t = setIn(t, 0, 1)
-	r := c
-	r.L = (1-t)*c.L + t
-	return r
+    white := HSL{c.H, 0.0, 1.0, 1.0}
+    return c.Interpolate(white, t)
+	// t = setIn(t, 0, 1)
+	// r := c
+	// r.L = (1-t)*c.L + t
+	// return r
 }
 
 func (c HSL) Dark(t float64) Color {
-	t = setIn(t, 0, 1)
-	r := c
-	r.L = (1 - t) * c.L
-	return r
+    black := HSL{c.H, 0.0, 0.0, 1.0}
+    return c.Interpolate(black, t)
+	// t = setIn(t, 0, 1)
+	// r := c
+	// r.L = (1 - t) * c.L
+	// return r
 }
 
 func (c HSL) Alpha(a float64) Color {
@@ -58,12 +62,12 @@ func (c HSL) Alpha(a float64) Color {
 }
 
 func (c1 HSL) Interpolate(col Color, t float64) Color {
-	t = setIn(t, 0, 1)
-	c2 := col.(HSL)
-	h := (1-t)*c1.H + t*c2.H
-	s := (1-t)*c1.S + t*c2.S
-	l := (1-t)*c1.L + t*c2.L
-	a := (1-t)*c1.A + t*c2.A
+	t = ipf(setIn(t, 0, 1))
+	c2 := HSLModel.Convert(col).(HSL)
+	h := (1.0-t)*c1.H + t*c2.H
+	s := (1.0-t)*c1.S + t*c2.S
+	l := (1.0-t)*c1.L + t*c2.L
+	a := (1.0-t)*c1.A + t*c2.A
 	return HSL{h, s, l, a}
 }
 

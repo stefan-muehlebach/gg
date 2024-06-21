@@ -51,15 +51,13 @@ func (c HSI) RGBA() (r, g, b, a uint32) {
 }
 
 func (c HSI) Bright(t float64) Color {
-	// Nicht realisiert, TO DO!
-	// t = setIn(t, 0, 1)
-	return c
+    white := HSI{c.H, 0.0, 1.0, 1.0}
+    return c.Interpolate(white, t)
 }
 
 func (c HSI) Dark(t float64) Color {
-	// Nicht realisiert, TO DO!
-	// t = setIn(t, 0, 1)
-	return c
+    black := HSI{c.H, 0.0, 0.0, 1.0}
+    return c.Interpolate(black, t)
 }
 
 func (c HSI) Alpha(a float64) Color {
@@ -68,12 +66,12 @@ func (c HSI) Alpha(a float64) Color {
 }
 
 func (c1 HSI) Interpolate(col Color, t float64) Color {
-	t = setIn(t, 0, 1)
-	c2 := col.(HSI)
-	h := (1-t)*c1.H + t*c2.H
-	s := (1-t)*c1.S + t*c2.S
-	i := (1-t)*c1.I + t*c2.I
-	a := (1-t)*c1.A + t*c2.A
+	t = ipf(setIn(t, 0, 1))
+	c2 := HSIModel.Convert(col).(HSI)
+	h := (1.0-t)*c1.H + t*c2.H
+	s := (1.0-t)*c1.S + t*c2.S
+	i := (1.0-t)*c1.I + t*c2.I
+	a := (1.0-t)*c1.A + t*c2.A
 	return HSI{h, s, i, a}
 }
 

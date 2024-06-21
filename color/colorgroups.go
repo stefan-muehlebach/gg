@@ -1,4 +1,4 @@
-package colornames
+package color
 
 import (
 	"errors"
@@ -7,24 +7,24 @@ import (
 type ColorGroup int
 
 const (
-	All ColorGroup = iota
-	Purples
-	Pinks
-	Blues
-	Reds
-	Greens
+	Browns ColorGroup = iota
+    Reds
 	Oranges
 	Yellows
-	Browns
+	Greens
+	Blues
+	Purples
+	Pinks
 	Whites
 	Grays
+    // GoColors
 	NumColorGroups
 )
 
 func (g ColorGroup) String() string {
 	switch g {
-	case All:
-		return "All"
+	// case All:
+	// 	return "All"
 	case Purples:
 		return "Purples"
 	case Pinks:
@@ -45,6 +45,8 @@ func (g ColorGroup) String() string {
 		return "Whites"
 	case Grays:
 		return "Grays"
+    // case GoColors:
+    //     return "GoColors"
 	default:
 		return "(unknown group)"
 	}
@@ -52,8 +54,8 @@ func (g ColorGroup) String() string {
 
 func (g *ColorGroup) Set(str string) error {
 	switch str {
-	case "All":
-		*g = All
+	// case "All":
+	// 	*g = All
 	case "Purples":
 		*g = Purples
 	case "Pinks":
@@ -74,6 +76,8 @@ func (g *ColorGroup) Set(str string) error {
 		*g = Whites
 	case "Grays":
 		*g = Grays
+    // case "GoColors":
+    //     *g = GoColors
 	default:
 		return errors.New("Unknown color group: " + str)
 	}
@@ -83,149 +87,149 @@ func (g *ColorGroup) Set(str string) error {
 // In diesem File werden die Farben aus colornames.go nach Farbton in
 // verschiedene Gruppen unterteilt.
 var Groups = map[ColorGroup][]string{
-	All: {
-		"AliceBlue",
-		"AntiqueWhite",
-		"Aqua",
-		"Aquamarine",
-		"Azure",
-		"Beige",
-		"Bisque",
-		"Black",
-		"BlanchedAlmond",
-		"Blue",
-		"BlueViolet",
-		"Brown",
-		"BurlyWood",
-		"CadetBlue",
-		"Chartreuse",
-		"Chocolate",
-		"Coral",
-		"CornflowerBlue",
-		"Cornsilk",
-		"Crimson",
-		"Cyan",
-		"DarkBlue",
-		"DarkCyan",
-		"DarkGoldenrod",
-		"DarkGray",
-		"DarkGreen",
-		"DarkKhaki",
-		"DarkMagenta",
-		"DarkOliveGreen",
-		"DarkOrange",
-		"DarkOrchid",
-		"DarkRed",
-		"DarkSalmon",
-		"DarkSeaGreen",
-		"DarkSlateBlue",
-		"DarkSlateGray",
-		"DarkTurquoise",
-		"DarkViolet",
-		"DeepPink",
-		"DeepSkyBlue",
-		"DimGray",
-		"DodgerBlue",
-		"FireBrick",
-		"FloralWhite",
-		"ForestGreen",
-		"Fuchsia",
-		"Gainsboro",
-		"GhostWhite",
-		"Gold",
-		"Goldenrod",
-		"Gray",
-		"Green",
-		"GreenYellow",
-		"Grey",
-		"Honeydew",
-		"HotPink",
-		"IndianRed",
-		"Indigo",
-		"Ivory",
-		"Khaki",
-		"Lavender",
-		"LavenderBlush",
-		"LawnGreen",
-		"LemonChiffon",
-		"LightBlue",
-		"LightCoral",
-		"LightCyan",
-		"LightGoldenrodYellow",
-		"LightGray",
-		"LightGreen",
-		"LightPink",
-		"LightSalmon",
-		"LightSeaGreen",
-		"LightSkyBlue",
-		"LightSlateGray",
-		"LightSteelBlue",
-		"LightYellow",
-		"Lime",
-		"LimeGreen",
-		"Linen",
-		"Magenta",
-		"Maroon",
-		"MediumAquamarine",
-		"MediumBlue",
-		"MediumOrchid",
-		"MediumPurple",
-		"MediumSeaGreen",
-		"MediumSlateBlue",
-		"MediumSpringGreen",
-		"MediumTurquoise",
-		"MediumVioletRed",
-		"MidnightBlue",
-		"MintCream",
-		"MistyRose",
-		"Moccasin",
-		"NavajoWhite",
-		"Navy",
-		"OldLace",
-		"Olive",
-		"OliveDrab",
-		"Orange",
-		"OrangeRed",
-		"Orchid",
-		"PaleGoldenrod",
-		"PaleGreen",
-		"PaleTurquoise",
-		"PaleVioletRed",
-		"PapayaWhip",
-		"PeachPuff",
-		"Peru",
-		"Pink",
-		"Plum",
-		"PowderBlue",
-		"Purple",
-		"Red",
-		"RosyBrown",
-		"RoyalBlue",
-		"SaddleBrown",
-		"Salmon",
-		"SandyBrown",
-		"SeaGreen",
-		"Seashell",
-		"Sienna",
-		"Silver",
-		"SkyBlue",
-		"SlateBlue",
-		"SlateGray",
-		"Snow",
-		"SpringGreen",
-		"SteelBlue",
-		"Tan",
-		"Teal",
-		"Thistle",
-		"Tomato",
-		"Turquoise",
-		"Violet",
-		"Wheat",
-		"White",
-		"WhiteSmoke",
-		"Yellow",
-		"YellowGreen",
-	},
+	// All: {
+	// 	"AliceBlue",
+	// 	"AntiqueWhite",
+	// 	"Aqua",
+	// 	"Aquamarine",
+	// 	"Azure",
+	// 	"Beige",
+	// 	"Bisque",
+	// 	"Black",
+	// 	"BlanchedAlmond",
+	// 	"Blue",
+	// 	"BlueViolet",
+	// 	"Brown",
+	// 	"BurlyWood",
+	// 	"CadetBlue",
+	// 	"Chartreuse",
+	// 	"Chocolate",
+	// 	"Coral",
+	// 	"CornflowerBlue",
+	// 	"Cornsilk",
+	// 	"Crimson",
+	// 	"Cyan",
+	// 	"DarkBlue",
+	// 	"DarkCyan",
+	// 	"DarkGoldenrod",
+	// 	"DarkGray",
+	// 	"DarkGreen",
+	// 	"DarkKhaki",
+	// 	"DarkMagenta",
+	// 	"DarkOliveGreen",
+	// 	"DarkOrange",
+	// 	"DarkOrchid",
+	// 	"DarkRed",
+	// 	"DarkSalmon",
+	// 	"DarkSeaGreen",
+	// 	"DarkSlateBlue",
+	// 	"DarkSlateGray",
+	// 	"DarkTurquoise",
+	// 	"DarkViolet",
+	// 	"DeepPink",
+	// 	"DeepSkyBlue",
+	// 	"DimGray",
+	// 	"DodgerBlue",
+	// 	"FireBrick",
+	// 	"FloralWhite",
+	// 	"ForestGreen",
+	// 	"Fuchsia",
+	// 	"Gainsboro",
+	// 	"GhostWhite",
+	// 	"Gold",
+	// 	"Goldenrod",
+	// 	"Gray",
+	// 	"Green",
+	// 	"GreenYellow",
+	// 	"Grey",
+	// 	"Honeydew",
+	// 	"HotPink",
+	// 	"IndianRed",
+	// 	"Indigo",
+	// 	"Ivory",
+	// 	"Khaki",
+	// 	"Lavender",
+	// 	"LavenderBlush",
+	// 	"LawnGreen",
+	// 	"LemonChiffon",
+	// 	"LightBlue",
+	// 	"LightCoral",
+	// 	"LightCyan",
+	// 	"LightGoldenrodYellow",
+	// 	"LightGray",
+	// 	"LightGreen",
+	// 	"LightPink",
+	// 	"LightSalmon",
+	// 	"LightSeaGreen",
+	// 	"LightSkyBlue",
+	// 	"LightSlateGray",
+	// 	"LightSteelBlue",
+	// 	"LightYellow",
+	// 	"Lime",
+	// 	"LimeGreen",
+	// 	"Linen",
+	// 	"Magenta",
+	// 	"Maroon",
+	// 	"MediumAquamarine",
+	// 	"MediumBlue",
+	// 	"MediumOrchid",
+	// 	"MediumPurple",
+	// 	"MediumSeaGreen",
+	// 	"MediumSlateBlue",
+	// 	"MediumSpringGreen",
+	// 	"MediumTurquoise",
+	// 	"MediumVioletRed",
+	// 	"MidnightBlue",
+	// 	"MintCream",
+	// 	"MistyRose",
+	// 	"Moccasin",
+	// 	"NavajoWhite",
+	// 	"Navy",
+	// 	"OldLace",
+	// 	"Olive",
+	// 	"OliveDrab",
+	// 	"Orange",
+	// 	"OrangeRed",
+	// 	"Orchid",
+	// 	"PaleGoldenrod",
+	// 	"PaleGreen",
+	// 	"PaleTurquoise",
+	// 	"PaleVioletRed",
+	// 	"PapayaWhip",
+	// 	"PeachPuff",
+	// 	"Peru",
+	// 	"Pink",
+	// 	"Plum",
+	// 	"PowderBlue",
+	// 	"Purple",
+	// 	"Red",
+	// 	"RosyBrown",
+	// 	"RoyalBlue",
+	// 	"SaddleBrown",
+	// 	"Salmon",
+	// 	"SandyBrown",
+	// 	"SeaGreen",
+	// 	"Seashell",
+	// 	"Sienna",
+	// 	"Silver",
+	// 	"SkyBlue",
+	// 	"SlateBlue",
+	// 	"SlateGray",
+	// 	"Snow",
+	// 	"SpringGreen",
+	// 	"SteelBlue",
+	// 	"Tan",
+	// 	"Teal",
+	// 	"Thistle",
+	// 	"Tomato",
+	// 	"Turquoise",
+	// 	"Violet",
+	// 	"Wheat",
+	// 	"White",
+	// 	"WhiteSmoke",
+	// 	"Yellow",
+	// 	"YellowGreen",
+	// },
 	Purples: {
 		"Lavender",
 		"Thistle",
@@ -387,4 +391,7 @@ var Groups = map[ColorGroup][]string{
 		"DarkSlateGray",
 		"Black",
 	},
+    // GoColors: {
+
+    // },
 }

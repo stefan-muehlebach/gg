@@ -3,7 +3,6 @@ package main
 import (
 	"github.com/stefan-muehlebach/gg"
 	"github.com/stefan-muehlebach/gg/color"
-	"github.com/stefan-muehlebach/gg/colornames"
 	"github.com/stefan-muehlebach/gg/geom"
 	"math"
 )
@@ -20,7 +19,7 @@ const (
 
 var (
 	BackColor = color.RGBAF{0.851, 0.811, 0.733, 1.0}
-	LineColor = colornames.DarkGoldenrod.Dark(0.2)
+	LineColor = color.DarkGoldenrod.Dark(0.2)
 )
 
 func main() {

@@ -1,7 +1,6 @@
 package main
 
 import (
-	"github.com/stefan-muehlebach/gg/colornames"
 	"math"
 
 	"github.com/stefan-muehlebach/gg"
@@ -47,7 +46,7 @@ func main() {
 	gc.DrawLine(MarginSize, Height/2, MarginSize+CanvasSize, Height/2)
 	gc.Stroke()
 
-	gc.SetFillColor(colornames.Crimson.Alpha(0.7))
+	gc.SetFillColor(color.Crimson.Alpha(0.7))
 	gc.DrawPoint(mp1.X, mp1.Y, 1.2*LineWidth)
 	gc.DrawPoint(mp2.X, mp2.Y, 1.2*LineWidth)
 	gc.Fill()
