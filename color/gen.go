@@ -41,12 +41,10 @@ var (
 {{- range $i, $row := .}}
     {{printf "%-24s = %s" $row.Name $row.Color}}
 {{- end}}
-)
 
-// Diese Farben tauchen im Style-Guide von Google zur Kommunikation von Go
-// auf und werden bspw. im GUI-Package 'adagui' fuer die Farben der
-// Bedienelemente verwendet.
-var (
+    // Diese Farben tauchen im Style-Guide von Google zur Kommunikation von Go
+    // auf und werden bspw. im GUI-Package 'adagui' fuer die Farben der
+    // Bedienelemente verwendet.
 	GoGopherBlue             = RGBAF{R:0.004, G:0.678, B:0.847, A:1}
 	GoLightBlue              = RGBAF{R:0.369, G:0.788, B:0.890, A:1}
 	GoAqua                   = RGBAF{R:0.000, G:0.635, B:0.622, A:1}
@@ -57,24 +55,24 @@ var (
 	GoDimGray                = RGBAF{R:0.333, G:0.341, B:0.349, A:1}
 	GoIndigo                 = RGBAF{R:0.251, G:0.169, B:0.337, A:1}
 	GoLightGray              = RGBAF{R:0.859, G:0.851, B:0.839, A:1}
+
+    // Map contains named colors defined in the SVG 1.1 spec.
+    Map = map[string]RGBAF{
+    {{- range $i, $row := .}}
+        {{printf "\"%s\": %[1]s," $row.Name}}
+    {{- end}}
+    }
+
+    // Der Slice 'Names' enthält die Namen aller Farben der SVG 1.1 Spezifikation.
+    // Auf die Besonderheit betr. Gross-/Kleinschreibung ist weiter oben bereits
+    // eingegangen worden. Jedes Element dieses Slices findet sich als Schlüssel
+    // in der Variable 'Map'.
+    Names = []string{
+    {{- range $i, $row := .}}
+        {{printf "\"%s\"," $row.Name}}
+    {{- end}}
+    }
 )
-
-// Map contains named colors defined in the SVG 1.1 spec.
-var Map = map[string]RGBAF{
-{{- range $i, $row := .}}
-    {{printf "\"%s\": %[1]s," $row.Name}}
-{{- end}}
-}
-
-// Der Slice 'Names' enthält die Namen aller Farben der SVG 1.1 Spezifikation.
-// Auf die Besonderheit betr. Gross-/Kleinschreibung ist weiter oben bereits
-// eingegangen worden. Jedes Element dieses Slices findet sich als Schlüssel
-// in der Variable 'Map'.
-var Names = []string{
-{{- range $i, $row := .}}
-    {{printf "\"%s\"," $row.Name}}
-{{- end}}
-}
 `
 )
 

@@ -23,11 +23,11 @@ func (c RGBAF) RGBA() (r, g, b, a uint32) {
 }
 
 func (c RGBAF) Bright(t float64) Color {
-    return c.Interpolate(White, t)
+	return c.Interpolate(RGBAF{1, 1, 1, 1}, t)
 }
 
 func (c RGBAF) Dark(t float64) Color {
-    return c.Interpolate(Black, t)
+	return c.Interpolate(RGBAF{0, 0, 0, 1}, t)
 }
 
 func (c RGBAF) Alpha(a float64) Color {
@@ -58,6 +58,17 @@ func (c1 RGBAF) Less(c2 RGBAF, key SortField) bool {
 		return false
 	}
 }
+
+// func (c *RGBAF) UnmarshalJSON(j []byte) error {
+//     var col RGBAF
+
+//     err := json.Unmarshal(j, &col)
+//     if err != nil {
+//         return err
+//     }
+//     *c = col
+//     return nil
+// }
 
 // Modell fuer den neuen Farbtyp, d.h. fuer die Konvertierung von einer
 // beliebigen Farbe nach RGBAF.

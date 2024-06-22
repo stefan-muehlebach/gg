@@ -25,6 +25,8 @@ import (
 var (
 	Transparent = RGBAF{0.0, 0.0, 0.0, 0.0}
 	Opaque      = RGBAF{1.0, 1.0, 1.0, 1.0}
+	// Map         map[string]RGBAF
+	// Names       []string
 )
 
 // Das Interface Color basiert auf dem gleichnamigen Interface der
@@ -53,7 +55,7 @@ func RandColor() Color {
 func RandGroupColor(group ColorGroup) Color {
 	nameList, ok := Groups[group]
 	if !ok {
-		return Black
+		return RGBAF{0, 0, 0, 1}
 	}
 	name := nameList[rand.Int()%len(nameList)]
 	return Map[name]

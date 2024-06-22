@@ -1,6 +1,7 @@
 package color
 
 import (
+	"encoding/json"
 	"fmt"
 	"image/color"
 	"math"
@@ -548,4 +549,54 @@ func TestHSI(test *testing.T) {
 			test.Errorf("  got : %#v\n", convHsiColor)
 		}
 	}
+}
+
+func TestUnmarshalColor(t *testing.T) {
+    type NamedColor struct {
+        Name string
+        Dark, Bright, Alpha float64
+    }
+    type JsonColor struct {
+        Color json.RawMessage
+    }
+    var j = []byte(`[
+        {"R": 0.0, "G": 0.0, "B": 0.0, "A": 1.0},
+        {"R": 1.0, "G": 1.0, "B": 1.0, "A": 1.0},
+        {"Name": "Indigo", "Dark": 0.5, "Alpha": 0.8},
+        {"Name": "Orang", "Dark": 0.5}
+    ]`)
+
+    var jsonColors []json.RawMessage
+    var colors []Color
+
+    err := json.Unmarshal(j, &jsonColors)
+    if err != nil {
+        t.Fatalf("error: %v", err)
+    }
+    for i, c := range jsonColors {
+        var namedColor NamedColor = NamedColor{Alpha: 1.0}
+        var rgbafColor RGBAF
+
+        t.Logf("%d: %+v", i, c)
+
+        err := json.Unmarshal(c, &namedColor)
+        if err != nil {
+            t.Fatalf("error: %v", err)
+        }
+        if namedColor.Name != "" {
+            if col, ok := Map[namedColor.Name]; ok {
+                colors = append(colors, col.Dark(namedColor.Dark).Bright(namedColor.Bright).Alpha(namedColor.Alpha))
+            } else {
+                t.Logf("color not found: %s", namedColor.Name)
+            }
+            continue
+        }
+
+        err = json.Unmarshal(c, &rgbafColor)
+        if err != nil {
+            t.Fatalf("error: %v", err)
+        }
+        colors = append(colors, rgbafColor)
+    }
+    t.Log(colors)
 }

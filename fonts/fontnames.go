@@ -51,19 +51,6 @@ var (
     seaforditalic, _ = fontFiles.ReadFile("FontFiles/31-Seaford-Italic.ttf")
     seafordbold, _ = fontFiles.ReadFile("FontFiles/32-Seaford-Bold.ttf")
     seafordbolditalic, _ = fontFiles.ReadFile("FontFiles/33-Seaford-Bold-Italic.ttf")
-    garamond, _ = fontFiles.ReadFile("FontFiles/35-Garamond.otf")
-    garamonditalic, _ = fontFiles.ReadFile("FontFiles/36-Garamond-Italic.otf")
-    garamondbold, _ = fontFiles.ReadFile("FontFiles/37-Garamond-Bold.otf")
-    elegante, _ = fontFiles.ReadFile("FontFiles/38-Elegante.ttf")
-    elegantebold, _ = fontFiles.ReadFile("FontFiles/39-Elegante-Bold.ttf")
-    leipzigfraktur, _ = fontFiles.ReadFile("FontFiles/40-LeipzigFraktur.ttf")
-    leipzigfrakturbold, _ = fontFiles.ReadFile("FontFiles/41-LeipzigFraktur-Bold.ttf")
-    rothenburgdecorative, _ = fontFiles.ReadFile("FontFiles/42-RothenburgDecorative.ttf")
-    elzevier, _ = fontFiles.ReadFile("FontFiles/45-Elzevier.ttf")
-    floralcapitals, _ = fontFiles.ReadFile("FontFiles/46-FloralCapitals.ttf")
-    goudyinitialen, _ = fontFiles.ReadFile("FontFiles/47-GoudyInitialen.ttf")
-    mosaicinitialen, _ = fontFiles.ReadFile("FontFiles/48-MosaicInitialen.ttf")
-    yinit, _ = fontFiles.ReadFile("FontFiles/49-Yinit.ttf")
     worksansthin, _ = fontFiles.ReadFile("FontFiles/50-WorkSans-Thin.ttf")
     worksansextralight, _ = fontFiles.ReadFile("FontFiles/51-WorkSans-ExtraLight.ttf")
     worksanslight, _ = fontFiles.ReadFile("FontFiles/52-WorkSans-Light.ttf")
@@ -82,6 +69,19 @@ var (
     worksansbolditalic, _ = fontFiles.ReadFile("FontFiles/66-WorkSans-BoldItalic.ttf")
     worksansextrabolditalic, _ = fontFiles.ReadFile("FontFiles/67-WorkSans-ExtraBoldItalic.ttf")
     worksansblackitalic, _ = fontFiles.ReadFile("FontFiles/68-WorkSans-BlackItalic.ttf")
+    garamond, _ = fontFiles.ReadFile("FontFiles/70-Garamond.otf")
+    garamonditalic, _ = fontFiles.ReadFile("FontFiles/71-Garamond-Italic.otf")
+    garamondbold, _ = fontFiles.ReadFile("FontFiles/72-Garamond-Bold.otf")
+    elegante, _ = fontFiles.ReadFile("FontFiles/73-Elegante.ttf")
+    elegantebold, _ = fontFiles.ReadFile("FontFiles/74-Elegante-Bold.ttf")
+    leipzigfraktur, _ = fontFiles.ReadFile("FontFiles/80-LeipzigFraktur.ttf")
+    leipzigfrakturbold, _ = fontFiles.ReadFile("FontFiles/81-LeipzigFraktur-Bold.ttf")
+    rothenburgdecorative, _ = fontFiles.ReadFile("FontFiles/82-RothenburgDecorative.ttf")
+    elzevier, _ = fontFiles.ReadFile("FontFiles/90-Elzevier.ttf")
+    floralcapitals, _ = fontFiles.ReadFile("FontFiles/91-FloralCapitals.ttf")
+    goudyinitialen, _ = fontFiles.ReadFile("FontFiles/92-GoudyInitialen.ttf")
+    mosaicinitialen, _ = fontFiles.ReadFile("FontFiles/93-MosaicInitialen.ttf")
+    yinit, _ = fontFiles.ReadFile("FontFiles/94-Yinit.ttf")
 )
 
 var (
@@ -122,19 +122,6 @@ var (
     SeafordItalic                       = Parse(seaforditalic)
     SeafordBold                         = Parse(seafordbold)
     SeafordBoldItalic                   = Parse(seafordbolditalic)
-    Garamond                            = Parse(garamond)
-    GaramondItalic                      = Parse(garamonditalic)
-    GaramondBold                        = Parse(garamondbold)
-    Elegante                            = Parse(elegante)
-    EleganteBold                        = Parse(elegantebold)
-    LeipzigFraktur                      = Parse(leipzigfraktur)
-    LeipzigFrakturBold                  = Parse(leipzigfrakturbold)
-    RothenburgDecorative                = Parse(rothenburgdecorative)
-    Elzevier                            = Parse(elzevier)
-    FloralCapitals                      = Parse(floralcapitals)
-    GoudyInitialen                      = Parse(goudyinitialen)
-    MosaicInitialen                     = Parse(mosaicinitialen)
-    Yinit                               = Parse(yinit)
     WorkSansThin                        = Parse(worksansthin)
     WorkSansExtraLight                  = Parse(worksansextralight)
     WorkSansLight                       = Parse(worksanslight)
@@ -153,6 +140,19 @@ var (
     WorkSansBoldItalic                  = Parse(worksansbolditalic)
     WorkSansExtraBoldItalic             = Parse(worksansextrabolditalic)
     WorkSansBlackItalic                 = Parse(worksansblackitalic)
+    Garamond                            = Parse(garamond)
+    GaramondItalic                      = Parse(garamonditalic)
+    GaramondBold                        = Parse(garamondbold)
+    Elegante                            = Parse(elegante)
+    EleganteBold                        = Parse(elegantebold)
+    LeipzigFraktur                      = Parse(leipzigfraktur)
+    LeipzigFrakturBold                  = Parse(leipzigfrakturbold)
+    RothenburgDecorative                = Parse(rothenburgdecorative)
+    Elzevier                            = Parse(elzevier)
+    FloralCapitals                      = Parse(floralcapitals)
+    GoudyInitialen                      = Parse(goudyinitialen)
+    MosaicInitialen                     = Parse(mosaicinitialen)
+    Yinit                               = Parse(yinit)
 )
 
 var Map = map[string]*Font{
@@ -193,19 +193,6 @@ var Map = map[string]*Font{
     "SeafordItalic": SeafordItalic,
     "SeafordBold": SeafordBold,
     "SeafordBoldItalic": SeafordBoldItalic,
-    "Garamond": Garamond,
-    "GaramondItalic": GaramondItalic,
-    "GaramondBold": GaramondBold,
-    "Elegante": Elegante,
-    "EleganteBold": EleganteBold,
-    "LeipzigFraktur": LeipzigFraktur,
-    "LeipzigFrakturBold": LeipzigFrakturBold,
-    "RothenburgDecorative": RothenburgDecorative,
-    "Elzevier": Elzevier,
-    "FloralCapitals": FloralCapitals,
-    "GoudyInitialen": GoudyInitialen,
-    "MosaicInitialen": MosaicInitialen,
-    "Yinit": Yinit,
     "WorkSansThin": WorkSansThin,
     "WorkSansExtraLight": WorkSansExtraLight,
     "WorkSansLight": WorkSansLight,
@@ -224,6 +211,19 @@ var Map = map[string]*Font{
     "WorkSansBoldItalic": WorkSansBoldItalic,
     "WorkSansExtraBoldItalic": WorkSansExtraBoldItalic,
     "WorkSansBlackItalic": WorkSansBlackItalic,
+    "Garamond": Garamond,
+    "GaramondItalic": GaramondItalic,
+    "GaramondBold": GaramondBold,
+    "Elegante": Elegante,
+    "EleganteBold": EleganteBold,
+    "LeipzigFraktur": LeipzigFraktur,
+    "LeipzigFrakturBold": LeipzigFrakturBold,
+    "RothenburgDecorative": RothenburgDecorative,
+    "Elzevier": Elzevier,
+    "FloralCapitals": FloralCapitals,
+    "GoudyInitialen": GoudyInitialen,
+    "MosaicInitialen": MosaicInitialen,
+    "Yinit": Yinit,
 }
 
 var Names = []string{
@@ -264,19 +264,6 @@ var Names = []string{
     "SeafordItalic",
     "SeafordBold",
     "SeafordBoldItalic",
-    "Garamond",
-    "GaramondItalic",
-    "GaramondBold",
-    "Elegante",
-    "EleganteBold",
-    "LeipzigFraktur",
-    "LeipzigFrakturBold",
-    "RothenburgDecorative",
-    "Elzevier",
-    "FloralCapitals",
-    "GoudyInitialen",
-    "MosaicInitialen",
-    "Yinit",
     "WorkSansThin",
     "WorkSansExtraLight",
     "WorkSansLight",
@@ -295,4 +282,17 @@ var Names = []string{
     "WorkSansBoldItalic",
     "WorkSansExtraBoldItalic",
     "WorkSansBlackItalic",
+    "Garamond",
+    "GaramondItalic",
+    "GaramondBold",
+    "Elegante",
+    "EleganteBold",
+    "LeipzigFraktur",
+    "LeipzigFrakturBold",
+    "RothenburgDecorative",
+    "Elzevier",
+    "FloralCapitals",
+    "GoudyInitialen",
+    "MosaicInitialen",
+    "Yinit",
 }
