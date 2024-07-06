@@ -18,7 +18,7 @@ Für das folgende Bild (ein angefangenes TicTacToe) werde ich nacheinander
 mehrere Lösungen zeigen. In jeder Iteration wird der Code kompakter,
 generischer und dadurch besser.
 
-![TicTacToe](tictactoe.png)
+![TicTacToe](tictactoe01.png)
 
 Das erste Beispiel implementiert das Bild _straight-forward_, d.h. alle
 benötigten Zeichenbefehle werden hintereinader ausgeführt und gut ist.
