@@ -48,6 +48,13 @@ func (p Point) Mul(k float64) Point {
 	return Point{p.X * k, p.Y * k}
 }
 
+// Falls die Streckung in X-, resp. Y-Richtung nicht gleich ist und die
+// Streckfaktoren die Koordinaten des Punktes s sind, bietet sich diese
+// Methode an.
+func (p Point) Scale(s Point) Point {
+    return Point{p.X*s.X, p.Y*s.Y}
+}
+
 // Dividiert die Koordinaten des Punktes p durch den Wert k.
 // Eliminiert, kann durch Mul abgedeckt werden!
 func (p Point) Div(k float64) Point {
@@ -91,10 +98,14 @@ func (p Point) Dist2(q Point) float64 {
 	return (p.X-q.X)*(p.X-q.X) + (p.Y-q.Y)*(p.Y-q.Y)
 }
 
+// Berechnet den Abstand des Punktes p zum Ursprung oder (wenn p als Vektor
+// interpretiert wird) die Laenge des Vektors p.
 func (p Point) Abs() float64 {
 	return math.Sqrt(p.X*p.X + p.Y*p.Y)
 }
 
+// Normalisiert den Vektor p. Das Resultat ist ein Vektor, der in die gleiche
+// Richtung zeigt wie p aber eine Laenge von 1.0 hat.
 func (p Point) Normalize() Point {
 	l := p.Abs()
 	if l == 0.0 {
@@ -104,6 +115,8 @@ func (p Point) Normalize() Point {
 	}
 }
 
+// Retourniert den Winkel des Vektors p zur x-Achse. Das Resultat ist im
+// Intervall (-pi,pi].
 func (p Point) Angle() float64 {
 	return math.Atan2(p.Y, p.X)
 }
@@ -167,21 +180,21 @@ func (p *Point) Set(s string) error {
 
 //----------------------------------------------------------------------------
 
-func max(a, b float64) float64 {
-	if a > b {
-		return a
-	} else {
-		return b
-	}
-}
+// func max(a, b float64) float64 {
+// 	if a > b {
+// 		return a
+// 	} else {
+// 		return b
+// 	}
+// }
 
-func min(a, b float64) float64 {
-	if a < b {
-		return a
-	} else {
-		return b
-	}
-}
+// func min(a, b float64) float64 {
+// 	if a < b {
+// 		return a
+// 	} else {
+// 		return b
+// 	}
+// }
 
 func fixp(x, y float64) fixed.Point26_6 {
 	return fixed.Point26_6{X: fix(x), Y: fix(y)}

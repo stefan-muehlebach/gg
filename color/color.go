@@ -64,7 +64,7 @@ func RandGroupColor(group ColorGroup) Color {
 type interpolFuncType func(float64) float64
 
 var (
-	ipf   = CubicInterpol
+	ipf   = LinearInterpol
 	gamma = 1.5
 )
 
