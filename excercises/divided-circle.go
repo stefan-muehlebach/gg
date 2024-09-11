@@ -37,11 +37,11 @@ var (
 	LineColor = color.RGBAF{0.153, 0.157, 0.133, 1.0}
 
 	GraphList = []GraphData{
-		{44, 1.0, color.DarkViolet.Bright(0.2)},
-		{36, 1.0, color.DarkBlue.Bright(0.1)},
-		{32, 1.0, color.DarkGreen},
-		{24, 1.0, color.DarkOliveGreen.Dark(0.1)},
-		{20, 1.0, color.DarkOrange.Dark(0.2)},
+		// {44, 1.0, color.DarkViolet.Bright(0.2)},
+		// {36, 1.0, color.DarkBlue.Bright(0.1)},
+		{45, 1.0, color.DarkGreen},
+		// {24, 1.0, color.DarkOliveGreen.Dark(0.1)},
+		// {20, 1.0, color.DarkOrange.Dark(0.2)},
 	}
 )
 

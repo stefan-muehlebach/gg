@@ -153,7 +153,8 @@ func (p Point) AsCoord() (x, y float64) {
 
 // Konvertiert den Punkt in einen Datentyp aus dem [image]-Package.
 func (p Point) Int() image.Point {
-	return image.Pt(int(p.X), int(p.Y))
+	// return image.Point{int(p.X), int(p.Y)}
+    return image.Point{int(math.Round(p.X)), int(math.Round(p.Y))}
 }
 
 // Konvertiert den Punkt in einen Datentyp aus dem [fixed]-Package.

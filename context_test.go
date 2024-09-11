@@ -241,7 +241,7 @@ func TestDrawStringWrapped(t *testing.T) {
 	gc := NewContext(100, 100)
 	DrawStringWrapped(gc, 1)
 	saveImage(gc, "TestDrawStringWrapped")
-	checkHash(t, gc, "8d92f6aae9e8b38563f171abd00893f8")
+	checkHash(t, gc, "bfa8bd15395510b453e3b9d075a1a66a")
 }
 
 func BenchmarkDrawStringWrapped(b *testing.B) {
@@ -254,8 +254,9 @@ func DrawStringWrapped(gc *Context, num int) {
 	for range num {
 		gc.SetFillColor(color.White)
 		gc.Clear()
-		gc.SetStrokeColor(color.Black)
-		gc.DrawStringWrapped("Hello, world! How are you?", 50, 50, 0.5, 0.5, 90, 1.5, AlignCenter)
+		gc.SetTextColor(color.Teal)
+		gc.DrawStringWrapped("Hello, world! How are you?",
+                    50, 50, 0.5, 0.5, 90, 1.5, AlignCenter)
 	}
 }
 

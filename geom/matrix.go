@@ -5,27 +5,25 @@ import (
 	"math"
 )
 
-// Der Datentyp Matrix enthält die relevanten Felder einer Transformations-
-// Matrix für linear-affine Abbildungen in der Ebene. Mij ist das Element
-// auf der Zeile i, in der Spalte j. Die letzte Zeile der Matrix ist immer
-// [0, 0, 1] und wird daher nicht mitgeführt.
+// Contains the values of a 3x3 transformation matrix as a slice of float
+// values. The slice is in row major order. The last row of the matrix is
+// always [0, 0, 1] and will not be stored.
 type Matrix [6]float64
 
-// Erzeugt die Einheitsmatrix.
+// Creates the identity matrix.
 func Identity() *Matrix {
 	return &Matrix{1.0, 0.0, 0.0,
 		0.0, 1.0, 0.0}
 }
 
-// Erzeugt eine Translationsmatrix. Die Angaben für die Translation befinden
-// sich als X-, resp. Y-Koordinate im Punkt d .
+// Creates a translation matrix for a translation along the vector d.
 func Translate(d Point) *Matrix {
 	return &Matrix{1.0, 0.0, d.X,
 		0.0, 1.0, d.Y}
 }
 
-// Erzeugt eine Rotationsmatrix um den Winkel a (im Bogenmass). Drehpunkt ist
-// der Ursprung des Koordinatensystems, Drehrichtung ist im Gegenuhrzeigersinn.
+// Creates a rotation matrix around the origin of an angle of a (in radians)
+// counter clockwise.
 func Rotate(a float64) *Matrix {
 	s := math.Sin(a)
 	c := math.Cos(a)
@@ -59,11 +57,7 @@ func ScaleAbout(sp Point, sx, sy float64) *Matrix {
 	return m
 }
 
-// Invertiert die Matrix a und liefert das Resultat als neue Matrix. Da wir
-// es hier eigentlich nie singulären Matrizen zu tun haben (ausser jemand
-// erstellt bewusst die Nullmatrix oder eine Skalierungsmatrix mit 0 als
-// einem der beiden Faktoren) verzichten wir hier zugunsten der Performance
-// auf einen entsprechenden Test.
+// Returns the inverse of the matrix a.
 func (a *Matrix) Inv() *Matrix {
 	det := a[0]*a[4] - a[1]*a[3]
 	return &Matrix{a[4] / det,
@@ -75,8 +69,7 @@ func (a *Matrix) Inv() *Matrix {
 		(a[3]*a[2] - a[0]*a[5]) / det}
 }
 
-// Multipliziert die Matrizen a und b (d.h. berechnet a*b) und liefert das
-// Resultat als neue Matrix.
+// Returns the product of the matrices a and b.
 func (a *Matrix) Multiply(b *Matrix) *Matrix {
 	return &Matrix{a[0]*b[0] + a[1]*b[3],
 		a[0]*b[1] + a[1]*b[4],
@@ -87,14 +80,12 @@ func (a *Matrix) Multiply(b *Matrix) *Matrix {
 		a[3]*b[2] + a[4]*b[5] + a[5]}
 }
 
-// Die Methoden Translate, Rotate, RotateAbout, Scale und ScaleAbout sind
-// Hilfsmethoden, um eine bestehende Matrix m mit einer entsprechenden
-// Transformationsmatrix zu ergänzen.
+// Translates the matrix a by d.
 func (m *Matrix) Translate(d Point) *Matrix {
 	return m.Multiply(Translate(d))
 }
 
-// Siehe Translate
+// Rotates the matrix m by angle counter clockwise around the origin.
 func (m *Matrix) Rotate(angle float64) *Matrix {
 	return m.Multiply(Rotate(angle))
 }

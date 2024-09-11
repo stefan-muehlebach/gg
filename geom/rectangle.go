@@ -72,7 +72,7 @@ func (r *Rectangle) Move(dp Point) {
 	r.Max.Move(dp)
 }
 
-// Prüft, ob das Rechteck leer ist. Im Fall, dass Min > Max ist, gilt das
+// Prüft, ob das Rechteck leer ist. Im Fall, dass Min >= Max ist, gilt das
 // Rechteck als leer.
 func (r Rectangle) Empty() bool {
 	return r.Min.X >= r.Max.X || r.Min.Y >= r.Max.Y
@@ -247,12 +247,12 @@ func (r Rectangle) SetInside(p Point) Point {
 	if p.X < r.Min.X {
 		q.X = r.Min.X
 	} else if p.X >= r.Max.X {
-		q.X = r.Max.X
+		q.X = r.Max.X - r.Dx()/1000.0
 	}
 	if p.Y < r.Min.Y {
 		q.Y = r.Min.Y
 	} else if p.Y >= r.Max.Y {
-		q.Y = r.Max.Y
+		q.Y = r.Max.Y - r.Dy()/1000.0
 	}
 	return q
 }

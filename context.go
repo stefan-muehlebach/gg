@@ -12,7 +12,6 @@ import (
 	"image/png"
 	"io"
 	"log"
-	_ "log"
 	"math"
 	"strings"
 
@@ -53,11 +52,15 @@ const (
 	AlignLeft Align = iota
 	AlignCenter
 	AlignRight
+	AlignTop
+	AlignMiddle
+	AlignBottom
 )
 
 var (
 	defaultFillStyle   = NewSolidPattern(color.White)
 	defaultStrokeStyle = NewSolidPattern(color.Black)
+	defaultTextStyle   = NewSolidPattern(color.Black)
 )
 
 type Context struct {
@@ -70,6 +73,7 @@ type Context struct {
 	path          raster.Path
 	strokePattern Pattern
 	fillPattern   Pattern
+	textPattern   Pattern
 	fillRule      FillRule
 	start         geom.Point
 	current       geom.Point
@@ -110,6 +114,7 @@ func NewContextForRGBA(im *image.RGBA) *Context {
 		im:            im,
 		fillPattern:   defaultFillStyle,
 		strokePattern: defaultStrokeStyle,
+		textPattern:   defaultTextStyle,
 		lineWidth:     1,
 		fillRule:      FillRuleWinding,
 		fontFace:      basicfont.Face7x13,
@@ -252,14 +257,20 @@ func (dc *Context) SetStrokeColor(c color.Color) {
 	dc.strokePattern = NewSolidPattern(c)
 }
 
-// SetFillStyle sets current fill style
+func (dc *Context) SetTextColor(c color.Color) {
+	dc.textPattern = NewSolidPattern(c)
+}
+
 func (dc *Context) SetFillStyle(pattern Pattern) {
 	dc.fillPattern = pattern
 }
 
-// SetStrokeStyle sets current stroke style
 func (dc *Context) SetStrokeStyle(pattern Pattern) {
 	dc.strokePattern = pattern
+}
+
+func (dc *Context) SetTextStyle(pattern Pattern) {
+	dc.textPattern = pattern
 }
 
 // Path Manipulation
@@ -322,30 +333,6 @@ func (dc *Context) CubicTo(x1, y1, x2, y2, x3, y3 float64) {
 		dc.current = pt
 	}
 }
-
-// func (dc *Context) CubicTo(x1, y1, x2, y2, x3, y3 float64) {
-//     if !dc.hasCurrent {
-//         dc.MoveTo(x1, y1)
-//     }
-//     x0, y0 := dc.current.X, dc.current.Y
-//     x1, y1 = dc.TransformPoint(x1, y1)
-//     x2, y2 = dc.TransformPoint(x2, y2)
-//     x3, y3 = dc.TransformPoint(x3, y3)
-//     points := CubicBezier(x0, y0, x1, y1, x2, y2, x3, y3)
-//     previous := dc.current.Fixed()
-//     for _, p := range points[1:] {
-//         f := p.Fixed()
-//         if f == previous {
-//             // TODO: this fixes some rendering issues but not all
-//             continue
-//         }
-//         previous = f
-//         dc.path.Add1(f)
-//         // dc.strokePath.Add1(f)
-//         // dc.fillPath.Add1(f)
-//         dc.current = p
-//     }
-// }
 
 // ClosePath adds a line segment from the current point to the beginning
 // of the current subpath. If there is no current point, this is a no-op.
@@ -716,7 +703,7 @@ func (dc *Context) FontHeight() float64 {
 func (dc *Context) drawString(im *image.RGBA, s string, x, y float64) {
 	d := &font.Drawer{
 		Dst:  im,
-		Src:  image.NewUniform(dc.strokePattern.ColorAt(0, 0)),
+		Src:  image.NewUniform(dc.textPattern.ColorAt(0, 0)),
 		Face: dc.fontFace,
 		Dot:  fixp(x, y),
 	}
@@ -736,9 +723,8 @@ func (dc *Context) drawString(im *image.RGBA, s string, x, y float64) {
 		sr := dr.Sub(dr.Min)
 		transformer := draw.ApproxBiLinear
 		fx, fy := float64(dr.Min.X), float64(dr.Min.Y)
-		ml := dc.matrix.Translate(geom.Point{X: fx, Y: fy})
+		ml := dc.matrix.Translate(geom.Point{fx, fy})
 		s2d := f64.Aff3(*ml)
-		// s2d := f64.Aff3{ml.M11, ml.M12, ml.M13, ml.M21, ml.M22, ml.M23}
 		transformer.Transform(d.Dst, s2d, d.Src, sr, draw.Over, &draw.Options{
 			SrcMask:  mask,
 			SrcMaskP: maskp,
