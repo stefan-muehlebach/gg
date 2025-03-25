@@ -261,14 +261,7 @@ func (r Rectangle) SetInside(p Point) Point {
 // die Koordinaten des Punktes Min auf jeden Fall kleiner sind als die Koord.
 // des Punktes Max.
 func (r Rectangle) Canon() Rectangle {
-	r.Min, r.Max = r.Min.Min(r.Max), r.Min.Max(r.Max)
-	// if r.Max.X < r.Min.X {
-	//     r.Min.X, r.Max.X = r.Max.X, r.Min.X
-	// }
-	// if r.Max.Y < r.Min.Y {
-	//     r.Min.Y, r.Max.Y = r.Max.Y, r.Min.Y
-	// }
-	return r
+	return Rectangle{Min: r.Min.Min(r.Max), Max: r.Min.Max(r.Max)}
 }
 
 // Liefert X- und Y-Koordinaten des Eckpunktes mit den kleinsten Koordinaten

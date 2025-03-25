@@ -14,18 +14,18 @@ type Point struct {
 	X, Y float64
 }
 
-// Erstellt einen neuen Punkt mit den angebenen X- und Y-Koordianten.
+// Erstellt einen neuen Punkt mit den angebenen X- und Y-Koordinaten.
 func NewPoint(x, y float64) Point {
 	return Point{x, y}
 }
 
-// Erstellt einen neuen Punkt aus den Koordianten des angegebenen Punktes
+// Erstellt einen neuen Punkt aus den Koordinaten des angegebenen Punktes
 // aus dem [image]-Paket.
 func NewPointIMG(p image.Point) Point {
 	return Point{float64(p.X), float64(p.Y)}
 }
 
-// Addiert die jeweiligen X- und Y-Koordianten der Punkte p und q.
+// Addiert die jeweiligen X- und Y-Koordinaten der Punkte p und q.
 func (p Point) Add(q Point) Point {
 	return Point{p.X + q.X, p.Y + q.Y}
 }
@@ -101,7 +101,7 @@ func (p Point) Dist2(q Point) float64 {
 // Berechnet den Abstand des Punktes p zum Ursprung oder (wenn p als Vektor
 // interpretiert wird) die Laenge des Vektors p.
 func (p Point) Abs() float64 {
-	return math.Sqrt(p.X*p.X + p.Y*p.Y)
+	return math.Hypot(p.X, p.Y)
 }
 
 // Normalisiert den Vektor p. Das Resultat ist ein Vektor, der in die gleiche
@@ -180,22 +180,6 @@ func (p *Point) Set(s string) error {
 }
 
 //----------------------------------------------------------------------------
-
-// func max(a, b float64) float64 {
-// 	if a > b {
-// 		return a
-// 	} else {
-// 		return b
-// 	}
-// }
-
-// func min(a, b float64) float64 {
-// 	if a < b {
-// 		return a
-// 	} else {
-// 		return b
-// 	}
-// }
 
 func fixp(x, y float64) fixed.Point26_6 {
 	return fixed.Point26_6{X: fix(x), Y: fix(y)}
