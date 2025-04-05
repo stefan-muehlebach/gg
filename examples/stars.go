@@ -5,7 +5,7 @@ import (
 	"math/rand"
 
 	"github.com/stefan-muehlebach/gg"
-	"github.com/stefan-muehlebach/gg/color"
+	"github.com/stefan-muehlebach/gg/colors"
 )
 
 const (
@@ -30,7 +30,7 @@ func main() {
 	const H = 120
 	const S = 100
 	dc := gg.NewContext(W, H)
-	dc.SetFillColor(color.White)
+	dc.SetFillColor(colors.White)
 	dc.Clear()
 	n := 5
 	points := Polygon(n)
@@ -46,8 +46,8 @@ func main() {
 			dc.LineTo(p.X, p.Y)
 		}
 		dc.SetStrokeWidth(10)
-		dc.SetStrokeColor(color.RGBAF{1.0, 0.8, 0.0, 1.0})
-		dc.SetFillColor(color.RGBAF{1.0, 0.894, 0.227, 1.0})
+		dc.SetStrokeColor(colors.RGBAF{1.0, 0.8, 0.0, 1.0})
+		dc.SetFillColor(colors.RGBAF{1.0, 0.894, 0.227, 1.0})
 		dc.StrokeFill()
 		dc.Pop()
 	}

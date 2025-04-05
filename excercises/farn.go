@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/stefan-muehlebach/gg"
-	"github.com/stefan-muehlebach/gg/color"
+	"github.com/stefan-muehlebach/gg/colors"
 	"github.com/stefan-muehlebach/gg/geom"
 	"math/rand"
 )
@@ -20,8 +20,8 @@ const (
 )
 
 var (
-	BackColor = color.RGBAF{0.851, 0.811, 0.733, 1.0}
-	LineColor = color.RGBAF{0.153, 0.157, 0.133, 1.0}
+	BackColor = colors.RGBAF{0.851, 0.811, 0.733, 1.0}
+	LineColor = colors.RGBAF{0.153, 0.157, 0.133, 1.0}
 
 	p = []float64{0.01, 0.86, 0.93, 1.0}
 
@@ -50,7 +50,7 @@ func main() {
 	gc := gg.NewContext(Width, Height)
 	gc.SetFillColor(BackColor)
 	gc.Clear()
-	gc.SetFillColor(color.DarkGreen)
+	gc.SetFillColor(colors.DarkGreen)
 	pt := geom.Point{0.0, 0.0}
 	for i := 0; i < numPoints; i++ {
 		rnd := rand.Float64()

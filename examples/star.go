@@ -4,7 +4,7 @@ import (
 	"math"
 
 	"github.com/stefan-muehlebach/gg"
-	"github.com/stefan-muehlebach/gg/color"
+	"github.com/stefan-muehlebach/gg/colors"
 )
 
 const (
@@ -28,16 +28,16 @@ func main() {
 	n := 5
 	points := Polygon(n, 512, 512, 400)
 	dc := gg.NewContext(1024, 1024)
-	dc.SetFillColor(color.White)
+	dc.SetFillColor(colors.White)
 	dc.Clear()
 	for i := 0; i < n+1; i++ {
 		index := (i * 2) % n
 		p := points[index]
 		dc.LineTo(p.X, p.Y)
 	}
-	dc.SetFillColor(color.RGBAF{0, 0.5, 0, 1.0})
+	dc.SetFillColor(colors.RGBAF{0, 0.5, 0, 1.0})
 	dc.SetFillRule(gg.FillRuleEvenOdd)
-	dc.SetStrokeColor(color.RGBAF{0, 1.0, 0, 0.5})
+	dc.SetStrokeColor(colors.RGBAF{0, 1.0, 0, 0.5})
 	dc.SetStrokeWidth(16)
 	dc.FillStroke()
 	dc.SavePNG(outFile)

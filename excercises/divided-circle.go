@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/stefan-muehlebach/gg"
-	"github.com/stefan-muehlebach/gg/color"
+	"github.com/stefan-muehlebach/gg/colors"
 	"github.com/stefan-muehlebach/gg/fonts"
 	"github.com/stefan-muehlebach/gg/geom"
 	"math"
@@ -27,21 +27,21 @@ const (
 type GraphData struct {
 	stepSize  int
 	lineWidth float64
-	color     color.Color
+	color     colors.Color
 }
 
 var (
 	// BackColor und LineColor sind die Standardfarben für den Hintergrund
 	// (das Papier) und den Vordergrund.
-	BackColor = color.RGBAF{0.851, 0.811, 0.733, 1.0}
-	LineColor = color.RGBAF{0.153, 0.157, 0.133, 1.0}
+	BackColor = colors.RGBAF{0.851, 0.811, 0.733, 1.0}
+	LineColor = colors.RGBAF{0.153, 0.157, 0.133, 1.0}
 
 	GraphList = []GraphData{
-		// {44, 1.0, color.DarkViolet.Bright(0.2)},
-		// {36, 1.0, color.DarkBlue.Bright(0.1)},
-		{45, 1.0, color.DarkGreen},
-		// {24, 1.0, color.DarkOliveGreen.Dark(0.1)},
-		// {20, 1.0, color.DarkOrange.Dark(0.2)},
+		// {44, 1.0, colors.DarkViolet.Bright(0.2)},
+		// {36, 1.0, colors.DarkBlue.Bright(0.1)},
+		{45, 1.0, colors.DarkGreen},
+		// {24, 1.0, colors.DarkOliveGreen.Dark(0.1)},
+		// {20, 1.0, colors.DarkOrange.Dark(0.2)},
 	}
 )
 

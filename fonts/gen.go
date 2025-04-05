@@ -66,7 +66,7 @@ var fontFiles embed.FS
 var (
 {{- range $i, $row := .}}
     {{- if not $row.IsGoFont}}
-    {{printf "%sTTF, _ = fontFiles.ReadFile(\"%s\")" $row.FontName $row.FileName}}
+    {{printf "%sTTF, _ = fontFiles.ReadFile(\"%s\")" $row.LowerName $row.FileName}}
     {{- end}}
 {{- end}}
 )
@@ -76,7 +76,7 @@ var (
     {{- if $row.IsGoFont}}
     {{printf "%-35s = Parse(%s.TTF)" $row.FontName $row.LowerName}}
     {{- else}}
-    {{printf "%-35s = Parse(%sTTF)" $row.FontName $row.FontName}}
+    {{printf "%-35s = Parse(%sTTF)" $row.FontName $row.LowerName}}
     {{- end}}
 {{- end}}
 )

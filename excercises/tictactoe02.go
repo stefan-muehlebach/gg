@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/stefan-muehlebach/gg"
-	"github.com/stefan-muehlebach/gg/color"
+	"github.com/stefan-muehlebach/gg/colors"
 )
 
 var (
@@ -11,10 +11,10 @@ var (
 	OuterFieldSize = 67.0
 	InnerFieldSize = 82.0
 
-	BackColor     = color.Beige
-	LineColor     = color.DarkSlateGray
-	Player1Color  = color.DarkGreen
-	Player2Color  = color.DarkRed
+	BackColor     = colors.Beige
+	LineColor     = colors.DarkSlateGray
+	Player1Color  = colors.DarkGreen
+	Player2Color  = colors.DarkRed
 	GridLineWidth = 7.0
 	IconLineWidth = 10.0
 	PNGFileName   = "tictactoe02.png"

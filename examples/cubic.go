@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/stefan-muehlebach/gg"
-	"github.com/stefan-muehlebach/gg/color"
+	"github.com/stefan-muehlebach/gg/colors"
 )
 
 const (
@@ -12,7 +12,7 @@ const (
 func main() {
 	const S = 512
 	dc := gg.NewContext(S, S)
-	dc.SetFillColor(color.White)
+	dc.SetFillColor(colors.White)
 	dc.Clear()
 	dc.Translate(S/2, S/2)
 	dc.Scale(20, 20)
@@ -27,8 +27,8 @@ func main() {
 	dc.CubicTo(x1, y1, x2, y2, x3, y3)
 	dc.SetStrokeWidth(8)
 	dc.SetDash(16, 24)
-	dc.SetFillColor(color.RGBAF{0, 0, 0, 0.2})
-	dc.SetStrokeColor(color.Black)
+	dc.SetFillColor(colors.RGBAF{0, 0, 0, 0.2})
+	dc.SetStrokeColor(colors.Black)
 	dc.FillStroke()
 
 	dc.MoveTo(x0, y0)
@@ -37,7 +37,7 @@ func main() {
 	dc.LineTo(x3, y3)
 	dc.SetStrokeWidth(2)
 	dc.SetDash(4, 8, 1, 8)
-	dc.SetStrokeColor(color.RGBAF{1, 0, 0, 0.4})
+	dc.SetStrokeColor(colors.RGBAF{1, 0, 0, 0.4})
 	dc.Stroke()
 
 	dc.SavePNG(outFile)

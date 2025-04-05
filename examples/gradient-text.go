@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/stefan-muehlebach/gg"
-	"github.com/stefan-muehlebach/gg/color"
+	"github.com/stefan-muehlebach/gg/colors"
 	"github.com/stefan-muehlebach/gg/fonts"
 )
 
@@ -16,7 +16,7 @@ func main() {
 	dc := gg.NewContext(W, H)
 
 	// draw text
-	dc.SetStrokeColor(color.Black)
+	dc.SetStrokeColor(colors.Black)
 	dc.SetFontFace(fonts.NewFace(fonts.GoBold, 128))
 	dc.DrawStringAnchored("Gradient Text", W/2, H/2, 0.5, 0.5)
 
@@ -24,13 +24,13 @@ func main() {
 	mask := dc.AsMask()
 
 	// clear the context
-	dc.SetFillColor(color.White)
+	dc.SetFillColor(colors.White)
 	dc.Clear()
 
 	// set a gradient
 	g := gg.NewLinearGradient(0, 0, W, H)
-	g.AddColorStop(0, color.RGBAF{1, 0, 0, 1})
-	g.AddColorStop(1, color.RGBAF{0, 0, 1, 1})
+	g.AddColorStop(0, colors.RGBAF{1, 0, 0, 1})
+	g.AddColorStop(1, colors.RGBAF{0, 0, 1, 1})
 	dc.SetFillStyle(g)
 
 	// using the mask, fill the context with the gradient

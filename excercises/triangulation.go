@@ -7,7 +7,7 @@ import (
 	"sort"
 
 	"github.com/stefan-muehlebach/gg"
-	"github.com/stefan-muehlebach/gg/color"
+	"github.com/stefan-muehlebach/gg/colors"
 	"github.com/stefan-muehlebach/gg/fonts"
 	"github.com/stefan-muehlebach/gg/geom"
 	// "image/color"
@@ -25,18 +25,18 @@ const (
 )
 
 var (
-	BackColor = color.RGBAF{0.851, 0.811, 0.733, 1.0}
+	BackColor = colors.RGBAF{0.851, 0.811, 0.733, 1.0}
 
-	AxesColor = color.Silver
+	AxesColor = colors.Silver
 
 	PointSize         = 3.5
-	PointColor        = color.FireBrick
+	PointColor        = colors.FireBrick
 	PointTextFont     = fonts.GoBold
 	PointTextColor    = PointColor.Dark(0.5)
 	PointTextFontSize = 16.0
 
 	EdgeSize         = 1.0
-	EdgeColor        = color.SlateGray
+	EdgeColor        = colors.SlateGray
 	EdgeTextFont     = fonts.GoRegular
 	EdgeTextColor    = EdgeColor.Dark(0.5)
 	EdgeTextFontSize = 0.8 * PointTextFontSize

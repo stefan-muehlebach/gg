@@ -4,7 +4,7 @@ import (
 	"math"
 
 	"github.com/stefan-muehlebach/gg"
-	"github.com/stefan-muehlebach/gg/color"
+	"github.com/stefan-muehlebach/gg/colors"
 )
 
 var (
@@ -18,8 +18,8 @@ var (
 	yMin, yMax = -1.0, 1.0
 	zMin, zMax = 1.0, -1.0
 
-	BackColor = color.RGBAF{0.851, 0.811, 0.733, 1.0}
-	LineColor = color.RGBAF{0.153, 0.157, 0.133, 1.0}
+	BackColor = colors.RGBAF{0.851, 0.811, 0.733, 1.0}
+	LineColor = colors.RGBAF{0.153, 0.157, 0.133, 1.0}
 )
 
 // Alle anzuzeigenden Objekte muessen folgendes Interface implementieren.
@@ -160,7 +160,7 @@ func main() {
 
 	// fmt.Printf("zMin, zMax: %f, %f\n", zMin, zMax)
 
-	pixelCol := color.RGBAF{}
+	pixelCol := colors.RGBAF{}
 	col0, row0 := int(MarginSize), int(Height-MarginSize)
 	for row := 0; row < GraphSize; row++ {
 		y := rowToY(row)
@@ -171,10 +171,10 @@ func main() {
 				z = max(z, obj.Z(x, y))
 			}
 			if math.IsInf(z, 0) {
-				pixelCol = color.RGBAF{0.0, 0.0, 0.0, 1.0}
+				pixelCol = colors.RGBAF{0.0, 0.0, 0.0, 1.0}
 			} else {
 				z = scaleZ(z)
-				pixelCol = color.RGBAF{z, z, z, 1.0}
+				pixelCol = colors.RGBAF{z, z, z, 1.0}
 			}
 			c := col0 + col
 			r := row0 - row

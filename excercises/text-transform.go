@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/stefan-muehlebach/gg"
-	"github.com/stefan-muehlebach/gg/color"
+	"github.com/stefan-muehlebach/gg/colors"
 	"github.com/stefan-muehlebach/gg/fonts"
 	"math/rand"
 )
@@ -14,17 +14,17 @@ const (
 )
 
 type ConfigData struct {
-	color      color.Color
+	color      colors.Color
 	dist, size float64
 }
 
 var (
-	BackColor  = color.RGBAF{0.851, 0.811, 0.733, 1.0}
+	BackColor  = colors.RGBAF{0.851, 0.811, 0.733, 1.0}
 	TextFont   = fonts.LucidaBrightDemibold
 	ConfigList = []ConfigData{
-		{color.Blue.Dark(0.5).Alpha(0.5), -80, 22.0},
-		{color.Green.Dark(0.7).Alpha(0.6), -250, 32.0},
-		{color.Red.Dark(0.7).Alpha(0.7), -300, 40.0},
+		{colors.Blue.Dark(0.5).Alpha(0.5), -80, 22.0},
+		{colors.Green.Dark(0.7).Alpha(0.6), -250, 32.0},
+		{colors.Red.Dark(0.7).Alpha(0.7), -300, 40.0},
 	}
 )
 

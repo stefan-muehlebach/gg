@@ -4,7 +4,7 @@ import (
 	"math"
 	// "fmt"
 	"github.com/stefan-muehlebach/gg"
-	"github.com/stefan-muehlebach/gg/color"
+	"github.com/stefan-muehlebach/gg/colors"
 
 	// "github.com/stefan-muehlebach/gg/fonts"
 	"github.com/stefan-muehlebach/gg/geom"
@@ -30,26 +30,26 @@ const (
 
 type ThreadData struct {
 	width float64
-	color color.Color
+	color colors.Color
 }
 
 var (
 	// BackColor und LineColor sind die Standardfarben für den Hintergrund
 	// (das Papier) und den Vordergrund.
-	// BackColor = color.RGBAF{0.851, 0.811, 0.733, 1.0}
-	// BackColor = color.DarkRed.Dark(0.6)
-	// LineColor = color.RGBAF{0.153, 0.157, 0.133, 1.0}
+	// BackColor = colors.RGBAF{0.851, 0.811, 0.733, 1.0}
+	// BackColor = colors.DarkRed.Dark(0.6)
+	// LineColor = colors.RGBAF{0.153, 0.157, 0.133, 1.0}
 
-	BackColor = color.RGBAF{0.851, 0.811, 0.733, 1.0}
-	LineColor = color.RGBAF{0.153, 0.157, 0.133, 1.0}
+	BackColor = colors.RGBAF{0.851, 0.811, 0.733, 1.0}
+	LineColor = colors.RGBAF{0.153, 0.157, 0.133, 1.0}
 
 	ThreadList = []ThreadData{
-		{1.0, color.DarkSlateBlue.Dark(0.4)},
-		{1.0, color.DarkViolet.Bright(0.2)},
-		{1.0, color.DarkBlue.Bright(0.1)},
-		{1.0, color.DarkGreen},
-		{1.0, color.DarkOliveGreen.Dark(0.1)},
-		{1.0, color.DarkOrange.Dark(0.2)},
+		{1.0, colors.DarkSlateBlue.Dark(0.4)},
+		{1.0, colors.DarkViolet.Bright(0.2)},
+		{1.0, colors.DarkBlue.Bright(0.1)},
+		{1.0, colors.DarkGreen},
+		{1.0, colors.DarkOliveGreen.Dark(0.1)},
+		{1.0, colors.DarkOrange.Dark(0.2)},
 	}
 )
 

@@ -2,8 +2,8 @@ package main
 
 import (
 	"github.com/stefan-muehlebach/gg"
-	"github.com/stefan-muehlebach/gg/color"
-	// "github.com/stefan-muehlebach/gg/color"
+	"github.com/stefan-muehlebach/gg/colors"
+	// "github.com/stefan-muehlebach/gg/colors"
 )
 
 const (
@@ -17,8 +17,8 @@ const (
 )
 
 var (
-	BackColor = color.RGBAF{0.851, 0.811, 0.733, 1.0}
-	LineColor = color.RGBAF{0.153, 0.157, 0.133, 1.0}
+	BackColor = colors.RGBAF{0.851, 0.811, 0.733, 1.0}
+	LineColor = colors.RGBAF{0.153, 0.157, 0.133, 1.0}
 )
 
 func DrawGrid(gc *gg.Context, x0, y0, w, h float64, numCols int, rot float64) {

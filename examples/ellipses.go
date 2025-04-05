@@ -1,11 +1,14 @@
 package main
 
-import "github.com/stefan-muehlebach/gg"
+import (
+	"github.com/stefan-muehlebach/gg"
+	"github.com/stefan-muehlebach/gg/colors"
+)
 
 func main() {
 	const S = 1024
 	dc := gg.NewContext(S, S)
-	dc.SetFillColor(gg.NewRGBA(0.0, 0.0, 0.0, 0.2))
+	dc.SetFillColor(colors.RGBAF{0.0, 0.0, 0.0, 0.2})
 	for i := 0; i < 360; i += 15 {
 		dc.Push()
 		dc.RotateAbout(gg.Radians(float64(i)), S/2, S/2)

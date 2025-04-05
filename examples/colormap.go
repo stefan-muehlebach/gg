@@ -2,17 +2,17 @@ package main
 
 import (
 	"fmt"
-	gocolor "image/color"
+	"image/color"
 	"regexp"
 
 	"github.com/stefan-muehlebach/gg"
-	"github.com/stefan-muehlebach/gg/color"
+	"github.com/stefan-muehlebach/gg/colors"
 	"github.com/stefan-muehlebach/gg/fonts"
 )
 
 type NamedColor struct {
 	name  string
-	color color.Color
+	color colors.Color
 }
 
 type NamedGroup struct {
@@ -50,16 +50,16 @@ var (
 	GoColorGroup = NamedGroup{
 		name: "GoColors",
 		list: []NamedColor{
-			{"GoGopherBlue", color.RGBAF{0.004, 0.678, 0.847, 1}},
-			{"GoLightBlue", color.RGBAF{0.369, 0.788, 0.890, 1}},
-			{"GoAqua", color.RGBAF{0.000, 0.635, 0.622, 1}},
-			{"GoBlack", color.RGBAF{0.000, 0.000, 0.000, 1}},
-			{"GoFuchsia", color.RGBAF{0.808, 0.188, 0.384, 1}},
-			{"GoYellow", color.RGBAF{0.992, 0.867, 0.000, 1}},
-			{"GoTeal", color.RGBAF{0.000, 0.520, 0.553, 1}},
-			{"GoDimGray", color.RGBAF{0.333, 0.341, 0.349, 1}},
-			{"GoIndigo", color.RGBAF{0.251, 0.169, 0.337, 1}},
-			{"GoLightGray", color.RGBAF{0.859, 0.851, 0.839, 1}},
+			{"GoGopherBlue", colors.RGBAF{0.004, 0.678, 0.847, 1}},
+			{"GoLightBlue", colors.RGBAF{0.369, 0.788, 0.890, 1}},
+			{"GoAqua", colors.RGBAF{0.000, 0.635, 0.622, 1}},
+			{"GoBlack", colors.RGBAF{0.000, 0.000, 0.000, 1}},
+			{"GoFuchsia", colors.RGBAF{0.808, 0.188, 0.384, 1}},
+			{"GoYellow", colors.RGBAF{0.992, 0.867, 0.000, 1}},
+			{"GoTeal", colors.RGBAF{0.000, 0.520, 0.553, 1}},
+			{"GoDimGray", colors.RGBAF{0.333, 0.341, 0.349, 1}},
+			{"GoIndigo", colors.RGBAF{0.251, 0.169, 0.337, 1}},
+			{"GoLightGray", colors.RGBAF{0.859, 0.851, 0.839, 1}},
 		},
 	}
 )
@@ -69,7 +69,7 @@ func DrawColorSample(gc *gg.Context, x0, y0 float64, namedCol NamedColor) {
 	gc.DrawRectangle(x0, y0+FadeHeight, SampleWidth, UniformHeight)
 	gc.Fill()
 	col := namedCol.color
-    hspCol := color.HSPModel.Convert(namedCol.color).(color.HSP)
+    hspCol := colors.HSPModel.Convert(namedCol.color).(colors.HSP)
 
 	for l := 0; l < NumFadeSteps; l++ {
 		t := FadeStep * float64(l+1)
@@ -80,15 +80,15 @@ func DrawColorSample(gc *gg.Context, x0, y0 float64, namedCol NamedColor) {
         DrawFadeField(gc, x, y0+FadeHeight+UniformHeight, darkCol)
 	}
 	if hspCol.P < 0.6 {
-		gc.SetStrokeColor(color.WhiteSmoke)
+		gc.SetStrokeColor(colors.WhiteSmoke)
 	} else {
-		gc.SetStrokeColor(color.Black)
+		gc.SetStrokeColor(colors.Black)
 	}
 	gc.SetFontFace(TextFontFace)
 	gc.DrawStringAnchored(namedCol.name, x0+SampleWidth/2.0, y0+SampleHeight/2.0, 0.5, 0.5)
 }
 
-func DrawFadeField(gc *gg.Context, x, y float64, col color.Color) {
+func DrawFadeField(gc *gg.Context, x, y float64, col colors.Color) {
     gc.SetFillColor(col)
     gc.DrawRectangle(x, y, FadeWidth, FadeHeight)
     gc.Fill()
@@ -102,13 +102,13 @@ func DrawColorMap(groupList []NamedGroup, fileName string) {
 		for row, namedColor := range namedGroup.list {
 			if row == 0 {
 				y0 := float64(row) * (SampleHeight + Padding)
-				gc.SetStrokeColor(color.Black)
+				gc.SetStrokeColor(colors.Black)
 				gc.SetStrokeWidth(2.0)
-				gc.SetFillColor(color.Silver)
+				gc.SetFillColor(colors.Silver)
 				gc.DrawRectangle(x0, y0, SampleWidth, SampleHeight)
 				gc.Fill()
 				gc.SetFontFace(TitleFontFace)
-				gc.SetStrokeColor(color.Black)
+				gc.SetStrokeColor(colors.Black)
 				gc.DrawStringWrapped(namedGroup.name, x0+SampleWidth/2, y0+SampleHeight/2, 0.5, 0.5, SampleWidth, 1.0, gg.AlignCenter)
 			}
 			y0 := float64(row+1) * (SampleHeight + Padding)
@@ -131,46 +131,46 @@ func CreateCanvas(groupList []NamedGroup) *gg.Context {
 
 	gc := gg.NewContext(int(width), int(height))
 	gc.SetStrokeWidth(0.0)
-	gc.SetFillColor(color.White)
+	gc.SetFillColor(colors.White)
 	gc.Clear()
 
     return gc
 }
 
 func PrepareColorList() []NamedGroup {
-	var groupIndex color.ColorGroup
+	var groupIndex colors.ColorGroup
 	var groupList []NamedGroup
 
-	groupList = make([]NamedGroup, color.NumColorGroups)
+	groupList = make([]NamedGroup, colors.NumColorGroups)
 	for i := range groupList {
 		groupList[i].list = make([]NamedColor, 0)
 	}
 
-	for groupIndex = 0; groupIndex < color.NumColorGroups; groupIndex++ {
+	for groupIndex = 0; groupIndex < colors.NumColorGroups; groupIndex++ {
 		groupList[groupIndex].name = groupIndex.String()
-		for _, colorName := range color.Groups[groupIndex] {
+		for _, colorName := range colors.Groups[groupIndex] {
 			if ok, _ := regexp.MatchString("[Gg]rey", colorName); ok {
 				continue
 			}
-			groupList[groupIndex].list = append(groupList[groupIndex].list, NamedColor{colorName, color.Map[colorName]})
+			groupList[groupIndex].list = append(groupList[groupIndex].list, NamedColor{colorName, colors.Map[colorName]})
 		}
 	}
 	return groupList
 }
 
-func PrepareFadeList(groupIndex color.ColorGroup, modelList []gocolor.Model) []NamedGroup {
+func PrepareFadeList(groupIndex colors.ColorGroup, modelList []color.Model) []NamedGroup {
     var groupList []NamedGroup
 
     groupList = make([]NamedGroup, len(modelList))
     for i, model := range modelList {
         groupList[i] = NamedGroup{
             fmt.Sprintf("%s\n%T", groupIndex, model),
-            make([]NamedColor, len(color.Groups[groupIndex])),
+            make([]NamedColor, len(colors.Groups[groupIndex])),
         }
-        for j, colorName := range color.Groups[groupIndex] {
+        for j, colorName := range colors.Groups[groupIndex] {
             groupList[i].list[j] = NamedColor{
                 colorName,
-                model.Convert(color.Map[colorName]).(color.Color),
+                model.Convert(colors.Map[colorName]).(colors.Color),
             }
         }
     }
@@ -179,16 +179,16 @@ func PrepareFadeList(groupIndex color.ColorGroup, modelList []gocolor.Model) []N
 }
 
 func main() {
-    // modelList := []gocolor.Model{
-    //     color.RGBAFModel,
-    //     color.HSPModel,
+    // modelList := []gocolors.Model{
+    //     colors.RGBAFModel,
+    //     colors.HSPModel,
     // }
-    // groupList := PrepareFadeList(color.Greens, modelList)
-    // color.SetInterpolFunc(color.LinearInterpol)
+    // groupList := PrepareFadeList(colors.Greens, modelList)
+    // colors.SetInterpolFunc(colors.LinearInterpol)
 	// DrawColorMap(groupList, "colormap-linear.png")
-    // color.SetInterpolFunc(color.CubicInterpol)
+    // colors.SetInterpolFunc(colors.CubicInterpol)
 	// DrawColorMap(groupList, "colormap-cubic.png")
-    // color.SetInterpolFunc(color.GammaInterpol)
+    // colors.SetInterpolFunc(colors.GammaInterpol)
 	// DrawColorMap(groupList, "colormap-gamma.png")
 
     	groupList := PrepareColorList()

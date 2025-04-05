@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/stefan-muehlebach/gg"
-	"github.com/stefan-muehlebach/gg/color"
+	"github.com/stefan-muehlebach/gg/colors"
 	"github.com/stefan-muehlebach/gg/geom"
 )
 
@@ -14,22 +14,22 @@ const (
 )
 
 var (
-	BackColor = color.RGBAF{0.851, 0.811, 0.733, 1.0}
+	BackColor = colors.RGBAF{0.851, 0.811, 0.733, 1.0}
 
-	color1 = color.Crimson
-	color2 = color.Gold
-	color3 = color.LightSeaGreen
-	color4 = color.Black
+	color1 = colors.Crimson
+	color2 = colors.Gold
+	color3 = colors.LightSeaGreen
+	color4 = colors.Black
 
-	//color1 = color.Red
-	//color2 = color.Yellow
-	//color3 = color.Cyan
-	//color4 = color.Black
+	//color1 = colors.Red
+	//color2 = colors.Yellow
+	//color3 = colors.Cyan
+	//color4 = colors.Black
 
-	// color1 = color.Cyan
-	// color2 = color.Yellow
-	// color3 = color.Magenta
-	// color4 = color.Black
+	// color1 = colors.Cyan
+	// color2 = colors.Yellow
+	// color3 = colors.Magenta
+	// color4 = colors.Black
 )
 
 func DrawCell(gc *gg.Context, pos, size geom.Point, tx, ty float64) {

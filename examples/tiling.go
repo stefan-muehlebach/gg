@@ -18,7 +18,7 @@ func main() {
 	dc := gg.NewContext(w*NX, h*NY)
 	for y := 0; y < NY; y++ {
 		for x := 0; x < NX; x++ {
-			dc.DrawImage(im, x*w, y*h)
+			dc.DrawImage(im, float64(x*w), float64(y*h))
 		}
 	}
 	dc.SavePNG(outFile)

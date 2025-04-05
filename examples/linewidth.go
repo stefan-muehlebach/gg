@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/stefan-muehlebach/gg"
-	"github.com/stefan-muehlebach/gg/color"
+	"github.com/stefan-muehlebach/gg/colors"
 )
 
 const (
@@ -11,9 +11,9 @@ const (
 
 func main() {
 	dc := gg.NewContext(1000, 1000)
-	dc.SetFillColor(color.White)
+	dc.SetFillColor(colors.White)
 	dc.Clear()
-	dc.SetStrokeColor(color.Black)
+	dc.SetStrokeColor(colors.Black)
 	w := 0.1
 	for i := 100; i <= 900; i += 20 {
 		x := float64(i)

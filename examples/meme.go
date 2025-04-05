@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/stefan-muehlebach/gg"
-	"github.com/stefan-muehlebach/gg/color"
+	"github.com/stefan-muehlebach/gg/colors"
 	"github.com/stefan-muehlebach/gg/fonts"
 )
 
@@ -13,10 +13,10 @@ const (
 func main() {
 	const S = 1024
 	dc := gg.NewContext(S, S)
-	dc.SetFillColor(color.White)
+	dc.SetFillColor(colors.White)
 	dc.Clear()
 	dc.SetFontFace(fonts.NewFace(fonts.GoBold, 72))
-	dc.SetStrokeColor(color.Black)
+	dc.SetStrokeColor(colors.Black)
 	s := "ONE DOES NOT SIMPLY"
 	n := 6 // "stroke" size
 	for dy := -n; dy <= n; dy++ {
@@ -30,7 +30,7 @@ func main() {
 			dc.DrawStringAnchored(s, x, y, 0.5, 0.5)
 		}
 	}
-	dc.SetStrokeColor(color.White)
+	dc.SetStrokeColor(colors.White)
 	dc.DrawStringAnchored(s, S/2, S/2, 0.5, 0.5)
 	dc.SavePNG(outFile)
 }

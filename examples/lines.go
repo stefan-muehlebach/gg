@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/stefan-muehlebach/gg"
-	"github.com/stefan-muehlebach/gg/color"
+	"github.com/stefan-muehlebach/gg/colors"
 	"math/rand"
 )
 
@@ -14,7 +14,7 @@ func main() {
 	const W = 1024
 	const H = 1024
 	dc := gg.NewContext(W, H)
-	dc.SetFillColor(color.Black)
+	dc.SetFillColor(colors.Black)
 	dc.Clear()
 	for i := 0; i < 1000; i++ {
 		x1 := rand.Float64() * W
@@ -26,7 +26,7 @@ func main() {
 		b := rand.Float64()
 		a := 0.5 + 0.5*rand.Float64()
 		w := rand.Float64()*4 + 1
-		dc.SetStrokeColor(color.RGBAF{r, g, b, a})
+		dc.SetStrokeColor(colors.RGBAF{r, g, b, a})
 		dc.SetStrokeWidth(w)
 		dc.DrawLine(x1, y1, x2, y2)
 		dc.Stroke()

@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/stefan-muehlebach/gg"
-	"github.com/stefan-muehlebach/gg/color"
+	"github.com/stefan-muehlebach/gg/colors"
 	"github.com/stefan-muehlebach/gg/fonts"
 )
 
@@ -13,8 +13,8 @@ const (
 )
 
 var (
-	BackColor = color.RGBAF{0.851, 0.811, 0.733, 1.0}
-	LineColor = color.RGBAF{0.153, 0.157, 0.133, 1.0}
+	BackColor = colors.RGBAF{0.851, 0.811, 0.733, 1.0}
+	LineColor = colors.RGBAF{0.153, 0.157, 0.133, 1.0}
 )
 
 func main() {
@@ -27,7 +27,7 @@ func main() {
 	dc.DrawLine(W/2, 0, W/2, H)
 	dc.DrawLine(0, H/2, W, H/2)
 	dc.DrawRectangle(P, P, W-P-P, H-P-P)
-	dc.SetStrokeColor(color.RGBAF{0, 0, 1.0, 0.25})
+	dc.SetStrokeColor(colors.RGBAF{0, 0, 1.0, 0.25})
 	dc.SetStrokeWidth(3)
 	dc.Stroke()
 	dc.SetStrokeColor(LineColor)

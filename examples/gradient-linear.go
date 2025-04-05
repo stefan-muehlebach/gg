@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/stefan-muehlebach/gg"
-	"github.com/stefan-muehlebach/gg/color"
+	"github.com/stefan-muehlebach/gg/colors"
 )
 
 const (
@@ -16,11 +16,11 @@ func main() {
 	dc := gg.NewContext(512, 512)
 
 	grad := gg.NewLinearGradient(32, 512-32, 512-32, 32)
-	grad.AddColorStop(0, color.RGBAF{0, 1.0, 0, 1.0})
-	grad.AddColorStop(1, color.RGBAF{0, 0, 1.0, 1.0})
-	grad.AddColorStop(0.5, color.RGBAF{1.0, 0, 0, 1.0})
+	grad.AddColorStop(0, colors.RGBAF{0, 1.0, 0, 1.0})
+	grad.AddColorStop(1, colors.RGBAF{0, 0, 1.0, 1.0})
+	grad.AddColorStop(0.5, colors.RGBAF{1.0, 0, 0, 1.0})
 
-	dc.SetStrokeColor(color.White)
+	dc.SetStrokeColor(colors.White)
 	dc.DrawRectangle(512/8, 512/8, 384, 384)
 	dc.Stroke()
 

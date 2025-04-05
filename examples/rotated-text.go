@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/stefan-muehlebach/gg"
-	"github.com/stefan-muehlebach/gg/color"
+	"github.com/stefan-muehlebach/gg/colors"
 	"github.com/stefan-muehlebach/gg/fonts"
 )
 
@@ -15,10 +15,10 @@ const (
 func main() {
 	const S = 400
 	dc := gg.NewContext(size, size)
-	dc.SetFillColor(color.White)
+	dc.SetFillColor(colors.White)
 	dc.Clear()
 
-	dc.SetStrokeColor(color.Black)
+	dc.SetStrokeColor(colors.Black)
 	dc.SetFontFace(fonts.NewFace(fonts.GoRegular, fontSize))
 	text := "Hello, world!"
 	w, h := dc.MeasureString(text)

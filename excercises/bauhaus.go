@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/stefan-muehlebach/gg"
-	"github.com/stefan-muehlebach/gg/color"
+	"github.com/stefan-muehlebach/gg/colors"
 	"github.com/stefan-muehlebach/gg/geom"
 	"math"
 )
@@ -17,18 +17,18 @@ const (
 )
 
 type CircleData struct {
-	color  color.Color
+	color  colors.Color
 	radius float64
 }
 
 var (
 	// Per GIMP Color-Picker aus der verd*** Fotographie entnommen.
-	BackColor = color.RGBAF{0.851, 0.811, 0.733, 1.0}
+	BackColor = colors.RGBAF{0.851, 0.811, 0.733, 1.0}
 	DataList  = []CircleData{
-		{color.RGBAF{0.125, 0.166, 0.356, 1.0}, Rad},
-		{color.RGBAF{0.392, 0.264, 0.298, 1.0}, 0.66 * Rad},
-		{color.RGBAF{0.907, 0.340, 0.169, 1.0}, 0.48 * Rad},
-		{color.RGBAF{0.930, 0.554, 0.104, 1.0}, 0.30 * Rad},
+		{colors.RGBAF{0.125, 0.166, 0.356, 1.0}, Rad},
+		{colors.RGBAF{0.392, 0.264, 0.298, 1.0}, 0.66 * Rad},
+		{colors.RGBAF{0.907, 0.340, 0.169, 1.0}, 0.48 * Rad},
+		{colors.RGBAF{0.930, 0.554, 0.104, 1.0}, 0.30 * Rad},
 	}
 )
 

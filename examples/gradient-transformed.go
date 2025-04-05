@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/stefan-muehlebach/gg"
-	"github.com/stefan-muehlebach/gg/color"
+	"github.com/stefan-muehlebach/gg/colors"
 )
 
 const (
@@ -17,13 +17,13 @@ func main() {
 	dc := gg.NewContext(width, height)
 
 	grad := gg.NewLinearGradient(0, 0, canvasSize, 0)
-	grad.AddColorStop(0.0, color.RGBAF{1.0, 0, 0, 0})
-	grad.AddColorStop(0.25, color.RGBAF{1.0, 0, 0, 1.0})
-	grad.AddColorStop(0.5, color.RGBAF{0, 1.0, 0, 1.0})
-	grad.AddColorStop(0.75, color.RGBAF{0, 0, 1.0, 1.0})
-	grad.AddColorStop(1.0, color.RGBAF{0, 0, 1.0, 0})
+	grad.AddColorStop(0.0, colors.RGBAF{1.0, 0, 0, 0})
+	grad.AddColorStop(0.25, colors.RGBAF{1.0, 0, 0, 1.0})
+	grad.AddColorStop(0.5, colors.RGBAF{0, 1.0, 0, 1.0})
+	grad.AddColorStop(0.75, colors.RGBAF{0, 0, 1.0, 1.0})
+	grad.AddColorStop(1.0, colors.RGBAF{0, 0, 1.0, 0})
 
-	dc.SetFillColor(color.Black)
+	dc.SetFillColor(colors.Black)
 	dc.Clear()
 
 	dc.SetFillStyle(grad)

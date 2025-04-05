@@ -4,7 +4,7 @@ import (
 	"math"
 
 	"github.com/stefan-muehlebach/gg"
-	"github.com/stefan-muehlebach/gg/color"
+	"github.com/stefan-muehlebach/gg/colors"
 )
 
 type PlayerType int
@@ -21,10 +21,10 @@ var (
 	SymbolPadding   = 15.0
 	OuterFieldSize  = 67.0
 	InnerFieldSize  = 82.0
-	BackColor       = color.Beige
-	LineColor       = color.DarkSlateGray
-	Player1Color    = color.DarkGreen
-	Player2Color    = color.DarkRed
+	BackColor       = colors.Beige
+	LineColor       = colors.DarkSlateGray
+	Player1Color    = colors.DarkGreen
+	Player2Color    = colors.DarkRed
 	GridLineWidth   = 7.0
 	SymbolLineWidth = 10.0
 	PNGFileName     = "tictactoe03.png"

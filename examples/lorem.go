@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/stefan-muehlebach/gg"
-	"github.com/stefan-muehlebach/gg/color"
+	"github.com/stefan-muehlebach/gg/colors"
 	"github.com/stefan-muehlebach/gg/fonts"
 )
 
@@ -23,9 +23,9 @@ func main() {
 	const W = 800
 	const H = 400
 	dc := gg.NewContext(W, H)
-	dc.SetFillColor(color.White)
+	dc.SetFillColor(colors.White)
 	dc.Clear()
-	dc.SetStrokeColor(color.Black)
+	dc.SetStrokeColor(colors.Black)
 	dc.SetFontFace(fonts.NewFace(fonts.GoRegular, 18))
 	const h = 24
 	for i, line := range lines {

@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/stefan-muehlebach/gg"
-	"github.com/stefan-muehlebach/gg/color"
+	"github.com/stefan-muehlebach/gg/colors"
 	"github.com/stefan-muehlebach/gg/fonts"
 )
 
@@ -16,9 +16,9 @@ func main() {
 
 	dc := gg.NewContext(width, height)
 	dc.SetFontFace(face)
-	dc.SetFillColor(color.White)
+	dc.SetFillColor(colors.White)
 	dc.Clear()
-	dc.SetStrokeColor(color.Black)
+	dc.SetStrokeColor(colors.Black)
 	dc.DrawStringAnchored("Hello, world!", width/2, height/2, 0.5, 0.5)
 	dc.SavePNG(outFile)
 }

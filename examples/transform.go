@@ -6,7 +6,7 @@ import (
 	"golang.org/x/image/font"
 
 	"github.com/stefan-muehlebach/gg"
-	"github.com/stefan-muehlebach/gg/color"
+	"github.com/stefan-muehlebach/gg/colors"
 	"github.com/stefan-muehlebach/gg/fonts"
 )
 
@@ -26,20 +26,20 @@ func drawRect(dc *gg.Context, mx, my, w, h float64) {
 	// Halbtransparentes Rechteck zeichnen.
 	dc.DrawRectangle(mx-w/2.0, my-h/2.0, w, h)
 	dc.SetStrokeWidth(10.0)
-	dc.SetFillColor(color.RGBAF{0, 0, 0, 0.5})
-	dc.SetStrokeColor(color.White)
+	dc.SetFillColor(colors.RGBAF{0, 0, 0, 0.5})
+	dc.SetStrokeColor(colors.White)
 	dc.FillStroke()
 
 	// Schrift laden und Text im Zentrum des Rechtecks zeichnen.
 	dc.SetFontFace(face)
-	dc.SetStrokeColor(color.Black)
+	dc.SetStrokeColor(colors.Black)
 	dc.DrawStringAnchored(sampleText, mx, my, 0.5, 0.5)
 
 	// Auffaelliger Rotationspunkt zeichnen.
 	dc.DrawPoint(mx, my, 5.0)
 	dc.SetStrokeWidth(2.0)
-	dc.SetFillColor(color.RGBAF{1, 0, 1, 0.5})
-	dc.SetStrokeColor(color.RGBAF{1, 0, 1, 1})
+	dc.SetFillColor(colors.RGBAF{1, 0, 1, 0.5})
+	dc.SetStrokeColor(colors.RGBAF{1, 0, 1, 1})
 	dc.FillStroke()
 }
 
@@ -47,7 +47,7 @@ func drawGrid(dc *gg.Context, mainTick float64) {
 	b := dc.Bounds()
 
 	dc.SetStrokeWidth(1.0)
-	dc.SetStrokeColor(color.Black)
+	dc.SetStrokeColor(colors.Black)
 	for tick := mainTick; (b.Min.X < -tick) || (tick < b.Max.X) || (b.Min.Y < -tick) || (tick < b.Max.Y); tick += mainTick {
 		if b.Min.X < -tick {
 			dc.DrawLine(-tick, b.Min.Y, -tick, b.Max.Y)
@@ -65,7 +65,7 @@ func drawGrid(dc *gg.Context, mainTick float64) {
 	dc.Stroke()
 
 	dc.SetStrokeWidth(3.0)
-	dc.SetStrokeColor(color.Black)
+	dc.SetStrokeColor(colors.Black)
 	dc.DrawLine(b.Min.X, 0, b.Max.X, 0)
 	dc.DrawLine(0, b.Min.Y, 0, b.Max.Y)
 	dc.Stroke()

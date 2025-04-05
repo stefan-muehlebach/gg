@@ -29,6 +29,6 @@ func main() {
 
 	dc := gg.NewContext(width, height)
 	dc.DrawImage(im1, 0, 0)
-	dc.DrawImage(im2, 0, s1.Y)
+	dc.DrawImage(im2, 0, float64(s1.Y))
 	dc.SavePNG(outFile)
 }

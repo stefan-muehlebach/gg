@@ -4,13 +4,13 @@ import (
 	"flag"
 	"fmt"
 	"image"
-	gocolor "image/color"
+	"image/color"
 	"log"
 	"math"
 	"os"
 
 	"github.com/stefan-muehlebach/gg"
-	"github.com/stefan-muehlebach/gg/color"
+	"github.com/stefan-muehlebach/gg/colors"
 	"github.com/stefan-muehlebach/gg/geom"
 )
 
@@ -31,8 +31,8 @@ const (
 )
 
 var (
-	BackColor = color.RGBAF{0.851, 0.811, 0.733, 1.0}
-	LineColor = color.RGBAF{0.153, 0.157, 0.133, 1.0}
+	BackColor = colors.RGBAF{0.851, 0.811, 0.733, 1.0}
+	LineColor = colors.RGBAF{0.153, 0.157, 0.133, 1.0}
 
 	Sqrt3                   = math.Sqrt(3.0)
 	Sqrt3_2                 = math.Sqrt(3.0) / 2.0
@@ -47,7 +47,7 @@ var (
 // im Interval [0,1] zurueckgegeben.
 func GrayValue(img image.Image, col, row int) float64 {
 	pixel := img.At(col, row)
-	grayPixel := gocolor.Gray16Model.Convert(pixel).(gocolor.Gray16)
+	grayPixel := color.Gray16Model.Convert(pixel).(color.Gray16)
 	return float64(grayPixel.Y) / float64(0xFFFF)
 }
 
