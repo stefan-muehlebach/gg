@@ -1,8 +1,9 @@
 package main
 
 import (
-	"github.com/stefan-muehlebach/gg"
 	"image/color"
+
+	"github.com/stefan-muehlebach/gg"
 )
 
 const (
@@ -15,7 +16,7 @@ func main() {
 	dc.SetFillColor(color.White)
 	dc.Clear()
 	dc.SetStrokeColor(color.Black)
-	if err := dc.LoadFontFace("Ubuntu-Regular.ttf", 96); err != nil {
+	if err := dc.LoadFontFace("Arial-Unicode-MS.ttf", 96); err != nil {
 		panic(err)
 	}
 	dc.DrawStringAnchored("Hello, world!", S/2, S/2, 0.5, 0.5)
