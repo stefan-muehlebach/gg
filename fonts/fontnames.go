@@ -77,6 +77,7 @@ var (
     leipzigfrakturTTF, _ = fontFiles.ReadFile("FontFiles/80-LeipzigFraktur.ttf")
     leipzigfrakturboldTTF, _ = fontFiles.ReadFile("FontFiles/81-LeipzigFraktur-Bold.ttf")
     rothenburgdecorativeTTF, _ = fontFiles.ReadFile("FontFiles/82-RothenburgDecorative.ttf")
+    uncialantiquaTTF, _ = fontFiles.ReadFile("FontFiles/83-UncialAntiqua.ttf")
     elzevierTTF, _ = fontFiles.ReadFile("FontFiles/90-Elzevier.ttf")
     floralcapitalsTTF, _ = fontFiles.ReadFile("FontFiles/91-FloralCapitals.ttf")
     goudyinitialenTTF, _ = fontFiles.ReadFile("FontFiles/92-GoudyInitialen.ttf")
@@ -148,6 +149,7 @@ var (
     LeipzigFraktur                      = Parse(leipzigfrakturTTF)
     LeipzigFrakturBold                  = Parse(leipzigfrakturboldTTF)
     RothenburgDecorative                = Parse(rothenburgdecorativeTTF)
+    UncialAntiqua                       = Parse(uncialantiquaTTF)
     Elzevier                            = Parse(elzevierTTF)
     FloralCapitals                      = Parse(floralcapitalsTTF)
     GoudyInitialen                      = Parse(goudyinitialenTTF)
@@ -219,6 +221,7 @@ var Map = map[string]*Font{
     "LeipzigFraktur": LeipzigFraktur,
     "LeipzigFrakturBold": LeipzigFrakturBold,
     "RothenburgDecorative": RothenburgDecorative,
+    "UncialAntiqua": UncialAntiqua,
     "Elzevier": Elzevier,
     "FloralCapitals": FloralCapitals,
     "GoudyInitialen": GoudyInitialen,
@@ -290,6 +293,7 @@ var Names = []string{
     "LeipzigFraktur",
     "LeipzigFrakturBold",
     "RothenburgDecorative",
+    "UncialAntiqua",
     "Elzevier",
     "FloralCapitals",
     "GoudyInitialen",

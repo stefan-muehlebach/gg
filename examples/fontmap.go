@@ -12,9 +12,14 @@ var (
 	LineHeight = 1.3 * FontSize
 	BackColor  = colors.RGBAF{0.851, 0.811, 0.733, 1.0}
 	TextColor  = colors.Black.Alpha(0.7)
+	MarkerColor = colors.Crimson
+	MarkerWidth = 2.0
+
+	FileName = "fontmap.png"
 
 	Width  = 1024.0
 	Height = 2*MarginSize + FontSize + float64(len(fonts.Names)-1)*LineHeight
+
 )
 
 func main() {
@@ -31,8 +36,8 @@ func main() {
 
 		w, _ := gc.MeasureString(fontName)
 
-		gc.SetStrokeColor(colors.Crimson)
-		gc.SetStrokeWidth(2.0)
+		gc.SetStrokeColor(MarkerColor)
+		gc.SetStrokeWidth(MarkerWidth)
 
 		// Links unten
 		gc.MoveTo(x, y-10.0)
@@ -53,5 +58,5 @@ func main() {
 
 		gc.Stroke()
 	}
-	gc.SavePNG("fontmap.png")
+	gc.SavePNG(FileName)
 }
