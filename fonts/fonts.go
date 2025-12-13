@@ -42,12 +42,15 @@ func (f *Font) UnmarshalText(text []byte) error {
 // verwendet werden kann. textFont ist ein Pointer auf einen OpenType-Font
 // Siehe auch Array [Names] für eine Liste aller Fonts, die in diesem Package
 // angeboten werden.
-func NewFace(textFont *Font, size float64) font.Face {
-	face, _ := opentype.NewFace((*opentype.Font)(textFont),
+func NewFace(textFont *Font, size float64) (font.Face, error) {
+	face, err := opentype.NewFace((*opentype.Font)(textFont),
 		&opentype.FaceOptions{
 			Size:    size,
 			DPI:     72,
 			Hinting: font.HintingFull,
 		})
-	return face
+    if err != nil {
+        return nil, err
+    }
+	return face, nil
 }

@@ -20,7 +20,8 @@ import (
 	"github.com/golang/freetype/raster"
 	"golang.org/x/image/draw"
 	"golang.org/x/image/font"
-	"golang.org/x/image/font/basicfont"
+
+	//	"golang.org/x/image/font/basicfont"
 	"golang.org/x/image/math/f64"
 )
 
@@ -106,21 +107,21 @@ func NewContextForImage(im image.Image) *Context {
 func NewContextForRGBA(im *image.RGBA) *Context {
 	w := im.Bounds().Size().X
 	h := im.Bounds().Size().Y
-	return &Context{
+	gc := &Context{
 		width:         w,
 		height:        h,
-		bounds:        geom.Rectangle{Max: geom.Point{X: float64(w), Y: float64(h)}},
-		rasterizer:    raster.NewRasterizer(w, h),
+		bounds:        geom.NewRectangleIMG(im.Bounds()),
+		rasterizer:    raster.NewRasterizer(im.Rect.Max.X, im.Rect.Max.Y),
 		im:            im,
 		fillPattern:   defaultFillStyle,
 		strokePattern: defaultStrokeStyle,
 		textPattern:   defaultTextStyle,
 		lineWidth:     1,
 		fillRule:      FillRuleWinding,
-		fontFace:      basicfont.Face7x13,
 		fontHeight:    13,
 		matrix:        geom.Identity(),
 	}
+	return gc
 }
 
 // GetCurrentPoint will return the current point and if there is a current point.
@@ -390,6 +391,10 @@ func (dc *Context) stroke(painter raster.Painter) {
 		// path = rasterPath(flattenPath(path))
 	}
 	r := dc.rasterizer
+	// fmt.Printf("stroke()\n")
+ //    fmt.Printf("  dc.rasterizer: %+v\n", r)
+	// fmt.Printf("  painter: %+v\n", painter.(*raster.RGBAPainter).Image.Rect)
+	// fmt.Printf("  path: %+v\n", path)
 	r.UseNonZeroWinding = true
 	r.Clear()
 	r.AddStroke(path, fix(dc.lineWidth), dc.capper(), dc.joiner())
