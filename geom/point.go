@@ -181,10 +181,13 @@ func (p *Point) Set(s string) error {
 
 //----------------------------------------------------------------------------
 
+// Hilfsfunktion, um einen Punkt mit Fliesskomma-Koordinaten in einen Punkt
+// mit Festkomma-Koordinaten umzuwandeln.
 func fixp(x, y float64) fixed.Point26_6 {
 	return fixed.Point26_6{X: fix(x), Y: fix(y)}
 }
 
+// Hilfsfunktion, um einen Fliesskommawert in einen Festkommawert umzuwandeln.
 func fix(x float64) fixed.Int26_6 {
 	return fixed.Int26_6(math.Round(x * 64))
 }

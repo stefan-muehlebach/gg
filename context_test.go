@@ -38,6 +38,59 @@ func saveImage(dc *Context, name string) error {
 	return nil
 }
 
+func drawDashes(gc *Context, num int) {
+	gc.SetFillColor(colors.White)
+	gc.Clear()
+	rnd := rand.New(rand.NewSource(99))
+	for range num {
+		x1 := rnd.Float64() * 100
+		y1 := rnd.Float64() * 100
+		x2 := rnd.Float64() * 100
+		y2 := rnd.Float64() * 100
+		gc.SetDash(rnd.Float64()*3+1, rnd.Float64()*3+3)
+		gc.DrawLine(x1, y1, x2, y2)
+		gc.SetStrokeWidth(rnd.Float64() * 3)
+		gc.SetStrokeColor(colors.RGBAF{rnd.Float64(), rnd.Float64(), rnd.Float64(), 1.0})
+		gc.Stroke()
+	}
+}
+
+func drawLinearGradient(gc *Context, num int) {
+	for range num {
+		g := NewLinearGradient(0, 0, 100, 100)
+		g.AddColorStop(0.0, colors.RGBAF{0, 1, 0, 1})
+		g.AddColorStop(0.5, colors.RGBAF{1, 0, 0, 1})
+		g.AddColorStop(1.0, colors.RGBAF{0, 0, 1, 1})
+		gc.SetFillStyle(g)
+		gc.DrawRectangle(0, 0, 100, 100)
+		gc.Fill()
+	}
+}
+
+func drawRadialGradient(gc *Context, num int) {
+	for range num {
+		g := NewRadialGradient(30, 50, 0, 70, 50, 50)
+		g.AddColorStop(0.0, colors.RGBAF{0, 1, 0, 1})
+		g.AddColorStop(0.5, colors.RGBAF{1, 0, 0, 1})
+		g.AddColorStop(1.0, colors.RGBAF{0, 0, 1, 1})
+		gc.SetFillStyle(g)
+		gc.DrawRectangle(0, 0, 100, 100)
+		gc.Fill()
+	}
+}
+
+func drawStringWrapped(gc *Context, num int) {
+	for range num {
+		gc.SetFillColor(colors.White)
+		gc.Clear()
+		gc.SetTextColor(colors.Teal)
+		gc.DrawStringWrapped("Hello, world! How are you?",
+                    50, 50, 0.5, 0.5, 90, 1.5, AlignCenter)
+	}
+}
+
+// The test functions
+//
 func TestBlank(t *testing.T) {
 	dc := NewContext(100, 100)
 	saveImage(dc, "TestBlank")
@@ -73,6 +126,7 @@ func TestLines(t *testing.T) {
 		dc.SetStrokeWidth(rnd.Float64() * 3)
 		dc.SetStrokeColor(colors.RGBAF{rnd.Float64(), rnd.Float64(), rnd.Float64(), 1.0})
 		dc.Stroke()
+        t.Logf("Dirty area: %v\n", dc.ChangedRect(true))
 	}
 	saveImage(dc, "TestLines")
 	checkHash(t, dc, "72735880e6b28b6351ea8f7d51c10193")
@@ -239,25 +293,9 @@ func TestPushPop(t *testing.T) {
 
 func TestDrawStringWrapped(t *testing.T) {
 	gc := NewContext(100, 100)
-	DrawStringWrapped(gc, 1)
+	drawStringWrapped(gc, 1)
 	saveImage(gc, "TestDrawStringWrapped")
-	checkHash(t, gc, "bfa8bd15395510b453e3b9d075a1a66a")
-}
-
-func BenchmarkDrawStringWrapped(b *testing.B) {
-	gc := NewContext(100, 100)
-	b.ResetTimer()
-	DrawStringWrapped(gc, b.N)
-}
-
-func DrawStringWrapped(gc *Context, num int) {
-	for range num {
-		gc.SetFillColor(colors.White)
-		gc.Clear()
-		gc.SetTextColor(colors.Teal)
-		gc.DrawStringWrapped("Hello, world! How are you?",
-                    50, 50, 0.5, 0.5, 90, 1.5, AlignCenter)
-	}
+	checkHash(t, gc, "3893d7f71cca2401618dff0b1626534d")
 }
 
 func TestDrawImage(t *testing.T) {
@@ -315,102 +353,44 @@ func TestDrawPoint(t *testing.T) {
 
 func TestLinearGradient(t *testing.T) {
 	gc := NewContext(100, 100)
-	DrawLinearGradient(gc, 1)
+	drawLinearGradient(gc, 1)
 	saveImage(gc, "TestLinearGradient")
 	checkHash(t, gc, "75eb9385c1219b1d5bb6f4c961802c7a")
+}
+
+func TestRadialGradient(t *testing.T) {
+	gc := NewContext(100, 100)
+	drawRadialGradient(gc, 1)
+	saveImage(gc, "TestRadialGradient")
+	checkHash(t, gc, "f170f39c3f35c29de11e00428532489d")
+}
+
+func TestDashes(t *testing.T) {
+	gc := NewContext(100, 100)
+	drawDashes(gc, 100)
+	saveImage(gc, "TestDashes")
+	checkHash(t, gc, "89669e7e03a08ca9fc7ba589a310f427")
+}
+
+
+// The benchmark tests
+//
+func BenchmarkDashes(b *testing.B) {
+	gc := NewContext(100, 100)
+	b.ResetTimer()
+	drawDashes(gc, b.N)
+}
+
+func BenchmarkDrawStringWrapped(b *testing.B) {
+	gc := NewContext(100, 100)
+	b.ResetTimer()
+	drawStringWrapped(gc, b.N)
 }
 
 func BenchmarkLinearGradient(b *testing.B) {
 	gc := NewContext(100, 100)
 	b.ResetTimer()
-	DrawLinearGradient(gc, b.N)
-}
-
-func DrawLinearGradient(gc *Context, num int) {
-	for range num {
-		g := NewLinearGradient(0, 0, 100, 100)
-		g.AddColorStop(0.0, colors.RGBAF{0, 1, 0, 1})
-		g.AddColorStop(0.5, colors.RGBAF{1, 0, 0, 1})
-		g.AddColorStop(1.0, colors.RGBAF{0, 0, 1, 1})
-		gc.SetFillStyle(g)
-		gc.DrawRectangle(0, 0, 100, 100)
-		gc.Fill()
-	}
-}
-
-func TestRadialGradient(t *testing.T) {
-	gc := NewContext(100, 100)
-	DrawRadialGradient(gc, 1)
-	saveImage(gc, "TestRadialGradient")
-	checkHash(t, gc, "f170f39c3f35c29de11e00428532489d")
-}
-
-func BenchmarkRadialGradient(b *testing.B) {
-	gc := NewContext(100, 100)
-	b.ResetTimer()
-	DrawRadialGradient(gc, b.N)
-}
-
-func DrawRadialGradient(gc *Context, num int) {
-	for range num {
-		g := NewRadialGradient(30, 50, 0, 70, 50, 50)
-		g.AddColorStop(0.0, colors.RGBAF{0, 1, 0, 1})
-		g.AddColorStop(0.5, colors.RGBAF{1, 0, 0, 1})
-		g.AddColorStop(1.0, colors.RGBAF{0, 0, 1, 1})
-		gc.SetFillStyle(g)
-		gc.DrawRectangle(0, 0, 100, 100)
-		gc.Fill()
-	}
-}
-
-func TestDashes(t *testing.T) {
-	gc := NewContext(100, 100)
-	DrawDashes(gc, 100)
-	saveImage(gc, "TestDashes")
-	checkHash(t, gc, "89669e7e03a08ca9fc7ba589a310f427")
-}
-
-func BenchmarkDashes(b *testing.B) {
-	gc := NewContext(100, 100)
-	b.ResetTimer()
-	DrawDashes(gc, b.N)
-}
-
-func DrawDashes(gc *Context, num int) {
-	gc.SetFillColor(colors.White)
-	gc.Clear()
-	rnd := rand.New(rand.NewSource(99))
-	for range num {
-		x1 := rnd.Float64() * 100
-		y1 := rnd.Float64() * 100
-		x2 := rnd.Float64() * 100
-		y2 := rnd.Float64() * 100
-		gc.SetDash(rnd.Float64()*3+1, rnd.Float64()*3+3)
-		gc.DrawLine(x1, y1, x2, y2)
-		gc.SetStrokeWidth(rnd.Float64() * 3)
-		gc.SetStrokeColor(colors.RGBAF{rnd.Float64(), rnd.Float64(), rnd.Float64(), 1.0})
-		gc.Stroke()
-	}
-}
-
-func BenchmarkScreenCoordSystem(b *testing.B) {
-	dc := NewContext(1000, 1000)
-	dc.SetFillColor(colors.White)
-	dc.Clear()
-	rnd := rand.New(rand.NewSource(99))
-	for i := 0; i < b.N; i++ {
-		x := rnd.Float64() * 1000
-		y := rnd.Float64() * 1000
-		dc.DrawCircle(x, y, 10)
-		if i%2 == 0 {
-			dc.SetFillColor(colors.Black)
-		} else {
-			dc.SetFillColor(colors.White)
-		}
-		dc.Fill()
-	}
-	b.StopTimer()
-	// saveImage(dc, "BenchmarkCircles")
+	drawLinearGradient(gc, b.N)
 }
 
 func BenchmarkMathCoordSystem(b *testing.B) {
@@ -434,3 +414,32 @@ func BenchmarkMathCoordSystem(b *testing.B) {
 	b.StopTimer()
 	// saveImage(dc, "BenchmarkMathCircles")
 }
+
+func BenchmarkRadialGradient(b *testing.B) {
+	gc := NewContext(100, 100)
+	b.ResetTimer()
+	drawRadialGradient(gc, b.N)
+}
+
+
+
+func BenchmarkScreenCoordSystem(b *testing.B) {
+	dc := NewContext(1000, 1000)
+	dc.SetFillColor(colors.White)
+	dc.Clear()
+	rnd := rand.New(rand.NewSource(99))
+	for i := 0; i < b.N; i++ {
+		x := rnd.Float64() * 1000
+		y := rnd.Float64() * 1000
+		dc.DrawCircle(x, y, 10)
+		if i%2 == 0 {
+			dc.SetFillColor(colors.Black)
+		} else {
+			dc.SetFillColor(colors.White)
+		}
+		dc.Fill()
+	}
+	b.StopTimer()
+	// saveImage(dc, "BenchmarkCircles")
+}
+

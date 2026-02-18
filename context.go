@@ -21,7 +21,9 @@ import (
 	"golang.org/x/image/draw"
 	"golang.org/x/image/font"
 
-	//	"golang.org/x/image/font/basicfont"
+	"golang.org/x/image/font/gofont/goregular"
+	"golang.org/x/image/font/opentype"
+
 	"golang.org/x/image/math/f64"
 )
 
@@ -59,17 +61,27 @@ const (
 )
 
 var (
+    defaultLineWidth   = 1.0
 	defaultFillStyle   = NewSolidPattern(color.White)
 	defaultStrokeStyle = NewSolidPattern(color.Black)
 	defaultTextStyle   = NewSolidPattern(color.Black)
+	defaultFont, _     = opentype.Parse(goregular.TTF)
+	defaultFontSize    = 13.0
+	defaultFontFace, _ = opentype.NewFace(defaultFont, &opentype.FaceOptions{
+		Size:    defaultFontSize,
+		DPI:     72,
+		Hinting: font.HintingNone,
+	})
 )
 
 type Context struct {
 	width         int
 	height        int
 	bounds        geom.Rectangle
-	rasterizer    *raster.Rasterizer
 	im            *image.RGBA
+	rasterizer    *raster.Rasterizer
+    painter       *Painter
+	// rgbaPainter   *raster.RGBAPainter
 	mask          *image.Alpha
 	path          raster.Path
 	strokePattern Pattern
@@ -111,14 +123,17 @@ func NewContextForRGBA(im *image.RGBA) *Context {
 		width:         w,
 		height:        h,
 		bounds:        geom.NewRectangleIMG(im.Bounds()),
-		rasterizer:    raster.NewRasterizer(im.Rect.Max.X, im.Rect.Max.Y),
 		im:            im,
+		rasterizer:    raster.NewRasterizer(im.Rect.Max.X, im.Rect.Max.Y),
+        painter:       newPainter(im),
+		// rgbaPainter:   raster.NewRGBAPainter(im),
 		fillPattern:   defaultFillStyle,
 		strokePattern: defaultStrokeStyle,
 		textPattern:   defaultTextStyle,
-		lineWidth:     1,
 		fillRule:      FillRuleWinding,
-		fontHeight:    13,
+		lineWidth:     defaultLineWidth,
+		fontHeight:    defaultFontSize,
+		fontFace:      defaultFontFace,
 		matrix:        geom.Identity(),
 	}
 	return gc
@@ -392,7 +407,7 @@ func (dc *Context) stroke(painter raster.Painter) {
 	}
 	r := dc.rasterizer
 	// fmt.Printf("stroke()\n")
- //    fmt.Printf("  dc.rasterizer: %+v\n", r)
+	//    fmt.Printf("  dc.rasterizer: %+v\n", r)
 	// fmt.Printf("  painter: %+v\n", painter.(*raster.RGBAPainter).Image.Rect)
 	// fmt.Printf("  path: %+v\n", path)
 	r.UseNonZeroWinding = true
@@ -424,9 +439,12 @@ func (dc *Context) StrokePreserve() {
 		if pattern, ok := dc.strokePattern.(*solidPattern); ok {
 			// with a nil mask and a solid color pattern, we can be more efficient
 			// TODO: refactor so we don't have to do this type assertion stuff?
-			p := raster.NewRGBAPainter(dc.im)
-			p.SetColor(pattern.color)
-			painter = p
+			// p := raster.NewRGBAPainter(dc.im)
+			// p.SetColor(pattern.color)
+			// painter = p
+
+			dc.painter.SetColor(pattern.color)
+			painter = dc.painter
 		}
 	}
 	if painter == nil {
@@ -451,9 +469,13 @@ func (dc *Context) FillPreserve() {
 		if pattern, ok := dc.fillPattern.(*solidPattern); ok {
 			// with a nil mask and a solid color pattern, we can be more efficient
 			// TODO: refactor so we don't have to do this type assertion stuff?
-			p := raster.NewRGBAPainter(dc.im)
-			p.SetColor(pattern.color)
-			painter = p
+			// p := raster.NewRGBAPainter(dc.im)
+			// p.SetColor(pattern.color)
+			// painter = p
+
+			dc.painter.SetColor(pattern.color)
+			painter = dc.painter
+
 		}
 	}
 	if painter == nil {
@@ -546,6 +568,18 @@ func (dc *Context) Clip() {
 // ResetClip clears the clipping region.
 func (dc *Context) ResetClip() {
 	dc.mask = nil
+}
+
+func (dc *Context) ChangedRect(clear bool) image.Rectangle {
+    r := dc.painter.Changed()
+    if clear {
+        dc.painter.Clear()
+    }
+	return r
+}
+
+func (dc *Context) ClearChanged() {
+	dc.painter.Clear()
 }
 
 // Convenient Drawing Functions
