@@ -1,12 +1,9 @@
-//go:generate rm -f colornames.go
 //go:generate go run gen.go
 
 // Erweiterung des Packages 'image/color' um neue Farbtypen.
 //
 // Dieses Package versteht sich als Erweiterung von 'image/color'
 // in Zusammenhang mit dem Package 'gg'.
-//
-// Im Wesentlichen
 // Die bestehende Implementation von Farben in 'image/color' bietet keine
 // Methoden, um Farben heller, resp. dunkler zu schattieren oder um zwischen
 // zwei beliebigen Farben eine lineare Interpolation durchzuführen.
@@ -16,7 +13,6 @@ package colors
 
 import (
 	"image/color"
-	"math"
 	"math/rand"
 )
 
@@ -25,8 +21,11 @@ import (
 var (
 	Transparent = RGBAF{0.0, 0.0, 0.0, 0.0}
 	Opaque      = RGBAF{1.0, 1.0, 1.0, 1.0}
-	//Map         map[string]RGBAF
-	//Names       []string
+	// BlackRGBA   = RGBA{0x00, 0x00, 0x00, 0xFF}
+	// WhiteRGBA   = RGBA{0xFF, 0xFF, 0xFF, 0xFF}
+
+	Map   map[string]RGBA
+	Names []string
 )
 
 // Das Interface Color basiert auf dem gleichnamigen Interface der
@@ -55,34 +54,34 @@ func RandColor() Color {
 func RandGroupColor(group ColorGroup) Color {
 	nameList, ok := Groups[group]
 	if !ok {
-		return RGBAF{0, 0, 0, 1}
+		return RGBA{0, 0, 0, 255}
 	}
 	name := nameList[rand.Int()%len(nameList)]
 	return Map[name]
 }
 
-type interpolFuncType func(float64) float64
+// type InterpolFuncType func(float64) float64
 
-var (
-	ipf   = LinearInterpol
-	gamma = 1.5
-)
+// var (
+// 	ipf   = LinearInterpol
+// 	gamma = 1.5
+// )
 
-func SetInterpolFunc(fnc interpolFuncType) {
-	ipf = fnc
-}
+// func SetInterpolFunc(fnc InterpolFuncType) {
+// 	ipf = fnc
+// }
 
-func LinearInterpol(t float64) float64 {
-	return t
-}
+// func LinearInterpol(t float64) float64 {
+// 	return t
+// }
 
-func GammaInterpol(t float64) float64 {
-	return math.Pow(t, gamma)
-}
+// func GammaInterpol(t float64) float64 {
+// 	return math.Pow(t, gamma)
+// }
 
-func CubicInterpol(t float64) float64 {
-	return 3.0*t*t - 2.0*t*t*t
-}
+// func CubicInterpol(t float64) float64 {
+// 	return 3.0*t*t - 2.0*t*t*t
+// }
 
 // Hilfsfunktion, mit welcher sichergestellt werden kann, dass der Wert v
 // zwingend zwischen a und b zu liegen kommt. Falls a groesser ist als b,

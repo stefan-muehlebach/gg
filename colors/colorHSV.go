@@ -73,11 +73,11 @@ func (c1 HSV) Interpolate(col Color, t float64) Color {
 
 func (c1 HSV) Less(c2 HSV, key SortField) bool {
 	switch key {
-	case SortByHue:
+	case ByHue:
 		return c1.H < c2.H
-	case SortBySaturation:
+	case BySaturation:
 		return c1.S < c2.S
-	case SortByValue:
+	case ByValue:
 		return c1.V < c2.V
 	default:
 		log.Fatalf("invalid sort field specified: '%v'", key)

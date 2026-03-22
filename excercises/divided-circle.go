@@ -21,7 +21,7 @@ const (
 	PointSize = 2.0
 	// Grösse der Beschriftungen. Hier muss man etwas experimentieren, bis
 	// die ideale Einstellung gefunden ist.
-	FontSize = 12.0
+	FontSize = 10.0
 )
 
 type GraphData struct {
@@ -92,7 +92,7 @@ func main() {
 	gc.SetFillColor(BackColor)
 	gc.Clear()
 
-	face := fonts.NewFace(fonts.GoMedium, FontSize)
+	face, _ := fonts.NewFace(fonts.GoMedium, FontSize)
 	str := fmt.Sprintf("n = %d", NumDivisions)
 	textPos := geom.Point{MarginSize, MarginSize}
 	gc.SetFontFace(face)
@@ -102,7 +102,7 @@ func main() {
 	for _, data := range GraphList {
 		DrawLines(gc, pointList, data)
 		str = fmt.Sprintf("s = %d", data.stepSize)
-		textPos = textPos.AddXY(0.0, 1.2*FontSize)
+		textPos = textPos.AddXY(0.0, 1.5*FontSize)
 		gc.SetStrokeColor(data.color)
 		gc.DrawStringAnchored(str, textPos.X, textPos.Y, 0.0, 1.0)
 	}

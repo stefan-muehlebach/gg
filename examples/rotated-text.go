@@ -15,11 +15,12 @@ const (
 func main() {
 	const S = 400
 	dc := gg.NewContext(size, size)
+	face, _ := fonts.NewFace(fonts.GoRegular, fontSize)
+
 	dc.SetFillColor(colors.White)
 	dc.Clear()
-
 	dc.SetStrokeColor(colors.Black)
-	dc.SetFontFace(fonts.NewFace(fonts.GoRegular, fontSize))
+	dc.SetFontFace(face)
 	text := "Hello, world!"
 	w, h := dc.MeasureString(text)
 	dc.RotateAbout(gg.Radians(10), size/2, size/2)

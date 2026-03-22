@@ -14,10 +14,11 @@ const (
 
 func main() {
 	dc := gg.NewContext(W, H)
+	face, _ := fonts.NewFace(fonts.GoBold, 128)
 
 	// draw text
 	dc.SetStrokeColor(colors.Black)
-	dc.SetFontFace(fonts.NewFace(fonts.GoBold, 128))
+	dc.SetFontFace(face)
 	dc.DrawStringAnchored("Gradient Text", W/2, H/2, 0.5, 0.5)
 
 	// get the context as an alpha mask

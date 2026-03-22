@@ -41,7 +41,7 @@ func abs(i int) int {
 	}
 }
 
-func CompRGBA(c1, c2 color.RGBA) bool {
+func CompRGBA(c1, c2 RGBA) bool {
 	if abs(int(c1.R)-int(c2.R)) > uint8Eps {
 		return false
 	}
@@ -145,7 +145,7 @@ var (
 
 	convColor color.Color
 
-	rgbaColorList = []color.RGBA{
+	rgbaColorList = []RGBA{
 		{0, 0, 0, 255},
 		{255, 255, 255, 255},
 		{255, 0, 0, 255},
@@ -279,7 +279,7 @@ func BenchmarkRGBAF2RGBA(bench *testing.B) {
 	}
 }
 func BenchmarkRGBA2RGBAF(bench *testing.B) {
-	c := color.RGBA{uint8(rnd.Intn(256)), uint8(rnd.Intn(256)), uint8(rnd.Intn(256)), uint8(rnd.Intn(256))}
+	c := RGBA{uint8(rnd.Intn(256)), uint8(rnd.Intn(256)), uint8(rnd.Intn(256)), uint8(rnd.Intn(256))}
 	for i := 0; i < bench.N; i++ {
 		convColor = RGBAFModel.Convert(c)
 	}
@@ -292,7 +292,7 @@ func BenchmarkHSP2RGBA(bench *testing.B) {
 	}
 }
 func BenchmarkRGBA2HSP(bench *testing.B) {
-	c := color.RGBA{uint8(rnd.Intn(256)), uint8(rnd.Intn(256)), uint8(rnd.Intn(256)), uint8(rnd.Intn(256))}
+	c := RGBA{uint8(rnd.Intn(256)), uint8(rnd.Intn(256)), uint8(rnd.Intn(256)), uint8(rnd.Intn(256))}
 	for i := 0; i < bench.N; i++ {
 		convColor = HSPModel.Convert(c)
 	}
@@ -305,7 +305,7 @@ func BenchmarkHSV2RGBA(bench *testing.B) {
 	}
 }
 func BenchmarkRGBA2HSV(bench *testing.B) {
-	c := color.RGBA{uint8(rnd.Intn(256)), uint8(rnd.Intn(256)), uint8(rnd.Intn(256)), uint8(rnd.Intn(256))}
+	c := RGBA{uint8(rnd.Intn(256)), uint8(rnd.Intn(256)), uint8(rnd.Intn(256)), uint8(rnd.Intn(256))}
 	for i := 0; i < bench.N; i++ {
 		convColor = HSVModel.Convert(c)
 	}
@@ -318,7 +318,7 @@ func BenchmarkHSL2RGBA(bench *testing.B) {
 	}
 }
 func BenchmarkRGBA2HSL(bench *testing.B) {
-	c := color.RGBA{uint8(rnd.Intn(256)), uint8(rnd.Intn(256)), uint8(rnd.Intn(256)), uint8(rnd.Intn(256))}
+	c := RGBA{uint8(rnd.Intn(256)), uint8(rnd.Intn(256)), uint8(rnd.Intn(256)), uint8(rnd.Intn(256))}
 	for i := 0; i < bench.N; i++ {
 		convColor = HSLModel.Convert(c)
 	}
@@ -331,10 +331,18 @@ func BenchmarkHSI2RGBA(bench *testing.B) {
 	}
 }
 func BenchmarkRGBA2HSI(bench *testing.B) {
-	c := color.RGBA{uint8(rnd.Intn(256)), uint8(rnd.Intn(256)), uint8(rnd.Intn(256)), uint8(rnd.Intn(256))}
+	c := RGBA{uint8(rnd.Intn(256)), uint8(rnd.Intn(256)), uint8(rnd.Intn(256)), uint8(rnd.Intn(256))}
 	for i := 0; i < bench.N; i++ {
 		convColor = HSIModel.Convert(c)
 	}
+}
+
+func ExampleRGBA() {
+	r1, g1, b1 := uint8(0xFF), uint8(0x7F), uint8(0x3F)
+	c1 := RGBA{r1, g1, b1, 0xFF}
+	fmt.Printf("%v", c1)
+	// Output:
+	// {255 127 63 255}
 }
 
 func ExampleRGBAF() {
@@ -377,6 +385,63 @@ func ExampleHSI() {
 	// {0 0.5 0.1 1}
 }
 
+// Check if every colorname in the slice 'Names' is also found
+// in the map 'Map'.
+func TestColorNames(t *testing.T) {
+	for _, colorName := range Names {
+		if _, ok := Map[colorName]; !ok {
+			t.Errorf("Colorname '%s': missing in 'Map'.", colorName)
+		}
+	}
+}
+
+// Check if every colorname in the map 'Map' is also found
+// in the slice 'Names'.
+func TestColorMap(t *testing.T) {
+	for colorName, _ := range Map {
+		nameFound := false
+		for _, name := range Names {
+			if colorName == name {
+				nameFound = true
+				break
+			}
+		}
+		if !nameFound {
+			t.Errorf("Colorname '%s': missing in 'Names'.", colorName)
+		}
+	}
+}
+
+// Check if every colorname in the map 'Groups' is also found
+// in the map 'Map'.
+func TestColorGroups(t *testing.T) {
+	for group, colorList := range Groups {
+		for _, colorName := range colorList {
+			if _, ok := Map[colorName]; !ok {
+				t.Errorf("Colorname '%s' in group '%v': missing in 'Map'.",
+					colorName, group)
+			}
+		}
+	}
+}
+
+// Check if every group name can be converted between string and ColorGroup.
+func TestColorGroup(t *testing.T) {
+    var g ColorGroup
+    var str string
+    var err error
+
+    for group := range NumColorGroups {
+        str = group.String()
+        if err = g.Set(str); err != nil {
+            t.Errorf("Color group name '%s': not convertable back", str)
+        }
+        if g != group {
+            t.Errorf("Color group name '%s': wrong value", str)
+        }
+    }
+}
+
 func TestFade(test *testing.T) {
 	padding := 10
 	fieldSize := 256
@@ -393,7 +458,7 @@ func TestFade(test *testing.T) {
 	for j := range fieldSize {
 		row := yOff - j
 		hsvColor.V = float64(j) / 255.0
-		for i := range j+1 {
+		for i := range j + 1 {
 			col := xOff + i
 			hsvColor.S = float64(i) / float64(j+1)
 			gc.SetPixel(col, row, hsvColor)
@@ -405,7 +470,7 @@ func TestFade(test *testing.T) {
 	for j := range fieldSize {
 		row := yOff - j
 		hsiColor.I = float64(j) / 255.0
-		for i := range j+1 {
+		for i := range j + 1 {
 			col := xOff + i
 			hsiColor.S = float64(i) / float64(j+1)
 			gc.SetPixel(col, row, hsiColor)
@@ -433,7 +498,7 @@ func TestFade(test *testing.T) {
 	for j := range fieldSize {
 		row := yOff - j
 		hspColor.P = float64(j) / 255.0
-		for i := range j+1 {
+		for i := range j + 1 {
 			col := xOff + i
 			hspColor.S = float64(i) / float64(j+1)
 			gc.SetPixel(col, row, hspColor)
@@ -451,7 +516,7 @@ func TestRGBAF(test *testing.T) {
 		rgbaColor := rgbaColorList[i]
 		rgbafColor := rgbafColorList[i]
 
-		convRgbaColor := color.RGBAModel.Convert(rgbafColor).(color.RGBA)
+		convRgbaColor := RGBAModel.Convert(rgbafColor).(RGBA)
 		convRgbafColor := RGBAFModel.Convert(rgbaColor).(RGBAF)
 
 		if !CompRGBA(rgbaColor, convRgbaColor) {
@@ -472,7 +537,7 @@ func TestHSP(test *testing.T) {
 		rgbaColor := rgbaColorList[i]
 		hspColor := hspColorList[i]
 
-		convRgbaColor := color.RGBAModel.Convert(hspColor).(color.RGBA)
+		convRgbaColor := RGBAModel.Convert(hspColor).(RGBA)
 		convHspColor := HSPModel.Convert(rgbaColor).(HSP)
 
 		if !CompRGBA(rgbaColor, convRgbaColor) {
@@ -493,7 +558,7 @@ func TestHSV(test *testing.T) {
 		rgbaColor := rgbaColorList[i]
 		hsvColor := hsvColorList[i]
 
-		convRgbaColor := color.RGBAModel.Convert(hsvColor).(color.RGBA)
+		convRgbaColor := RGBAModel.Convert(hsvColor).(RGBA)
 		convHsvColor := HSVModel.Convert(rgbaColor).(HSV)
 
 		if !CompRGBA(rgbaColor, convRgbaColor) {
@@ -514,7 +579,7 @@ func TestHSL(test *testing.T) {
 		rgbaColor := rgbaColorList[i]
 		hslColor := hslColorList[i]
 
-		convRgbaColor := color.RGBAModel.Convert(hslColor).(color.RGBA)
+		convRgbaColor := RGBAModel.Convert(hslColor).(RGBA)
 		convHslColor := HSLModel.Convert(rgbaColor).(HSL)
 
 		if !CompRGBA(rgbaColor, convRgbaColor) {
@@ -535,7 +600,7 @@ func TestHSI(test *testing.T) {
 		rgbaColor := rgbaColorList[i]
 		hsiColor := hsiColorList[i]
 
-		convRgbaColor := color.RGBAModel.Convert(hsiColor).(color.RGBA)
+		convRgbaColor := RGBAModel.Convert(hsiColor).(RGBA)
 		convHsiColor := HSIModel.Convert(rgbaColor).(HSI)
 
 		if !CompRGBA(rgbaColor, convRgbaColor) {
@@ -552,51 +617,71 @@ func TestHSI(test *testing.T) {
 }
 
 func TestUnmarshalColor(t *testing.T) {
-    type NamedColor struct {
-        Name string
-        Dark, Bright, Alpha float64
-    }
-    type JsonColor struct {
-        Color json.RawMessage
-    }
-    var j = []byte(`[
+	type NamedColor struct {
+		Name                string
+		Dark, Bright, Alpha float64
+	}
+	type JsonColor struct {
+		Color json.RawMessage
+	}
+	var j = []byte(`[
         {"R": 0.0, "G": 0.0, "B": 0.0, "A": 1.0},
         {"R": 1.0, "G": 1.0, "B": 1.0, "A": 1.0},
         {"Name": "Indigo", "Dark": 0.5, "Alpha": 0.8},
         {"Name": "Orange", "Dark": 0.5}
     ]`)
 
-    var jsonColors []json.RawMessage
-    var colors []Color
+	var jsonColors []json.RawMessage
+	var colors []Color
 
-    err := json.Unmarshal(j, &jsonColors)
+	if err := json.Unmarshal(j, &jsonColors); err !=  nil {
+		t.Fatalf("error: %v", err)
+	}
+	for _, c := range jsonColors {
+		var namedColor NamedColor = NamedColor{Alpha: 1.0}
+		var rgbafColor RGBAF
+
+		// t.Logf("%d: %+v", i, c)
+
+		if err := json.Unmarshal(c, &namedColor); err != nil {
+			t.Fatalf("error: %v", err)
+		}
+		if namedColor.Name != "" {
+			if col, ok := Map[namedColor.Name]; ok {
+				colors = append(colors, col.Dark(namedColor.Dark).Bright(namedColor.Bright).Alpha(namedColor.Alpha))
+			} else {
+				t.Logf("color not found: %s", namedColor.Name)
+			}
+			continue
+		}
+
+		if err := json.Unmarshal(c, &rgbafColor); err != nil {
+			t.Fatalf("error: %v", err)
+		}
+		colors = append(colors, rgbafColor)
+	}
+	t.Log(colors)
+}
+
+
+func TestReadPaletteData(t *testing.T) {
+    palNames, palMap, err := ReadPaletteFile("palette.json")
     if err != nil {
-        t.Fatalf("error: %v", err)
+        t.Fatalf("error: %v, err", err)
     }
-    for i, c := range jsonColors {
-        var namedColor NamedColor = NamedColor{Alpha: 1.0}
-        var rgbafColor RGBAF
+    pal := palMap[palNames[0]]
+    t.Logf("%+v", pal)
+    // t.Logf("len(palMap): %d", len(palMap))
+    // for name, pal := range palMap {
+    //     t.Logf("%s -- (%T)\n%+v", name, pal, pal)
+    // }
 
-        t.Logf("%d: %+v", i, c)
-
-        err := json.Unmarshal(c, &namedColor)
-        if err != nil {
-            t.Fatalf("error: %v", err)
-        }
-        if namedColor.Name != "" {
-            if col, ok := Map[namedColor.Name]; ok {
-                colors = append(colors, col.Dark(namedColor.Dark).Bright(namedColor.Bright).Alpha(namedColor.Alpha))
-            } else {
-                t.Logf("color not found: %s", namedColor.Name)
-            }
-            continue
-        }
-
-        err = json.Unmarshal(c, &rgbafColor)
-        if err != nil {
-            t.Fatalf("error: %v", err)
-        }
-        colors = append(colors, rgbafColor)
-    }
-    t.Log(colors)
+    // for _, name := range []string{"Plasma", "Neon"} {
+    //     t.Logf("%s", name)
+    //     pal := palMap[name]
+    //     for pos := 0.0; pos <= 1.0; pos += dPos {
+    //         col := pal.Color(pos)
+    //         t.Logf("%f: %+v", pos, col)
+    //     }
+    // }
 }

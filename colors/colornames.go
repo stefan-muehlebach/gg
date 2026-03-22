@@ -9,470 +9,469 @@ package colors
 // Alle in der SVG 1.1 Spezifikation benannten Farben sind
 // in diesem Package als Variablen definiert.
 var (
-    AliceBlue                = RGBAF{R:0.9412, G:0.9725, B:1, A:1}
-    AntiqueWhite             = RGBAF{R:0.9804, G:0.9216, B:0.8431, A:1}
-    Aqua                     = RGBAF{R:0, G:1, B:1, A:1}
-    Aquamarine               = RGBAF{R:0.498, G:1, B:0.8314, A:1}
-    Azure                    = RGBAF{R:0.9412, G:1, B:1, A:1}
-    Beige                    = RGBAF{R:0.9608, G:0.9608, B:0.8627, A:1}
-    Bisque                   = RGBAF{R:1, G:0.8941, B:0.7686, A:1}
-    Black                    = RGBAF{R:0, G:0, B:0, A:1}
-    BlanchedAlmond           = RGBAF{R:1, G:0.9216, B:0.8039, A:1}
-    Blue                     = RGBAF{R:0, G:0, B:1, A:1}
-    BlueViolet               = RGBAF{R:0.5412, G:0.1686, B:0.8863, A:1}
-    Brown                    = RGBAF{R:0.6471, G:0.1647, B:0.1647, A:1}
-    BurlyWood                = RGBAF{R:0.8706, G:0.7216, B:0.5294, A:1}
-    CadetBlue                = RGBAF{R:0.3725, G:0.6196, B:0.6275, A:1}
-    Chartreuse               = RGBAF{R:0.498, G:1, B:0, A:1}
-    Chocolate                = RGBAF{R:0.8235, G:0.4118, B:0.1176, A:1}
-    Coral                    = RGBAF{R:1, G:0.498, B:0.3137, A:1}
-    CornflowerBlue           = RGBAF{R:0.3922, G:0.5843, B:0.9294, A:1}
-    Cornsilk                 = RGBAF{R:1, G:0.9725, B:0.8627, A:1}
-    Crimson                  = RGBAF{R:0.8627, G:0.07843, B:0.2353, A:1}
-    Cyan                     = RGBAF{R:0, G:1, B:1, A:1}
-    DarkBlue                 = RGBAF{R:0, G:0, B:0.5451, A:1}
-    DarkCyan                 = RGBAF{R:0, G:0.5451, B:0.5451, A:1}
-    DarkGoldenrod            = RGBAF{R:0.7216, G:0.5255, B:0.04314, A:1}
-    DarkGray                 = RGBAF{R:0.6627, G:0.6627, B:0.6627, A:1}
-    DarkGreen                = RGBAF{R:0, G:0.3922, B:0, A:1}
-    DarkGrey                 = RGBAF{R:0.6627, G:0.6627, B:0.6627, A:1}
-    DarkKhaki                = RGBAF{R:0.7412, G:0.7176, B:0.4196, A:1}
-    DarkMagenta              = RGBAF{R:0.5451, G:0, B:0.5451, A:1}
-    DarkOliveGreen           = RGBAF{R:0.3333, G:0.4196, B:0.1843, A:1}
-    DarkOrange               = RGBAF{R:1, G:0.549, B:0, A:1}
-    DarkOrchid               = RGBAF{R:0.6, G:0.1961, B:0.8, A:1}
-    DarkRed                  = RGBAF{R:0.5451, G:0, B:0, A:1}
-    DarkSalmon               = RGBAF{R:0.9137, G:0.5882, B:0.4784, A:1}
-    DarkSeaGreen             = RGBAF{R:0.5608, G:0.7373, B:0.5608, A:1}
-    DarkSlateBlue            = RGBAF{R:0.2824, G:0.2392, B:0.5451, A:1}
-    DarkSlateGray            = RGBAF{R:0.1843, G:0.3098, B:0.3098, A:1}
-    DarkSlateGrey            = RGBAF{R:0.1843, G:0.3098, B:0.3098, A:1}
-    DarkTurquoise            = RGBAF{R:0, G:0.8078, B:0.8196, A:1}
-    DarkViolet               = RGBAF{R:0.5804, G:0, B:0.8275, A:1}
-    DeepPink                 = RGBAF{R:1, G:0.07843, B:0.5765, A:1}
-    DeepSkyBlue              = RGBAF{R:0, G:0.749, B:1, A:1}
-    DimGray                  = RGBAF{R:0.4118, G:0.4118, B:0.4118, A:1}
-    DimGrey                  = RGBAF{R:0.4118, G:0.4118, B:0.4118, A:1}
-    DodgerBlue               = RGBAF{R:0.1176, G:0.5647, B:1, A:1}
-    FireBrick                = RGBAF{R:0.698, G:0.1333, B:0.1333, A:1}
-    FloralWhite              = RGBAF{R:1, G:0.9804, B:0.9412, A:1}
-    ForestGreen              = RGBAF{R:0.1333, G:0.5451, B:0.1333, A:1}
-    Fuchsia                  = RGBAF{R:1, G:0, B:1, A:1}
-    Gainsboro                = RGBAF{R:0.8627, G:0.8627, B:0.8627, A:1}
-    GhostWhite               = RGBAF{R:0.9725, G:0.9725, B:1, A:1}
-    Gold                     = RGBAF{R:1, G:0.8431, B:0, A:1}
-    Goldenrod                = RGBAF{R:0.8549, G:0.6471, B:0.1255, A:1}
-    Gray                     = RGBAF{R:0.502, G:0.502, B:0.502, A:1}
-    Green                    = RGBAF{R:0, G:0.502, B:0, A:1}
-    GreenYellow              = RGBAF{R:0.6784, G:1, B:0.1843, A:1}
-    Grey                     = RGBAF{R:0.502, G:0.502, B:0.502, A:1}
-    Honeydew                 = RGBAF{R:0.9412, G:1, B:0.9412, A:1}
-    HotPink                  = RGBAF{R:1, G:0.4118, B:0.7059, A:1}
-    IndianRed                = RGBAF{R:0.8039, G:0.3608, B:0.3608, A:1}
-    Indigo                   = RGBAF{R:0.2941, G:0, B:0.5098, A:1}
-    Ivory                    = RGBAF{R:1, G:1, B:0.9412, A:1}
-    Khaki                    = RGBAF{R:0.9412, G:0.902, B:0.549, A:1}
-    Lavender                 = RGBAF{R:0.902, G:0.902, B:0.9804, A:1}
-    LavenderBlush            = RGBAF{R:1, G:0.9412, B:0.9608, A:1}
-    LawnGreen                = RGBAF{R:0.4863, G:0.9882, B:0, A:1}
-    LemonChiffon             = RGBAF{R:1, G:0.9804, B:0.8039, A:1}
-    LightBlue                = RGBAF{R:0.6784, G:0.8471, B:0.902, A:1}
-    LightCoral               = RGBAF{R:0.9412, G:0.502, B:0.502, A:1}
-    LightCyan                = RGBAF{R:0.8784, G:1, B:1, A:1}
-    LightGoldenrodYellow     = RGBAF{R:0.9804, G:0.9804, B:0.8235, A:1}
-    LightGray                = RGBAF{R:0.8275, G:0.8275, B:0.8275, A:1}
-    LightGreen               = RGBAF{R:0.5647, G:0.9333, B:0.5647, A:1}
-    LightGrey                = RGBAF{R:0.8275, G:0.8275, B:0.8275, A:1}
-    LightPink                = RGBAF{R:1, G:0.7137, B:0.7569, A:1}
-    LightSalmon              = RGBAF{R:1, G:0.6275, B:0.4784, A:1}
-    LightSeaGreen            = RGBAF{R:0.1255, G:0.698, B:0.6667, A:1}
-    LightSkyBlue             = RGBAF{R:0.5294, G:0.8078, B:0.9804, A:1}
-    LightSlateGray           = RGBAF{R:0.4667, G:0.5333, B:0.6, A:1}
-    LightSlateGrey           = RGBAF{R:0.4667, G:0.5333, B:0.6, A:1}
-    LightSteelBlue           = RGBAF{R:0.6902, G:0.7686, B:0.8706, A:1}
-    LightYellow              = RGBAF{R:1, G:1, B:0.8784, A:1}
-    Lime                     = RGBAF{R:0, G:1, B:0, A:1}
-    LimeGreen                = RGBAF{R:0.1961, G:0.8039, B:0.1961, A:1}
-    Linen                    = RGBAF{R:0.9804, G:0.9412, B:0.902, A:1}
-    Magenta                  = RGBAF{R:1, G:0, B:1, A:1}
-    Maroon                   = RGBAF{R:0.502, G:0, B:0, A:1}
-    MediumAquamarine         = RGBAF{R:0.4, G:0.8039, B:0.6667, A:1}
-    MediumBlue               = RGBAF{R:0, G:0, B:0.8039, A:1}
-    MediumOrchid             = RGBAF{R:0.7294, G:0.3333, B:0.8275, A:1}
-    MediumPurple             = RGBAF{R:0.5765, G:0.4392, B:0.8588, A:1}
-    MediumSeaGreen           = RGBAF{R:0.2353, G:0.702, B:0.4431, A:1}
-    MediumSlateBlue          = RGBAF{R:0.4824, G:0.4078, B:0.9333, A:1}
-    MediumSpringGreen        = RGBAF{R:0, G:0.9804, B:0.6039, A:1}
-    MediumTurquoise          = RGBAF{R:0.2824, G:0.8196, B:0.8, A:1}
-    MediumVioletRed          = RGBAF{R:0.7804, G:0.08235, B:0.5216, A:1}
-    MidnightBlue             = RGBAF{R:0.09804, G:0.09804, B:0.4392, A:1}
-    MintCream                = RGBAF{R:0.9608, G:1, B:0.9804, A:1}
-    MistyRose                = RGBAF{R:1, G:0.8941, B:0.8824, A:1}
-    Moccasin                 = RGBAF{R:1, G:0.8941, B:0.7098, A:1}
-    NavajoWhite              = RGBAF{R:1, G:0.8706, B:0.6784, A:1}
-    Navy                     = RGBAF{R:0, G:0, B:0.502, A:1}
-    OldLace                  = RGBAF{R:0.9922, G:0.9608, B:0.902, A:1}
-    Olive                    = RGBAF{R:0.502, G:0.502, B:0, A:1}
-    OliveDrab                = RGBAF{R:0.4196, G:0.5569, B:0.1373, A:1}
-    Orange                   = RGBAF{R:1, G:0.6471, B:0, A:1}
-    OrangeRed                = RGBAF{R:1, G:0.2706, B:0, A:1}
-    Orchid                   = RGBAF{R:0.8549, G:0.4392, B:0.8392, A:1}
-    PaleGoldenrod            = RGBAF{R:0.9333, G:0.9098, B:0.6667, A:1}
-    PaleGreen                = RGBAF{R:0.5961, G:0.9843, B:0.5961, A:1}
-    PaleTurquoise            = RGBAF{R:0.6863, G:0.9333, B:0.9333, A:1}
-    PaleVioletRed            = RGBAF{R:0.8588, G:0.4392, B:0.5765, A:1}
-    PapayaWhip               = RGBAF{R:1, G:0.9373, B:0.8353, A:1}
-    PeachPuff                = RGBAF{R:1, G:0.8549, B:0.7255, A:1}
-    Peru                     = RGBAF{R:0.8039, G:0.5216, B:0.2471, A:1}
-    Pink                     = RGBAF{R:1, G:0.7529, B:0.7961, A:1}
-    Plum                     = RGBAF{R:0.8667, G:0.6275, B:0.8667, A:1}
-    PowderBlue               = RGBAF{R:0.6902, G:0.8784, B:0.902, A:1}
-    Purple                   = RGBAF{R:0.502, G:0, B:0.502, A:1}
-    Red                      = RGBAF{R:1, G:0, B:0, A:1}
-    RosyBrown                = RGBAF{R:0.7373, G:0.5608, B:0.5608, A:1}
-    RoyalBlue                = RGBAF{R:0.2549, G:0.4118, B:0.8824, A:1}
-    SaddleBrown              = RGBAF{R:0.5451, G:0.2706, B:0.07451, A:1}
-    Salmon                   = RGBAF{R:0.9804, G:0.502, B:0.4471, A:1}
-    SandyBrown               = RGBAF{R:0.9569, G:0.6431, B:0.3765, A:1}
-    SeaGreen                 = RGBAF{R:0.1804, G:0.5451, B:0.3412, A:1}
-    Seashell                 = RGBAF{R:1, G:0.9608, B:0.9333, A:1}
-    Sienna                   = RGBAF{R:0.6275, G:0.3216, B:0.1765, A:1}
-    Silver                   = RGBAF{R:0.7529, G:0.7529, B:0.7529, A:1}
-    SkyBlue                  = RGBAF{R:0.5294, G:0.8078, B:0.9216, A:1}
-    SlateBlue                = RGBAF{R:0.4157, G:0.3529, B:0.8039, A:1}
-    SlateGray                = RGBAF{R:0.4392, G:0.502, B:0.5647, A:1}
-    SlateGrey                = RGBAF{R:0.4392, G:0.502, B:0.5647, A:1}
-    Snow                     = RGBAF{R:1, G:0.9804, B:0.9804, A:1}
-    SpringGreen              = RGBAF{R:0, G:1, B:0.498, A:1}
-    SteelBlue                = RGBAF{R:0.2745, G:0.5098, B:0.7059, A:1}
-    Tan                      = RGBAF{R:0.8235, G:0.7059, B:0.549, A:1}
-    Teal                     = RGBAF{R:0, G:0.502, B:0.502, A:1}
-    Thistle                  = RGBAF{R:0.8471, G:0.749, B:0.8471, A:1}
-    Tomato                   = RGBAF{R:1, G:0.3882, B:0.2784, A:1}
-    Turquoise                = RGBAF{R:0.251, G:0.8784, B:0.8157, A:1}
-    Violet                   = RGBAF{R:0.9333, G:0.5098, B:0.9333, A:1}
-    Wheat                    = RGBAF{R:0.9608, G:0.8706, B:0.702, A:1}
-    White                    = RGBAF{R:1, G:1, B:1, A:1}
-    WhiteSmoke               = RGBAF{R:0.9608, G:0.9608, B:0.9608, A:1}
-    Yellow                   = RGBAF{R:1, G:1, B:0, A:1}
-    YellowGreen              = RGBAF{R:0.6039, G:0.8039, B:0.1961, A:1}
+    AliceBlue                = RGBA{R:0x00f0, G:0x00f8, B:0x00ff, A:0x00ff}
+    AntiqueWhite             = RGBA{R:0x00fa, G:0x00eb, B:0x00d7, A:0x00ff}
+    Aqua                     = RGBA{R:0x0000, G:0x00ff, B:0x00ff, A:0x00ff}
+    Aquamarine               = RGBA{R:0x007f, G:0x00ff, B:0x00d4, A:0x00ff}
+    Azure                    = RGBA{R:0x00f0, G:0x00ff, B:0x00ff, A:0x00ff}
+    Beige                    = RGBA{R:0x00f5, G:0x00f5, B:0x00dc, A:0x00ff}
+    Bisque                   = RGBA{R:0x00ff, G:0x00e4, B:0x00c4, A:0x00ff}
+    Black                    = RGBA{R:0x0000, G:0x0000, B:0x0000, A:0x00ff}
+    BlanchedAlmond           = RGBA{R:0x00ff, G:0x00eb, B:0x00cd, A:0x00ff}
+    Blue                     = RGBA{R:0x0000, G:0x0000, B:0x00ff, A:0x00ff}
+    BlueViolet               = RGBA{R:0x008a, G:0x002b, B:0x00e2, A:0x00ff}
+    Brown                    = RGBA{R:0x00a5, G:0x002a, B:0x002a, A:0x00ff}
+    BurlyWood                = RGBA{R:0x00de, G:0x00b8, B:0x0087, A:0x00ff}
+    CadetBlue                = RGBA{R:0x005f, G:0x009e, B:0x00a0, A:0x00ff}
+    Chartreuse               = RGBA{R:0x007f, G:0x00ff, B:0x0000, A:0x00ff}
+    Chocolate                = RGBA{R:0x00d2, G:0x0069, B:0x001e, A:0x00ff}
+    Coral                    = RGBA{R:0x00ff, G:0x007f, B:0x0050, A:0x00ff}
+    CornflowerBlue           = RGBA{R:0x0064, G:0x0095, B:0x00ed, A:0x00ff}
+    Cornsilk                 = RGBA{R:0x00ff, G:0x00f8, B:0x00dc, A:0x00ff}
+    Crimson                  = RGBA{R:0x00dc, G:0x0014, B:0x003c, A:0x00ff}
+    Cyan                     = RGBA{R:0x0000, G:0x00ff, B:0x00ff, A:0x00ff}
+    DarkBlue                 = RGBA{R:0x0000, G:0x0000, B:0x008b, A:0x00ff}
+    DarkCyan                 = RGBA{R:0x0000, G:0x008b, B:0x008b, A:0x00ff}
+    DarkGoldenrod            = RGBA{R:0x00b8, G:0x0086, B:0x000b, A:0x00ff}
+    DarkGray                 = RGBA{R:0x00a9, G:0x00a9, B:0x00a9, A:0x00ff}
+    DarkGreen                = RGBA{R:0x0000, G:0x0064, B:0x0000, A:0x00ff}
+    DarkGrey                 = RGBA{R:0x00a9, G:0x00a9, B:0x00a9, A:0x00ff}
+    DarkKhaki                = RGBA{R:0x00bd, G:0x00b7, B:0x006b, A:0x00ff}
+    DarkMagenta              = RGBA{R:0x008b, G:0x0000, B:0x008b, A:0x00ff}
+    DarkOliveGreen           = RGBA{R:0x0055, G:0x006b, B:0x002f, A:0x00ff}
+    DarkOrange               = RGBA{R:0x00ff, G:0x008c, B:0x0000, A:0x00ff}
+    DarkOrchid               = RGBA{R:0x0099, G:0x0032, B:0x00cc, A:0x00ff}
+    DarkRed                  = RGBA{R:0x008b, G:0x0000, B:0x0000, A:0x00ff}
+    DarkSalmon               = RGBA{R:0x00e9, G:0x0096, B:0x007a, A:0x00ff}
+    DarkSeaGreen             = RGBA{R:0x008f, G:0x00bc, B:0x008f, A:0x00ff}
+    DarkSlateBlue            = RGBA{R:0x0048, G:0x003d, B:0x008b, A:0x00ff}
+    DarkSlateGray            = RGBA{R:0x002f, G:0x004f, B:0x004f, A:0x00ff}
+    DarkSlateGrey            = RGBA{R:0x002f, G:0x004f, B:0x004f, A:0x00ff}
+    DarkTurquoise            = RGBA{R:0x0000, G:0x00ce, B:0x00d1, A:0x00ff}
+    DarkViolet               = RGBA{R:0x0094, G:0x0000, B:0x00d3, A:0x00ff}
+    DeepPink                 = RGBA{R:0x00ff, G:0x0014, B:0x0093, A:0x00ff}
+    DeepSkyBlue              = RGBA{R:0x0000, G:0x00bf, B:0x00ff, A:0x00ff}
+    DimGray                  = RGBA{R:0x0069, G:0x0069, B:0x0069, A:0x00ff}
+    DimGrey                  = RGBA{R:0x0069, G:0x0069, B:0x0069, A:0x00ff}
+    DodgerBlue               = RGBA{R:0x001e, G:0x0090, B:0x00ff, A:0x00ff}
+    FireBrick                = RGBA{R:0x00b2, G:0x0022, B:0x0022, A:0x00ff}
+    FloralWhite              = RGBA{R:0x00ff, G:0x00fa, B:0x00f0, A:0x00ff}
+    ForestGreen              = RGBA{R:0x0022, G:0x008b, B:0x0022, A:0x00ff}
+    Fuchsia                  = RGBA{R:0x00ff, G:0x0000, B:0x00ff, A:0x00ff}
+    Gainsboro                = RGBA{R:0x00dc, G:0x00dc, B:0x00dc, A:0x00ff}
+    GhostWhite               = RGBA{R:0x00f8, G:0x00f8, B:0x00ff, A:0x00ff}
+    Gold                     = RGBA{R:0x00ff, G:0x00d7, B:0x0000, A:0x00ff}
+    Goldenrod                = RGBA{R:0x00da, G:0x00a5, B:0x0020, A:0x00ff}
+    Gray                     = RGBA{R:0x0080, G:0x0080, B:0x0080, A:0x00ff}
+    Green                    = RGBA{R:0x0000, G:0x0080, B:0x0000, A:0x00ff}
+    GreenYellow              = RGBA{R:0x00ad, G:0x00ff, B:0x002f, A:0x00ff}
+    Grey                     = RGBA{R:0x0080, G:0x0080, B:0x0080, A:0x00ff}
+    Honeydew                 = RGBA{R:0x00f0, G:0x00ff, B:0x00f0, A:0x00ff}
+    HotPink                  = RGBA{R:0x00ff, G:0x0069, B:0x00b4, A:0x00ff}
+    IndianRed                = RGBA{R:0x00cd, G:0x005c, B:0x005c, A:0x00ff}
+    Indigo                   = RGBA{R:0x004b, G:0x0000, B:0x0082, A:0x00ff}
+    Ivory                    = RGBA{R:0x00ff, G:0x00ff, B:0x00f0, A:0x00ff}
+    Khaki                    = RGBA{R:0x00f0, G:0x00e6, B:0x008c, A:0x00ff}
+    Lavender                 = RGBA{R:0x00e6, G:0x00e6, B:0x00fa, A:0x00ff}
+    LavenderBlush            = RGBA{R:0x00ff, G:0x00f0, B:0x00f5, A:0x00ff}
+    LawnGreen                = RGBA{R:0x007c, G:0x00fc, B:0x0000, A:0x00ff}
+    LemonChiffon             = RGBA{R:0x00ff, G:0x00fa, B:0x00cd, A:0x00ff}
+    LightBlue                = RGBA{R:0x00ad, G:0x00d8, B:0x00e6, A:0x00ff}
+    LightCoral               = RGBA{R:0x00f0, G:0x0080, B:0x0080, A:0x00ff}
+    LightCyan                = RGBA{R:0x00e0, G:0x00ff, B:0x00ff, A:0x00ff}
+    LightGoldenrodYellow     = RGBA{R:0x00fa, G:0x00fa, B:0x00d2, A:0x00ff}
+    LightGray                = RGBA{R:0x00d3, G:0x00d3, B:0x00d3, A:0x00ff}
+    LightGreen               = RGBA{R:0x0090, G:0x00ee, B:0x0090, A:0x00ff}
+    LightGrey                = RGBA{R:0x00d3, G:0x00d3, B:0x00d3, A:0x00ff}
+    LightPink                = RGBA{R:0x00ff, G:0x00b6, B:0x00c1, A:0x00ff}
+    LightSalmon              = RGBA{R:0x00ff, G:0x00a0, B:0x007a, A:0x00ff}
+    LightSeaGreen            = RGBA{R:0x0020, G:0x00b2, B:0x00aa, A:0x00ff}
+    LightSkyBlue             = RGBA{R:0x0087, G:0x00ce, B:0x00fa, A:0x00ff}
+    LightSlateGray           = RGBA{R:0x0077, G:0x0088, B:0x0099, A:0x00ff}
+    LightSlateGrey           = RGBA{R:0x0077, G:0x0088, B:0x0099, A:0x00ff}
+    LightSteelBlue           = RGBA{R:0x00b0, G:0x00c4, B:0x00de, A:0x00ff}
+    LightYellow              = RGBA{R:0x00ff, G:0x00ff, B:0x00e0, A:0x00ff}
+    Lime                     = RGBA{R:0x0000, G:0x00ff, B:0x0000, A:0x00ff}
+    LimeGreen                = RGBA{R:0x0032, G:0x00cd, B:0x0032, A:0x00ff}
+    Linen                    = RGBA{R:0x00fa, G:0x00f0, B:0x00e6, A:0x00ff}
+    Magenta                  = RGBA{R:0x00ff, G:0x0000, B:0x00ff, A:0x00ff}
+    Maroon                   = RGBA{R:0x0080, G:0x0000, B:0x0000, A:0x00ff}
+    MediumAquamarine         = RGBA{R:0x0066, G:0x00cd, B:0x00aa, A:0x00ff}
+    MediumBlue               = RGBA{R:0x0000, G:0x0000, B:0x00cd, A:0x00ff}
+    MediumOrchid             = RGBA{R:0x00ba, G:0x0055, B:0x00d3, A:0x00ff}
+    MediumPurple             = RGBA{R:0x0093, G:0x0070, B:0x00db, A:0x00ff}
+    MediumSeaGreen           = RGBA{R:0x003c, G:0x00b3, B:0x0071, A:0x00ff}
+    MediumSlateBlue          = RGBA{R:0x007b, G:0x0068, B:0x00ee, A:0x00ff}
+    MediumSpringGreen        = RGBA{R:0x0000, G:0x00fa, B:0x009a, A:0x00ff}
+    MediumTurquoise          = RGBA{R:0x0048, G:0x00d1, B:0x00cc, A:0x00ff}
+    MediumVioletRed          = RGBA{R:0x00c7, G:0x0015, B:0x0085, A:0x00ff}
+    MidnightBlue             = RGBA{R:0x0019, G:0x0019, B:0x0070, A:0x00ff}
+    MintCream                = RGBA{R:0x00f5, G:0x00ff, B:0x00fa, A:0x00ff}
+    MistyRose                = RGBA{R:0x00ff, G:0x00e4, B:0x00e1, A:0x00ff}
+    Moccasin                 = RGBA{R:0x00ff, G:0x00e4, B:0x00b5, A:0x00ff}
+    NavajoWhite              = RGBA{R:0x00ff, G:0x00de, B:0x00ad, A:0x00ff}
+    Navy                     = RGBA{R:0x0000, G:0x0000, B:0x0080, A:0x00ff}
+    OldLace                  = RGBA{R:0x00fd, G:0x00f5, B:0x00e6, A:0x00ff}
+    Olive                    = RGBA{R:0x0080, G:0x0080, B:0x0000, A:0x00ff}
+    OliveDrab                = RGBA{R:0x006b, G:0x008e, B:0x0023, A:0x00ff}
+    Orange                   = RGBA{R:0x00ff, G:0x00a5, B:0x0000, A:0x00ff}
+    OrangeRed                = RGBA{R:0x00ff, G:0x0045, B:0x0000, A:0x00ff}
+    Orchid                   = RGBA{R:0x00da, G:0x0070, B:0x00d6, A:0x00ff}
+    PaleGoldenrod            = RGBA{R:0x00ee, G:0x00e8, B:0x00aa, A:0x00ff}
+    PaleGreen                = RGBA{R:0x0098, G:0x00fb, B:0x0098, A:0x00ff}
+    PaleTurquoise            = RGBA{R:0x00af, G:0x00ee, B:0x00ee, A:0x00ff}
+    PaleVioletRed            = RGBA{R:0x00db, G:0x0070, B:0x0093, A:0x00ff}
+    PapayaWhip               = RGBA{R:0x00ff, G:0x00ef, B:0x00d5, A:0x00ff}
+    PeachPuff                = RGBA{R:0x00ff, G:0x00da, B:0x00b9, A:0x00ff}
+    Peru                     = RGBA{R:0x00cd, G:0x0085, B:0x003f, A:0x00ff}
+    Pink                     = RGBA{R:0x00ff, G:0x00c0, B:0x00cb, A:0x00ff}
+    Plum                     = RGBA{R:0x00dd, G:0x00a0, B:0x00dd, A:0x00ff}
+    PowderBlue               = RGBA{R:0x00b0, G:0x00e0, B:0x00e6, A:0x00ff}
+    Purple                   = RGBA{R:0x0080, G:0x0000, B:0x0080, A:0x00ff}
+    Red                      = RGBA{R:0x00ff, G:0x0000, B:0x0000, A:0x00ff}
+    RosyBrown                = RGBA{R:0x00bc, G:0x008f, B:0x008f, A:0x00ff}
+    RoyalBlue                = RGBA{R:0x0041, G:0x0069, B:0x00e1, A:0x00ff}
+    SaddleBrown              = RGBA{R:0x008b, G:0x0045, B:0x0013, A:0x00ff}
+    Salmon                   = RGBA{R:0x00fa, G:0x0080, B:0x0072, A:0x00ff}
+    SandyBrown               = RGBA{R:0x00f4, G:0x00a4, B:0x0060, A:0x00ff}
+    SeaGreen                 = RGBA{R:0x002e, G:0x008b, B:0x0057, A:0x00ff}
+    Seashell                 = RGBA{R:0x00ff, G:0x00f5, B:0x00ee, A:0x00ff}
+    Sienna                   = RGBA{R:0x00a0, G:0x0052, B:0x002d, A:0x00ff}
+    Silver                   = RGBA{R:0x00c0, G:0x00c0, B:0x00c0, A:0x00ff}
+    SkyBlue                  = RGBA{R:0x0087, G:0x00ce, B:0x00eb, A:0x00ff}
+    SlateBlue                = RGBA{R:0x006a, G:0x005a, B:0x00cd, A:0x00ff}
+    SlateGray                = RGBA{R:0x0070, G:0x0080, B:0x0090, A:0x00ff}
+    SlateGrey                = RGBA{R:0x0070, G:0x0080, B:0x0090, A:0x00ff}
+    Snow                     = RGBA{R:0x00ff, G:0x00fa, B:0x00fa, A:0x00ff}
+    SpringGreen              = RGBA{R:0x0000, G:0x00ff, B:0x007f, A:0x00ff}
+    SteelBlue                = RGBA{R:0x0046, G:0x0082, B:0x00b4, A:0x00ff}
+    Tan                      = RGBA{R:0x00d2, G:0x00b4, B:0x008c, A:0x00ff}
+    Teal                     = RGBA{R:0x0000, G:0x0080, B:0x0080, A:0x00ff}
+    Thistle                  = RGBA{R:0x00d8, G:0x00bf, B:0x00d8, A:0x00ff}
+    Tomato                   = RGBA{R:0x00ff, G:0x0063, B:0x0047, A:0x00ff}
+    Turquoise                = RGBA{R:0x0040, G:0x00e0, B:0x00d0, A:0x00ff}
+    Violet                   = RGBA{R:0x00ee, G:0x0082, B:0x00ee, A:0x00ff}
+    Wheat                    = RGBA{R:0x00f5, G:0x00de, B:0x00b3, A:0x00ff}
+    White                    = RGBA{R:0x00ff, G:0x00ff, B:0x00ff, A:0x00ff}
+    WhiteSmoke               = RGBA{R:0x00f5, G:0x00f5, B:0x00f5, A:0x00ff}
+    Yellow                   = RGBA{R:0x00ff, G:0x00ff, B:0x0000, A:0x00ff}
+    YellowGreen              = RGBA{R:0x009a, G:0x00cd, B:0x0032, A:0x00ff}
 
     // Diese Farben tauchen im Style-Guide von Google zur Kommunikation von Go
     // auf und werden bspw. im GUI-Package 'adagui' fuer die Farben der
     // Bedienelemente verwendet.
-	GoGopherBlue             = RGBAF{R:0.004, G:0.678, B:0.847, A:1}
-	GoLightBlue              = RGBAF{R:0.369, G:0.788, B:0.890, A:1}
-	GoAqua                   = RGBAF{R:0.000, G:0.635, B:0.622, A:1}
-	GoBlack                  = RGBAF{R:0.000, G:0.000, B:0.000, A:1}
-	GoFuchsia                = RGBAF{R:0.808, G:0.188, B:0.384, A:1}
-	GoYellow                 = RGBAF{R:0.992, G:0.867, B:0.000, A:1}
-	GoTeal                   = RGBAF{R:0.000, G:0.520, B:0.553, A:1}
-	GoDimGray                = RGBAF{R:0.333, G:0.341, B:0.349, A:1}
-	GoIndigo                 = RGBAF{R:0.251, G:0.169, B:0.337, A:1}
-	GoLightGray              = RGBAF{R:0.859, G:0.851, B:0.839, A:1}
+	GoGopherBlue         = RGBA{0x00, 0xAD, 0xD8, 0xFF}
+	GoLightBlue          = RGBA{0x5D, 0xC9, 0xE2, 0xFF}
+	GoAqua               = RGBA{0x00, 0xA2, 0x9C, 0xFF}
+	GoFuchsia            = RGBA{0xCE, 0x32, 0x62, 0xFF}
+	GoYellow             = RGBA{0xFD, 0xDD, 0x00, 0xFF}
+	GoTeal               = RGBA{0x00, 0x75, 0x8D, 0xFF}
+	GoDimGray            = RGBA{0x55, 0x57, 0x59, 0xFF}
+	GoIndigo             = RGBA{0x40, 0x2B, 0x56, 0xFF}
+	GoLightGray          = RGBA{0xDB, 0xD9, 0xD6, 0xFF}
+)
 
+func init() {
     // Map contains named colors defined in the SVG 1.1 spec.
-    Map = map[string]RGBAF{
-        "AliceBlue": AliceBlue,
-        "AntiqueWhite": AntiqueWhite,
-        "Aqua": Aqua,
-        "Aquamarine": Aquamarine,
-        "Azure": Azure,
-        "Beige": Beige,
-        "Bisque": Bisque,
-        "Black": Black,
-        "BlanchedAlmond": BlanchedAlmond,
-        "Blue": Blue,
-        "BlueViolet": BlueViolet,
-        "Brown": Brown,
-        "BurlyWood": BurlyWood,
-        "CadetBlue": CadetBlue,
-        "Chartreuse": Chartreuse,
-        "Chocolate": Chocolate,
-        "Coral": Coral,
-        "CornflowerBlue": CornflowerBlue,
-        "Cornsilk": Cornsilk,
-        "Crimson": Crimson,
-        "Cyan": Cyan,
-        "DarkBlue": DarkBlue,
-        "DarkCyan": DarkCyan,
-        "DarkGoldenrod": DarkGoldenrod,
-        "DarkGray": DarkGray,
-        "DarkGreen": DarkGreen,
-        "DarkGrey": DarkGrey,
-        "DarkKhaki": DarkKhaki,
-        "DarkMagenta": DarkMagenta,
-        "DarkOliveGreen": DarkOliveGreen,
-        "DarkOrange": DarkOrange,
-        "DarkOrchid": DarkOrchid,
-        "DarkRed": DarkRed,
-        "DarkSalmon": DarkSalmon,
-        "DarkSeaGreen": DarkSeaGreen,
-        "DarkSlateBlue": DarkSlateBlue,
-        "DarkSlateGray": DarkSlateGray,
-        "DarkSlateGrey": DarkSlateGrey,
-        "DarkTurquoise": DarkTurquoise,
-        "DarkViolet": DarkViolet,
-        "DeepPink": DeepPink,
-        "DeepSkyBlue": DeepSkyBlue,
-        "DimGray": DimGray,
-        "DimGrey": DimGrey,
-        "DodgerBlue": DodgerBlue,
-        "FireBrick": FireBrick,
-        "FloralWhite": FloralWhite,
-        "ForestGreen": ForestGreen,
-        "Fuchsia": Fuchsia,
-        "Gainsboro": Gainsboro,
-        "GhostWhite": GhostWhite,
-        "Gold": Gold,
-        "Goldenrod": Goldenrod,
-        "Gray": Gray,
-        "Green": Green,
-        "GreenYellow": GreenYellow,
-        "Grey": Grey,
-        "Honeydew": Honeydew,
-        "HotPink": HotPink,
-        "IndianRed": IndianRed,
-        "Indigo": Indigo,
-        "Ivory": Ivory,
-        "Khaki": Khaki,
-        "Lavender": Lavender,
-        "LavenderBlush": LavenderBlush,
-        "LawnGreen": LawnGreen,
-        "LemonChiffon": LemonChiffon,
-        "LightBlue": LightBlue,
-        "LightCoral": LightCoral,
-        "LightCyan": LightCyan,
-        "LightGoldenrodYellow": LightGoldenrodYellow,
-        "LightGray": LightGray,
-        "LightGreen": LightGreen,
-        "LightGrey": LightGrey,
-        "LightPink": LightPink,
-        "LightSalmon": LightSalmon,
-        "LightSeaGreen": LightSeaGreen,
-        "LightSkyBlue": LightSkyBlue,
-        "LightSlateGray": LightSlateGray,
-        "LightSlateGrey": LightSlateGrey,
-        "LightSteelBlue": LightSteelBlue,
-        "LightYellow": LightYellow,
-        "Lime": Lime,
-        "LimeGreen": LimeGreen,
-        "Linen": Linen,
-        "Magenta": Magenta,
-        "Maroon": Maroon,
-        "MediumAquamarine": MediumAquamarine,
-        "MediumBlue": MediumBlue,
-        "MediumOrchid": MediumOrchid,
-        "MediumPurple": MediumPurple,
-        "MediumSeaGreen": MediumSeaGreen,
-        "MediumSlateBlue": MediumSlateBlue,
-        "MediumSpringGreen": MediumSpringGreen,
-        "MediumTurquoise": MediumTurquoise,
-        "MediumVioletRed": MediumVioletRed,
-        "MidnightBlue": MidnightBlue,
-        "MintCream": MintCream,
-        "MistyRose": MistyRose,
-        "Moccasin": Moccasin,
-        "NavajoWhite": NavajoWhite,
-        "Navy": Navy,
-        "OldLace": OldLace,
-        "Olive": Olive,
-        "OliveDrab": OliveDrab,
-        "Orange": Orange,
-        "OrangeRed": OrangeRed,
-        "Orchid": Orchid,
-        "PaleGoldenrod": PaleGoldenrod,
-        "PaleGreen": PaleGreen,
-        "PaleTurquoise": PaleTurquoise,
-        "PaleVioletRed": PaleVioletRed,
-        "PapayaWhip": PapayaWhip,
-        "PeachPuff": PeachPuff,
-        "Peru": Peru,
-        "Pink": Pink,
-        "Plum": Plum,
-        "PowderBlue": PowderBlue,
-        "Purple": Purple,
-        "Red": Red,
-        "RosyBrown": RosyBrown,
-        "RoyalBlue": RoyalBlue,
-        "SaddleBrown": SaddleBrown,
-        "Salmon": Salmon,
-        "SandyBrown": SandyBrown,
-        "SeaGreen": SeaGreen,
-        "Seashell": Seashell,
-        "Sienna": Sienna,
-        "Silver": Silver,
-        "SkyBlue": SkyBlue,
-        "SlateBlue": SlateBlue,
-        "SlateGray": SlateGray,
-        "SlateGrey": SlateGrey,
-        "Snow": Snow,
-        "SpringGreen": SpringGreen,
-        "SteelBlue": SteelBlue,
-        "Tan": Tan,
-        "Teal": Teal,
-        "Thistle": Thistle,
-        "Tomato": Tomato,
-        "Turquoise": Turquoise,
-        "Violet": Violet,
-        "Wheat": Wheat,
-        "White": White,
-        "WhiteSmoke": WhiteSmoke,
-        "Yellow": Yellow,
-        "YellowGreen": YellowGreen,
-    }
+    Map = make(map[string]RGBA)
+    Map["AliceBlue"] = AliceBlue
+    Map["AntiqueWhite"] = AntiqueWhite
+    Map["Aqua"] = Aqua
+    Map["Aquamarine"] = Aquamarine
+    Map["Azure"] = Azure
+    Map["Beige"] = Beige
+    Map["Bisque"] = Bisque
+    Map["Black"] = Black
+    Map["BlanchedAlmond"] = BlanchedAlmond
+    Map["Blue"] = Blue
+    Map["BlueViolet"] = BlueViolet
+    Map["Brown"] = Brown
+    Map["BurlyWood"] = BurlyWood
+    Map["CadetBlue"] = CadetBlue
+    Map["Chartreuse"] = Chartreuse
+    Map["Chocolate"] = Chocolate
+    Map["Coral"] = Coral
+    Map["CornflowerBlue"] = CornflowerBlue
+    Map["Cornsilk"] = Cornsilk
+    Map["Crimson"] = Crimson
+    Map["Cyan"] = Cyan
+    Map["DarkBlue"] = DarkBlue
+    Map["DarkCyan"] = DarkCyan
+    Map["DarkGoldenrod"] = DarkGoldenrod
+    Map["DarkGray"] = DarkGray
+    Map["DarkGreen"] = DarkGreen
+    Map["DarkGrey"] = DarkGrey
+    Map["DarkKhaki"] = DarkKhaki
+    Map["DarkMagenta"] = DarkMagenta
+    Map["DarkOliveGreen"] = DarkOliveGreen
+    Map["DarkOrange"] = DarkOrange
+    Map["DarkOrchid"] = DarkOrchid
+    Map["DarkRed"] = DarkRed
+    Map["DarkSalmon"] = DarkSalmon
+    Map["DarkSeaGreen"] = DarkSeaGreen
+    Map["DarkSlateBlue"] = DarkSlateBlue
+    Map["DarkSlateGray"] = DarkSlateGray
+    Map["DarkSlateGrey"] = DarkSlateGrey
+    Map["DarkTurquoise"] = DarkTurquoise
+    Map["DarkViolet"] = DarkViolet
+    Map["DeepPink"] = DeepPink
+    Map["DeepSkyBlue"] = DeepSkyBlue
+    Map["DimGray"] = DimGray
+    Map["DimGrey"] = DimGrey
+    Map["DodgerBlue"] = DodgerBlue
+    Map["FireBrick"] = FireBrick
+    Map["FloralWhite"] = FloralWhite
+    Map["ForestGreen"] = ForestGreen
+    Map["Fuchsia"] = Fuchsia
+    Map["Gainsboro"] = Gainsboro
+    Map["GhostWhite"] = GhostWhite
+    Map["Gold"] = Gold
+    Map["Goldenrod"] = Goldenrod
+    Map["Gray"] = Gray
+    Map["Green"] = Green
+    Map["GreenYellow"] = GreenYellow
+    Map["Grey"] = Grey
+    Map["Honeydew"] = Honeydew
+    Map["HotPink"] = HotPink
+    Map["IndianRed"] = IndianRed
+    Map["Indigo"] = Indigo
+    Map["Ivory"] = Ivory
+    Map["Khaki"] = Khaki
+    Map["Lavender"] = Lavender
+    Map["LavenderBlush"] = LavenderBlush
+    Map["LawnGreen"] = LawnGreen
+    Map["LemonChiffon"] = LemonChiffon
+    Map["LightBlue"] = LightBlue
+    Map["LightCoral"] = LightCoral
+    Map["LightCyan"] = LightCyan
+    Map["LightGoldenrodYellow"] = LightGoldenrodYellow
+    Map["LightGray"] = LightGray
+    Map["LightGreen"] = LightGreen
+    Map["LightGrey"] = LightGrey
+    Map["LightPink"] = LightPink
+    Map["LightSalmon"] = LightSalmon
+    Map["LightSeaGreen"] = LightSeaGreen
+    Map["LightSkyBlue"] = LightSkyBlue
+    Map["LightSlateGray"] = LightSlateGray
+    Map["LightSlateGrey"] = LightSlateGrey
+    Map["LightSteelBlue"] = LightSteelBlue
+    Map["LightYellow"] = LightYellow
+    Map["Lime"] = Lime
+    Map["LimeGreen"] = LimeGreen
+    Map["Linen"] = Linen
+    Map["Magenta"] = Magenta
+    Map["Maroon"] = Maroon
+    Map["MediumAquamarine"] = MediumAquamarine
+    Map["MediumBlue"] = MediumBlue
+    Map["MediumOrchid"] = MediumOrchid
+    Map["MediumPurple"] = MediumPurple
+    Map["MediumSeaGreen"] = MediumSeaGreen
+    Map["MediumSlateBlue"] = MediumSlateBlue
+    Map["MediumSpringGreen"] = MediumSpringGreen
+    Map["MediumTurquoise"] = MediumTurquoise
+    Map["MediumVioletRed"] = MediumVioletRed
+    Map["MidnightBlue"] = MidnightBlue
+    Map["MintCream"] = MintCream
+    Map["MistyRose"] = MistyRose
+    Map["Moccasin"] = Moccasin
+    Map["NavajoWhite"] = NavajoWhite
+    Map["Navy"] = Navy
+    Map["OldLace"] = OldLace
+    Map["Olive"] = Olive
+    Map["OliveDrab"] = OliveDrab
+    Map["Orange"] = Orange
+    Map["OrangeRed"] = OrangeRed
+    Map["Orchid"] = Orchid
+    Map["PaleGoldenrod"] = PaleGoldenrod
+    Map["PaleGreen"] = PaleGreen
+    Map["PaleTurquoise"] = PaleTurquoise
+    Map["PaleVioletRed"] = PaleVioletRed
+    Map["PapayaWhip"] = PapayaWhip
+    Map["PeachPuff"] = PeachPuff
+    Map["Peru"] = Peru
+    Map["Pink"] = Pink
+    Map["Plum"] = Plum
+    Map["PowderBlue"] = PowderBlue
+    Map["Purple"] = Purple
+    Map["Red"] = Red
+    Map["RosyBrown"] = RosyBrown
+    Map["RoyalBlue"] = RoyalBlue
+    Map["SaddleBrown"] = SaddleBrown
+    Map["Salmon"] = Salmon
+    Map["SandyBrown"] = SandyBrown
+    Map["SeaGreen"] = SeaGreen
+    Map["Seashell"] = Seashell
+    Map["Sienna"] = Sienna
+    Map["Silver"] = Silver
+    Map["SkyBlue"] = SkyBlue
+    Map["SlateBlue"] = SlateBlue
+    Map["SlateGray"] = SlateGray
+    Map["SlateGrey"] = SlateGrey
+    Map["Snow"] = Snow
+    Map["SpringGreen"] = SpringGreen
+    Map["SteelBlue"] = SteelBlue
+    Map["Tan"] = Tan
+    Map["Teal"] = Teal
+    Map["Thistle"] = Thistle
+    Map["Tomato"] = Tomato
+    Map["Turquoise"] = Turquoise
+    Map["Violet"] = Violet
+    Map["Wheat"] = Wheat
+    Map["White"] = White
+    Map["WhiteSmoke"] = WhiteSmoke
+    Map["Yellow"] = Yellow
+    Map["YellowGreen"] = YellowGreen
 
     // Der Slice 'Names' enthält die Namen aller Farben der SVG 1.1 Spezifikation.
     // Auf die Besonderheit betr. Gross-/Kleinschreibung ist weiter oben bereits
     // eingegangen worden. Jedes Element dieses Slices findet sich als Schlüssel
     // in der Variable 'Map'.
-    Names = []string{
-        "AliceBlue",
-        "AntiqueWhite",
-        "Aqua",
-        "Aquamarine",
-        "Azure",
-        "Beige",
-        "Bisque",
-        "Black",
-        "BlanchedAlmond",
-        "Blue",
-        "BlueViolet",
-        "Brown",
-        "BurlyWood",
-        "CadetBlue",
-        "Chartreuse",
-        "Chocolate",
-        "Coral",
-        "CornflowerBlue",
-        "Cornsilk",
-        "Crimson",
-        "Cyan",
-        "DarkBlue",
-        "DarkCyan",
-        "DarkGoldenrod",
-        "DarkGray",
-        "DarkGreen",
-        "DarkGrey",
-        "DarkKhaki",
-        "DarkMagenta",
-        "DarkOliveGreen",
-        "DarkOrange",
-        "DarkOrchid",
-        "DarkRed",
-        "DarkSalmon",
-        "DarkSeaGreen",
-        "DarkSlateBlue",
-        "DarkSlateGray",
-        "DarkSlateGrey",
-        "DarkTurquoise",
-        "DarkViolet",
-        "DeepPink",
-        "DeepSkyBlue",
-        "DimGray",
-        "DimGrey",
-        "DodgerBlue",
-        "FireBrick",
-        "FloralWhite",
-        "ForestGreen",
-        "Fuchsia",
-        "Gainsboro",
-        "GhostWhite",
-        "Gold",
-        "Goldenrod",
-        "Gray",
-        "Green",
-        "GreenYellow",
-        "Grey",
-        "Honeydew",
-        "HotPink",
-        "IndianRed",
-        "Indigo",
-        "Ivory",
-        "Khaki",
-        "Lavender",
-        "LavenderBlush",
-        "LawnGreen",
-        "LemonChiffon",
-        "LightBlue",
-        "LightCoral",
-        "LightCyan",
-        "LightGoldenrodYellow",
-        "LightGray",
-        "LightGreen",
-        "LightGrey",
-        "LightPink",
-        "LightSalmon",
-        "LightSeaGreen",
-        "LightSkyBlue",
-        "LightSlateGray",
-        "LightSlateGrey",
-        "LightSteelBlue",
-        "LightYellow",
-        "Lime",
-        "LimeGreen",
-        "Linen",
-        "Magenta",
-        "Maroon",
-        "MediumAquamarine",
-        "MediumBlue",
-        "MediumOrchid",
-        "MediumPurple",
-        "MediumSeaGreen",
-        "MediumSlateBlue",
-        "MediumSpringGreen",
-        "MediumTurquoise",
-        "MediumVioletRed",
-        "MidnightBlue",
-        "MintCream",
-        "MistyRose",
-        "Moccasin",
-        "NavajoWhite",
-        "Navy",
-        "OldLace",
-        "Olive",
-        "OliveDrab",
-        "Orange",
-        "OrangeRed",
-        "Orchid",
-        "PaleGoldenrod",
-        "PaleGreen",
-        "PaleTurquoise",
-        "PaleVioletRed",
-        "PapayaWhip",
-        "PeachPuff",
-        "Peru",
-        "Pink",
-        "Plum",
-        "PowderBlue",
-        "Purple",
-        "Red",
-        "RosyBrown",
-        "RoyalBlue",
-        "SaddleBrown",
-        "Salmon",
-        "SandyBrown",
-        "SeaGreen",
-        "Seashell",
-        "Sienna",
-        "Silver",
-        "SkyBlue",
-        "SlateBlue",
-        "SlateGray",
-        "SlateGrey",
-        "Snow",
-        "SpringGreen",
-        "SteelBlue",
-        "Tan",
-        "Teal",
-        "Thistle",
-        "Tomato",
-        "Turquoise",
-        "Violet",
-        "Wheat",
-        "White",
-        "WhiteSmoke",
-        "Yellow",
-        "YellowGreen",
-    }
-)
+    Names = make([]string, 147)
+    Names[0] = "AliceBlue"
+    Names[1] = "AntiqueWhite"
+    Names[2] = "Aqua"
+    Names[3] = "Aquamarine"
+    Names[4] = "Azure"
+    Names[5] = "Beige"
+    Names[6] = "Bisque"
+    Names[7] = "Black"
+    Names[8] = "BlanchedAlmond"
+    Names[9] = "Blue"
+    Names[10] = "BlueViolet"
+    Names[11] = "Brown"
+    Names[12] = "BurlyWood"
+    Names[13] = "CadetBlue"
+    Names[14] = "Chartreuse"
+    Names[15] = "Chocolate"
+    Names[16] = "Coral"
+    Names[17] = "CornflowerBlue"
+    Names[18] = "Cornsilk"
+    Names[19] = "Crimson"
+    Names[20] = "Cyan"
+    Names[21] = "DarkBlue"
+    Names[22] = "DarkCyan"
+    Names[23] = "DarkGoldenrod"
+    Names[24] = "DarkGray"
+    Names[25] = "DarkGreen"
+    Names[26] = "DarkGrey"
+    Names[27] = "DarkKhaki"
+    Names[28] = "DarkMagenta"
+    Names[29] = "DarkOliveGreen"
+    Names[30] = "DarkOrange"
+    Names[31] = "DarkOrchid"
+    Names[32] = "DarkRed"
+    Names[33] = "DarkSalmon"
+    Names[34] = "DarkSeaGreen"
+    Names[35] = "DarkSlateBlue"
+    Names[36] = "DarkSlateGray"
+    Names[37] = "DarkSlateGrey"
+    Names[38] = "DarkTurquoise"
+    Names[39] = "DarkViolet"
+    Names[40] = "DeepPink"
+    Names[41] = "DeepSkyBlue"
+    Names[42] = "DimGray"
+    Names[43] = "DimGrey"
+    Names[44] = "DodgerBlue"
+    Names[45] = "FireBrick"
+    Names[46] = "FloralWhite"
+    Names[47] = "ForestGreen"
+    Names[48] = "Fuchsia"
+    Names[49] = "Gainsboro"
+    Names[50] = "GhostWhite"
+    Names[51] = "Gold"
+    Names[52] = "Goldenrod"
+    Names[53] = "Gray"
+    Names[54] = "Green"
+    Names[55] = "GreenYellow"
+    Names[56] = "Grey"
+    Names[57] = "Honeydew"
+    Names[58] = "HotPink"
+    Names[59] = "IndianRed"
+    Names[60] = "Indigo"
+    Names[61] = "Ivory"
+    Names[62] = "Khaki"
+    Names[63] = "Lavender"
+    Names[64] = "LavenderBlush"
+    Names[65] = "LawnGreen"
+    Names[66] = "LemonChiffon"
+    Names[67] = "LightBlue"
+    Names[68] = "LightCoral"
+    Names[69] = "LightCyan"
+    Names[70] = "LightGoldenrodYellow"
+    Names[71] = "LightGray"
+    Names[72] = "LightGreen"
+    Names[73] = "LightGrey"
+    Names[74] = "LightPink"
+    Names[75] = "LightSalmon"
+    Names[76] = "LightSeaGreen"
+    Names[77] = "LightSkyBlue"
+    Names[78] = "LightSlateGray"
+    Names[79] = "LightSlateGrey"
+    Names[80] = "LightSteelBlue"
+    Names[81] = "LightYellow"
+    Names[82] = "Lime"
+    Names[83] = "LimeGreen"
+    Names[84] = "Linen"
+    Names[85] = "Magenta"
+    Names[86] = "Maroon"
+    Names[87] = "MediumAquamarine"
+    Names[88] = "MediumBlue"
+    Names[89] = "MediumOrchid"
+    Names[90] = "MediumPurple"
+    Names[91] = "MediumSeaGreen"
+    Names[92] = "MediumSlateBlue"
+    Names[93] = "MediumSpringGreen"
+    Names[94] = "MediumTurquoise"
+    Names[95] = "MediumVioletRed"
+    Names[96] = "MidnightBlue"
+    Names[97] = "MintCream"
+    Names[98] = "MistyRose"
+    Names[99] = "Moccasin"
+    Names[100] = "NavajoWhite"
+    Names[101] = "Navy"
+    Names[102] = "OldLace"
+    Names[103] = "Olive"
+    Names[104] = "OliveDrab"
+    Names[105] = "Orange"
+    Names[106] = "OrangeRed"
+    Names[107] = "Orchid"
+    Names[108] = "PaleGoldenrod"
+    Names[109] = "PaleGreen"
+    Names[110] = "PaleTurquoise"
+    Names[111] = "PaleVioletRed"
+    Names[112] = "PapayaWhip"
+    Names[113] = "PeachPuff"
+    Names[114] = "Peru"
+    Names[115] = "Pink"
+    Names[116] = "Plum"
+    Names[117] = "PowderBlue"
+    Names[118] = "Purple"
+    Names[119] = "Red"
+    Names[120] = "RosyBrown"
+    Names[121] = "RoyalBlue"
+    Names[122] = "SaddleBrown"
+    Names[123] = "Salmon"
+    Names[124] = "SandyBrown"
+    Names[125] = "SeaGreen"
+    Names[126] = "Seashell"
+    Names[127] = "Sienna"
+    Names[128] = "Silver"
+    Names[129] = "SkyBlue"
+    Names[130] = "SlateBlue"
+    Names[131] = "SlateGray"
+    Names[132] = "SlateGrey"
+    Names[133] = "Snow"
+    Names[134] = "SpringGreen"
+    Names[135] = "SteelBlue"
+    Names[136] = "Tan"
+    Names[137] = "Teal"
+    Names[138] = "Thistle"
+    Names[139] = "Tomato"
+    Names[140] = "Turquoise"
+    Names[141] = "Violet"
+    Names[142] = "Wheat"
+    Names[143] = "White"
+    Names[144] = "WhiteSmoke"
+    Names[145] = "Yellow"
+    Names[146] = "YellowGreen"
+}

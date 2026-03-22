@@ -7,15 +7,17 @@ import (
 )
 
 const (
+	S       = 1024
 	outFile = "meme.png"
 )
 
 func main() {
-	const S = 1024
 	dc := gg.NewContext(S, S)
+	face, _ := fonts.NewFace(fonts.GoBold, 72)
+
 	dc.SetFillColor(colors.White)
 	dc.Clear()
-	dc.SetFontFace(fonts.NewFace(fonts.GoBold, 72))
+	dc.SetFontFace(face)
 	dc.SetStrokeColor(colors.Black)
 	s := "ONE DOES NOT SIMPLY"
 	n := 6 // "stroke" size

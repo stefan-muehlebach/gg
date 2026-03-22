@@ -10,7 +10,6 @@ import (
 	"github.com/stefan-muehlebach/gg/colors"
 	"github.com/stefan-muehlebach/gg/fonts"
 	"github.com/stefan-muehlebach/gg/geom"
-	// "image/color"
 )
 
 const (
@@ -33,11 +32,11 @@ var (
 	PointColor        = colors.FireBrick
 	PointTextFont     = fonts.GoBold
 	PointTextColor    = PointColor.Dark(0.5)
-	PointTextFontSize = 16.0
+	PointTextFontSize = 18.0
 
 	EdgeSize         = 1.0
 	EdgeColor        = colors.SlateGray
-	EdgeTextFont     = fonts.GoRegular
+	EdgeTextFont     = fonts.Go
 	EdgeTextColor    = EdgeColor.Dark(0.5)
 	EdgeTextFontSize = 0.8 * PointTextFontSize
 )
@@ -153,51 +152,68 @@ func (g *Grid) isBetween(pi0, pi1, piA, piB int) bool {
 	}
 }
 
-func (g *Grid) Draw(gc *gg.Context, withLabels bool) {
-	gc.SetStrokeColor(EdgeColor)
-	gc.SetStrokeWidth(EdgeSize)
-	for _, edge := range g.edges {
-		p0 := g.points[edge.pi0]
-		p1 := g.points[edge.pi1]
-		gc.DrawLine(p0.X, p0.Y, p1.X, p1.Y)
-		gc.Stroke()
+type DrawOpts byte
+
+const (
+	WithPoints DrawOpts = (1 << iota)
+	WithEdges
+	WithPointLabels
+	WithEdgeLabels
+
+	WithAll = WithPoints | WithEdges | WithPointLabels | WithEdgeLabels
+)
+
+func (g *Grid) Draw(gc *gg.Context, opts DrawOpts) {
+	if (opts & WithEdges) != 0 {
+		gc.SetStrokeColor(EdgeColor)
+		gc.SetStrokeWidth(EdgeSize)
+		for _, edge := range g.edges {
+			p0 := g.points[edge.pi0]
+			p1 := g.points[edge.pi1]
+			gc.DrawLine(p0.X, p0.Y, p1.X, p1.Y)
+			gc.Stroke()
+		}
 	}
 
-	gc.SetStrokeColor(PointColor)
-	gc.SetFillColor(PointColor)
-	for _, pt := range g.points {
-		gc.DrawPoint(pt.X, pt.Y, PointSize)
-		gc.FillStroke()
+	if (opts & WithPoints) != 0 {
+		gc.SetStrokeColor(PointColor)
+		gc.SetFillColor(PointColor)
+		for _, pt := range g.points {
+			gc.DrawPoint(pt.X, pt.Y, PointSize)
+			gc.FillStroke()
+		}
 	}
 
-	if !withLabels {
-		return
-	}
 	matrix := gc.Matrix()
 	gc.Push()
 	gc.Identity()
 
-	face := fonts.NewFace(EdgeTextFont, EdgeTextFontSize)
-	gc.SetFontFace(face)
-	gc.SetStrokeColor(EdgeTextColor)
-	gc.SetFillColor(BackColor)
-	for i, edge := range g.edges {
-		p0 := g.points[edge.pi0]
-		p1 := g.points[edge.pi1]
-		pt := p0.Interpolate(p1, 0.5)
-		ptNew := matrix.Transform(pt)
-		lbl := fmt.Sprintf("%d", i)
-		lblW, lblH := gc.MeasureString(lbl)
-		gc.DrawCircle(ptNew.X, ptNew.Y, max(lblW/2, lblH/2))
-		gc.Fill()
-		gc.DrawStringAnchored(lbl, ptNew.X, ptNew.Y, 0.5, 0.5)
+	if (opts & WithEdgeLabels) != 0 {
+		face, _ := fonts.NewFace(EdgeTextFont, EdgeTextFontSize)
+		gc.SetFontFace(face)
+		gc.SetTextColor(EdgeTextColor)
+		gc.SetFillColor(BackColor)
+		for i, edge := range g.edges {
+			p0 := g.points[edge.pi0]
+			p1 := g.points[edge.pi1]
+			pt := p0.Interpolate(p1, 0.5)
+			ptNew := matrix.Transform(pt)
+			lbl := fmt.Sprintf("%d", i)
+			lblW, lblH := gc.MeasureString(lbl)
+			gc.DrawCircle(ptNew.X, ptNew.Y, max(lblW/2, lblH/2))
+			gc.Fill()
+			gc.DrawStringAnchored(lbl, ptNew.X, ptNew.Y, 0.5, 0.5)
+		}
 	}
-	face = fonts.NewFace(PointTextFont, PointTextFontSize)
-	gc.SetFontFace(face)
-	gc.SetStrokeColor(PointTextColor)
-	for i, pt := range g.points {
-		ptNew := matrix.Transform(pt)
-		gc.DrawString(fmt.Sprintf("%d", i), ptNew.X+4, ptNew.Y-4)
+
+	if (opts & WithPointLabels) != 0 {
+		face, _ := fonts.NewFace(PointTextFont, PointTextFontSize)
+		gc.SetFontFace(face)
+		gc.SetTextColor(PointTextColor)
+		for i, pt := range g.points {
+			ptNew := matrix.Transform(pt)
+			gc.DrawString(fmt.Sprintf("%d", i), ptNew.X+4, ptNew.Y-4)
+		}
 	}
 
 	gc.Pop()
@@ -274,18 +290,18 @@ func main() {
 	sort.SliceStable(edges, func(i, j int) bool {
 		return grid.Angle(edges[i]) < grid.Angle(edges[j])
 	})
-	fmt.Printf("edges, originating from point %d: %v\n", pi0, edges)
+	// fmt.Printf("edges, originating from point %d: %v\n", pi0, edges)
 	for i := 0; i < len(edges); i++ {
 		pi1 := edges[i].pi1
 		pi2 := edges[(i+1)%len(edges)].pi1
-		if grid.FindEdge(pi1, pi2) {
-			fmt.Printf(">>> triangle %d, %d, %d\n", pi0, pi1, pi2)
+		if ok, _ := grid.FindEdge(pi1, pi2); ok {
+			// fmt.Printf(">>> triangle %d, %d, %d\n", pi0, pi1, pi2)
 		}
 	}
 
 	DrawAxes(gc)
 
-	grid.Draw(gc, DrawLabels)
+	grid.Draw(gc, WithPoints | WithPointLabels | WithEdges)
 
 	gc.SavePNG(OutFileName)
 }

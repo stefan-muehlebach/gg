@@ -39,11 +39,11 @@ var (
 	TextFontSize = 20.0
 
 	// Abgeleitete Groessen (sollten nicht angepasst werden muessen)
-	SampleHeight  = 2.0*FadeHeight + UniformHeight
-	FadeStep      = 1.0 / float64(NumFadeSteps+1)
-	FadeWidth     = SampleWidth / float64(NumFadeSteps)
-	TitleFontFace = fonts.NewFace(TitleFont, TitleFontSize)
-	TextFontFace  = fonts.NewFace(TextFont, TextFontSize)
+	SampleHeight     = 2.0*FadeHeight + UniformHeight
+	FadeStep         = 1.0 / float64(NumFadeSteps+1)
+	FadeWidth        = SampleWidth / float64(NumFadeSteps)
+	TitleFontFace, _ = fonts.NewFace(TitleFont, TitleFontSize)
+	TextFontFace, _  = fonts.NewFace(TextFont, TextFontSize)
 )
 
 var (
@@ -69,15 +69,15 @@ func DrawColorSample(gc *gg.Context, x0, y0 float64, namedCol NamedColor) {
 	gc.DrawRectangle(x0, y0+FadeHeight, SampleWidth, UniformHeight)
 	gc.Fill()
 	col := namedCol.color
-    hspCol := colors.HSPModel.Convert(namedCol.color).(colors.HSP)
+	hspCol := colors.HSPModel.Convert(namedCol.color).(colors.HSP)
 
 	for l := 0; l < NumFadeSteps; l++ {
 		t := FadeStep * float64(l+1)
 		brightCol := col.Bright(1.0 - t)
 		darkCol := col.Dark(t)
 		x := x0 + float64(l)*FadeWidth
-        DrawFadeField(gc, x, y0, brightCol)
-        DrawFadeField(gc, x, y0+FadeHeight+UniformHeight, darkCol)
+		DrawFadeField(gc, x, y0, brightCol)
+		DrawFadeField(gc, x, y0+FadeHeight+UniformHeight, darkCol)
 	}
 	if hspCol.P < 0.6 {
 		gc.SetStrokeColor(colors.WhiteSmoke)
@@ -89,13 +89,13 @@ func DrawColorSample(gc *gg.Context, x0, y0 float64, namedCol NamedColor) {
 }
 
 func DrawFadeField(gc *gg.Context, x, y float64, col colors.Color) {
-    gc.SetFillColor(col)
-    gc.DrawRectangle(x, y, FadeWidth, FadeHeight)
-    gc.Fill()
+	gc.SetFillColor(col)
+	gc.DrawRectangle(x, y, FadeWidth, FadeHeight)
+	gc.Fill()
 }
 
 func DrawColorMap(groupList []NamedGroup, fileName string) {
-    gc := CreateCanvas(groupList)
+	gc := CreateCanvas(groupList)
 
 	for column, namedGroup := range groupList {
 		x0 := float64(column) * (SampleWidth + Padding)
@@ -134,7 +134,7 @@ func CreateCanvas(groupList []NamedGroup) *gg.Context {
 	gc.SetFillColor(colors.White)
 	gc.Clear()
 
-    return gc
+	return gc
 }
 
 func PrepareColorList() []NamedGroup {
@@ -159,40 +159,40 @@ func PrepareColorList() []NamedGroup {
 }
 
 func PrepareFadeList(groupIndex colors.ColorGroup, modelList []color.Model) []NamedGroup {
-    var groupList []NamedGroup
+	var groupList []NamedGroup
 
-    groupList = make([]NamedGroup, len(modelList))
-    for i, model := range modelList {
-        groupList[i] = NamedGroup{
-            fmt.Sprintf("%s\n%T", groupIndex, model),
-            make([]NamedColor, len(colors.Groups[groupIndex])),
-        }
-        for j, colorName := range colors.Groups[groupIndex] {
-            groupList[i].list[j] = NamedColor{
-                colorName,
-                model.Convert(colors.Map[colorName]).(colors.Color),
-            }
-        }
-    }
+	groupList = make([]NamedGroup, len(modelList))
+	for i, model := range modelList {
+		groupList[i] = NamedGroup{
+			fmt.Sprintf("%s\n%T", groupIndex, model),
+			make([]NamedColor, len(colors.Groups[groupIndex])),
+		}
+		for j, colorName := range colors.Groups[groupIndex] {
+			groupList[i].list[j] = NamedColor{
+				colorName,
+				model.Convert(colors.Map[colorName]).(colors.Color),
+			}
+		}
+	}
 
-    return groupList
+	return groupList
 }
 
 func main() {
-    // modelList := []gocolors.Model{
-    //     colors.RGBAFModel,
-    //     colors.HSPModel,
-    // }
-    // groupList := PrepareFadeList(colors.Greens, modelList)
-    // colors.SetInterpolFunc(colors.LinearInterpol)
+	// modelList := []gocolors.Model{
+	//     colors.RGBAFModel,
+	//     colors.HSPModel,
+	// }
+	// groupList := PrepareFadeList(colors.Greens, modelList)
+	// colors.SetInterpolFunc(colors.LinearInterpol)
 	// DrawColorMap(groupList, "colormap-linear.png")
-    // colors.SetInterpolFunc(colors.CubicInterpol)
+	// colors.SetInterpolFunc(colors.CubicInterpol)
 	// DrawColorMap(groupList, "colormap-cubic.png")
-    // colors.SetInterpolFunc(colors.GammaInterpol)
+	// colors.SetInterpolFunc(colors.GammaInterpol)
 	// DrawColorMap(groupList, "colormap-gamma.png")
 
-    	groupList := PrepareColorList()
+	groupList := PrepareColorList()
 	groupList = append(groupList, GoColorGroup)
-    DrawColorMap(groupList, "colormap.png")
+	DrawColorMap(groupList, "colormap.png")
 
 }

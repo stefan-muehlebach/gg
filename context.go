@@ -80,8 +80,8 @@ type Context struct {
 	bounds        geom.Rectangle
 	im            *image.RGBA
 	rasterizer    *raster.Rasterizer
-    painter       *Painter
-	// rgbaPainter   *raster.RGBAPainter
+    // painter       *Painter
+	rgbaPainter   *raster.RGBAPainter
 	mask          *image.Alpha
 	path          raster.Path
 	strokePattern Pattern
@@ -125,8 +125,8 @@ func NewContextForRGBA(im *image.RGBA) *Context {
 		bounds:        geom.NewRectangleIMG(im.Bounds()),
 		im:            im,
 		rasterizer:    raster.NewRasterizer(im.Rect.Max.X, im.Rect.Max.Y),
-        painter:       newPainter(im),
-		// rgbaPainter:   raster.NewRGBAPainter(im),
+        // painter:       newPainter(im),
+		rgbaPainter:   raster.NewRGBAPainter(im),
 		fillPattern:   defaultFillStyle,
 		strokePattern: defaultStrokeStyle,
 		textPattern:   defaultTextStyle,
@@ -407,7 +407,7 @@ func (dc *Context) stroke(painter raster.Painter) {
 	}
 	r := dc.rasterizer
 	// fmt.Printf("stroke()\n")
-	//    fmt.Printf("  dc.rasterizer: %+v\n", r)
+	// fmt.Printf("  dc.rasterizer: %+v\n", r)
 	// fmt.Printf("  painter: %+v\n", painter.(*raster.RGBAPainter).Image.Rect)
 	// fmt.Printf("  path: %+v\n", path)
 	r.UseNonZeroWinding = true
@@ -439,12 +439,12 @@ func (dc *Context) StrokePreserve() {
 		if pattern, ok := dc.strokePattern.(*solidPattern); ok {
 			// with a nil mask and a solid color pattern, we can be more efficient
 			// TODO: refactor so we don't have to do this type assertion stuff?
-			// p := raster.NewRGBAPainter(dc.im)
-			// p.SetColor(pattern.color)
-			// painter = p
+			p := raster.NewRGBAPainter(dc.im)
+			p.SetColor(pattern.color)
+			painter = p
 
-			dc.painter.SetColor(pattern.color)
-			painter = dc.painter
+			// dc.painter.SetColor(pattern.color)
+			// painter = dc.painter
 		}
 	}
 	if painter == nil {
@@ -469,12 +469,12 @@ func (dc *Context) FillPreserve() {
 		if pattern, ok := dc.fillPattern.(*solidPattern); ok {
 			// with a nil mask and a solid color pattern, we can be more efficient
 			// TODO: refactor so we don't have to do this type assertion stuff?
-			// p := raster.NewRGBAPainter(dc.im)
-			// p.SetColor(pattern.color)
-			// painter = p
+			p := raster.NewRGBAPainter(dc.im)
+			p.SetColor(pattern.color)
+			painter = p
 
-			dc.painter.SetColor(pattern.color)
-			painter = dc.painter
+			//dc.painter.SetColor(pattern.color)
+			//painter = dc.painter
 
 		}
 	}
@@ -570,6 +570,7 @@ func (dc *Context) ResetClip() {
 	dc.mask = nil
 }
 
+/*
 func (dc *Context) ChangedRect(clear bool) image.Rectangle {
     r := dc.painter.Changed()
     if clear {
@@ -581,6 +582,7 @@ func (dc *Context) ChangedRect(clear bool) image.Rectangle {
 func (dc *Context) ClearChanged() {
 	dc.painter.Clear()
 }
+*/
 
 // Convenient Drawing Functions
 

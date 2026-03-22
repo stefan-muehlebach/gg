@@ -1,0 +1,98 @@
+[
+    {
+        "Name": "Default",
+        "Stops": [
+            {
+                "Pos": 0.0,  "Color": "0x010662"
+            },
+            {
+                "Pos": 0.25, "Color": "0xD9F8FD"
+            },
+            {
+                "Pos": 0.5,  "Color": "0xFDBB07"
+            },
+            {
+                "Pos": 0.75, "Color": "0xD9F8FD"
+            },
+            {
+                "Pos": 1.0,  "Color": "0x010662"
+            }
+        ]
+    },
+    {
+        "Name": "EarthAndSky",
+        "Stops": [
+            {
+                "Pos": 0.00000, "Color": "0xFFFFFF"
+            },
+            {
+                "Pos": 0.13238, "Color": "0xFFFF00"
+            },
+            {
+                "Pos": 0.45975, "Color": "0xFF3300"
+            },
+            {
+                "Pos": 0.76207, "Color": "0x000099"
+            },
+            {
+                "Pos": 0.90161, "Color": "0x0066FF"
+            },
+            {
+                "Pos": 1.00000, "Color": "0xFFFFFF"
+            }
+        ]
+    },
+    {
+        "Name": "Plasma",
+        "Colors": [
+            "0xF0F921",
+            "0xFEBC2B",
+            "0xF48948",
+            "0xDB5B68",
+            "0xB93389",
+            "0x8B09A5",
+            "0x5402A3",
+            "0x0F0787"
+        ]
+    },
+    {
+        "Name": "Fraqtive",
+        "Stops": [
+            {
+                "Pos": 0.00, "Color": "0x000000"
+            },
+            {
+                "Pos": 0.16, "Color": "0xFF0000", "Ignore": "GB"
+            },
+            {
+                "Pos": 0.25, "Color": "0x00FF00", "Ignore": "RB"
+            },
+            {
+                "Pos": 0.33, "Color": "0x0000FF", "Ignore": "RG"
+            },
+            {
+                "Pos": 0.50, "Color": "0x000000"
+            },
+            {
+                "Pos": 0.66, "Color": "0x00FF00", "Ignore": "RB"
+            },
+            {
+                "Pos": 0.75, "Color": "0x0000FF", "Ignore": "RG"
+            },
+            {
+                "Pos": 0.84, "Color": "0xFF0000", "Ignore": "GB"
+            },
+            {
+                "Pos": 1.00, "Color": "0x000000"
+            }
+        ]
+    },
+	{
+		"Name": "Neon",
+		"Params": [
+			{ "Y0": 0.5, "Y1": 0.5, "X0": 2.0, "X1": 0.5 },
+			{ "Y0": 0.5, "Y1": 0.5, "X0": 1.0, "X1": 0.2 },
+			{ "Y0": 0.5, "Y1": 0.5, "X0": 0.0, "X1": 0.25 }
+		]
+	}
+]

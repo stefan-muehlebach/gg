@@ -45,20 +45,21 @@ var (
     // Diese Farben tauchen im Style-Guide von Google zur Kommunikation von Go
     // auf und werden bspw. im GUI-Package 'adagui' fuer die Farben der
     // Bedienelemente verwendet.
-	GoGopherBlue         = RGBA{0x00, 0xAD, 0xD8, 0xFF}
-	GoLightBlue          = RGBA{0x5D, 0xC9, 0xE2, 0xFF}
-	GoAqua               = RGBA{0x00, 0xA2, 0x9C, 0xFF}
-	GoFuchsia            = RGBA{0xCE, 0x32, 0x62, 0xFF}
-	GoYellow             = RGBA{0xFD, 0xDD, 0x00, 0xFF}
-	GoTeal               = RGBA{0x00, 0x75, 0x8D, 0xFF}
-	GoDimGray            = RGBA{0x55, 0x57, 0x59, 0xFF}
-	GoIndigo             = RGBA{0x40, 0x2B, 0x56, 0xFF}
-	GoLightGray          = RGBA{0xDB, 0xD9, 0xD6, 0xFF}
+	GoGopherBlue             = RGBAF{R:0.004, G:0.678, B:0.847, A:1}
+	GoLightBlue              = RGBAF{R:0.369, G:0.788, B:0.890, A:1}
+	GoAqua                   = RGBAF{R:0.000, G:0.635, B:0.622, A:1}
+	GoBlack                  = RGBAF{R:0.000, G:0.000, B:0.000, A:1}
+	GoFuchsia                = RGBAF{R:0.808, G:0.188, B:0.384, A:1}
+	GoYellow                 = RGBAF{R:0.992, G:0.867, B:0.000, A:1}
+	GoTeal                   = RGBAF{R:0.000, G:0.520, B:0.553, A:1}
+	GoDimGray                = RGBAF{R:0.333, G:0.341, B:0.349, A:1}
+	GoIndigo                 = RGBAF{R:0.251, G:0.169, B:0.337, A:1}
+	GoLightGray              = RGBAF{R:0.859, G:0.851, B:0.839, A:1}
 )
 
 func init() {
     // Map contains named colors defined in the SVG 1.1 spec.
-    Map = make(map[string]RGBA)
+    Map = make(map[string]RGBAF)
 
     {{- range $i, $row := .}}
     {{printf "Map[\"%s\"] = %[1]s" $row.Name}}
@@ -146,7 +147,7 @@ func main() {
 
 	colorList := make([]TemplateType, len(colornames.Names))
 	for i, name := range colornames.Names {
-		colorDef := fmt.Sprintf("%#.4v", colors.RGBAModel.Convert(colornames.Map[name]))
+		colorDef := fmt.Sprintf("%#.4v", colors.RGBAFModel.Convert(colornames.Map[name]))
 		colorDef, _ = strings.CutPrefix(colorDef, "colors.")
 		colorList[i] = TemplateType{
 			replacer.Replace(titleCase.String(name)),

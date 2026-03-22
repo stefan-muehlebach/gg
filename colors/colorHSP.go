@@ -2,6 +2,7 @@ package colors
 
 import (
 	"image/color"
+	"log"
 	"math"
 )
 
@@ -11,7 +12,7 @@ const (
 	perBlue  = 0.068
 )
 
-// Der neue Farbtyp HSP mit 'P' fuer "perceived brightness".
+// Der neue Farbtyp HSP mit 'B' fuer "perceived brightness".
 type HSP struct {
 	H, S, P, A float64
 }
@@ -131,6 +132,20 @@ func (c1 HSP) Interpolate(col Color, t float64) Color {
 	p := (1.0-t)*c1.P + t*c2.P
 	a := (1.0-t)*c1.A + t*c2.A
 	return HSP{h, s, p, a}
+}
+
+func (c1 HSP) Less(c2 HSP, key SortField) bool {
+	switch key {
+	case ByHue:
+		return c1.H < c2.H
+	case BySaturation:
+		return c1.S < c2.S
+	case ByBrightness:
+		return c1.P < c2.P
+	default:
+		log.Fatalf("invalid sort field specified: '%v'", key)
+		return false
+	}
 }
 
 // Modell fuer den neuen Farbtyp, d.h. fuer die Konvertierung von einer

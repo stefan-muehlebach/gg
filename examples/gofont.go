@@ -12,7 +12,7 @@ const (
 )
 
 func main() {
-	face := fonts.NewFace(fonts.GoBold, 48)
+	face, _ := fonts.NewFace(fonts.GoBold, 48)
 
 	dc := gg.NewContext(width, height)
 	dc.SetFontFace(face)

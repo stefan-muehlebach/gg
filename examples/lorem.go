@@ -7,6 +7,8 @@ import (
 )
 
 const (
+    W = 800
+    H = 400
 	outFile = "lorem.png"
 )
 
@@ -20,13 +22,13 @@ var lines = []string{
 }
 
 func main() {
-	const W = 800
-	const H = 400
 	dc := gg.NewContext(W, H)
+    face, _ := fonts.NewFace(fonts.GoRegular, 18)
+
 	dc.SetFillColor(colors.White)
 	dc.Clear()
 	dc.SetStrokeColor(colors.Black)
-	dc.SetFontFace(fonts.NewFace(fonts.GoRegular, 18))
+	dc.SetFontFace(face)
 	const h = 24
 	for i, line := range lines {
 		y := H/2 - h*len(lines)/2 + i*h

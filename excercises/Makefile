@@ -15,6 +15,7 @@ TARGETS = bauhaus \
           tictactoe01 \
           tictactoe02 \
           tictactoe03 \
+          triangulation \
           text-transform \
           vertigo
 

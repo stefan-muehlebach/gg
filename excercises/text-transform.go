@@ -1,10 +1,11 @@
 package main
 
 import (
+	"math/rand"
+
 	"github.com/stefan-muehlebach/gg"
 	"github.com/stefan-muehlebach/gg/colors"
 	"github.com/stefan-muehlebach/gg/fonts"
-	"math/rand"
 )
 
 const (
@@ -22,9 +23,9 @@ var (
 	BackColor  = colors.RGBAF{0.851, 0.811, 0.733, 1.0}
 	TextFont   = fonts.LucidaBrightDemibold
 	ConfigList = []ConfigData{
-		{colors.Blue.Dark(0.5).Alpha(0.5), -80, 22.0},
-		{colors.Green.Dark(0.7).Alpha(0.6), -250, 32.0},
-		{colors.Red.Dark(0.7).Alpha(0.7), -300, 40.0},
+		{colors.Blue.Dark(0.5).Alpha(0.5), -100.0, 15.0},
+		{colors.Green.Dark(0.7).Alpha(0.4), -220.0, 24.0},
+		{colors.Red.Dark(0.7).Alpha(0.3), -300.0, 35.0},
 	}
 )
 
@@ -34,10 +35,11 @@ func main() {
 	gc.Clear()
 
 	for _, conf := range ConfigList {
-		gc.SetFontFace(fonts.NewFace(TextFont, conf.size))
+		face, _ := fonts.NewFace(TextFont, conf.size)
+		gc.SetFontFace(face)
 		gc.Identity()
 		gc.Translate(Width/2, Height/2)
-		gc.SetStrokeColor(conf.color)
+		gc.SetTextColor(conf.color)
 		for i := 0; i < 60; i++ {
 			angle := 0.4 + 0.1*rand.NormFloat64()
 			scale := 0.97 + 0.08*rand.NormFloat64()

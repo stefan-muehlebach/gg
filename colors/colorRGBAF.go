@@ -47,28 +47,17 @@ func (c1 RGBAF) Interpolate(col Color, t float64) Color {
 
 func (c1 RGBAF) Less(c2 RGBAF, key SortField) bool {
 	switch key {
-	case SortByRed:
+	case ByRed:
 		return c1.R < c2.R
-	case SortByGreen:
+	case ByGreen:
 		return c1.G < c2.G
-	case SortByBlue:
+	case ByBlue:
 		return c1.B < c2.B
 	default:
 		log.Fatalf("invalid sort field specified: '%v'", key)
 		return false
 	}
 }
-
-// func (c *RGBAF) UnmarshalJSON(j []byte) error {
-//     var col RGBAF
-
-//     err := json.Unmarshal(j, &col)
-//     if err != nil {
-//         return err
-//     }
-//     *c = col
-//     return nil
-// }
 
 // Modell fuer den neuen Farbtyp, d.h. fuer die Konvertierung von einer
 // beliebigen Farbe nach RGBAF.

@@ -2,20 +2,23 @@ package main
 
 import (
 	"fmt"
+	"math"
+
 	"github.com/stefan-muehlebach/gg"
 	"github.com/stefan-muehlebach/gg/colors"
 	"github.com/stefan-muehlebach/gg/fonts"
 	"github.com/stefan-muehlebach/gg/geom"
-	"math"
 )
 
 const (
 	Width, Height = 512.0, 512.0
-	MarginSize    = Width / 32.0
+	MarginSize    = 16.0
 	CanvasSize    = Width - 2*MarginSize
 	BorderSize    = 20.0
+	MarkerGap     = 5.0
+	MarkerLength  = BorderSize - (2 * MarkerGap)
 	FieldSize     = (Width - 2*MarginSize - 2*BorderSize) / 8.0
-	FontSize      = 11.0
+	FontSize      = MarkerLength
 	LineWidth     = 1.5
 )
 
@@ -45,25 +48,26 @@ func main() {
 			gc.Fill()
 		}
 	}
-	face := fonts.NewFace(fonts.LucidaHandwritingItalic, FontSize)
+	face, _ := fonts.NewFace(fonts.LucidaBright, FontSize)
 	gc.SetFontFace(face)
-	gc.SetStrokeColor(TextColor)
+	gc.SetTextColor(TextColor)
+	gc.SetStrokeColor(LineColor)
 	gc.SetStrokeWidth(LineWidth)
 	gc.DrawRectangle(MarginSize, MarginSize, CanvasSize, CanvasSize)
 	gc.Stroke()
 
-	pos := geom.Point{MarginSize + BorderSize + FieldSize/2.0, Height - MarginSize - BorderSize/2.0}
+	pos := geom.Point{MarginSize + BorderSize + FieldSize/2.0, Height - MarginSize - MarkerGap}
 	for k := 0; k < 2; k++ {
-		p1 := pos.AddXY(-FieldSize/2.0, -5.0)
-		p2 := p1.AddXY(0.0, 10.0)
+		p1 := pos.AddXY(-FieldSize/2.0, 0.0)
+		p2 := p1.AddXY(0.0, -MarkerLength)
 		gc.DrawLine(p1.X, p1.Y, p2.X, p2.Y)
 		gc.Stroke()
 		for i := 0; i < 8; i++ {
 			p := pos.AddXY(float64(i)*FieldSize, 0.0)
 			lbl := fmt.Sprintf("%c", 'A'+i)
-			gc.DrawStringAnchored(lbl, p.X, p.Y, 0.5, 0.5)
-			p1 = p.AddXY(FieldSize/2.0, -5.0)
-			p2 = p1.AddXY(0.0, 10.0)
+			gc.DrawStringAnchored(lbl, p.X, p.Y, 0.5, 0.0)
+			p1 = p.AddXY(FieldSize/2.0, 0.0)
+			p2 = p1.AddXY(0.0, -MarkerLength)
 			gc.DrawLine(p1.X, p1.Y, p2.X, p2.Y)
 			gc.Stroke()
 		}
@@ -71,16 +75,16 @@ func main() {
 	}
 	gc.RotateAbout(math.Pi/2.0, Width/2, Height/2)
 	for k := 0; k < 2; k++ {
-		p1 := pos.AddXY(-FieldSize/2.0, -5.0)
-		p2 := p1.AddXY(0.0, 10.0)
+		p1 := pos.AddXY(-FieldSize/2.0, 0.0)
+		p2 := p1.AddXY(0.0, -MarkerLength)
 		gc.DrawLine(p1.X, p1.Y, p2.X, p2.Y)
 		gc.Stroke()
 		for i := 0; i < 8; i++ {
 			p := pos.AddXY(float64(i)*FieldSize, 0.0)
 			lbl := fmt.Sprintf("%d", i+1)
-			gc.DrawStringAnchored(lbl, p.X, p.Y, 0.5, 0.5)
-			p1 = p.AddXY(FieldSize/2.0, -5.0)
-			p2 = p1.AddXY(0.0, 10.0)
+			gc.DrawStringAnchored(lbl, p.X, p.Y, 0.5, 0.0)
+			p1 = p.AddXY(FieldSize/2.0, 0.0)
+			p2 = p1.AddXY(0.0, -MarkerLength)
 			gc.DrawLine(p1.X, p1.Y, p2.X, p2.Y)
 			gc.Stroke()
 		}

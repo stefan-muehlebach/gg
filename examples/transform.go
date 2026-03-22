@@ -72,7 +72,7 @@ func drawGrid(dc *gg.Context, mainTick float64) {
 }
 
 func main() {
-	face = fonts.NewFace(fonts.GoRegular, 60.0)
+	face, _ = fonts.NewFace(fonts.GoRegular, 60.0)
 
 	dc = gg.NewContext(width, height)
 

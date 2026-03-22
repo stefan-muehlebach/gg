@@ -26,71 +26,74 @@ import (
 var fontFiles embed.FS
 
 var (
-    lucidabrightTTF, _ = fontFiles.ReadFile(`FontFiles\000-LucidaBright.ttf`)
-    lucidabrightitalicTTF, _ = fontFiles.ReadFile(`FontFiles\001-LucidaBright-Italic.ttf`)
-    lucidabrightdemiboldTTF, _ = fontFiles.ReadFile(`FontFiles\002-LucidaBright-Demibold.ttf`)
-    lucidabrightdemibolditalicTTF, _ = fontFiles.ReadFile(`FontFiles\003-LucidaBright-Demibold-Italic.ttf`)
-    lucidasansTTF, _ = fontFiles.ReadFile(`FontFiles\005-LucidaSans.ttf`)
-    lucidasansitalicTTF, _ = fontFiles.ReadFile(`FontFiles\006-LucidaSans-Italic.ttf`)
-    lucidasansdemiboldromanTTF, _ = fontFiles.ReadFile(`FontFiles\007-LucidaSans-Demibold-Roman.ttf`)
-    lucidasansdemibolditalicTTF, _ = fontFiles.ReadFile(`FontFiles\008-LucidaSans-Demibold-Italic.ttf`)
-    lucidasanstypewriterTTF, _ = fontFiles.ReadFile(`FontFiles\010-LucidaSansTypewriter.ttf`)
-    lucidasanstypewriterobliqueTTF, _ = fontFiles.ReadFile(`FontFiles\011-LucidaSansTypewriter-Oblique.ttf`)
-    lucidasanstypewriterboldTTF, _ = fontFiles.ReadFile(`FontFiles\012-LucidaSansTypewriter-Bold.ttf`)
-    lucidasanstypewriterboldobliqueTTF, _ = fontFiles.ReadFile(`FontFiles\013-LucidaSansTypewriter-Bold-Oblique.ttf`)
-    lucidafaxTTF, _ = fontFiles.ReadFile(`FontFiles\015-LucidaFax.ttf`)
-    lucidafaxitalicTTF, _ = fontFiles.ReadFile(`FontFiles\016-LucidaFax-Italic.ttf`)
-    lucidafaxdemiboldTTF, _ = fontFiles.ReadFile(`FontFiles\017-LucidaFax-Demibold.ttf`)
-    lucidafaxdemibolditalicTTF, _ = fontFiles.ReadFile(`FontFiles\018-LucidaFax-Demibold-Italic.ttf`)
-    lucidaconsoleTTF, _ = fontFiles.ReadFile(`FontFiles\020-LucidaConsole.ttf`)
-    lucidahandwritingitalicTTF, _ = fontFiles.ReadFile(`FontFiles\021-LucidaHandwriting-Italic.ttf`)
-    lucidacalligraphyTTF, _ = fontFiles.ReadFile(`FontFiles\022-LucidaCalligraphy.ttf`)
-    lucidacalligraphyboldTTF, _ = fontFiles.ReadFile(`FontFiles\023-LucidaCalligraphy-Bold.ttf`)
-    lucidablackletterTTF, _ = fontFiles.ReadFile(`FontFiles\024-LucidaBlackletter.ttf`)
-    seafordTTF, _ = fontFiles.ReadFile(`FontFiles\030-Seaford.ttf`)
-    seaforditalicTTF, _ = fontFiles.ReadFile(`FontFiles\031-Seaford-Italic.ttf`)
-    seafordboldTTF, _ = fontFiles.ReadFile(`FontFiles\032-Seaford-Bold.ttf`)
-    seafordbolditalicTTF, _ = fontFiles.ReadFile(`FontFiles\033-Seaford-Bold-Italic.ttf`)
-    worksansthinTTF, _ = fontFiles.ReadFile(`FontFiles\050-WorkSans-Thin.ttf`)
-    worksansextralightTTF, _ = fontFiles.ReadFile(`FontFiles\051-WorkSans-ExtraLight.ttf`)
-    worksanslightTTF, _ = fontFiles.ReadFile(`FontFiles\052-WorkSans-Light.ttf`)
-    worksansregularTTF, _ = fontFiles.ReadFile(`FontFiles\053-WorkSans-Regular.ttf`)
-    worksansmediumTTF, _ = fontFiles.ReadFile(`FontFiles\054-WorkSans-Medium.ttf`)
-    worksanssemiboldTTF, _ = fontFiles.ReadFile(`FontFiles\055-WorkSans-SemiBold.ttf`)
-    worksansboldTTF, _ = fontFiles.ReadFile(`FontFiles\056-WorkSans-Bold.ttf`)
-    worksansextraboldTTF, _ = fontFiles.ReadFile(`FontFiles\057-WorkSans-ExtraBold.ttf`)
-    worksansblackTTF, _ = fontFiles.ReadFile(`FontFiles\058-WorkSans-Black.ttf`)
-    worksansthinitalicTTF, _ = fontFiles.ReadFile(`FontFiles\060-WorkSans-ThinItalic.ttf`)
-    worksansextralightitalicTTF, _ = fontFiles.ReadFile(`FontFiles\061-WorkSans-ExtraLightItalic.ttf`)
-    worksanslightitalicTTF, _ = fontFiles.ReadFile(`FontFiles\062-WorkSans-LightItalic.ttf`)
-    worksansitalicTTF, _ = fontFiles.ReadFile(`FontFiles\063-WorkSans-Italic.ttf`)
-    worksansmediumitalicTTF, _ = fontFiles.ReadFile(`FontFiles\064-WorkSans-MediumItalic.ttf`)
-    worksanssemibolditalicTTF, _ = fontFiles.ReadFile(`FontFiles\065-WorkSans-SemiBoldItalic.ttf`)
-    worksansbolditalicTTF, _ = fontFiles.ReadFile(`FontFiles\066-WorkSans-BoldItalic.ttf`)
-    worksansextrabolditalicTTF, _ = fontFiles.ReadFile(`FontFiles\067-WorkSans-ExtraBoldItalic.ttf`)
-    worksansblackitalicTTF, _ = fontFiles.ReadFile(`FontFiles\068-WorkSans-BlackItalic.ttf`)
-    garamondTTF, _ = fontFiles.ReadFile(`FontFiles\070-Garamond.otf`)
-    garamonditalicTTF, _ = fontFiles.ReadFile(`FontFiles\071-Garamond-Italic.otf`)
-    garamondboldTTF, _ = fontFiles.ReadFile(`FontFiles\072-Garamond-Bold.otf`)
-    eleganteTTF, _ = fontFiles.ReadFile(`FontFiles\073-Elegante.ttf`)
-    eleganteboldTTF, _ = fontFiles.ReadFile(`FontFiles\074-Elegante-Bold.ttf`)
-    leipzigfrakturTTF, _ = fontFiles.ReadFile(`FontFiles\080-LeipzigFraktur.ttf`)
-    leipzigfrakturboldTTF, _ = fontFiles.ReadFile(`FontFiles\081-LeipzigFraktur-Bold.ttf`)
-    rothenburgdecorativeTTF, _ = fontFiles.ReadFile(`FontFiles\082-RothenburgDecorative.ttf`)
-    uncialantiquaTTF, _ = fontFiles.ReadFile(`FontFiles\083-UncialAntiqua.ttf`)
-    elzevierTTF, _ = fontFiles.ReadFile(`FontFiles\090-Elzevier.ttf`)
-    floralcapitalsTTF, _ = fontFiles.ReadFile(`FontFiles\091-FloralCapitals.ttf`)
-    goudyinitialenTTF, _ = fontFiles.ReadFile(`FontFiles\092-GoudyInitialen.ttf`)
-    mosaicinitialenTTF, _ = fontFiles.ReadFile(`FontFiles\093-MosaicInitialen.ttf`)
-    yinitTTF, _ = fontFiles.ReadFile(`FontFiles\094-Yinit.ttf`)
-    roddenberryTTF, _ = fontFiles.ReadFile(`FontFiles\100-Roddenberry.ttf`)
-    roddenberryitalicTTF, _ = fontFiles.ReadFile(`FontFiles\101-Roddenberry-Italic.ttf`)
-    roddenberryboldTTF, _ = fontFiles.ReadFile(`FontFiles\102-Roddenberry-Bold.ttf`)
-    roddenberrybolditalicTTF, _ = fontFiles.ReadFile(`FontFiles\103-Roddenberry-Bold-Italic.ttf`)
+    lucidabrightTTF, _ = fontFiles.ReadFile(`FontFiles/000-LucidaBright.ttf`)
+    lucidabrightitalicTTF, _ = fontFiles.ReadFile(`FontFiles/001-LucidaBright-Italic.ttf`)
+    lucidabrightdemiboldTTF, _ = fontFiles.ReadFile(`FontFiles/002-LucidaBright-Demibold.ttf`)
+    lucidabrightdemibolditalicTTF, _ = fontFiles.ReadFile(`FontFiles/003-LucidaBright-Demibold-Italic.ttf`)
+    lucidasansTTF, _ = fontFiles.ReadFile(`FontFiles/005-LucidaSans.ttf`)
+    lucidasansitalicTTF, _ = fontFiles.ReadFile(`FontFiles/006-LucidaSans-Italic.ttf`)
+    lucidasansdemiboldromanTTF, _ = fontFiles.ReadFile(`FontFiles/007-LucidaSans-Demibold-Roman.ttf`)
+    lucidasansdemibolditalicTTF, _ = fontFiles.ReadFile(`FontFiles/008-LucidaSans-Demibold-Italic.ttf`)
+    lucidasanstypewriterTTF, _ = fontFiles.ReadFile(`FontFiles/010-LucidaSansTypewriter.ttf`)
+    lucidasanstypewriterobliqueTTF, _ = fontFiles.ReadFile(`FontFiles/011-LucidaSansTypewriter-Oblique.ttf`)
+    lucidasanstypewriterboldTTF, _ = fontFiles.ReadFile(`FontFiles/012-LucidaSansTypewriter-Bold.ttf`)
+    lucidasanstypewriterboldobliqueTTF, _ = fontFiles.ReadFile(`FontFiles/013-LucidaSansTypewriter-Bold-Oblique.ttf`)
+    lucidafaxTTF, _ = fontFiles.ReadFile(`FontFiles/015-LucidaFax.ttf`)
+    lucidafaxitalicTTF, _ = fontFiles.ReadFile(`FontFiles/016-LucidaFax-Italic.ttf`)
+    lucidafaxdemiboldTTF, _ = fontFiles.ReadFile(`FontFiles/017-LucidaFax-Demibold.ttf`)
+    lucidafaxdemibolditalicTTF, _ = fontFiles.ReadFile(`FontFiles/018-LucidaFax-Demibold-Italic.ttf`)
+    lucidaconsoleTTF, _ = fontFiles.ReadFile(`FontFiles/020-LucidaConsole.ttf`)
+    lucidahandwritingitalicTTF, _ = fontFiles.ReadFile(`FontFiles/021-LucidaHandwriting-Italic.ttf`)
+    lucidacalligraphyTTF, _ = fontFiles.ReadFile(`FontFiles/022-LucidaCalligraphy.ttf`)
+    lucidacalligraphyboldTTF, _ = fontFiles.ReadFile(`FontFiles/023-LucidaCalligraphy-Bold.ttf`)
+    lucidablackletterTTF, _ = fontFiles.ReadFile(`FontFiles/024-LucidaBlackletter.ttf`)
+    seafordTTF, _ = fontFiles.ReadFile(`FontFiles/030-Seaford.ttf`)
+    seaforditalicTTF, _ = fontFiles.ReadFile(`FontFiles/031-Seaford-Italic.ttf`)
+    seafordboldTTF, _ = fontFiles.ReadFile(`FontFiles/032-Seaford-Bold.ttf`)
+    seafordbolditalicTTF, _ = fontFiles.ReadFile(`FontFiles/033-Seaford-Bold-Italic.ttf`)
+    worksansthinTTF, _ = fontFiles.ReadFile(`FontFiles/050-WorkSans-Thin.ttf`)
+    worksansthinitalicTTF, _ = fontFiles.ReadFile(`FontFiles/051-WorkSans-ThinItalic.ttf`)
+    worksansextralightTTF, _ = fontFiles.ReadFile(`FontFiles/052-WorkSans-ExtraLight.ttf`)
+    worksansextralightitalicTTF, _ = fontFiles.ReadFile(`FontFiles/053-WorkSans-ExtraLightItalic.ttf`)
+    worksanslightTTF, _ = fontFiles.ReadFile(`FontFiles/054-WorkSans-Light.ttf`)
+    worksanslightitalicTTF, _ = fontFiles.ReadFile(`FontFiles/055-WorkSans-LightItalic.ttf`)
+    worksansTTF, _ = fontFiles.ReadFile(`FontFiles/056-WorkSans.ttf`)
+    worksansitalicTTF, _ = fontFiles.ReadFile(`FontFiles/057-WorkSans-Italic.ttf`)
+    worksansmediumTTF, _ = fontFiles.ReadFile(`FontFiles/058-WorkSans-Medium.ttf`)
+    worksansmediumitalicTTF, _ = fontFiles.ReadFile(`FontFiles/059-WorkSans-MediumItalic.ttf`)
+    worksanssemiboldTTF, _ = fontFiles.ReadFile(`FontFiles/060-WorkSans-SemiBold.ttf`)
+    worksanssemibolditalicTTF, _ = fontFiles.ReadFile(`FontFiles/061-WorkSans-SemiBoldItalic.ttf`)
+    worksansboldTTF, _ = fontFiles.ReadFile(`FontFiles/062-WorkSans-Bold.ttf`)
+    worksansbolditalicTTF, _ = fontFiles.ReadFile(`FontFiles/063-WorkSans-BoldItalic.ttf`)
+    worksansextraboldTTF, _ = fontFiles.ReadFile(`FontFiles/064-WorkSans-ExtraBold.ttf`)
+    worksansextrabolditalicTTF, _ = fontFiles.ReadFile(`FontFiles/065-WorkSans-ExtraBoldItalic.ttf`)
+    worksansblackTTF, _ = fontFiles.ReadFile(`FontFiles/066-WorkSans-Black.ttf`)
+    worksansblackitalicTTF, _ = fontFiles.ReadFile(`FontFiles/067-WorkSans-BlackItalic.ttf`)
+    garamondTTF, _ = fontFiles.ReadFile(`FontFiles/070-Garamond.otf`)
+    garamonditalicTTF, _ = fontFiles.ReadFile(`FontFiles/071-Garamond-Italic.otf`)
+    garamondboldTTF, _ = fontFiles.ReadFile(`FontFiles/072-Garamond-Bold.otf`)
+    eleganteTTF, _ = fontFiles.ReadFile(`FontFiles/073-Elegante.ttf`)
+    eleganteboldTTF, _ = fontFiles.ReadFile(`FontFiles/074-Elegante-Bold.ttf`)
+    leipzigfrakturTTF, _ = fontFiles.ReadFile(`FontFiles/080-LeipzigFraktur.ttf`)
+    leipzigfrakturboldTTF, _ = fontFiles.ReadFile(`FontFiles/081-LeipzigFraktur-Bold.ttf`)
+    rothenburgdecorativeTTF, _ = fontFiles.ReadFile(`FontFiles/082-RothenburgDecorative.ttf`)
+    uncialantiquaTTF, _ = fontFiles.ReadFile(`FontFiles/083-UncialAntiqua.ttf`)
+    elzevierTTF, _ = fontFiles.ReadFile(`FontFiles/090-Elzevier.ttf`)
+    floralcapitalsTTF, _ = fontFiles.ReadFile(`FontFiles/091-FloralCapitals.ttf`)
+    goudyinitialenTTF, _ = fontFiles.ReadFile(`FontFiles/092-GoudyInitialen.ttf`)
+    mosaicinitialenTTF, _ = fontFiles.ReadFile(`FontFiles/093-MosaicInitialen.ttf`)
+    yinitTTF, _ = fontFiles.ReadFile(`FontFiles/094-Yinit.ttf`)
+    roddenberryTTF, _ = fontFiles.ReadFile(`FontFiles/100-Roddenberry.ttf`)
+    roddenberryitalicTTF, _ = fontFiles.ReadFile(`FontFiles/101-Roddenberry-Italic.ttf`)
+    roddenberryboldTTF, _ = fontFiles.ReadFile(`FontFiles/102-Roddenberry-Bold.ttf`)
+    roddenberrybolditalicTTF, _ = fontFiles.ReadFile(`FontFiles/103-Roddenberry-Bold-Italic.ttf`)
+    comfortaalightTTF, _ = fontFiles.ReadFile(`FontFiles/110-Comfortaa-Light.ttf`)
+    comfortaaTTF, _ = fontFiles.ReadFile(`FontFiles/111-Comfortaa.ttf`)
+    comfortaaboldTTF, _ = fontFiles.ReadFile(`FontFiles/112-Comfortaa-Bold.ttf`)
 )
 
 var (
-    GoRegular                           = Parse(goregular.TTF)
+    Go                                  = Parse(goregular.TTF)
     GoItalic                            = Parse(goitalic.TTF)
     GoMedium                            = Parse(gomedium.TTF)
     GoMediumItalic                      = Parse(gomediumitalic.TTF)
@@ -128,22 +131,22 @@ var (
     SeafordBold                         = Parse(seafordboldTTF)
     SeafordBoldItalic                   = Parse(seafordbolditalicTTF)
     WorkSansThin                        = Parse(worksansthinTTF)
-    WorkSansExtraLight                  = Parse(worksansextralightTTF)
-    WorkSansLight                       = Parse(worksanslightTTF)
-    WorkSansRegular                     = Parse(worksansregularTTF)
-    WorkSansMedium                      = Parse(worksansmediumTTF)
-    WorkSansSemiBold                    = Parse(worksanssemiboldTTF)
-    WorkSansBold                        = Parse(worksansboldTTF)
-    WorkSansExtraBold                   = Parse(worksansextraboldTTF)
-    WorkSansBlack                       = Parse(worksansblackTTF)
     WorkSansThinItalic                  = Parse(worksansthinitalicTTF)
+    WorkSansExtraLight                  = Parse(worksansextralightTTF)
     WorkSansExtraLightItalic            = Parse(worksansextralightitalicTTF)
+    WorkSansLight                       = Parse(worksanslightTTF)
     WorkSansLightItalic                 = Parse(worksanslightitalicTTF)
+    WorkSans                            = Parse(worksansTTF)
     WorkSansItalic                      = Parse(worksansitalicTTF)
+    WorkSansMedium                      = Parse(worksansmediumTTF)
     WorkSansMediumItalic                = Parse(worksansmediumitalicTTF)
+    WorkSansSemiBold                    = Parse(worksanssemiboldTTF)
     WorkSansSemiBoldItalic              = Parse(worksanssemibolditalicTTF)
+    WorkSansBold                        = Parse(worksansboldTTF)
     WorkSansBoldItalic                  = Parse(worksansbolditalicTTF)
+    WorkSansExtraBold                   = Parse(worksansextraboldTTF)
     WorkSansExtraBoldItalic             = Parse(worksansextrabolditalicTTF)
+    WorkSansBlack                       = Parse(worksansblackTTF)
     WorkSansBlackItalic                 = Parse(worksansblackitalicTTF)
     Garamond                            = Parse(garamondTTF)
     GaramondItalic                      = Parse(garamonditalicTTF)
@@ -163,10 +166,13 @@ var (
     RoddenberryItalic                   = Parse(roddenberryitalicTTF)
     RoddenberryBold                     = Parse(roddenberryboldTTF)
     RoddenberryBoldItalic               = Parse(roddenberrybolditalicTTF)
+    ComfortaaLight                      = Parse(comfortaalightTTF)
+    Comfortaa                           = Parse(comfortaaTTF)
+    ComfortaaBold                       = Parse(comfortaaboldTTF)
 )
 
 var Map = map[string]*Font{
-    "GoRegular": GoRegular,
+    "Go": Go,
     "GoItalic": GoItalic,
     "GoMedium": GoMedium,
     "GoMediumItalic": GoMediumItalic,
@@ -204,22 +210,22 @@ var Map = map[string]*Font{
     "SeafordBold": SeafordBold,
     "SeafordBoldItalic": SeafordBoldItalic,
     "WorkSansThin": WorkSansThin,
-    "WorkSansExtraLight": WorkSansExtraLight,
-    "WorkSansLight": WorkSansLight,
-    "WorkSansRegular": WorkSansRegular,
-    "WorkSansMedium": WorkSansMedium,
-    "WorkSansSemiBold": WorkSansSemiBold,
-    "WorkSansBold": WorkSansBold,
-    "WorkSansExtraBold": WorkSansExtraBold,
-    "WorkSansBlack": WorkSansBlack,
     "WorkSansThinItalic": WorkSansThinItalic,
+    "WorkSansExtraLight": WorkSansExtraLight,
     "WorkSansExtraLightItalic": WorkSansExtraLightItalic,
+    "WorkSansLight": WorkSansLight,
     "WorkSansLightItalic": WorkSansLightItalic,
+    "WorkSans": WorkSans,
     "WorkSansItalic": WorkSansItalic,
+    "WorkSansMedium": WorkSansMedium,
     "WorkSansMediumItalic": WorkSansMediumItalic,
+    "WorkSansSemiBold": WorkSansSemiBold,
     "WorkSansSemiBoldItalic": WorkSansSemiBoldItalic,
+    "WorkSansBold": WorkSansBold,
     "WorkSansBoldItalic": WorkSansBoldItalic,
+    "WorkSansExtraBold": WorkSansExtraBold,
     "WorkSansExtraBoldItalic": WorkSansExtraBoldItalic,
+    "WorkSansBlack": WorkSansBlack,
     "WorkSansBlackItalic": WorkSansBlackItalic,
     "Garamond": Garamond,
     "GaramondItalic": GaramondItalic,
@@ -239,10 +245,13 @@ var Map = map[string]*Font{
     "RoddenberryItalic": RoddenberryItalic,
     "RoddenberryBold": RoddenberryBold,
     "RoddenberryBoldItalic": RoddenberryBoldItalic,
+    "ComfortaaLight": ComfortaaLight,
+    "Comfortaa": Comfortaa,
+    "ComfortaaBold": ComfortaaBold,
 }
 
 var Names = []string{
-    "GoRegular",
+    "Go",
     "GoItalic",
     "GoMedium",
     "GoMediumItalic",
@@ -280,22 +289,22 @@ var Names = []string{
     "SeafordBold",
     "SeafordBoldItalic",
     "WorkSansThin",
-    "WorkSansExtraLight",
-    "WorkSansLight",
-    "WorkSansRegular",
-    "WorkSansMedium",
-    "WorkSansSemiBold",
-    "WorkSansBold",
-    "WorkSansExtraBold",
-    "WorkSansBlack",
     "WorkSansThinItalic",
+    "WorkSansExtraLight",
     "WorkSansExtraLightItalic",
+    "WorkSansLight",
     "WorkSansLightItalic",
+    "WorkSans",
     "WorkSansItalic",
+    "WorkSansMedium",
     "WorkSansMediumItalic",
+    "WorkSansSemiBold",
     "WorkSansSemiBoldItalic",
+    "WorkSansBold",
     "WorkSansBoldItalic",
+    "WorkSansExtraBold",
     "WorkSansExtraBoldItalic",
+    "WorkSansBlack",
     "WorkSansBlackItalic",
     "Garamond",
     "GaramondItalic",
@@ -315,4 +324,7 @@ var Names = []string{
     "RoddenberryItalic",
     "RoddenberryBold",
     "RoddenberryBoldItalic",
+    "ComfortaaLight",
+    "Comfortaa",
+    "ComfortaaBold",
 }

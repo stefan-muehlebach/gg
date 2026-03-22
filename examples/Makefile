@@ -10,12 +10,13 @@ TARGETS = beziers \
           ellipses \
           fontmap \
           gofont \
-		  gradient-conic \
-		  gradient-linear \
-		  gradient-mandelbrot \
-		  gradient-radial \
-		  gradient-text \
-		  gradient-transformed \
+          gradient-conic \
+          gradient-linear \
+          gradient-mandelbrot \
+          gradient-radial \
+          gradient-text \
+          gradient-transformed \
+          invert-mask \
           lines \
           linewidth \
           lorem \
@@ -23,17 +24,17 @@ TARGETS = beziers \
           meme \
           pattern-fill \
           quadratic \
-		  rotated-image \
-		  rotated-text \
-		  sine \
-		  spiral \
-		  star \
-		  stars \
-		  text \
-		  tiling \
-		  transform \
-		  unicode \
-		  wrap
+          rotated-image \
+          rotated-text \
+          sine \
+          spiral \
+          star \
+          stars \
+          text \
+          tiling \
+          transform \
+          unicode \
+          wrap
 
 PNG_FILES = $(TARGETS:=.png)
 
