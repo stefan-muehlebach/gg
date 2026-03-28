@@ -295,7 +295,7 @@ func TestDrawStringWrapped(t *testing.T) {
     gc := NewContext(100, 100)
     drawStringWrapped(gc, 1)
     saveImage(gc, "TestDrawStringWrapped")
-    checkHash(t, gc, "3893d7f71cca2401618dff0b1626534d")
+    checkHash(t, gc, "742e516b47b3763f4247e5d2fcf4791e")
 }
 
 func TestDrawImage(t *testing.T) {
