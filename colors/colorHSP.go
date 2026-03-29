@@ -148,6 +148,11 @@ func (c1 HSP) Less(c2 HSP, key SortField) bool {
 	}
 }
 
+func (c HSP) Mix(bg Color, mix ColorMixType) Color {
+    return c
+}
+
+
 // Modell fuer den neuen Farbtyp, d.h. fuer die Konvertierung von einer
 // beliebigen Farbe nach HSP.
 var (

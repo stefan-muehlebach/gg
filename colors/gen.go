@@ -7,7 +7,7 @@
 
 package main
 
-// Dieses Programm ist Teil des Packages `gg/color` und erzeugt alle Farben
+// Dieses Programm ist Teil des Packages `gg/colors` und erzeugt alle Farben
 // aus `golang.org/x/image/colornames` als RGBAF-Farben. Das generierte File
 // wird unter `colornames.go` abgelegt und kann nun anstelle von
 // `golang.org/x/image/colornames` verwendet werden.
@@ -31,29 +31,16 @@ const (
 
 package colors
 
-// ACHTUNG: Dieses File ist Teil von 'gg/color' und wird
+// ACHTUNG: Dieses File ist Teil von 'gg/colors' und wird
 // automatisch erzeugt. Manuelle Anpassungn an dieser
 // Datei werden bei einem erneuten Generieren überschreiben.
 
 // Alle in der SVG 1.1 Spezifikation benannten Farben sind
 // in diesem Package als Variablen definiert.
 var (
-{{- range $i, $row := .}}
+    {{- range $i, $row := .}}
     {{printf "%-24s = %s" $row.Name $row.Color}}
-{{- end}}
-
-    // Diese Farben tauchen im Style-Guide von Google zur Kommunikation von Go
-    // auf und werden bspw. im GUI-Package 'adagui' fuer die Farben der
-    // Bedienelemente verwendet.
-	GoGopherBlue         = RGBA{0x00, 0xAD, 0xD8, 0xFF}
-	GoLightBlue          = RGBA{0x5D, 0xC9, 0xE2, 0xFF}
-	GoAqua               = RGBA{0x00, 0xA2, 0x9C, 0xFF}
-	GoFuchsia            = RGBA{0xCE, 0x32, 0x62, 0xFF}
-	GoYellow             = RGBA{0xFD, 0xDD, 0x00, 0xFF}
-	GoTeal               = RGBA{0x00, 0x75, 0x8D, 0xFF}
-	GoDimGray            = RGBA{0x55, 0x57, 0x59, 0xFF}
-	GoIndigo             = RGBA{0x40, 0x2B, 0x56, 0xFF}
-	GoLightGray          = RGBA{0xDB, 0xD9, 0xD6, 0xFF}
+    {{- end}}
 )
 
 func init() {
@@ -120,6 +107,34 @@ var (
 		"wood",
 		"yellow",
 	}
+
+	GoMap = map[string]colors.RGBA{
+		"GoGopherBlue": colors.RGBA{R: 0x00, G: 0xAD, B: 0xD8, A: 0xFF},
+		"GoLightBlue":  colors.RGBA{R: 0x5D, G: 0xC9, B: 0xE2, A: 0xFF},
+		"GoAqua":       colors.RGBA{R: 0x00, G: 0xA2, B: 0x9C, A: 0xFF},
+		"GoFuchsia":    colors.RGBA{R: 0xCE, G: 0x32, B: 0x62, A: 0xFF},
+		"GoYellow":     colors.RGBA{R: 0xFD, G: 0xDD, B: 0x00, A: 0xFF},
+		"GoTeal":       colors.RGBA{R: 0x00, G: 0x75, B: 0x8D, A: 0xFF},
+		"GoIndigo":     colors.RGBA{R: 0x40, G: 0x2B, B: 0x56, A: 0xFF},
+		"GoBlack":      colors.RGBA{R: 0x00, G: 0x00, B: 0x00, A: 0xFF},
+		"GoDimGray":    colors.RGBA{R: 0x55, G: 0x57, B: 0x59, A: 0xFF},
+		"GoLightGray":  colors.RGBA{R: 0xDB, G: 0xD9, B: 0xD6, A: 0xFF},
+		"GoWhite":      colors.RGBA{R: 0xFF, G: 0xFF, B: 0xFF, A: 0xFF},
+	}
+
+	GoNames = []string{
+		"GoGopherBlue",
+		"GoLightBlue",
+		"GoAqua",
+		"GoFuchsia",
+		"GoYellow",
+		"GoTeal",
+		"GoIndigo",
+		"GoBlack",
+		"GoDimGray",
+		"GoLightGray",
+		"GoWhite",
+	}
 )
 
 type TemplateType struct {
@@ -144,14 +159,22 @@ func main() {
 	}
 	replacer = strings.NewReplacer(replList...)
 
-	colorList := make([]TemplateType, len(colornames.Names))
-	for i, name := range colornames.Names {
-		colorDef := fmt.Sprintf("%#.4v", colors.RGBAModel.Convert(colornames.Map[name]))
+	colorList := make([]TemplateType, 0)
+	for _, name := range colornames.Names {
+		colorDef := fmt.Sprintf("%#.2v", colors.RGBAModel.Convert(colornames.Map[name]).(colors.RGBA))
 		colorDef, _ = strings.CutPrefix(colorDef, "colors.")
-		colorList[i] = TemplateType{
+		colorList = append(colorList, TemplateType{
 			replacer.Replace(titleCase.String(name)),
 			colorDef,
-		}
+		})
+	}
+	for _, name := range GoNames {
+		colorDef := fmt.Sprintf("%#.2v", colors.RGBAModel.Convert(GoMap[name]).(colors.RGBA))
+		colorDef, _ = strings.CutPrefix(colorDef, "colors.")
+		colorList = append(colorList, TemplateType{
+			name,
+			colorDef,
+		})
 	}
 
 	fh, err := os.Create("colornames.go")

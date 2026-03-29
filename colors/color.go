@@ -1,3 +1,4 @@
+//go:generate rm -f colornames.go
 //go:generate go run gen.go
 
 // Erweiterung des Packages 'image/color' um neue Farbtypen.
@@ -13,20 +14,43 @@ package colors
 
 import (
 	"image/color"
-	"math/rand"
+	"math/rand/v2"
 )
 
 // Da dieses Package anstelle von 'image/color' verwendet werden kann,
 // sind einige Standardfarben auch hier definiert.
 var (
-	Transparent = RGBAF{0.0, 0.0, 0.0, 0.0}
-	Opaque      = RGBAF{1.0, 1.0, 1.0, 1.0}
-	// BlackRGBA   = RGBA{0x00, 0x00, 0x00, 0xFF}
-	// WhiteRGBA   = RGBA{0xFF, 0xFF, 0xFF, 0xFF}
+	Transparent = RGBA{0x00, 0x00, 0x00, 0x00}
+	Opaque      = RGBA{0xFF, 0xFF, 0xFF, 0xFF}
 
 	Map   map[string]RGBA
 	Names []string
+
+	black = RGBA{0x00, 0x00, 0x00, 0xFF}
+	white = RGBA{0xFF, 0xFF, 0xFF, 0xFF}
 )
+
+// Mit folgenden Konstanten kann das Verfahren bestimmt werden, welches beim
+// Mischen von Farben verwendet werden soll (siehe auch Methode Mix).
+type ColorMixType int
+
+const (
+	// Ersetzt die Hintergundfarbe durch die Vordergrundfarbe.
+	Replace ColorMixType = iota
+	// Ueberblendet die Hintergrundfarbe mit der Vordergrundfarbe anhand
+	// des Alpha-Wertes.
+	Blend
+	// Bestimmt die neue Farbe durch das Maximum von RGB zwischen Hinter- und
+	// Vordergrundfarbe.
+	Max
+	// Analog zu Max, nimmt jedoch den Mittelwert von jeweils R, G und B.
+	Average
+	// Analog zu Max, nimmt jedoch das Minimum von jeweils R, G und B.
+	Min
+)
+
+// Mischt die Farben c (Vordergrundfarbe) und bg (Hintergrundfarbe) nach einem
+// Verfahren, welches in mix spezifiziert ist. Siehe auch ColorMixType.
 
 // Das Interface Color basiert auf dem gleichnamigen Interface der
 // Standard-Bibliothek, verlangt jedoch Methoden, um eine Farbe aufzuhellen,
@@ -39,24 +63,25 @@ type Color interface {
 	Dark(t float64) Color
 	Alpha(a float64) Color
 	Interpolate(c2 Color, t float64) Color
+	Mix(bg Color, mix ColorMixType) Color
 }
 
 // Mit RandColor kann zufällig eine aus dem gesamten Sortiment der hier
 // definierten Farben gewählt werden. Hilfreich für Tests, Beispielprogramme
 // oder anderes.
-func RandColor() Color {
-	name := Names[rand.Int()%len(Names)]
+func RandColor() RGBA {
+	name := Names[rand.IntN(len(Names))]
 	return Map[name]
 }
 
 // Mit RandGroupColor kann der Zufall eine bestimmte Farbgruppe beschraenkt
 // werden.
-func RandGroupColor(group ColorGroup) Color {
+func RandColorByGroup(group ColorGroup) RGBA {
 	nameList, ok := Groups[group]
 	if !ok {
-		return RGBA{0, 0, 0, 255}
+		return RGBA{A: 0xff}
 	}
-	name := nameList[rand.Int()%len(nameList)]
+	name := nameList[rand.IntN(len(nameList))]
 	return Map[name]
 }
 

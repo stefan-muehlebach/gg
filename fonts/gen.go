@@ -109,7 +109,7 @@ func main() {
 	dataList := make([]TemplateData, 0)
 	for _, name := range goFontList {
 		data := TemplateData{
-			FontName:  strings.TrimSuffix(name, "Regular"),
+			FontName:  name,
 			LowerName: strings.ToLower(name),
 			IsGoFont:  true,
 		}

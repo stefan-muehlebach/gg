@@ -33,10 +33,10 @@ var (
 	Padding = 5.0
 	// Font und Groesse der Farbgruppentitel
 	TitleFont     = fonts.GoBold
-	TitleFontSize = 40.0
+	TitleFontSize = 35.0
 	// Font und Groesse der Farbbezeichnungen.
 	TextFont     = fonts.GoMedium
-	TextFontSize = 20.0
+	TextFontSize = 18.0
 
 	// Abgeleitete Groessen (sollten nicht angepasst werden muessen)
 	SampleHeight     = 2.0*FadeHeight + UniformHeight
@@ -44,24 +44,6 @@ var (
 	FadeWidth        = SampleWidth / float64(NumFadeSteps)
 	TitleFontFace, _ = fonts.NewFace(TitleFont, TitleFontSize)
 	TextFontFace, _  = fonts.NewFace(TextFont, TextFontSize)
-)
-
-var (
-	GoColorGroup = NamedGroup{
-		name: "GoColors",
-		list: []NamedColor{
-			{"GoGopherBlue", colors.RGBAF{0.004, 0.678, 0.847, 1}},
-			{"GoLightBlue", colors.RGBAF{0.369, 0.788, 0.890, 1}},
-			{"GoAqua", colors.RGBAF{0.000, 0.635, 0.622, 1}},
-			{"GoBlack", colors.RGBAF{0.000, 0.000, 0.000, 1}},
-			{"GoFuchsia", colors.RGBAF{0.808, 0.188, 0.384, 1}},
-			{"GoYellow", colors.RGBAF{0.992, 0.867, 0.000, 1}},
-			{"GoTeal", colors.RGBAF{0.000, 0.520, 0.553, 1}},
-			{"GoDimGray", colors.RGBAF{0.333, 0.341, 0.349, 1}},
-			{"GoIndigo", colors.RGBAF{0.251, 0.169, 0.337, 1}},
-			{"GoLightGray", colors.RGBAF{0.859, 0.851, 0.839, 1}},
-		},
-	}
 )
 
 func DrawColorSample(gc *gg.Context, x0, y0 float64, namedCol NamedColor) {
@@ -179,20 +161,6 @@ func PrepareFadeList(groupIndex colors.ColorGroup, modelList []color.Model) []Na
 }
 
 func main() {
-	// modelList := []gocolors.Model{
-	//     colors.RGBAFModel,
-	//     colors.HSPModel,
-	// }
-	// groupList := PrepareFadeList(colors.Greens, modelList)
-	// colors.SetInterpolFunc(colors.LinearInterpol)
-	// DrawColorMap(groupList, "colormap-linear.png")
-	// colors.SetInterpolFunc(colors.CubicInterpol)
-	// DrawColorMap(groupList, "colormap-cubic.png")
-	// colors.SetInterpolFunc(colors.GammaInterpol)
-	// DrawColorMap(groupList, "colormap-gamma.png")
-
 	groupList := PrepareColorList()
-	groupList = append(groupList, GoColorGroup)
 	DrawColorMap(groupList, "colormap.png")
-
 }

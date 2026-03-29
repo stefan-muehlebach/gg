@@ -17,7 +17,7 @@ const (
 	Browns
 	Whites
 	Grays
-    // GoColors
+    GoColors
 	NumColorGroups
 )
 
@@ -43,8 +43,8 @@ func (g ColorGroup) String() string {
 		return "Whites"
 	case Grays:
 		return "Grays"
-    // case GoColors:
-    //     return "GoColors"
+    case GoColors:
+        return "GoColors"
 	default:
 		return "(unknown group)"
 	}
@@ -72,8 +72,8 @@ func (g *ColorGroup) Set(str string) error {
 		*g = Whites
 	case "Grays":
 		*g = Grays
-    // case "GoColors":
-    //     *g = GoColors
+    case "GoColors":
+        *g = GoColors
 	default:
 		return errors.New("unknown color group: " + str)
 	}
@@ -244,7 +244,17 @@ var Groups = map[ColorGroup][]string{
 		"DarkSlateGray",
 		"Black",
 	},
-    // GoColors: {
-
-    // },
+    GoColors: {
+		"GoGopherBlue",
+		"GoLightBlue",
+		"GoAqua",
+		"GoFuchsia",
+		"GoYellow",
+		"GoTeal",
+		"GoIndigo",
+		"GoBlack",
+		"GoDimGray",
+		"GoLightGray",
+		"GoWhite",
+    },
 }

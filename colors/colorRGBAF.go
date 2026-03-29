@@ -59,6 +59,10 @@ func (c1 RGBAF) Less(c2 RGBAF, key SortField) bool {
 	}
 }
 
+func (c RGBAF) Mix(bg Color, mix ColorMixType) Color {
+    return c
+}
+
 // Modell fuer den neuen Farbtyp, d.h. fuer die Konvertierung von einer
 // beliebigen Farbe nach RGBAF.
 var (

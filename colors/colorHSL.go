@@ -85,6 +85,10 @@ func (c1 HSL) Less(c2 HSL, key SortField) bool {
 	}
 }
 
+func (c HSL) Mix(bg Color, mix ColorMixType) Color {
+    return c
+}
+
 // Modell fuer den neuen Farbtyp, d.h. fuer die Konvertierung von einer
 // beliebigen Farbe nach HSL.
 var (

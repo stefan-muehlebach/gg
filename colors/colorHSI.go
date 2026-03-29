@@ -89,6 +89,10 @@ func (c1 HSI) Less(c2 HSI, key SortField) bool {
 	}
 }
 
+func (c HSI) Mix(bg Color, mix ColorMixType) Color {
+    return c
+}
+
 // Modell fuer den neuen Farbtyp, d.h. fuer die Konvertierung von einer
 // beliebigen Farbe nach HSI.
 var (

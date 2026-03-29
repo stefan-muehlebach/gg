@@ -85,6 +85,10 @@ func (c1 HSV) Less(c2 HSV, key SortField) bool {
 	}
 }
 
+func (c HSV) Mix(bg Color, mix ColorMixType) Color {
+    return c
+}
+
 // Modell fuer den neuen Farbtyp, d.h. fuer die Konvertierung von einer
 // beliebigen Farbe nach HSV.
 var (

@@ -40,23 +40,23 @@ func (c RGBA) RGB() (r, g, b uint8) {
 // Retourniert eine neue Farbe, welche eine Interpolation zwischen c und Weiss
 // ist. t ist ein Wert in [0, 1] und bestimmt die Position der Interpolation.
 // t=0 retourniert c, t=1 retourniert Weiss.
-func (c RGBA) Bright(t float64) Color {
+func (c RGBA) Bright(t float64) RGBA {
 	t = max(min(t, 1.0), 0.0)
-	return c.Interpolate(White, t)
+	return c.Interpolate(white, t)
 }
 
 // Retourniert eine neue Farbe, welche eine Interpolation zwischen c und
 // Schwarz ist. t ist ein Wert in [0, 1] und bestimmt die Position der
 // Interpolation. t=0 retourniert c, t=1 retourniert Schwarz.
-func (c RGBA) Dark(t float64) Color {
+func (c RGBA) Dark(t float64) RGBA {
 	t = max(min(t, 1.0), 0.0)
-	return c.Interpolate(Black, t)
+	return c.Interpolate(black, t)
 }
 
 // Retourniert eine neue Farbe, basierend auf c, jedoch mit dem hier
 // angegebenen Alpha-Wert (als Fliesskommazahl in [0, 1], wobei 0 voll
 // transparent und 1 voll deckend bedeuten).
-func (c RGBA) Alpha(a float64) Color {
+func (c RGBA) Alpha(a float64) RGBA {
 	a = max(min(a, 1.0), 0.0)
 	return RGBA{c.R, c.G, c.B, uint8(255.0 * a)}
 }
@@ -64,7 +64,7 @@ func (c RGBA) Alpha(a float64) Color {
 // Berechnet eine RGB-Farbe, welche 'zwischen' den Farben c1 und c2 liegt,
 // so dass bei t=0 der Farbwert c1 und bei t=1 der Farbwert c2 retourniert
 // wird. t wird vorgaengig auf das Interval [0,1] eingeschraenkt.
-func (c1 RGBA) Interpolate(col Color, t float64) Color {
+func (c1 RGBA) Interpolate(col RGBA, t float64) RGBA {
 	t = ipf(setIn(t, 0, 1))
 	c2 := RGBAModel.Convert(col).(RGBA)
 	r := (1.0-t)*float64(c1.R) + t*float64(c2.R)
@@ -107,6 +107,48 @@ func (c *RGBA) UnmarshalText(text []byte) error {
 	c.B = uint8((hexVal & 0x0000FF))
 	c.A = 0xFF
 	return nil
+}
+
+// Mischt die Farben c (Vordergrundfarbe) und bg (Hintergrundfarbe) nach einem
+// Verfahren, welches in mix spezifiziert ist. Siehe auch ColorMixType.
+func (c RGBA) Mix(bg RGBA, mix ColorMixType) RGBA {
+    // bg := RGBAModel.Convert(c2).(RGBA)
+
+	switch mix {
+	case Replace:
+		return c
+	case Blend:
+		ca := float64(c.A) / 255.0
+		da := float64(bg.A) / 255.0
+		a := 1.0 - (1.0-ca)*(1.0-da)
+		t1 := ca / a
+		t2 := da * (1.0 - ca) / a
+		r := float64(c.R)*t1 + float64(bg.R)*t2
+		g := float64(c.G)*t1 + float64(bg.G)*t2
+		b := float64(c.B)*t1 + float64(bg.B)*t2
+		return RGBA{uint8(r), uint8(g), uint8(b), uint8(255.0*a)}
+	case Max:
+		r := max(c.R, bg.R)
+		g := max(c.G, bg.G)
+		b := max(c.B, bg.B)
+		a := max(c.A, bg.A)
+		return RGBA{r, g, b, a}
+	case Average:
+		r := c.R/2 + bg.R/2
+		g := c.G/2 + bg.G/2
+		b := c.B/2 + bg.B/2
+		a := c.A/2 + bg.A/2
+		return RGBA{r, g, b, a}
+	case Min:
+		r := min(c.R, bg.R)
+		g := min(c.G, bg.G)
+		b := min(c.B, bg.B)
+		a := min(c.A, bg.A)
+		return RGBA{r, g, b, a}
+	default:
+		log.Fatalf("Unknown mixing function: '%d'", mix)
+	}
+	return RGBA{}
 }
 
 // Modell fuer den neuen Farbtyp, d.h. fuer die Konvertierung von einer

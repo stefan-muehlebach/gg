@@ -663,14 +663,14 @@ func TestUnmarshalColor(t *testing.T) {
 	t.Log(colors)
 }
 
-
 func TestReadPaletteData(t *testing.T) {
     palNames, palMap, err := ReadPaletteFile("palette.json")
     if err != nil {
         t.Fatalf("error: %v, err", err)
     }
-    pal := palMap[palNames[0]]
-    t.Logf("%+v", pal)
+    for _, name := range palNames {
+        t.Logf("%s: %+v\n", name, palMap[name])
+    }
     // t.Logf("len(palMap): %d", len(palMap))
     // for name, pal := range palMap {
     //     t.Logf("%s -- (%T)\n%+v", name, pal, pal)

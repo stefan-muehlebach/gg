@@ -22,8 +22,8 @@ var (
 
 func main() {
 	dc := gg.NewContext(W, H)
-    face1, _ := fonts.NewFace(fonts.GoBold, 18)
-    face2, _ := fonts.NewFace(fonts.GoRegular, 12)
+    face1, _ := fonts.NewFace(fonts.GoBold, 14.0)
+    face2, _ := fonts.NewFace(fonts.LucidaBright, 10.0)
 
 	dc.SetFillColor(BackColor)
 	dc.Clear()
@@ -33,22 +33,24 @@ func main() {
 	dc.SetStrokeColor(colors.RGBAF{0, 0, 1.0, 0.25})
 	dc.SetStrokeWidth(3)
 	dc.Stroke()
-	dc.SetStrokeColor(LineColor)
 
+	dc.SetTextColor(LineColor)
 	dc.SetFontFace(face1)
-	dc.DrawStringWrapped("UPPER LEFT", P, P, 0, 0, 0, 1.5, gg.AlignLeft)
-	dc.DrawStringWrapped("UPPER RIGHT", W-P, P, 1, 0, 0, 1.5, gg.AlignRight)
-	dc.DrawStringWrapped("BOTTOM LEFT", P, H-P, 0, 1, 0, 1.5, gg.AlignLeft)
-	dc.DrawStringWrapped("BOTTOM RIGHT", W-P, H-P, 1, 1, 0, 1.5, gg.AlignRight)
-	dc.DrawStringWrapped("UPPER MIDDLE", W/2, P, 0.5, 0, 0, 1.5, gg.AlignCenter)
-	dc.DrawStringWrapped("LOWER MIDDLE", W/2, H-P, 0.5, 1, 0, 1.5, gg.AlignCenter)
-	dc.DrawStringWrapped("LEFT MIDDLE", P, H/2, 0, 0.5, 0, 1.5, gg.AlignLeft)
-	dc.DrawStringWrapped("RIGHT MIDDLE", W-P, H/2, 1, 0.5, 0, 1.5, gg.AlignRight)
+	dc.DrawStringWrapped("TOP LEFT", P, P, 0, 0, W, 1.5, gg.AlignLeft)
+	dc.DrawStringWrapped("TOP CENTER", W/2, P, 0.5, 0, 0, 1.5, gg.AlignCenter)
+	dc.DrawStringWrapped("TOP RIGHT", W-P, P, 1, 0, W, 1.5, gg.AlignRight)
+	dc.DrawStringWrapped("MIDDLE LEFT", P, H/2, 0, 0.5, 0, 1.5, gg.AlignLeft)
+	dc.DrawStringWrapped("MIDDLE CENTER", W/2, H/2, 0.5, 0.5, 0, 1.5, gg.AlignCenter)
+	dc.DrawStringWrapped("MIDDLE RIGHT", W-P, H/2, 1, 0.5, 0, 1.5, gg.AlignRight)
+	dc.DrawStringWrapped("BOTTOM LEFT", P, H-P, 0, 1, W, 1.5, gg.AlignLeft)
+	dc.DrawStringWrapped("BOTTOM CENTER", W/2, H-P, 0.5, 1, 0, 1.5, gg.AlignCenter)
+	dc.DrawStringWrapped("BOTTOM RIGHT", W-P, H-P, 1, 1, W, 1.5, gg.AlignRight)
 
 	dc.SetFontFace(face2)
-	dc.DrawStringWrapped(TEXT, W/2-P, H/2-P, 1, 1, W/3, 1.75, gg.AlignRight)
-	dc.DrawStringWrapped(TEXT, W/2+P, H/2-P, 0, 1, W/3, 2, gg.AlignLeft)
-	dc.DrawStringWrapped(TEXT, W/2-P, H/2+P, 1, 0, W/3, 2.25, gg.AlignRight)
-	dc.DrawStringWrapped(TEXT, W/2+P, H/2+P, 0, 0, W/3, 2.5, gg.AlignLeft)
+	dc.DrawStringWrapped(TEXT, W/2-P, H/2-P, 1, 1, W/2-3*P, 1.5, gg.AlignRight)
+	dc.DrawStringWrapped(TEXT, W/2+P, H/2-P, 0, 1, W/2-3*P, 1.75, gg.AlignLeft)
+	dc.DrawStringWrapped(TEXT, W/2-P, H/2+P, 1, 0, W/2-3*P, 2.0, gg.AlignRight)
+	dc.DrawStringWrapped(TEXT, W/2+P, H/2+P, 0, 0, W/2-3*P, 2.25, gg.AlignLeft)
+
 	dc.SavePNG(outFile)
 }

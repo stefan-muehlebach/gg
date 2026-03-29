@@ -22,6 +22,7 @@ TARGETS = beziers \
           lorem \
           mask \
           meme \
+          paletten \
           pattern-fill \
           quadratic \
           rotated-image \

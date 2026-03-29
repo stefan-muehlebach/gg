@@ -93,7 +93,7 @@ var (
 )
 
 var (
-    Go                                  = Parse(goregular.TTF)
+    GoRegular                           = Parse(goregular.TTF)
     GoItalic                            = Parse(goitalic.TTF)
     GoMedium                            = Parse(gomedium.TTF)
     GoMediumItalic                      = Parse(gomediumitalic.TTF)
@@ -172,7 +172,7 @@ var (
 )
 
 var Map = map[string]*Font{
-    "Go": Go,
+    "GoRegular": GoRegular,
     "GoItalic": GoItalic,
     "GoMedium": GoMedium,
     "GoMediumItalic": GoMediumItalic,
@@ -251,7 +251,7 @@ var Map = map[string]*Font{
 }
 
 var Names = []string{
-    "Go",
+    "GoRegular",
     "GoItalic",
     "GoMedium",
     "GoMediumItalic",
