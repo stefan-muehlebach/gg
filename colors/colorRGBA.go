@@ -112,7 +112,7 @@ func (c *RGBA) UnmarshalText(text []byte) error {
 // Mischt die Farben c (Vordergrundfarbe) und bg (Hintergrundfarbe) nach einem
 // Verfahren, welches in mix spezifiziert ist. Siehe auch ColorMixType.
 func (c RGBA) Mix(bg RGBA, mix ColorMixType) RGBA {
-    // bg := RGBAModel.Convert(c2).(RGBA)
+	// bg := RGBAModel.Convert(c2).(RGBA)
 
 	switch mix {
 	case Replace:
@@ -126,7 +126,7 @@ func (c RGBA) Mix(bg RGBA, mix ColorMixType) RGBA {
 		r := float64(c.R)*t1 + float64(bg.R)*t2
 		g := float64(c.G)*t1 + float64(bg.G)*t2
 		b := float64(c.B)*t1 + float64(bg.B)*t2
-		return RGBA{uint8(r), uint8(g), uint8(b), uint8(255.0*a)}
+		return RGBA{uint8(r), uint8(g), uint8(b), uint8(255.0 * a)}
 	case Max:
 		r := max(c.R, bg.R)
 		g := max(c.G, bg.G)
