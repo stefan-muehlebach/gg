@@ -1,9 +1,10 @@
+*conflicted*
 examples/beziers
 examples/circles
 examples/clip
-examples/colorWheel
 examples/colormap
 examples/colors
+examples/colorWheel
 examples/concat
 examples/crisp
 examples/cubic
@@ -16,13 +17,14 @@ examples/gradient-mandelbrot
 examples/gradient-radial
 examples/gradient-text
 examples/gradient-transformed
+examples/invert-mask
 examples/lines
 examples/linewidth
 examples/lorem
 examples/mask
 examples/meme
-examples/pattern-fill
 examples/paletten
+examples/pattern-fill
 examples/quadratic
 examples/rotated-image
 examples/rotated-text
@@ -53,7 +55,6 @@ excercises/text-transform
 excercises/tictactoe01
 excercises/tictactoe02
 excercises/tictactoe03
+excercises/triangulation
 excercises/vertigo
 geom/matrix_20240418.go
-examples/invert-mask
-excercises/triangulation

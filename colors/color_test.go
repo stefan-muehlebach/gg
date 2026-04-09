@@ -272,77 +272,77 @@ func init() {
 	A = uint8(rnd.Intn(256))
 }
 
-func BenchmarkRGBAF2RGBA(bench *testing.B) {
-	c := RGBAF{rnd.Float64(), rnd.Float64(), rnd.Float64(), rnd.Float64()}
-	for i := 0; i < bench.N; i++ {
-		r, g, b, a = c.RGBA()
-	}
-}
-func BenchmarkRGBA2RGBAF(bench *testing.B) {
-	c := RGBA{uint8(rnd.Intn(256)), uint8(rnd.Intn(256)), uint8(rnd.Intn(256)), uint8(rnd.Intn(256))}
-	for i := 0; i < bench.N; i++ {
-		convColor = RGBAFModel.Convert(c)
-	}
-}
+// func BenchmarkRGBAF2RGBA(bench *testing.B) {
+// 	c := RGBAF{rnd.Float64(), rnd.Float64(), rnd.Float64(), rnd.Float64()}
+// 	for i := 0; i < bench.N; i++ {
+// 		r, g, b, a = c.RGBA()
+// 	}
+// }
+// func BenchmarkRGBA2RGBAF(bench *testing.B) {
+// 	c := RGBA{uint8(rnd.Intn(256)), uint8(rnd.Intn(256)), uint8(rnd.Intn(256)), uint8(rnd.Intn(256))}
+// 	for i := 0; i < bench.N; i++ {
+// 		convColor = RGBAFModel.Convert(c)
+// 	}
+// }
 
-func BenchmarkHSP2RGBA(bench *testing.B) {
-	c := HSP{360.0 * rnd.Float64(), rnd.Float64(), rnd.Float64(), rnd.Float64()}
-	for i := 0; i < bench.N; i++ {
-		r, g, b, a = c.RGBA()
-	}
-}
-func BenchmarkRGBA2HSP(bench *testing.B) {
-	c := RGBA{uint8(rnd.Intn(256)), uint8(rnd.Intn(256)), uint8(rnd.Intn(256)), uint8(rnd.Intn(256))}
-	for i := 0; i < bench.N; i++ {
-		convColor = HSPModel.Convert(c)
-	}
-}
+// func BenchmarkHSP2RGBA(bench *testing.B) {
+// 	c := HSP{360.0 * rnd.Float64(), rnd.Float64(), rnd.Float64(), rnd.Float64()}
+// 	for i := 0; i < bench.N; i++ {
+// 		r, g, b, a = c.RGBA()
+// 	}
+// }
+// func BenchmarkRGBA2HSP(bench *testing.B) {
+// 	c := RGBA{uint8(rnd.Intn(256)), uint8(rnd.Intn(256)), uint8(rnd.Intn(256)), uint8(rnd.Intn(256))}
+// 	for i := 0; i < bench.N; i++ {
+// 		convColor = HSPModel.Convert(c)
+// 	}
+// }
 
-func BenchmarkHSV2RGBA(bench *testing.B) {
-	c := HSV{360.0 * rnd.Float64(), rnd.Float64(), rnd.Float64(), rnd.Float64()}
-	for i := 0; i < bench.N; i++ {
-		r, g, b, a = c.RGBA()
-	}
-}
-func BenchmarkRGBA2HSV(bench *testing.B) {
-	c := RGBA{uint8(rnd.Intn(256)), uint8(rnd.Intn(256)), uint8(rnd.Intn(256)), uint8(rnd.Intn(256))}
-	for i := 0; i < bench.N; i++ {
-		convColor = HSVModel.Convert(c)
-	}
-}
+// func BenchmarkHSV2RGBA(bench *testing.B) {
+// 	c := HSV{360.0 * rnd.Float64(), rnd.Float64(), rnd.Float64(), rnd.Float64()}
+// 	for i := 0; i < bench.N; i++ {
+// 		r, g, b, a = c.RGBA()
+// 	}
+// }
+// func BenchmarkRGBA2HSV(bench *testing.B) {
+// 	c := RGBA{uint8(rnd.Intn(256)), uint8(rnd.Intn(256)), uint8(rnd.Intn(256)), uint8(rnd.Intn(256))}
+// 	for i := 0; i < bench.N; i++ {
+// 		convColor = HSVModel.Convert(c)
+// 	}
+// }
 
-func BenchmarkHSL2RGBA(bench *testing.B) {
-	c := HSL{360.0 * rnd.Float64(), rnd.Float64(), rnd.Float64(), rnd.Float64()}
-	for i := 0; i < bench.N; i++ {
-		r, g, b, a = c.RGBA()
-	}
-}
-func BenchmarkRGBA2HSL(bench *testing.B) {
-	c := RGBA{uint8(rnd.Intn(256)), uint8(rnd.Intn(256)), uint8(rnd.Intn(256)), uint8(rnd.Intn(256))}
-	for i := 0; i < bench.N; i++ {
-		convColor = HSLModel.Convert(c)
-	}
-}
+// func BenchmarkHSL2RGBA(bench *testing.B) {
+// 	c := HSL{360.0 * rnd.Float64(), rnd.Float64(), rnd.Float64(), rnd.Float64()}
+// 	for i := 0; i < bench.N; i++ {
+// 		r, g, b, a = c.RGBA()
+// 	}
+// }
+// func BenchmarkRGBA2HSL(bench *testing.B) {
+// 	c := RGBA{uint8(rnd.Intn(256)), uint8(rnd.Intn(256)), uint8(rnd.Intn(256)), uint8(rnd.Intn(256))}
+// 	for i := 0; i < bench.N; i++ {
+// 		convColor = HSLModel.Convert(c)
+// 	}
+// }
 
-func BenchmarkHSI2RGBA(bench *testing.B) {
-	c := HSI{360.0 * rnd.Float64(), rnd.Float64(), rnd.Float64(), rnd.Float64()}
-	for i := 0; i < bench.N; i++ {
-		r, g, b, a = c.RGBA()
-	}
-}
-func BenchmarkRGBA2HSI(bench *testing.B) {
-	c := RGBA{uint8(rnd.Intn(256)), uint8(rnd.Intn(256)), uint8(rnd.Intn(256)), uint8(rnd.Intn(256))}
-	for i := 0; i < bench.N; i++ {
-		convColor = HSIModel.Convert(c)
-	}
-}
+// func BenchmarkHSI2RGBA(bench *testing.B) {
+// 	c := HSI{360.0 * rnd.Float64(), rnd.Float64(), rnd.Float64(), rnd.Float64()}
+// 	for i := 0; i < bench.N; i++ {
+// 		r, g, b, a = c.RGBA()
+// 	}
+// }
+// func BenchmarkRGBA2HSI(bench *testing.B) {
+// 	c := RGBA{uint8(rnd.Intn(256)), uint8(rnd.Intn(256)), uint8(rnd.Intn(256)), uint8(rnd.Intn(256))}
+// 	for i := 0; i < bench.N; i++ {
+// 		convColor = HSIModel.Convert(c)
+// 	}
+// }
 
 func ExampleRGBA() {
 	r1, g1, b1 := uint8(0xFF), uint8(0x7F), uint8(0x3F)
 	c1 := RGBA{r1, g1, b1, 0xFF}
 	fmt.Printf("%v", c1)
 	// Output:
-	// {255 127 63 255}
+	// {0xFF, 0x7F, 0x3F, 0xFF}
 }
 
 func ExampleRGBAF() {
@@ -427,19 +427,19 @@ func TestColorGroups(t *testing.T) {
 
 // Check if every group name can be converted between string and ColorGroup.
 func TestColorGroup(t *testing.T) {
-    var g ColorGroup
-    var str string
-    var err error
+	var g ColorGroup
+	var str string
+	var err error
 
-    for group := range NumColorGroups {
-        str = group.String()
-        if err = g.Set(str); err != nil {
-            t.Errorf("Color group name '%s': not convertable back", str)
-        }
-        if g != group {
-            t.Errorf("Color group name '%s': wrong value", str)
-        }
-    }
+	for group := range NumColorGroups {
+		str = group.String()
+		if err = g.Set(str); err != nil {
+			t.Errorf("Color group name '%s': not convertable back", str)
+		}
+		if g != group {
+			t.Errorf("Color group name '%s': wrong value", str)
+		}
+	}
 }
 
 func TestFade(test *testing.T) {
@@ -618,33 +618,35 @@ func TestHSI(test *testing.T) {
 
 func TestUnmarshalColor(t *testing.T) {
 	type NamedColor struct {
-		Name                string
-		Dark, Bright, Alpha float64
+		Name   string  `json:"name"`
+		Dark   float64 `json:"dark"`
+		Bright float64 `json:"bright"`
+		Alpha  float64 `json:"alpha"`
 	}
-	type JsonColor struct {
-		Color json.RawMessage
+	type RGBAColor struct {
+		Color RGBA `json:"color"`
 	}
 	var j = []byte(`[
-        {"R": 0.0, "G": 0.0, "B": 0.0, "A": 1.0},
-        {"R": 1.0, "G": 1.0, "B": 1.0, "A": 1.0},
         {"Name": "Indigo", "Dark": 0.5, "Alpha": 0.8},
-        {"Name": "Orange", "Dark": 0.5}
+        {"Name": "Orange", "Dark": 0.5},
+        {"color": "0x000000"},
+        {"color": "0xFFFFFF"}
     ]`)
 
 	var jsonColors []json.RawMessage
-	var colors []Color
+	var colors []RGBA
 
-	if err := json.Unmarshal(j, &jsonColors); err !=  nil {
+	if err := json.Unmarshal(j, &jsonColors); err != nil {
 		t.Fatalf("error: %v", err)
 	}
-	for _, c := range jsonColors {
+	for i, c := range jsonColors {
 		var namedColor NamedColor = NamedColor{Alpha: 1.0}
-		var rgbafColor RGBAF
+		var rgbaColor RGBAColor
 
-		// t.Logf("%d: %+v", i, c)
+		t.Logf("%d: %s", i, string(c))
 
 		if err := json.Unmarshal(c, &namedColor); err != nil {
-			t.Fatalf("error: %v", err)
+			t.Fatalf("no named color, error: %v", err)
 		}
 		if namedColor.Name != "" {
 			if col, ok := Map[namedColor.Name]; ok {
@@ -655,33 +657,10 @@ func TestUnmarshalColor(t *testing.T) {
 			continue
 		}
 
-		if err := json.Unmarshal(c, &rgbafColor); err != nil {
-			t.Fatalf("error: %v", err)
+		if err := json.Unmarshal(c, &rgbaColor); err != nil {
+			t.Fatalf("no rgba color, error: %v", err.Error())
 		}
-		colors = append(colors, rgbafColor)
+		colors = append(colors, rgbaColor.Color)
 	}
 	t.Log(colors)
-}
-
-func TestReadPaletteData(t *testing.T) {
-    palNames, palMap, err := ReadPaletteFile("palette.json")
-    if err != nil {
-        t.Fatalf("error: %v, err", err)
-    }
-    for _, name := range palNames {
-        t.Logf("%s: %+v\n", name, palMap[name])
-    }
-    // t.Logf("len(palMap): %d", len(palMap))
-    // for name, pal := range palMap {
-    //     t.Logf("%s -- (%T)\n%+v", name, pal, pal)
-    // }
-
-    // for _, name := range []string{"Plasma", "Neon"} {
-    //     t.Logf("%s", name)
-    //     pal := palMap[name]
-    //     for pos := 0.0; pos <= 1.0; pos += dPos {
-    //         col := pal.Color(pos)
-    //         t.Logf("%f: %+v", pos, col)
-    //     }
-    // }
 }

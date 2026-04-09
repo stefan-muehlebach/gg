@@ -41,7 +41,7 @@ func (c RGBA) RGB() (r, g, b uint8) {
 // ist. t ist ein Wert in [0, 1] und bestimmt die Position der Interpolation.
 // t=0 retourniert c, t=1 retourniert Weiss.
 func (c RGBA) Bright(t float64) RGBA {
-	t = max(min(t, 1.0), 0.0)
+	t = setIn(t, 0.0, 1.0)
 	return c.Interpolate(white, t)
 }
 
@@ -49,24 +49,22 @@ func (c RGBA) Bright(t float64) RGBA {
 // Schwarz ist. t ist ein Wert in [0, 1] und bestimmt die Position der
 // Interpolation. t=0 retourniert c, t=1 retourniert Schwarz.
 func (c RGBA) Dark(t float64) RGBA {
-	t = max(min(t, 1.0), 0.0)
+	t = setIn(t, 0.0, 1.0)
 	return c.Interpolate(black, t)
 }
 
 // Retourniert eine neue Farbe, basierend auf c, jedoch mit dem hier
 // angegebenen Alpha-Wert (als Fliesskommazahl in [0, 1], wobei 0 voll
 // transparent und 1 voll deckend bedeuten).
-func (c RGBA) Alpha(a float64) RGBA {
-	a = max(min(a, 1.0), 0.0)
-	return RGBA{c.R, c.G, c.B, uint8(255.0 * a)}
+func (c RGBA) Alpha(t float64) RGBA {
+	t = setIn(t, 0.0, 1.0)
+	return RGBA{c.R, c.G, c.B, uint8(255.0 * t)}
 }
 
 // Berechnet eine RGB-Farbe, welche 'zwischen' den Farben c1 und c2 liegt,
 // so dass bei t=0 der Farbwert c1 und bei t=1 der Farbwert c2 retourniert
 // wird. t wird vorgaengig auf das Interval [0,1] eingeschraenkt.
-func (c1 RGBA) Interpolate(col RGBA, t float64) RGBA {
-	t = ipf(setIn(t, 0, 1))
-	c2 := RGBAModel.Convert(col).(RGBA)
+func (c1 RGBA) Interpolate(c2 RGBA, t float64) RGBA {
 	r := (1.0-t)*float64(c1.R) + t*float64(c2.R)
 	g := (1.0-t)*float64(c1.G) + t*float64(c2.G)
 	b := (1.0-t)*float64(c1.B) + t*float64(c2.B)

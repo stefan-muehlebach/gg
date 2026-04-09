@@ -15,12 +15,13 @@ const (
 )
 
 type ConfigData struct {
-	color      colors.Color
+	color      colors.RGBA
 	dist, size float64
 }
 
 var (
-	BackColor  = colors.RGBAF{0.851, 0.811, 0.733, 1.0}
+    BackColor = colors.RGBA{217, 206, 187, 255}
+    LineColor = colors.RGBA{39, 39, 34, 255}
 	TextFont   = fonts.LucidaBrightDemibold
 	ConfigList = []ConfigData{
 		{colors.Blue.Dark(0.5).Alpha(0.5), -100.0, 15.0},

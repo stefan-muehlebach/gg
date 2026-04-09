@@ -36,7 +36,7 @@ var (
 
 	EdgeSize         = 1.0
 	EdgeColor        = colors.SlateGray
-	EdgeTextFont     = fonts.Go
+	EdgeTextFont     = fonts.GoRegular
 	EdgeTextColor    = EdgeColor.Dark(0.5)
 	EdgeTextFontSize = 0.8 * PointTextFontSize
 )

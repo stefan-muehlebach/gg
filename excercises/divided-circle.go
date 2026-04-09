@@ -27,14 +27,14 @@ const (
 type GraphData struct {
 	stepSize  int
 	lineWidth float64
-	color     colors.Color
+	color     colors.RGBA
 }
 
 var (
 	// BackColor und LineColor sind die Standardfarben für den Hintergrund
 	// (das Papier) und den Vordergrund.
-	BackColor = colors.RGBAF{0.851, 0.811, 0.733, 1.0}
-	LineColor = colors.RGBAF{0.153, 0.157, 0.133, 1.0}
+	BackColor = colors.RGBA{217, 206, 187, 255}
+	LineColor = colors.RGBA{39, 39, 34, 255}
 
 	GraphList = []GraphData{
 		// {44, 1.0, colors.DarkViolet.Bright(0.2)},

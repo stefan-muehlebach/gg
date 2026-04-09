@@ -14,6 +14,7 @@ package colors
 
 import (
 	"image/color"
+	"math"
 	"math/rand/v2"
 )
 
@@ -85,28 +86,30 @@ func RandColorByGroup(group ColorGroup) RGBA {
 	return Map[name]
 }
 
-// type InterpolFuncType func(float64) float64
+// ---------------------------------------------------------------------------
 
-// var (
-// 	ipf   = LinearInterpol
-// 	gamma = 1.5
-// )
+var (
+	ipf = cubicInterp
+    gamma = 1.2
+)
 
-// func SetInterpolFunc(fnc InterpolFuncType) {
-// 	ipf = fnc
-// }
+//go:inline
+func linearInterp(t float64) float64 {
+	return t
+}
 
-// func LinearInterpol(t float64) float64 {
-// 	return t
-// }
+func powerInterp(t float64) float64 {
+	t1 := math.Pow(2, gamma-1.0)
+	if t < 0.5 {
+		return t1 * math.Pow(t, gamma)
+	} else {
+		return 1.0 - t1*math.Pow(1.0-t, gamma)
+	}
+}
 
-// func GammaInterpol(t float64) float64 {
-// 	return math.Pow(t, gamma)
-// }
-
-// func CubicInterpol(t float64) float64 {
-// 	return 3.0*t*t - 2.0*t*t*t
-// }
+func cubicInterp(t float64) float64 {
+	return 3.0*t*t - 2.0*t*t*t
+}
 
 // Hilfsfunktion, mit welcher sichergestellt werden kann, dass der Wert v
 // zwingend zwischen a und b zu liegen kommt. Falls a groesser ist als b,

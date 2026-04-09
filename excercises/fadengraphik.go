@@ -30,7 +30,7 @@ const (
 
 type ThreadData struct {
 	width float64
-	color colors.Color
+	color colors.RGBA
 }
 
 var (
@@ -40,8 +40,8 @@ var (
 	// BackColor = colors.DarkRed.Dark(0.6)
 	// LineColor = colors.RGBAF{0.153, 0.157, 0.133, 1.0}
 
-	BackColor = colors.RGBAF{0.851, 0.811, 0.733, 1.0}
-	LineColor = colors.RGBAF{0.153, 0.157, 0.133, 1.0}
+    BackColor = colors.RGBA{217, 206, 187, 255}
+    LineColor = colors.RGBA{39, 39, 34, 255}
 
 	ThreadList = []ThreadData{
 		{1.0, colors.DarkSlateBlue.Dark(0.4)},

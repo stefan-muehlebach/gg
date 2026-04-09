@@ -6,6 +6,7 @@ import (
 	"io"
 	"log"
 	"math"
+	"os"
 	"slices"
 )
 
@@ -15,81 +16,25 @@ type Palette interface {
 	Color(t float64) RGBA
 }
 
-var (
-	ipf = linearInterp
-)
-
-func linearInterp(t float64) float64 {
-	return t
-}
-
-func powerInterp(t float64) float64 {
-	a := 1.2
-	t1 := math.Pow(2, a-1.0)
-	if t <= 0.5 {
-		return t1 * math.Pow(t, a)
-	} else {
-		return 1.0 - t1*math.Pow(1.0-t, a)
-	}
-}
-
-func cubicInterp(t float64) float64 {
-	return 3.0*t*t - 2.0*t*t*t
-}
-
-type ColorIdent byte
-
-const (
-	RedColor = (1 << iota)
-	GreenColor
-	BlueColor
-)
-
-func (c ColorIdent) String() (s string) {
-	if (c & RedColor) != 0 {
-		s += "R"
-	}
-	if (c & GreenColor) != 0 {
-		s += "G"
-	}
-	if (c & BlueColor) != 0 {
-		s += "B"
-	}
-	return s
-}
-
-func (c *ColorIdent) UnmarshalText(text []byte) error {
-	for _, ch := range text {
-		switch ch {
-		case 'R':
-			*c |= RedColor
-		case 'G':
-			*c |= GreenColor
-		case 'B':
-			*c |= BlueColor
-		default:
-			log.Fatalf("no such color identifier: %c", ch)
-		}
-	}
-	return nil
-}
-
 type PaletteType byte
 
 const (
-	LinearGradientType PaletteType = iota
-	GradientType
+	LinearType PaletteType = iota
+	ColorStopsType
 	FunctionType
+	SimpleType
 )
 
 func (t PaletteType) String() string {
 	switch t {
-	case LinearGradientType:
-		return "Linear Gradient"
-	case GradientType:
-		return "Gradient"
+	case LinearType:
+		return "Linear"
+	case ColorStopsType:
+		return "ColorStops"
 	case FunctionType:
 		return "Function"
+	case SimpleType:
+		return "Simple"
 	default:
 		return "(unknown type)"
 	}
@@ -97,142 +42,332 @@ func (t PaletteType) String() string {
 
 // ---------------------------------------------------------------------------
 
-type LinGradPalette struct {
-	name   string
-	colors []RGBA
-	dt     float64
+type paletteEmb struct {
+	name string
+	typ  PaletteType
 }
 
-func NewPaletteByColors(name string, colors ...RGBA) *LinGradPalette {
-	p := &LinGradPalette{}
-	p.name = name
-	p.colors = make([]RGBA, len(colors))
-	p.dt = 1.0 / float64(len(colors)-1)
-	copy(p.colors, colors)
-	return p
-}
-
-func (p *LinGradPalette) Name() string {
+func (p *paletteEmb) Name() string {
 	return p.name
 }
 
-func (p *LinGradPalette) Type() PaletteType {
-	return LinearGradientType
+func (p *paletteEmb) Type() PaletteType {
+	return p.typ
 }
 
-func (p *LinGradPalette) Color(t float64) (c RGBA) {
+// ---------------------------------------------------------------------------
+
+type ColorIdent byte
+type ColorMask byte
+
+const (
+	RedId ColorIdent = iota
+	GreenId
+	BlueId
+	AlphaId
+	NumColorIds
+)
+
+const (
+	RedMask ColorMask = (1 << iota)
+	GreenMask
+	BlueMask
+	AlphaMask
+)
+
+func (c ColorMask) String() (s string) {
+	if (c & RedMask) != 0 {
+		s += "R"
+	}
+	if (c & GreenMask) != 0 {
+		s += "G"
+	}
+	if (c & BlueMask) != 0 {
+		s += "B"
+	}
+	if (c & AlphaMask) != 0 {
+		s += "A"
+	}
+	return s
+}
+
+func (c *ColorMask) UnmarshalText(text []byte) error {
+	for _, ch := range text {
+		switch ch {
+		case 'R':
+			*c |= RedMask
+		case 'G':
+			*c |= GreenMask
+		case 'B':
+			*c |= BlueMask
+		case 'A':
+			*c |= AlphaMask
+		default:
+			log.Fatalf("no such color identifier: %c", ch)
+		}
+	}
+	return nil
+}
+
+// ---------------------------------------------------------------------------
+
+type SimplePalette struct {
+	paletteEmb
+	colors []RGBA
+}
+
+func NewSimplePalette(name string, n int) *SimplePalette {
+	p := &SimplePalette{}
+	p.name = name
+	p.typ = 0
+	p.colors = make([]RGBA, n)
+	return p
+}
+
+func NewPaletteFromOther(name string, n int, pal Palette) *SimplePalette {
+    p := NewSimplePalette(name, n)
+	for i := range n {
+		t := float64(i) / float64(n-1)
+		p.SetColor(i, pal.Color(t))
+	}
+    return p
+}
+
+func (p *SimplePalette) SetColor(i int, c RGBA) {
+	p.colors[i] = c
+}
+
+func (p *SimplePalette) Color(t float64) RGBA {
+    	if t == 0.0 {
+		return p.colors[0]
+	}
+	if t == 1.0 {
+		return p.colors[len(p.colors)-1]
+	}
+	i := int(t * float64(len(p.colors)-1))
+	return p.colors[i]
+}
+
+// ---------------------------------------------------------------------------
+
+type LinearPalette struct {
+	paletteEmb
+	colors []RGBA
+	// dt     float64
+}
+
+func NewLinearPalette(name string) *LinearPalette {
+	p := &LinearPalette{}
+	p.name = name
+	p.typ = LinearType
+	p.colors = make([]RGBA, 0)
+	// p.dt = 1.0
+	return p
+}
+
+func NewPaletteByColors(name string, colors ...RGBA) *LinearPalette {
+	p := NewLinearPalette(name)
+	for _, c := range colors {
+		p.AddColor(c)
+	}
+	return p
+}
+
+func (p *LinearPalette) AddColor(c RGBA) {
+	p.colors = append(p.colors, c)
+}
+
+func (p *LinearPalette) Color(t float64) (c RGBA) {
 	if t == 0.0 {
 		return p.colors[0]
 	}
 	if t == 1.0 {
 		return p.colors[len(p.colors)-1]
 	}
-	i, u := math.Modf(t / p.dt)
+	i, u := math.Modf(t * float64(len(p.colors)-1))
 	col1 := p.colors[int(i)]
 	col2 := p.colors[int(i)+1]
-	return col1.Interpolate(col2, ipf(u))
+	return col1.Interpolate(col2, u)
 }
 
 // ---------------------------------------------------------------------------
 
-// Gradienten-Paletten basieren auf einer Anzahl Farben (Stuetzstellen)
+// ColorStops-Paletten basieren auf einer Anzahl Farben (Stuetzstellen)
 // zwischen denen eine Farbe interpoliert werden kann. Jede Stuetzstelle
 // besteht aus einer Position (Zahl im Intervall [0,1]) und einer dazu
 // gehoerenden Farbe.
-type GradPalette struct {
-	name  string
-	stops []ColorStop
+type ColorStopsPalette struct {
+	paletteEmb
+	stops [][]ValueStop
 }
 
-func NewPaletteByStops(name string, stops ...ColorStop) *GradPalette {
+type ColorStop struct {
+	Pos    float64   `json:"pos"`
+	Color  RGBA      `json:"color"`
+	Ignore ColorMask `json:"ignore,omitempty"`
+}
+
+type ValueStop struct {
+	Pos   float64
+	Value uint8
+}
+
+func NewColorStopsPalette(name string) *ColorStopsPalette {
+	p := &ColorStopsPalette{}
+	p.name = name
+	p.typ = ColorStopsType
+	p.stops = make([][]ValueStop, 4)
+	for i := range NumColorIds {
+		value := uint8(0)
+		if i == AlphaId {
+			value = 0xFF
+		}
+		p.stops[i] = []ValueStop{
+			{Pos: 0.0, Value: value},
+			{Pos: 1.0, Value: value},
+		}
+	}
+	return p
+}
+
+func NewPaletteByStops(name string, stops ...ColorStop) *ColorStopsPalette {
 	if len(stops) < 2 {
 		log.Fatalf("at least two stops must be provided: got only %d", len(stops))
 	}
-	p := &GradPalette{}
-	p.name = name
-	p.stops = []ColorStop{
-		{Pos: 0.0, Color: black},
-		{Pos: 1.0, Color: black},
-	}
+	p := NewColorStopsPalette(name)
 	for _, stop := range stops {
 		p.SetColorStop(stop)
 	}
 	return p
 }
 
-func (p *GradPalette) SetColorStop(colStop ColorStop) {
+func (p *ColorStopsPalette) SetColorStop(colStop ColorStop) {
 	if colStop.Pos < 0.0 || colStop.Pos > 1.0 {
 		log.Fatalf("Position must be in [0,1]; is: %f", colStop.Pos)
 	}
-	for i, stop := range p.stops {
-		if stop.Pos == colStop.Pos {
-			p.stops[i].Color = colStop.Color
-			return
+	for colId := range NumColorIds {
+        colMask := ColorMask(1 << colId)
+        if colStop.Ignore & colMask != 0 {
+            continue
+        }
+		value := uint8(0)
+		switch colId {
+		case RedId:
+			value = colStop.Color.R
+		case GreenId:
+			value = colStop.Color.G
+		case BlueId:
+			value = colStop.Color.B
+		case AlphaId:
+			value = colStop.Color.A
 		}
-		if stop.Pos > colStop.Pos {
-			p.stops = slices.Insert(p.stops, i, colStop)
-			return
-		}
+		p.SetValueStop(colId, ValueStop{colStop.Pos, value})
 	}
 }
 
-func (p *GradPalette) Name() string {
-	return p.name
-}
-
-func (p *GradPalette) Type() PaletteType {
-	return GradientType
+func (p *ColorStopsPalette) SetValueStop(colId ColorIdent, valStop ValueStop) {
+	if valStop.Pos < 0.0 || valStop.Pos > 1.0 {
+		log.Fatalf("Position must be in [0,1]; is: %f", valStop.Pos)
+	}
+	for i, stop := range p.stops[colId] {
+		if stop.Pos == valStop.Pos {
+			p.stops[colId][i].Value = valStop.Value
+			return
+		}
+		if stop.Pos > valStop.Pos {
+			p.stops[colId] = slices.Insert(p.stops[colId], i, valStop)
+			return
+		}
+	}
 }
 
 // Hier nun spielt die Musik: aufgrund des Wertes t (muss im Intervall [0,1]
 // liegen) wird eine neue Farbe interpoliert.
-func (p *GradPalette) Color(t float64) (c RGBA) {
-	var i int
-	var stop ColorStop
+func (p *ColorStopsPalette) Color(t float64) (c RGBA) {
+	c.R = p.Value(RedId, t)
+	c.G = p.Value(GreenId, t)
+	c.B = p.Value(BlueId, t)
+	c.A = p.Value(AlphaId, t)
+	return c
+}
 
-	if t < 0.0 || t > 1.0 {
-		t = max(0.0, min(1.0, t))
+func (p *ColorStopsPalette) Value(colId ColorIdent, t float64) (v uint8) {
+	var pStop, nStop ValueStop
+
+	if t == 0.0 {
+		return p.stops[colId][0].Value
 	}
-	for i, stop = range p.stops[1:] {
-		if stop.Pos > t {
+	if t == 1.0 {
+		return p.stops[colId][len(p.stops[colId])-1].Value
+	}
+	pStop = p.stops[colId][0]
+	for _, nStop = range p.stops[colId][1:] {
+		if nStop.Pos > t {
 			break
 		}
+		pStop = nStop
 	}
-	t = (t - p.stops[i].Pos) / (p.stops[i+1].Pos - p.stops[i].Pos)
-	c = p.stops[i].Color.Interpolate(p.stops[i+1].Color, ipf(t))
-	return c
+	t = (t - pStop.Pos) / (nStop.Pos - pStop.Pos)
+	v = uint8(float64(pStop.Value) + ipf(t)*(float64(nStop.Value)-float64(pStop.Value)))
+	return v
 }
 
 // ----------------------------------------------------------------------------
 
-type ProcPalette struct {
-	name   string
+type FunctionPalette struct {
+	paletteEmb
 	params []ParamSet
 }
 
-func NewPaletteByParams(name string, params ...ParamSet) *ProcPalette {
-	p := &ProcPalette{}
+type ParamSet struct {
+	P0 float64 `json:"p0"`
+	P1 float64 `json:"p1"`
+	P2 float64 `json:"p2"`
+	P3 float64 `json:"p3"`
+}
+
+func NewFunctionPalette(name string) *FunctionPalette {
+	p := &FunctionPalette{}
 	p.name = name
-	p.params = make([]ParamSet, 3)
-	for i, param := range params {
-		p.params[i] = param
+	p.typ = FunctionType
+	p.params = []ParamSet{
+		{0.0, 0.0, 0.0, 0.0},
+		{0.0, 0.0, 0.0, 0.0},
+		{0.0, 0.0, 0.0, 0.0},
+		{1.0, 0.0, 0.0, 0.0},
 	}
 	return p
 }
 
-func (p *ProcPalette) Name() string {
-	return p.name
+func NewPaletteByParams(name string, params ...ParamSet) *FunctionPalette {
+	p := NewFunctionPalette(name)
+	for i, param := range params {
+		p.SetParam(ColorIdent(i), param)
+	}
+	return p
 }
 
-func (p *ProcPalette) Type() PaletteType {
-	return FunctionType
+func (p *FunctionPalette) SetParam(colId ColorIdent, param ParamSet) {
+	p.params[colId] = param
 }
 
-func (p *ProcPalette) Color(t float64) (c RGBA) {
+func (p *FunctionPalette) Color(t float64) (c RGBA) {
+	// t = setIn(t, 0.0, 1.0)
+
 	r := p.params[0].Value(t)
 	g := p.params[1].Value(t)
 	b := p.params[2].Value(t)
-	return RGBA{uint8(255.0 * r), uint8(255.0 * g), uint8(255.0 * b), 0xFF}
+	a := p.params[3].Value(t)
+	return RGBA{
+		uint8(255.0 * r),
+		uint8(255.0 * g),
+		uint8(255.0 * b),
+		uint8(255.0 * a),
+	}
+}
+
+func (p ParamSet) Value(t float64) float64 {
+	return p.P0 + p.P1*math.Cos(2*math.Pi*(t*p.P2+p.P3))
 }
 
 // ---------------------------------------------------------------------------
@@ -244,26 +379,18 @@ type JsonPalette struct {
 	Params []ParamSet  `json:"params,omitempty"`
 }
 
-type ColorStop struct {
-	Pos    float64    `json:"pos"`
-	Color  RGBA       `json:"color"`
-	Ignore ColorIdent `json:"ignore,omitempty"`
-}
+// ---------------------------------------------------------------------------
 
-type ParamSet struct {
-	Y0 float64 `json:"y0"`
-	Y1 float64 `json:"y1"`
-	X0 float64 `json:"x0"`
-	X1 float64 `json:"x1"`
-}
-
-func (p ParamSet) Value(t float64) float64 {
-	return p.Y0 + p.Y1*math.Cos(2*math.Pi*(t*p.X0+p.X1))
+func ReadPaletteFile(fileName string) ([]string, map[string]Palette, error) {
+	fh, err := os.Open(fileName)
+	if err != nil {
+		log.Fatalf("couldn't open file %s: %v", fileName, err.Error())
+	}
+	defer fh.Close()
+	return ReadPaletteData(fh)
 }
 
 func ReadPaletteData(fh io.Reader) ([]string, map[string]Palette, error) {
-
-	// func ReadPaletteFile(fileName string) ([]string, map[string]Palette, error) {
 	var jsonPalList []JsonPalette
 	var palNames []string
 	var palMap map[string]Palette
@@ -279,18 +406,21 @@ func ReadPaletteData(fh io.Reader) ([]string, map[string]Palette, error) {
 	palMap = make(map[string]Palette)
 	for _, jsonPal := range jsonPalList {
 		if _, found := palMap[jsonPal.Name]; found {
-			log.Fatalf("palette %s already defined", jsonPal.Name)
+			log.Printf("palette '%s' is already defined", jsonPal.Name)
+			continue
+		}
+		switch {
+		case len(jsonPal.Colors) > 0:
+			pal = NewPaletteByColors(jsonPal.Name, jsonPal.Colors...)
+		case len(jsonPal.Stops) > 0:
+			pal = NewPaletteByStops(jsonPal.Name, jsonPal.Stops...)
+		case len(jsonPal.Params) > 0:
+			pal = NewPaletteByParams(jsonPal.Name, jsonPal.Params...)
+		default:
+			log.Printf("palette '%s' has no known format", jsonPal.Name)
 			continue
 		}
 		palNames = append(palNames, jsonPal.Name)
-		switch {
-		case len(jsonPal.Stops) > 0:
-			pal = NewPaletteByStops(jsonPal.Name, jsonPal.Stops...)
-		case len(jsonPal.Colors) > 0:
-			pal = NewPaletteByColors(jsonPal.Name, jsonPal.Colors...)
-		case len(jsonPal.Params) > 0:
-			pal = NewPaletteByParams(jsonPal.Name, jsonPal.Params...)
-		}
 		palMap[pal.Name()] = pal
 	}
 	slices.SortFunc(palNames, func(nameA, nameB string) int {
