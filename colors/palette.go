@@ -43,8 +43,9 @@ func (t PaletteType) String() string {
 // ---------------------------------------------------------------------------
 
 type paletteEmb struct {
-	name string
-	typ  PaletteType
+	name   string
+	typ    PaletteType
+	mapFnc Mapper
 }
 
 func (p *paletteEmb) Name() string {
@@ -53,6 +54,10 @@ func (p *paletteEmb) Name() string {
 
 func (p *paletteEmb) Type() PaletteType {
 	return p.typ
+}
+
+func (p *paletteEmb) SetMapper(mapFnc Mapper) {
+	p.mapFnc = mapFnc
 }
 
 // ---------------------------------------------------------------------------
@@ -120,17 +125,18 @@ func NewSimplePalette(name string, n int) *SimplePalette {
 	p := &SimplePalette{}
 	p.name = name
 	p.typ = 0
+	p.mapFnc = DefaultMapper
 	p.colors = make([]RGBA, n)
 	return p
 }
 
 func NewPaletteFromOther(name string, n int, pal Palette) *SimplePalette {
-    p := NewSimplePalette(name, n)
+	p := NewSimplePalette(name, n)
 	for i := range n {
 		t := float64(i) / float64(n-1)
 		p.SetColor(i, pal.Color(t))
 	}
-    return p
+	return p
 }
 
 func (p *SimplePalette) SetColor(i int, c RGBA) {
@@ -138,30 +144,34 @@ func (p *SimplePalette) SetColor(i int, c RGBA) {
 }
 
 func (p *SimplePalette) Color(t float64) RGBA {
-    	if t == 0.0 {
+	t = p.mapFnc(t)
+	if t == 0.0 {
 		return p.colors[0]
 	}
 	if t == 1.0 {
 		return p.colors[len(p.colors)-1]
 	}
-	i := int(t * float64(len(p.colors)-1))
+	i := int(math.Round(t * float64(len(p.colors)-1)))
 	return p.colors[i]
 }
 
 // ---------------------------------------------------------------------------
 
+// Bei einer Palette des Typs 'Linear' werden eine feste Anzahl
+// RGB-Farben gleichmaessig, d.h. aequidistant uber das Interval [0, 1]
+// verteilt. Beim Ermitteln einer Farbe mit der Funktion Color(t) wird
+// zwischen zwei hinterlegen Farben linear interpoliert.
 type LinearPalette struct {
 	paletteEmb
 	colors []RGBA
-	// dt     float64
 }
 
 func NewLinearPalette(name string) *LinearPalette {
 	p := &LinearPalette{}
 	p.name = name
 	p.typ = LinearType
+	p.mapFnc = DefaultMapper
 	p.colors = make([]RGBA, 0)
-	// p.dt = 1.0
 	return p
 }
 
@@ -178,6 +188,7 @@ func (p *LinearPalette) AddColor(c RGBA) {
 }
 
 func (p *LinearPalette) Color(t float64) (c RGBA) {
+	t = p.mapFnc(t)
 	if t == 0.0 {
 		return p.colors[0]
 	}
@@ -194,17 +205,11 @@ func (p *LinearPalette) Color(t float64) (c RGBA) {
 
 // ColorStops-Paletten basieren auf einer Anzahl Farben (Stuetzstellen)
 // zwischen denen eine Farbe interpoliert werden kann. Jede Stuetzstelle
-// besteht aus einer Position (Zahl im Intervall [0,1]) und einer dazu
-// gehoerenden Farbe.
+// besteht aus einer Position (Zahl im Intervall [0,1]) und einem dazu
+// gehoerenden Farbwert fuer die insgesamt 4 Farbkanaele (R, G, B und A)
 type ColorStopsPalette struct {
 	paletteEmb
 	stops [][]ValueStop
-}
-
-type ColorStop struct {
-	Pos    float64   `json:"pos"`
-	Color  RGBA      `json:"color"`
-	Ignore ColorMask `json:"ignore,omitempty"`
 }
 
 type ValueStop struct {
@@ -212,10 +217,19 @@ type ValueStop struct {
 	Value uint8
 }
 
+// Dieser Typ wird nur fuer das Einlesen der Paletten-Daten aus einem
+// JSON-File verwendet.
+type ColorStop struct {
+	Pos    float64   `json:"pos"`
+	Color  RGBA      `json:"color"`
+	Ignore ColorMask `json:"ignore,omitempty"`
+}
+
 func NewColorStopsPalette(name string) *ColorStopsPalette {
 	p := &ColorStopsPalette{}
 	p.name = name
 	p.typ = ColorStopsType
+	p.mapFnc = DefaultMapper
 	p.stops = make([][]ValueStop, 4)
 	for i := range NumColorIds {
 		value := uint8(0)
@@ -246,10 +260,10 @@ func (p *ColorStopsPalette) SetColorStop(colStop ColorStop) {
 		log.Fatalf("Position must be in [0,1]; is: %f", colStop.Pos)
 	}
 	for colId := range NumColorIds {
-        colMask := ColorMask(1 << colId)
-        if colStop.Ignore & colMask != 0 {
-            continue
-        }
+		colMask := ColorMask(1 << colId)
+		if colStop.Ignore&colMask != 0 {
+			continue
+		}
 		value := uint8(0)
 		switch colId {
 		case RedId:
@@ -284,6 +298,7 @@ func (p *ColorStopsPalette) SetValueStop(colId ColorIdent, valStop ValueStop) {
 // Hier nun spielt die Musik: aufgrund des Wertes t (muss im Intervall [0,1]
 // liegen) wird eine neue Farbe interpoliert.
 func (p *ColorStopsPalette) Color(t float64) (c RGBA) {
+	t = p.mapFnc(t)
 	c.R = p.Value(RedId, t)
 	c.G = p.Value(GreenId, t)
 	c.B = p.Value(BlueId, t)
@@ -330,6 +345,7 @@ func NewFunctionPalette(name string) *FunctionPalette {
 	p := &FunctionPalette{}
 	p.name = name
 	p.typ = FunctionType
+	p.mapFnc = DefaultMapper
 	p.params = []ParamSet{
 		{0.0, 0.0, 0.0, 0.0},
 		{0.0, 0.0, 0.0, 0.0},
@@ -352,7 +368,7 @@ func (p *FunctionPalette) SetParam(colId ColorIdent, param ParamSet) {
 }
 
 func (p *FunctionPalette) Color(t float64) (c RGBA) {
-	// t = setIn(t, 0.0, 1.0)
+	t = p.mapFnc(t)
 
 	r := p.params[0].Value(t)
 	g := p.params[1].Value(t)
@@ -432,4 +448,31 @@ func ReadPaletteData(fh io.Reader) ([]string, map[string]Palette, error) {
 		return cmp.Compare(nameA, nameB)
 	})
 	return palNames, palMap, nil
+}
+
+// Mapper
+type Mapper func(t float64) float64
+
+var (
+	DefaultMapper = func(t float64) float64 { return t }
+)
+
+func NewMapper(minIn, maxIn, minOut, maxOut float64, wrap bool) Mapper {
+	diffIn := maxIn - minIn
+	diffOut := maxOut - minOut
+	quot := diffOut / diffIn
+
+	if wrap {
+		return func(t float64) float64 {
+			t = math.Mod(t-minIn, diffIn)
+			if t < 0.0 {
+				t += diffIn
+			}
+			return minOut + t*quot
+		}
+	} else {
+		return func(t float64) float64 {
+			return minOut + (t-minIn)*quot
+		}
+	}
 }

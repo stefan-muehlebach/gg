@@ -7,6 +7,7 @@ TARGETS = bauhaus \
           flower-of-life \
           graph \
           irrgarten \
+		  kardioide \
           moiree \
           raster \
           raster-image \

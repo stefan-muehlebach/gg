@@ -16,6 +16,7 @@ import (
 	"log"
 	"os"
 	"path/filepath"
+	"strconv"
 	"strings"
 	"text/template"
 )
@@ -74,9 +75,9 @@ var (
 var (
 {{- range $i, $row := .}}
     {{- if $row.IsGoFont}}
-    {{printf "%-35s = Parse(%s.TTF)" $row.FontName $row.LowerName}}
+    {{printf "%-35s = NewFont(%d, %s.TTF)" $row.FontName $row.ID $row.LowerName}}
     {{- else}}
-    {{printf "%-35s = Parse(%sTTF)" $row.FontName $row.LowerName}}
+    {{printf "%-35s = NewFont(%d, %sTTF)" $row.FontName $row.ID $row.LowerName}}
     {{- end}}
 {{- end}}
 )
@@ -98,6 +99,7 @@ var Names = []string{
 )
 
 type TemplateData struct {
+	ID                            int
 	FontName, LowerName, FileName string
 	IsGoFont                      bool
 }
@@ -117,9 +119,14 @@ func main() {
 	}
 	for _, fileName := range fileList {
 		baseName := filepath.Base(fileName)
+		id, err := strconv.Atoi(baseName[:3])
+		if err != nil {
+			log.Fatalf("Couldn't parse '%s': %v", baseName[:3], err)
+		}
 		name := baseName[3 : len(baseName)-len(filepath.Ext(baseName))]
 		name = strings.Replace(name, "-", "", -1)
 		data := TemplateData{
+			ID:        id,
 			FontName:  name,
 			LowerName: strings.ToLower(name),
 			FileName:  fileName,

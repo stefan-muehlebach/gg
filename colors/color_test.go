@@ -6,6 +6,7 @@ import (
 	"image/color"
 	"math"
 	"math/rand"
+	"strings"
 	"testing"
 
 	"github.com/stefan-muehlebach/gg"
@@ -619,36 +620,59 @@ func TestHSI(test *testing.T) {
 func TestUnmarshalColor(t *testing.T) {
 	type NamedColor struct {
 		Name   string  `json:"name"`
-		Dark   float64 `json:"dark"`
-		Bright float64 `json:"bright"`
-		Alpha  float64 `json:"alpha"`
+		Dark   float64 `json:"nark,omitempty"`
+		Bright float64 `json:"bright,omitempty"`
+		Alpha  float64 `json:"alpha,omitempty"`
 	}
 	type RGBAColor struct {
-		Color RGBA `json:"color"`
+		R byte `json:"r"`
+		G byte `json:"g"`
+		B byte `json:"b"`
+		A byte `json:"a"`
 	}
 	var j = []byte(`[
-        {"Name": "Indigo", "Dark": 0.5, "Alpha": 0.8},
-        {"Name": "Orange", "Dark": 0.5},
-        {"color": "0x000000"},
-        {"color": "0xFFFFFF"}
+        {"r": 0, "g": 0, "b": 0, "a": 128},
+        {"r": 128, "g": 128, "b": 128, "a": 128},
+        {"name": "Indigo", "dark": 0.5, "alpha": 0.8},
+        {"name": "Orange", "dark": 0.5},
+        {"value": "0x121212"},
+        {"value": "0xf0f0f0"}
     ]`)
 
 	var jsonColors []json.RawMessage
 	var colors []RGBA
 
-	if err := json.Unmarshal(j, &jsonColors); err != nil {
-		t.Fatalf("error: %v", err)
+	dec := json.NewDecoder(strings.NewReader(string(j)))
+	dec.DisallowUnknownFields()
+	if err := dec.Decode(&jsonColors); err != nil {
+		t.Fatalf("error decoding data: %v", err)
 	}
+
+	// if err := json.Unmarshal(j, &jsonColors); err != nil {
+	// 	t.Fatalf("error: %v", err)
+	// }
+
 	for i, c := range jsonColors {
 		var namedColor NamedColor = NamedColor{Alpha: 1.0}
 		var rgbaColor RGBAColor
+		var rgba RGBA
 
 		t.Logf("%d: %s", i, string(c))
 
-		if err := json.Unmarshal(c, &namedColor); err != nil {
-			t.Fatalf("no named color, error: %v", err)
+		if err := json.Unmarshal(c, &rgba); err != nil {
+            t.Logf("  unmarshal(RGBA): %v", err)
+            continue
+        }
+		colors = append(colors, rgba)
+
+		if err := json.Unmarshal(c, &rgbaColor); err == nil {
+            t.Logf("  found (RGBAColor)")
+			colors = append(colors, RGBA{rgbaColor.R, rgbaColor.G, rgbaColor.B, rgbaColor.A})
+			continue
 		}
-		if namedColor.Name != "" {
+
+		if err := json.Unmarshal(c, &namedColor); err == nil {
+            t.Logf("  found (NamedColor)")
 			if col, ok := Map[namedColor.Name]; ok {
 				colors = append(colors, col.Dark(namedColor.Dark).Bright(namedColor.Bright).Alpha(namedColor.Alpha))
 			} else {
@@ -657,10 +681,8 @@ func TestUnmarshalColor(t *testing.T) {
 			continue
 		}
 
-		if err := json.Unmarshal(c, &rgbaColor); err != nil {
-			t.Fatalf("no rgba color, error: %v", err.Error())
-		}
-		colors = append(colors, rgbaColor.Color)
+
+		t.Fatalf("no type found for data '%s'", c)
 	}
 	t.Log(colors)
 }

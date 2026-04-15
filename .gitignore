@@ -1,4 +1,6 @@
+*.go_save
 *conflicted*
+examples/*.png
 examples/beziers
 examples/circles
 examples/clip
@@ -37,6 +39,7 @@ examples/tiling
 examples/transform
 examples/unicode
 examples/wrap
+excercises/*.png
 excercises/bauhaus
 excercises/chessboard
 excercises/color-cells
@@ -46,6 +49,7 @@ excercises/farn
 excercises/flower-of-life
 excercises/graph
 excercises/irrgarten
+excercises/kardioide
 excercises/moiree
 excercises/raster
 excercises/raster-image

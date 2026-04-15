@@ -1,0 +1,75 @@
+[
+    {
+        "name": "TestLinear",
+        "colors": [
+            "0xF0F921",
+            "0xFEBC2B",
+            "0xF48948",
+            "0xDB5B68",
+            "0xB93389",
+            "0x8B09A5",
+            "0x5402A3",
+            "0x0F0787"
+        ]
+    },
+    {
+        "name": "TestColorStops",
+        "stops": [
+            {
+                "pos": 0.0,  "color": "0x010662"
+            },
+            {
+                "pos": 0.25, "color": "0xD9F8FD"
+            },
+            {
+                "pos": 0.5,  "color": "0xFDBB07"
+            },
+            {
+                "pos": 0.75, "color": "0xD9F8FD"
+            },
+            {
+                "pos": 1.0,  "color": "0x010662"
+            }
+        ]
+    },
+    {
+        "name": "TestColorStopsIgnore",
+        "stops": [
+            {
+                "pos": 0.00, "color": "0x000000"
+            },
+            {
+                "pos": 0.16, "color": "0xFF0000", "ignore": "GB"
+            },
+            {
+                "pos": 0.25, "color": "0x00FF00", "ignore": "RB"
+            },
+            {
+                "pos": 0.33, "color": "0x0000FF", "ignore": "RG"
+            },
+            {
+                "pos": 0.50, "color": "0x000000"
+            },
+            {
+                "pos": 0.66, "color": "0x00FF00", "ignore": "RB"
+            },
+            {
+                "pos": 0.75, "color": "0x0000FF", "ignore": "RG"
+            },
+            {
+                "pos": 0.84, "color": "0xFF0000", "ignore": "GB"
+            },
+            {
+                "pos": 1.00, "color": "0x000000"
+            }
+        ]
+    },
+	{
+		"name": "TestFunction",
+		"params": [
+			{ "p0": 0.5, "p1": 0.5, "p2": 2.0, "p3": 0.5 },
+			{ "p0": 0.5, "p1": 0.5, "p2": 1.0, "p3": 0.2 },
+			{ "p0": 0.5, "p1": 0.5, "p2": 0.0, "p3": 0.25 }
+		]
+	}
+]

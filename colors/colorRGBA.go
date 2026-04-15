@@ -5,6 +5,7 @@ import (
 	"image/color"
 	"log"
 	"strconv"
+	// "strconv"
 )
 
 // Dieser Typ wird fuer die Farbwerte verwendet, welche via SPI zu den LED's
@@ -98,7 +99,8 @@ func (c *RGBA) UnmarshalText(text []byte) error {
 	hexStr := string(text[2:])
 	hexVal, err := strconv.ParseUint(hexStr, 16, 32)
 	if err != nil {
-		log.Fatal(err)
+		return err
+		//log.Fatal(err)
 	}
 	c.R = uint8((hexVal & 0xFF0000) >> 16)
 	c.G = uint8((hexVal & 0x00FF00) >> 8)

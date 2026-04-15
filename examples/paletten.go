@@ -62,8 +62,8 @@ func main() {
 		x0 := col * (FieldWidth + ColorPaddingHori)
 		y0 := row * (FieldHeight + ColorPaddingVert + TextHeight)
 		pal := palMap[name]
-		for w := range FieldWidth + 1 {
-			t := float64(w) / float64(FieldWidth)
+		for w := range FieldWidth {
+			t := float64(w) / float64(FieldWidth-1)
 			color := pal.Color(t)
 			x := x0 + w
 			for h := range FieldHeight {

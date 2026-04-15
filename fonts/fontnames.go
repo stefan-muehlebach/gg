@@ -72,103 +72,103 @@ var (
     garamondTTF, _ = fontFiles.ReadFile(`FontFiles/070-Garamond.otf`)
     garamonditalicTTF, _ = fontFiles.ReadFile(`FontFiles/071-Garamond-Italic.otf`)
     garamondboldTTF, _ = fontFiles.ReadFile(`FontFiles/072-Garamond-Bold.otf`)
-    eleganteTTF, _ = fontFiles.ReadFile(`FontFiles/073-Elegante.ttf`)
-    eleganteboldTTF, _ = fontFiles.ReadFile(`FontFiles/074-Elegante-Bold.ttf`)
-    leipzigfrakturTTF, _ = fontFiles.ReadFile(`FontFiles/080-LeipzigFraktur.ttf`)
-    leipzigfrakturboldTTF, _ = fontFiles.ReadFile(`FontFiles/081-LeipzigFraktur-Bold.ttf`)
-    rothenburgdecorativeTTF, _ = fontFiles.ReadFile(`FontFiles/082-RothenburgDecorative.ttf`)
-    uncialantiquaTTF, _ = fontFiles.ReadFile(`FontFiles/083-UncialAntiqua.ttf`)
-    elzevierTTF, _ = fontFiles.ReadFile(`FontFiles/090-Elzevier.ttf`)
-    floralcapitalsTTF, _ = fontFiles.ReadFile(`FontFiles/091-FloralCapitals.ttf`)
-    goudyinitialenTTF, _ = fontFiles.ReadFile(`FontFiles/092-GoudyInitialen.ttf`)
-    mosaicinitialenTTF, _ = fontFiles.ReadFile(`FontFiles/093-MosaicInitialen.ttf`)
-    yinitTTF, _ = fontFiles.ReadFile(`FontFiles/094-Yinit.ttf`)
-    roddenberryTTF, _ = fontFiles.ReadFile(`FontFiles/100-Roddenberry.ttf`)
-    roddenberryitalicTTF, _ = fontFiles.ReadFile(`FontFiles/101-Roddenberry-Italic.ttf`)
-    roddenberryboldTTF, _ = fontFiles.ReadFile(`FontFiles/102-Roddenberry-Bold.ttf`)
-    roddenberrybolditalicTTF, _ = fontFiles.ReadFile(`FontFiles/103-Roddenberry-Bold-Italic.ttf`)
-    comfortaalightTTF, _ = fontFiles.ReadFile(`FontFiles/110-Comfortaa-Light.ttf`)
-    comfortaaTTF, _ = fontFiles.ReadFile(`FontFiles/111-Comfortaa.ttf`)
-    comfortaaboldTTF, _ = fontFiles.ReadFile(`FontFiles/112-Comfortaa-Bold.ttf`)
+    comfortaalightTTF, _ = fontFiles.ReadFile(`FontFiles/080-Comfortaa-Light.ttf`)
+    comfortaaTTF, _ = fontFiles.ReadFile(`FontFiles/081-Comfortaa.ttf`)
+    comfortaaboldTTF, _ = fontFiles.ReadFile(`FontFiles/082-Comfortaa-Bold.ttf`)
+    roddenberryTTF, _ = fontFiles.ReadFile(`FontFiles/090-Roddenberry.ttf`)
+    roddenberryitalicTTF, _ = fontFiles.ReadFile(`FontFiles/091-Roddenberry-Italic.ttf`)
+    roddenberryboldTTF, _ = fontFiles.ReadFile(`FontFiles/092-Roddenberry-Bold.ttf`)
+    roddenberrybolditalicTTF, _ = fontFiles.ReadFile(`FontFiles/093-Roddenberry-Bold-Italic.ttf`)
+    eleganteTTF, _ = fontFiles.ReadFile(`FontFiles/973-Elegante.ttf`)
+    eleganteboldTTF, _ = fontFiles.ReadFile(`FontFiles/974-Elegante-Bold.ttf`)
+    leipzigfrakturTTF, _ = fontFiles.ReadFile(`FontFiles/980-LeipzigFraktur.ttf`)
+    leipzigfrakturboldTTF, _ = fontFiles.ReadFile(`FontFiles/981-LeipzigFraktur-Bold.ttf`)
+    rothenburgdecorativeTTF, _ = fontFiles.ReadFile(`FontFiles/982-RothenburgDecorative.ttf`)
+    uncialantiquaTTF, _ = fontFiles.ReadFile(`FontFiles/983-UncialAntiqua.ttf`)
+    elzevierTTF, _ = fontFiles.ReadFile(`FontFiles/990-Elzevier.ttf`)
+    floralcapitalsTTF, _ = fontFiles.ReadFile(`FontFiles/991-FloralCapitals.ttf`)
+    goudyinitialenTTF, _ = fontFiles.ReadFile(`FontFiles/992-GoudyInitialen.ttf`)
+    mosaicinitialenTTF, _ = fontFiles.ReadFile(`FontFiles/993-MosaicInitialen.ttf`)
+    yinitTTF, _ = fontFiles.ReadFile(`FontFiles/994-Yinit.ttf`)
 )
 
 var (
-    GoRegular                           = Parse(goregular.TTF)
-    GoItalic                            = Parse(goitalic.TTF)
-    GoMedium                            = Parse(gomedium.TTF)
-    GoMediumItalic                      = Parse(gomediumitalic.TTF)
-    GoBold                              = Parse(gobold.TTF)
-    GoBoldItalic                        = Parse(gobolditalic.TTF)
-    GoMono                              = Parse(gomono.TTF)
-    GoMonoItalic                        = Parse(gomonoitalic.TTF)
-    GoMonoBold                          = Parse(gomonobold.TTF)
-    GoMonoBoldItalic                    = Parse(gomonobolditalic.TTF)
-    GoSmallcaps                         = Parse(gosmallcaps.TTF)
-    GoSmallcapsItalic                   = Parse(gosmallcapsitalic.TTF)
-    LucidaBright                        = Parse(lucidabrightTTF)
-    LucidaBrightItalic                  = Parse(lucidabrightitalicTTF)
-    LucidaBrightDemibold                = Parse(lucidabrightdemiboldTTF)
-    LucidaBrightDemiboldItalic          = Parse(lucidabrightdemibolditalicTTF)
-    LucidaSans                          = Parse(lucidasansTTF)
-    LucidaSansItalic                    = Parse(lucidasansitalicTTF)
-    LucidaSansDemiboldRoman             = Parse(lucidasansdemiboldromanTTF)
-    LucidaSansDemiboldItalic            = Parse(lucidasansdemibolditalicTTF)
-    LucidaSansTypewriter                = Parse(lucidasanstypewriterTTF)
-    LucidaSansTypewriterOblique         = Parse(lucidasanstypewriterobliqueTTF)
-    LucidaSansTypewriterBold            = Parse(lucidasanstypewriterboldTTF)
-    LucidaSansTypewriterBoldOblique     = Parse(lucidasanstypewriterboldobliqueTTF)
-    LucidaFax                           = Parse(lucidafaxTTF)
-    LucidaFaxItalic                     = Parse(lucidafaxitalicTTF)
-    LucidaFaxDemibold                   = Parse(lucidafaxdemiboldTTF)
-    LucidaFaxDemiboldItalic             = Parse(lucidafaxdemibolditalicTTF)
-    LucidaConsole                       = Parse(lucidaconsoleTTF)
-    LucidaHandwritingItalic             = Parse(lucidahandwritingitalicTTF)
-    LucidaCalligraphy                   = Parse(lucidacalligraphyTTF)
-    LucidaCalligraphyBold               = Parse(lucidacalligraphyboldTTF)
-    LucidaBlackletter                   = Parse(lucidablackletterTTF)
-    Seaford                             = Parse(seafordTTF)
-    SeafordItalic                       = Parse(seaforditalicTTF)
-    SeafordBold                         = Parse(seafordboldTTF)
-    SeafordBoldItalic                   = Parse(seafordbolditalicTTF)
-    WorkSansThin                        = Parse(worksansthinTTF)
-    WorkSansThinItalic                  = Parse(worksansthinitalicTTF)
-    WorkSansExtraLight                  = Parse(worksansextralightTTF)
-    WorkSansExtraLightItalic            = Parse(worksansextralightitalicTTF)
-    WorkSansLight                       = Parse(worksanslightTTF)
-    WorkSansLightItalic                 = Parse(worksanslightitalicTTF)
-    WorkSans                            = Parse(worksansTTF)
-    WorkSansItalic                      = Parse(worksansitalicTTF)
-    WorkSansMedium                      = Parse(worksansmediumTTF)
-    WorkSansMediumItalic                = Parse(worksansmediumitalicTTF)
-    WorkSansSemiBold                    = Parse(worksanssemiboldTTF)
-    WorkSansSemiBoldItalic              = Parse(worksanssemibolditalicTTF)
-    WorkSansBold                        = Parse(worksansboldTTF)
-    WorkSansBoldItalic                  = Parse(worksansbolditalicTTF)
-    WorkSansExtraBold                   = Parse(worksansextraboldTTF)
-    WorkSansExtraBoldItalic             = Parse(worksansextrabolditalicTTF)
-    WorkSansBlack                       = Parse(worksansblackTTF)
-    WorkSansBlackItalic                 = Parse(worksansblackitalicTTF)
-    Garamond                            = Parse(garamondTTF)
-    GaramondItalic                      = Parse(garamonditalicTTF)
-    GaramondBold                        = Parse(garamondboldTTF)
-    Elegante                            = Parse(eleganteTTF)
-    EleganteBold                        = Parse(eleganteboldTTF)
-    LeipzigFraktur                      = Parse(leipzigfrakturTTF)
-    LeipzigFrakturBold                  = Parse(leipzigfrakturboldTTF)
-    RothenburgDecorative                = Parse(rothenburgdecorativeTTF)
-    UncialAntiqua                       = Parse(uncialantiquaTTF)
-    Elzevier                            = Parse(elzevierTTF)
-    FloralCapitals                      = Parse(floralcapitalsTTF)
-    GoudyInitialen                      = Parse(goudyinitialenTTF)
-    MosaicInitialen                     = Parse(mosaicinitialenTTF)
-    Yinit                               = Parse(yinitTTF)
-    Roddenberry                         = Parse(roddenberryTTF)
-    RoddenberryItalic                   = Parse(roddenberryitalicTTF)
-    RoddenberryBold                     = Parse(roddenberryboldTTF)
-    RoddenberryBoldItalic               = Parse(roddenberrybolditalicTTF)
-    ComfortaaLight                      = Parse(comfortaalightTTF)
-    Comfortaa                           = Parse(comfortaaTTF)
-    ComfortaaBold                       = Parse(comfortaaboldTTF)
+    GoRegular                           = NewFont(0, goregular.TTF)
+    GoItalic                            = NewFont(0, goitalic.TTF)
+    GoMedium                            = NewFont(0, gomedium.TTF)
+    GoMediumItalic                      = NewFont(0, gomediumitalic.TTF)
+    GoBold                              = NewFont(0, gobold.TTF)
+    GoBoldItalic                        = NewFont(0, gobolditalic.TTF)
+    GoMono                              = NewFont(0, gomono.TTF)
+    GoMonoItalic                        = NewFont(0, gomonoitalic.TTF)
+    GoMonoBold                          = NewFont(0, gomonobold.TTF)
+    GoMonoBoldItalic                    = NewFont(0, gomonobolditalic.TTF)
+    GoSmallcaps                         = NewFont(0, gosmallcaps.TTF)
+    GoSmallcapsItalic                   = NewFont(0, gosmallcapsitalic.TTF)
+    LucidaBright                        = NewFont(0, lucidabrightTTF)
+    LucidaBrightItalic                  = NewFont(1, lucidabrightitalicTTF)
+    LucidaBrightDemibold                = NewFont(2, lucidabrightdemiboldTTF)
+    LucidaBrightDemiboldItalic          = NewFont(3, lucidabrightdemibolditalicTTF)
+    LucidaSans                          = NewFont(5, lucidasansTTF)
+    LucidaSansItalic                    = NewFont(6, lucidasansitalicTTF)
+    LucidaSansDemiboldRoman             = NewFont(7, lucidasansdemiboldromanTTF)
+    LucidaSansDemiboldItalic            = NewFont(8, lucidasansdemibolditalicTTF)
+    LucidaSansTypewriter                = NewFont(10, lucidasanstypewriterTTF)
+    LucidaSansTypewriterOblique         = NewFont(11, lucidasanstypewriterobliqueTTF)
+    LucidaSansTypewriterBold            = NewFont(12, lucidasanstypewriterboldTTF)
+    LucidaSansTypewriterBoldOblique     = NewFont(13, lucidasanstypewriterboldobliqueTTF)
+    LucidaFax                           = NewFont(15, lucidafaxTTF)
+    LucidaFaxItalic                     = NewFont(16, lucidafaxitalicTTF)
+    LucidaFaxDemibold                   = NewFont(17, lucidafaxdemiboldTTF)
+    LucidaFaxDemiboldItalic             = NewFont(18, lucidafaxdemibolditalicTTF)
+    LucidaConsole                       = NewFont(20, lucidaconsoleTTF)
+    LucidaHandwritingItalic             = NewFont(21, lucidahandwritingitalicTTF)
+    LucidaCalligraphy                   = NewFont(22, lucidacalligraphyTTF)
+    LucidaCalligraphyBold               = NewFont(23, lucidacalligraphyboldTTF)
+    LucidaBlackletter                   = NewFont(24, lucidablackletterTTF)
+    Seaford                             = NewFont(30, seafordTTF)
+    SeafordItalic                       = NewFont(31, seaforditalicTTF)
+    SeafordBold                         = NewFont(32, seafordboldTTF)
+    SeafordBoldItalic                   = NewFont(33, seafordbolditalicTTF)
+    WorkSansThin                        = NewFont(50, worksansthinTTF)
+    WorkSansThinItalic                  = NewFont(51, worksansthinitalicTTF)
+    WorkSansExtraLight                  = NewFont(52, worksansextralightTTF)
+    WorkSansExtraLightItalic            = NewFont(53, worksansextralightitalicTTF)
+    WorkSansLight                       = NewFont(54, worksanslightTTF)
+    WorkSansLightItalic                 = NewFont(55, worksanslightitalicTTF)
+    WorkSans                            = NewFont(56, worksansTTF)
+    WorkSansItalic                      = NewFont(57, worksansitalicTTF)
+    WorkSansMedium                      = NewFont(58, worksansmediumTTF)
+    WorkSansMediumItalic                = NewFont(59, worksansmediumitalicTTF)
+    WorkSansSemiBold                    = NewFont(60, worksanssemiboldTTF)
+    WorkSansSemiBoldItalic              = NewFont(61, worksanssemibolditalicTTF)
+    WorkSansBold                        = NewFont(62, worksansboldTTF)
+    WorkSansBoldItalic                  = NewFont(63, worksansbolditalicTTF)
+    WorkSansExtraBold                   = NewFont(64, worksansextraboldTTF)
+    WorkSansExtraBoldItalic             = NewFont(65, worksansextrabolditalicTTF)
+    WorkSansBlack                       = NewFont(66, worksansblackTTF)
+    WorkSansBlackItalic                 = NewFont(67, worksansblackitalicTTF)
+    Garamond                            = NewFont(70, garamondTTF)
+    GaramondItalic                      = NewFont(71, garamonditalicTTF)
+    GaramondBold                        = NewFont(72, garamondboldTTF)
+    ComfortaaLight                      = NewFont(80, comfortaalightTTF)
+    Comfortaa                           = NewFont(81, comfortaaTTF)
+    ComfortaaBold                       = NewFont(82, comfortaaboldTTF)
+    Roddenberry                         = NewFont(90, roddenberryTTF)
+    RoddenberryItalic                   = NewFont(91, roddenberryitalicTTF)
+    RoddenberryBold                     = NewFont(92, roddenberryboldTTF)
+    RoddenberryBoldItalic               = NewFont(93, roddenberrybolditalicTTF)
+    Elegante                            = NewFont(973, eleganteTTF)
+    EleganteBold                        = NewFont(974, eleganteboldTTF)
+    LeipzigFraktur                      = NewFont(980, leipzigfrakturTTF)
+    LeipzigFrakturBold                  = NewFont(981, leipzigfrakturboldTTF)
+    RothenburgDecorative                = NewFont(982, rothenburgdecorativeTTF)
+    UncialAntiqua                       = NewFont(983, uncialantiquaTTF)
+    Elzevier                            = NewFont(990, elzevierTTF)
+    FloralCapitals                      = NewFont(991, floralcapitalsTTF)
+    GoudyInitialen                      = NewFont(992, goudyinitialenTTF)
+    MosaicInitialen                     = NewFont(993, mosaicinitialenTTF)
+    Yinit                               = NewFont(994, yinitTTF)
 )
 
 var Map = map[string]*Font{
@@ -230,6 +230,13 @@ var Map = map[string]*Font{
     "Garamond": Garamond,
     "GaramondItalic": GaramondItalic,
     "GaramondBold": GaramondBold,
+    "ComfortaaLight": ComfortaaLight,
+    "Comfortaa": Comfortaa,
+    "ComfortaaBold": ComfortaaBold,
+    "Roddenberry": Roddenberry,
+    "RoddenberryItalic": RoddenberryItalic,
+    "RoddenberryBold": RoddenberryBold,
+    "RoddenberryBoldItalic": RoddenberryBoldItalic,
     "Elegante": Elegante,
     "EleganteBold": EleganteBold,
     "LeipzigFraktur": LeipzigFraktur,
@@ -241,13 +248,6 @@ var Map = map[string]*Font{
     "GoudyInitialen": GoudyInitialen,
     "MosaicInitialen": MosaicInitialen,
     "Yinit": Yinit,
-    "Roddenberry": Roddenberry,
-    "RoddenberryItalic": RoddenberryItalic,
-    "RoddenberryBold": RoddenberryBold,
-    "RoddenberryBoldItalic": RoddenberryBoldItalic,
-    "ComfortaaLight": ComfortaaLight,
-    "Comfortaa": Comfortaa,
-    "ComfortaaBold": ComfortaaBold,
 }
 
 var Names = []string{
@@ -309,6 +309,13 @@ var Names = []string{
     "Garamond",
     "GaramondItalic",
     "GaramondBold",
+    "ComfortaaLight",
+    "Comfortaa",
+    "ComfortaaBold",
+    "Roddenberry",
+    "RoddenberryItalic",
+    "RoddenberryBold",
+    "RoddenberryBoldItalic",
     "Elegante",
     "EleganteBold",
     "LeipzigFraktur",
@@ -320,11 +327,4 @@ var Names = []string{
     "GoudyInitialen",
     "MosaicInitialen",
     "Yinit",
-    "Roddenberry",
-    "RoddenberryItalic",
-    "RoddenberryBold",
-    "RoddenberryBoldItalic",
-    "ComfortaaLight",
-    "Comfortaa",
-    "ComfortaaBold",
 }
