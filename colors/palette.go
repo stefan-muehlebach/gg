@@ -440,7 +440,9 @@ func ReadPaletteData(fh io.Reader) ([]string, map[string]Palette, error) {
 type Mapper func(t float64) float64
 
 var (
-	DefaultMapper = func(t float64) float64 { return t }
+	DefaultMapper = func(t float64) float64 {
+		return t
+	}
 )
 
 func NewMapper(minIn, maxIn, minOut, maxOut float64, wrap bool) Mapper {
