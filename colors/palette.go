@@ -45,7 +45,6 @@ func (t PaletteType) String() string {
 type paletteEmb struct {
 	name   string
 	typ    PaletteType
-	mapFnc Mapper
 }
 
 func (p *paletteEmb) Name() string {
@@ -54,10 +53,6 @@ func (p *paletteEmb) Name() string {
 
 func (p *paletteEmb) Type() PaletteType {
 	return p.typ
-}
-
-func (p *paletteEmb) SetMapper(mapFnc Mapper) {
-	p.mapFnc = mapFnc
 }
 
 // ---------------------------------------------------------------------------
@@ -125,7 +120,6 @@ func NewSimplePalette(name string, n int) *SimplePalette {
 	p := &SimplePalette{}
 	p.name = name
 	p.typ = 0
-	p.mapFnc = DefaultMapper
 	p.colors = make([]RGBA, n)
 	return p
 }
@@ -144,7 +138,6 @@ func (p *SimplePalette) SetColor(i int, c RGBA) {
 }
 
 func (p *SimplePalette) Color(t float64) RGBA {
-	t = p.mapFnc(t)
 	if t == 0.0 {
 		return p.colors[0]
 	}
@@ -170,7 +163,6 @@ func NewLinearPalette(name string) *LinearPalette {
 	p := &LinearPalette{}
 	p.name = name
 	p.typ = LinearType
-	p.mapFnc = DefaultMapper
 	p.colors = make([]RGBA, 0)
 	return p
 }
@@ -188,7 +180,6 @@ func (p *LinearPalette) AddColor(c RGBA) {
 }
 
 func (p *LinearPalette) Color(t float64) (c RGBA) {
-	t = p.mapFnc(t)
 	if t == 0.0 {
 		return p.colors[0]
 	}
@@ -229,7 +220,6 @@ func NewColorStopsPalette(name string) *ColorStopsPalette {
 	p := &ColorStopsPalette{}
 	p.name = name
 	p.typ = ColorStopsType
-	p.mapFnc = DefaultMapper
 	p.stops = make([][]ValueStop, 4)
 	for i := range NumColorIds {
 		value := uint8(0)
@@ -298,7 +288,6 @@ func (p *ColorStopsPalette) SetValueStop(colId ColorIdent, valStop ValueStop) {
 // Hier nun spielt die Musik: aufgrund des Wertes t (muss im Intervall [0,1]
 // liegen) wird eine neue Farbe interpoliert.
 func (p *ColorStopsPalette) Color(t float64) (c RGBA) {
-	t = p.mapFnc(t)
 	c.R = p.Value(RedId, t)
 	c.G = p.Value(GreenId, t)
 	c.B = p.Value(BlueId, t)
@@ -345,7 +334,6 @@ func NewFunctionPalette(name string) *FunctionPalette {
 	p := &FunctionPalette{}
 	p.name = name
 	p.typ = FunctionType
-	p.mapFnc = DefaultMapper
 	p.params = []ParamSet{
 		{0.0, 0.0, 0.0, 0.0},
 		{0.0, 0.0, 0.0, 0.0},
@@ -368,8 +356,6 @@ func (p *FunctionPalette) SetParam(colId ColorIdent, param ParamSet) {
 }
 
 func (p *FunctionPalette) Color(t float64) (c RGBA) {
-	t = p.mapFnc(t)
-
 	r := p.params[0].Value(t)
 	g := p.params[1].Value(t)
 	b := p.params[2].Value(t)
