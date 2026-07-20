@@ -252,9 +252,9 @@ var Groups = map[ColorGroup][]RGBA{
 		GoYellow,
 		GoTeal,
 		GoIndigo,
-		GoBlack,
-		GoDimGray,
-		GoLightGray,
 		GoWhite,
+		GoLightGray,
+		GoDimGray,
+		GoBlack,
     },
 }
