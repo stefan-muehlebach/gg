@@ -31,12 +31,13 @@ const (
 
 package colors
 
-// ACHTUNG: Dieses File ist Teil von 'gg/colors' und wird
-// automatisch erzeugt. Manuelle Anpassungn an dieser
-// Datei werden bei einem erneuten Generieren überschreiben.
+// IMPORTANT: This file is a part of 'gg/colors' and will be created
+// automatically. Manual changes will be overwritten the next time this file
+// is generated.
 
-// Alle in der SVG 1.1 Spezifikation benannten Farben sind
-// in diesem Package als Variablen definiert.
+// All named colors in the SVG 1.1 spec are provided as variables
+// in this file.
+
 var (
     {{- range $i, $row := .}}
     {{printf "%-24s = %s" $row.Name $row.Color}}
@@ -44,17 +45,15 @@ var (
 )
 
 func init() {
-    // Map contains named colors defined in the SVG 1.1 spec.
+    // The map 'Map' contain all named colors defined in the SVG 1.1 spec.
     Map = make(map[string]RGBA)
 
     {{- range $i, $row := .}}
     {{printf "Map[\"%s\"] = %[1]s" $row.Name}}
     {{- end}}
 
-    // Der Slice 'Names' enthält die Namen aller Farben der SVG 1.1 Spezifikation.
-    // Auf die Besonderheit betr. Gross-/Kleinschreibung ist weiter oben bereits
-    // eingegangen worden. Jedes Element dieses Slices findet sich als Schlüssel
-    // in der Variable 'Map'.
+    // The slice 'Names' contain the names of all colors of the SVG 1.1 spec.
+    // Each element of this slice can be used as a key for the map 'Map'.
     Names = make([]string, {{len .}})
 
     {{- range $i, $row := .}}

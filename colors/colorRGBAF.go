@@ -75,7 +75,7 @@ func rgbafModel(c color.Color) color.Color {
 	}
 	r, g, b, a := c.RGBA()
 	if a == 0xffff {
-		return RGBAF{float64(r) / 65535.0, float64(g) / 65535.0, float64(b) / 65535.0, float64(a) / 65535.0}
+		return RGBAF{float64(r) / 65535.0, float64(g) / 65535.0, float64(b) / 65535.0, 1.0}
 	}
 	if a == 0 {
 		return RGBAF{}

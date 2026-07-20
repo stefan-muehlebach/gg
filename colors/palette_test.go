@@ -4,7 +4,7 @@ import (
 	"math/rand"
 	"testing"
 
-	"github.com/stefan-muehlebach/gg/fonts"
+	// "github.com/stefan-muehlebach/gg/fonts"
 )
 
 var (
@@ -20,8 +20,8 @@ var (
 	BoxWidth          = ColorBarWidth + 2*BoxPadding
 	BoxHeight         = ColorBarHeight + TextHeight + 2*BoxPadding
 	SimplePalSize     = 1024
-	RegularFont       = fonts.LucidaBrightDemibold
-	ItalicFont        = fonts.LucidaBrightItalic
+	// RegularFont       = fonts.LucidaBrightDemibold
+	// ItalicFont        = fonts.LucidaBrightItalic
 	c                 RGBA
 )
 

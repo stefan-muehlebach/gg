@@ -15,27 +15,57 @@ import (
 var (
 	FileName = "fontmap.png"
 
-	MarginSize = 16.0
-	FontSize   = 36.0
-	LineHeight = 1.5 * FontSize
-	LineWidth  = 1024.0
-	BackColor  = colors.RGBAF{0.851, 0.811, 0.733, 1.0}
-	TextColor  = colors.Black.Alpha(0.7)
+	MarginSize   = 16.0
+	FontSize     = 36.0
+	DecoFontSize = 3.0 * FontSize
+	LineWidth    = 1024.0
+	BackColor    = colors.RGBAF{0.851, 0.811, 0.733, 1.0}
+	TextColor    = colors.Black
 
 	NumberFont     = fonts.GoMono
 	NumberFontSize = 18.0
 
-	MarkerColor = colors.Crimson
+	MarkerColor = colors.Red
 	MarkerWidth = 2.0
+    MarkerLen   = 10.0
 
-	NumRows = 30
-	NumCols = (len(fonts.Names) / NumRows) + 1
+	NumRows = 0
+	NumCols = 3
 
-	Width  = float64(NumCols)*LineWidth + float64(NumCols+1)*MarginSize
-	Height = float64(NumRows-1)*LineHeight + FontSize + 2*MarginSize
+	Width, Height float64
 )
 
 func main() {
+
+	DecoFontsHeight := 0.0
+	numRegularFonts, numDecoFonts := 0, 0
+	for _, fontName := range fonts.Names {
+		font := fonts.Map[fontName]
+		if font.Id < 900 {
+			numRegularFonts++
+		} else {
+			numDecoFonts++
+			face, err := fonts.NewFace(font, DecoFontSize)
+			if err != nil {
+				log.Fatalf("couldn't create face for font '%s': %v", fontName, err)
+			}
+			metr := face.Metrics()
+			DecoFontsHeight += math.Abs(fix2flt(metr.CapHeight)) + MarginSize
+		}
+	}
+
+	if NumCols != 0 && NumRows == 0 {
+		NumRows = numRegularFonts/NumCols + 1
+	} else if NumCols == 0 && NumRows != 0 {
+		NumCols = numRegularFonts/NumRows + 1
+	} else {
+		log.Fatal("Either NumCols or NumRows must be zero!")
+	}
+
+	Width = float64(NumCols)*LineWidth + float64(NumCols+1)*MarginSize
+	Height = float64(NumRows)*FontSize + float64(NumRows-1)*MarginSize + 2*MarginSize
+	Height += DecoFontsHeight
+
 	gc := gg.NewContext(int(Width), int(Height))
 	gc.SetFillColor(BackColor)
 	gc.Clear()
@@ -50,16 +80,29 @@ func main() {
 	gc.SetFontFace(numberFace)
 	numberWidth, _ := gc.MeasureString("999")
 
-    var y float64
-	for i, fontName := range fonts.Names {
-		col, row := i/NumRows, i%NumRows
-		x := float64(col)*(MarginSize+LineWidth) + MarginSize
-		font := fonts.Map[fontName]
+	var col, row int
+	var x, y float64
+	var fontSize float64
+	var isDecoFont bool
 
-        fontSize := FontSize
-        if font.Id >= 900 {
-            fontSize *= 2.0
-        }
+	for i, fontName := range fonts.Names {
+		font := fonts.Map[fontName]
+		if font.Id < 900 {
+			col, row = i/NumRows, i%NumRows
+			x = float64(col)*(MarginSize+LineWidth) + MarginSize
+			if row == 0 {
+				y = 0.0
+			}
+			fontSize = FontSize
+		} else {
+			x = MarginSize
+			if !isDecoFont {
+				isDecoFont = true
+				y = float64(NumRows) * (FontSize + MarginSize)
+			}
+			fontSize = DecoFontSize
+		}
+
 		face, err := fonts.NewFace(font, fontSize)
 		if err != nil {
 			log.Fatalf("couldn't create face for font '%s': %v", fontName, err)
@@ -67,14 +110,16 @@ func main() {
 		metr := face.Metrics()
 
 		log.Printf("%s: %+v", fontName, metr)
-		if row == 0 {
-			y = 0.0
-		}
-        // height := fix2flt(metr.Height)
-        capHeight := math.Abs(fix2flt(metr.CapHeight))
+		// height := fix2flt(metr.Height)
+		capHeight := math.Abs(fix2flt(metr.CapHeight))
 		// log.Printf("height: %f, capHeight: %f", height, capHeight)
 
-		y += MarginSize + capHeight
+		if font.Id < 900 {
+			y += MarginSize + fontSize
+		} else {
+			y += MarginSize + capHeight
+		}
+		//y += MarginSize + capHeight
 		log.Printf("y: %f", y)
 
 		str := fmt.Sprintf("%03d", font.Id)
@@ -88,21 +133,21 @@ func main() {
 		w, _ := gc.MeasureString(fontName)
 
 		// Links unten
-		gc.MoveTo(x, y-10.0)
+		gc.MoveTo(x, y-MarkerLen)
 		gc.LineTo(x, y)
-		gc.LineTo(x+10.0, y)
+		gc.LineTo(x+MarkerLen, y)
 		// Links oben
-		gc.MoveTo(x+10.0, y-capHeight)
+		gc.MoveTo(x+MarkerLen, y-capHeight)
 		gc.LineTo(x, y-capHeight)
-		gc.LineTo(x, y-capHeight+10.0)
+		gc.LineTo(x, y-capHeight+MarkerLen)
 		// Rechts unten
-		gc.MoveTo(x+w-10.0, y)
+		gc.MoveTo(x+w-MarkerLen, y)
 		gc.LineTo(x+w, y)
-		gc.LineTo(x+w, y-10.0)
+		gc.LineTo(x+w, y-MarkerLen)
 		// Rechts oben
-		gc.MoveTo(x+w-10.0, y-capHeight)
+		gc.MoveTo(x+w-MarkerLen, y-capHeight)
 		gc.LineTo(x+w, y-capHeight)
-		gc.LineTo(x+w, y-capHeight+10.0)
+		gc.LineTo(x+w, y-capHeight+MarkerLen)
 
 		gc.Stroke()
 	}

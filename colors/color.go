@@ -78,19 +78,22 @@ func RandColor() RGBA {
 // Mit RandGroupColor kann der Zufall eine bestimmte Farbgruppe beschraenkt
 // werden.
 func RandColorByGroup(group ColorGroup) RGBA {
-	nameList, ok := Groups[group]
+	groupColors, ok := Groups[group]
 	if !ok {
 		return RGBA{A: 0xff}
 	}
-	name := nameList[rand.IntN(len(nameList))]
-	return Map[name]
+	return groupColors[rand.IntN(len(groupColors))]
 }
+
+var (
+	RandGroupColor = RandColorByGroup
+)
 
 // ---------------------------------------------------------------------------
 
 var (
-	ipf = cubicInterp
-    gamma = 1.2
+	ipf   = cubicInterp
+	gamma = 1.2
 )
 
 //go:inline

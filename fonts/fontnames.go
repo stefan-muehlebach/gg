@@ -1,10 +1,10 @@
-// Code generated  DO NOT EDIT.
+// Code generated - DO NOT EDIT.
 
 package fonts
 
-// WICHTIG: Diese Datei sollte nicht manuell angepasst werden!
-// Sie wird automatisch per Script neu erzeugt. Allfaellige manuelle
-// Anpassungen werden damit ueberschrieben.
+// IMPORTANT: This file is a part of 'gg/fonts' and will be created
+// automatically. Manual changes will be overwritten the next time this file
+// is generated.
 
 import (
     "embed"
@@ -32,7 +32,7 @@ var (
     lucidabrightdemibolditalicTTF, _ = fontFiles.ReadFile(`FontFiles/003-LucidaBright-Demibold-Italic.ttf`)
     lucidasansTTF, _ = fontFiles.ReadFile(`FontFiles/005-LucidaSans.ttf`)
     lucidasansitalicTTF, _ = fontFiles.ReadFile(`FontFiles/006-LucidaSans-Italic.ttf`)
-    lucidasansdemiboldromanTTF, _ = fontFiles.ReadFile(`FontFiles/007-LucidaSans-Demibold-Roman.ttf`)
+    lucidasansdemiboldTTF, _ = fontFiles.ReadFile(`FontFiles/007-LucidaSans-Demibold.ttf`)
     lucidasansdemibolditalicTTF, _ = fontFiles.ReadFile(`FontFiles/008-LucidaSans-Demibold-Italic.ttf`)
     lucidasanstypewriterTTF, _ = fontFiles.ReadFile(`FontFiles/010-LucidaSansTypewriter.ttf`)
     lucidasanstypewriterobliqueTTF, _ = fontFiles.ReadFile(`FontFiles/011-LucidaSansTypewriter-Oblique.ttf`)
@@ -52,23 +52,23 @@ var (
     seafordboldTTF, _ = fontFiles.ReadFile(`FontFiles/032-Seaford-Bold.ttf`)
     seafordbolditalicTTF, _ = fontFiles.ReadFile(`FontFiles/033-Seaford-Bold-Italic.ttf`)
     worksansthinTTF, _ = fontFiles.ReadFile(`FontFiles/050-WorkSans-Thin.ttf`)
-    worksansthinitalicTTF, _ = fontFiles.ReadFile(`FontFiles/051-WorkSans-ThinItalic.ttf`)
+    worksansthinitalicTTF, _ = fontFiles.ReadFile(`FontFiles/051-WorkSans-Thin-Italic.ttf`)
     worksansextralightTTF, _ = fontFiles.ReadFile(`FontFiles/052-WorkSans-ExtraLight.ttf`)
-    worksansextralightitalicTTF, _ = fontFiles.ReadFile(`FontFiles/053-WorkSans-ExtraLightItalic.ttf`)
+    worksansextralightitalicTTF, _ = fontFiles.ReadFile(`FontFiles/053-WorkSans-ExtraLight-Italic.ttf`)
     worksanslightTTF, _ = fontFiles.ReadFile(`FontFiles/054-WorkSans-Light.ttf`)
-    worksanslightitalicTTF, _ = fontFiles.ReadFile(`FontFiles/055-WorkSans-LightItalic.ttf`)
+    worksanslightitalicTTF, _ = fontFiles.ReadFile(`FontFiles/055-WorkSans-Light-Italic.ttf`)
     worksansTTF, _ = fontFiles.ReadFile(`FontFiles/056-WorkSans.ttf`)
     worksansitalicTTF, _ = fontFiles.ReadFile(`FontFiles/057-WorkSans-Italic.ttf`)
     worksansmediumTTF, _ = fontFiles.ReadFile(`FontFiles/058-WorkSans-Medium.ttf`)
-    worksansmediumitalicTTF, _ = fontFiles.ReadFile(`FontFiles/059-WorkSans-MediumItalic.ttf`)
+    worksansmediumitalicTTF, _ = fontFiles.ReadFile(`FontFiles/059-WorkSans-Medium-Italic.ttf`)
     worksanssemiboldTTF, _ = fontFiles.ReadFile(`FontFiles/060-WorkSans-SemiBold.ttf`)
-    worksanssemibolditalicTTF, _ = fontFiles.ReadFile(`FontFiles/061-WorkSans-SemiBoldItalic.ttf`)
+    worksanssemibolditalicTTF, _ = fontFiles.ReadFile(`FontFiles/061-WorkSans-SemiBold-Italic.ttf`)
     worksansboldTTF, _ = fontFiles.ReadFile(`FontFiles/062-WorkSans-Bold.ttf`)
-    worksansbolditalicTTF, _ = fontFiles.ReadFile(`FontFiles/063-WorkSans-BoldItalic.ttf`)
+    worksansbolditalicTTF, _ = fontFiles.ReadFile(`FontFiles/063-WorkSans-Bold-Italic.ttf`)
     worksansextraboldTTF, _ = fontFiles.ReadFile(`FontFiles/064-WorkSans-ExtraBold.ttf`)
-    worksansextrabolditalicTTF, _ = fontFiles.ReadFile(`FontFiles/065-WorkSans-ExtraBoldItalic.ttf`)
+    worksansextrabolditalicTTF, _ = fontFiles.ReadFile(`FontFiles/065-WorkSans-ExtraBold-Italic.ttf`)
     worksansblackTTF, _ = fontFiles.ReadFile(`FontFiles/066-WorkSans-Black.ttf`)
-    worksansblackitalicTTF, _ = fontFiles.ReadFile(`FontFiles/067-WorkSans-BlackItalic.ttf`)
+    worksansblackitalicTTF, _ = fontFiles.ReadFile(`FontFiles/067-WorkSans-Black-Italic.ttf`)
     garamondTTF, _ = fontFiles.ReadFile(`FontFiles/070-Garamond.otf`)
     garamonditalicTTF, _ = fontFiles.ReadFile(`FontFiles/071-Garamond-Italic.otf`)
     garamondboldTTF, _ = fontFiles.ReadFile(`FontFiles/072-Garamond-Bold.otf`)
@@ -111,7 +111,7 @@ var (
     LucidaBrightDemiboldItalic          = NewFont(3, lucidabrightdemibolditalicTTF)
     LucidaSans                          = NewFont(5, lucidasansTTF)
     LucidaSansItalic                    = NewFont(6, lucidasansitalicTTF)
-    LucidaSansDemiboldRoman             = NewFont(7, lucidasansdemiboldromanTTF)
+    LucidaSansDemibold                  = NewFont(7, lucidasansdemiboldTTF)
     LucidaSansDemiboldItalic            = NewFont(8, lucidasansdemibolditalicTTF)
     LucidaSansTypewriter                = NewFont(10, lucidasanstypewriterTTF)
     LucidaSansTypewriterOblique         = NewFont(11, lucidasanstypewriterobliqueTTF)
@@ -190,7 +190,7 @@ var Map = map[string]*Font{
     "LucidaBrightDemiboldItalic": LucidaBrightDemiboldItalic,
     "LucidaSans": LucidaSans,
     "LucidaSansItalic": LucidaSansItalic,
-    "LucidaSansDemiboldRoman": LucidaSansDemiboldRoman,
+    "LucidaSansDemibold": LucidaSansDemibold,
     "LucidaSansDemiboldItalic": LucidaSansDemiboldItalic,
     "LucidaSansTypewriter": LucidaSansTypewriter,
     "LucidaSansTypewriterOblique": LucidaSansTypewriterOblique,
@@ -269,7 +269,7 @@ var Names = []string{
     "LucidaBrightDemiboldItalic",
     "LucidaSans",
     "LucidaSansItalic",
-    "LucidaSansDemiboldRoman",
+    "LucidaSansDemibold",
     "LucidaSansDemiboldItalic",
     "LucidaSansTypewriter",
     "LucidaSansTypewriterOblique",

@@ -180,16 +180,20 @@ func (p *LinearPalette) AddColor(c RGBA) {
 }
 
 func (p *LinearPalette) Color(t float64) (c RGBA) {
-	if t == 0.0 {
+	if t <= 0.0 {
 		return p.colors[0]
 	}
-	if t == 1.0 {
+	if t >= 1.0 {
 		return p.colors[len(p.colors)-1]
 	}
 	i, u := math.Modf(t * float64(len(p.colors)-1))
 	col1 := p.colors[int(i)]
 	col2 := p.colors[int(i)+1]
 	return col1.Interpolate(col2, u)
+}
+
+func (p *LinearPalette) Len() int {
+    return len(p.colors)
 }
 
 // ---------------------------------------------------------------------------
@@ -368,6 +372,12 @@ func (p *FunctionPalette) Color(t float64) (c RGBA) {
 	}
 }
 
+// Dies schliesslich ist die massgebende Funktion, welche fuer den Wert
+// t in [0,1] einen Rueckgabewert in [0,1] erzeugt. Damit dies fuer jeden
+// Farbwert RGBA mit eigenen Parametern gemacht werden kann, ist dies eine
+// Methode des Typs ParamSet.
+//
+// Die Funktionsgleichung lautet: p_0 + p_1 * cos(2pi*(t * p_2 + p_3))
 func (p ParamSet) Value(t float64) float64 {
 	return p.P0 + p.P1*math.Cos(2*math.Pi*(t*p.P2+p.P3))
 }

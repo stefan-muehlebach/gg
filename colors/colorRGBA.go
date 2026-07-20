@@ -1,6 +1,7 @@
 package colors
 
 import (
+	"math"
 	"fmt"
 	"image/color"
 	"log"
@@ -17,7 +18,7 @@ type RGBA struct {
 }
 
 // RGBA ist Teil des color.Color Interfaces und retourniert die Farbwerte
-// als Alpha-korrigierte uint16-Werte.
+// als Alpha-korrigierte uint32-Werte.
 func (c RGBA) RGBA() (r, g, b, a uint32) {
 	r, g, b, a = uint32(c.R), uint32(c.G), uint32(c.B), uint32(c.A)
 	r |= r << 8
@@ -45,6 +46,40 @@ func (c RGBA) Bright(t float64) RGBA {
 	t = setIn(t, 0.0, 1.0)
 	return c.Interpolate(white, t)
 }
+
+var (
+    D = 1.0/(255.0 * math.Sqrt(3.0))
+)
+
+const (
+    // Die Gewichte der einzelnen Grundfarben.
+    // Wichtig: wr+wg+wb = 1.0 !
+    wr = 4.0/12.0
+    wg = 6.0/12.0
+    wb = 2.0/12.0
+)
+
+// Ermittelt die Helligkeit der Farbe, durch eine Projektion auf die
+// Raumdiagonale des RGB-Farbwuerfels und versucht die unterschiedlichen
+// Wahrnehmungen der Grundfarben Rot, Gruen und Blau zu kompensieren.
+func (c RGBA) Brightness() float64 {
+    return wr*float64(c.R)/255.0 + wg*float64(c.G)/255.0 + wb*float64(c.B)/255.0
+}
+
+// // Ermittelt die Helligkeit der Farbe durch den euklidischen Abstand zwischen
+// // dieser Farbe und "Weiss" (d.h. [255,255,255]).
+// func (c RGBA) Brightness01() float64 {
+//     r := (255.0 - float64(c.R))
+//     g := (255.0 - float64(c.G))
+//     b := (255.0 - float64(c.B))
+//     return 1.0 - math.Sqrt(r*r + g*g + b*b) * D
+// }
+
+// // Ermittelt die Helligkeit der Farbe, durch eine Projektion auf die
+// // Raumdiagonale des RGB-Farbwuerfels.
+// func (c RGBA) Brightness02() float64 {
+//     return (float64(c.R)+float64(c.G)+float64(c.B))/765.0
+// }
 
 // Retourniert eine neue Farbe, welche eine Interpolation zwischen c und
 // Schwarz ist. t ist ein Wert in [0, 1] und bestimmt die Position der
@@ -163,13 +198,16 @@ func rgbaModel(c color.Color) color.Color {
 	}
 	r, g, b, a := c.RGBA()
 	if a == 0xffff {
+        // r = r >> 8
+        // g = g >> 8
+        // b = b >> 8
 		return RGBA{uint8(r >> 8), uint8(g >> 8), uint8(b >> 8), 0xFF}
+	} else if a == 0 {
+        // r, g, b = 0x00, 0x00, 0x00
+		return RGBA{0, 0, 0, 0}
 	}
-	if a == 0 {
-		return RGBA{}
-	}
-	r = (r * 0xffff) / a
-	g = (g * 0xffff) / a
-	b = (b * 0xffff) / a
-	return RGBA{uint8(r >> 8), uint8(g >> 8), uint8(b >> 8), uint8(a >> 8)}
+    r = (r * 0xffff) / a
+    g = (g * 0xffff) / a
+    	b = (b * 0xffff) / a
+    return RGBA{uint8(r >> 8), uint8(g >> 8), uint8(b >> 8), uint8(a >> 8)}
 }

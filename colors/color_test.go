@@ -6,8 +6,11 @@ import (
 	"image/color"
 	"math"
 	"math/rand"
+	"slices"
 	"strings"
 	"testing"
+
+	"github.com/stefan-muehlebach/gg/geom"
 
 	"github.com/stefan-muehlebach/gg"
 )
@@ -415,16 +418,16 @@ func TestColorMap(t *testing.T) {
 
 // Check if every colorname in the map 'Groups' is also found
 // in the map 'Map'.
-func TestColorGroups(t *testing.T) {
-	for group, colorList := range Groups {
-		for _, colorName := range colorList {
-			if _, ok := Map[colorName]; !ok {
-				t.Errorf("Colorname '%s' in group '%v': missing in 'Map'.",
-					colorName, group)
-			}
-		}
-	}
-}
+// func TestColorGroups(t *testing.T) {
+// 	for group, colorList := range Groups {
+// 		for _, colorName := range colorList {
+// 			if _, ok := Map[colorName]; !ok {
+// 				t.Errorf("Colorname '%s' in group '%v': missing in 'Map'.",
+// 					colorName, group)
+// 			}
+// 		}
+// 	}
+// }
 
 // Check if every group name can be converted between string and ColorGroup.
 func TestColorGroup(t *testing.T) {
@@ -510,6 +513,25 @@ func TestFade(test *testing.T) {
 	if err != nil {
 		test.Error(err)
 	}
+}
+
+func TestRGBAFunc(t *testing.T) {
+	var whiteRGBA = RGBA{0xff, 0xff, 0xff, 0xff}
+	var whiteRGBAF = RGBAF{1.0, 1.0, 1.0, 1.0}
+
+	t.Logf("RGBA\n")
+	R, G, B, A := whiteRGBA.RGBA()
+	t.Logf("  R,G,B,A: %x, %x, %x, %x\n", R, G, B, A)
+	rgba := RGBAModel.Convert(whiteRGBAF).(RGBA)
+	R, G, B, A = rgba.RGBA()
+	t.Logf("  R,G,B,A: %x, %x, %x, %x\n", R, G, B, A)
+
+	t.Logf("RGBAF\n")
+	R, G, B, A = whiteRGBAF.RGBA()
+	t.Logf("  R,G,B,A: %x, %x, %x, %x\n", R, G, B, A)
+	rgbaf := RGBAFModel.Convert(whiteRGBA).(RGBAF)
+	R, G, B, A = rgbaf.RGBA()
+	t.Logf("  R,G,B,A: %x, %x, %x, %x\n", R, G, B, A)
 }
 
 func TestRGBAF(test *testing.T) {
@@ -617,6 +639,75 @@ func TestHSI(test *testing.T) {
 	}
 }
 
+var (
+	ColorFieldSize = geom.Point{130.0, 30.0}
+	Padding        = 10.0
+	FileName       = "color_sorted.png"
+)
+
+func TestSortRGBA(t *testing.T) {
+
+	imageSize := geom.Point{
+		Padding + 2.0*(ColorFieldSize.X+Padding),
+		Padding + (float64(len(Names))*ColorFieldSize.Y + Padding),
+	}
+	gc := gg.NewContext(int(imageSize.X), int(imageSize.Y))
+	gc.SetFillColor(White)
+	gc.Clear()
+
+	colorList := make([]RGBA, len(Names))
+	pt := geom.Point{Padding, Padding}
+	step := geom.Point{0.0, ColorFieldSize.Y}
+	for i, _ := range colorList {
+		colorList[i] = Map[Names[i]]
+
+		gc.SetFillColor(colorList[i])
+		gc.DrawRectangle(pt.X, pt.Y, ColorFieldSize.X, ColorFieldSize.Y)
+		gc.Fill()
+		pt = pt.Add(step)
+	}
+
+	// Sortiere die Farben anhand der Eigenschaft 'Brightness'
+	slices.SortFunc(colorList, func(a, b RGBA) int {
+		if a.Brightness() < b.Brightness() {
+			return -1
+		} else if a.Brightness() > b.Brightness() {
+			return +1
+		} else {
+			return 0
+		}
+	})
+
+	pt = geom.Point{Padding + 1.0*(ColorFieldSize.X+Padding), Padding}
+	for _, col := range colorList {
+		gc.SetFillColor(col)
+		gc.DrawRectangle(pt.X, pt.Y, ColorFieldSize.X, ColorFieldSize.Y)
+		gc.Fill()
+		pt = pt.Add(step)
+	}
+
+	// // Sortiere die Farben anhand der Eigenschaft 'Brightness02'
+	// slices.SortFunc(colorList, func(a, b RGBA) int {
+	// 	if a.Brightness03() < b.Brightness03() {
+	// 		return -1
+	// 	} else if a.Brightness03() > b.Brightness03() {
+	// 		return +1
+	// 	} else {
+	// 		return 0
+	// 	}
+	// })
+
+	// pt = geom.Point{Padding + 2.0*(ColorFieldSize.X+Padding), Padding}
+	// for _, col := range colorList {
+	// 	gc.SetFillColor(col)
+	// 	gc.DrawRectangle(pt.X, pt.Y, ColorFieldSize.X, ColorFieldSize.Y)
+	// 	gc.Fill()
+	// 	pt = pt.Add(step)
+	// }
+
+	gc.SavePNG(FileName)
+}
+
 func TestUnmarshalColor(t *testing.T) {
 	type NamedColor struct {
 		Name   string  `json:"name"`
@@ -655,24 +746,24 @@ func TestUnmarshalColor(t *testing.T) {
 	for i, c := range jsonColors {
 		var namedColor NamedColor = NamedColor{Alpha: 1.0}
 		var rgbaColor RGBAColor
-		var rgba RGBA
+		// var rgba RGBA
 
 		t.Logf("%d: %s", i, string(c))
 
-		if err := json.Unmarshal(c, &rgba); err != nil {
-            t.Logf("  unmarshal(RGBA): %v", err)
-            continue
-        }
-		colors = append(colors, rgba)
+		// if err := json.Unmarshal(c, &rgba); err != nil {
+		// 	t.Logf("  unmarshal(RGBA): %v", err)
+		// 	continue
+		// }
+		// colors = append(colors, rgba)
 
 		if err := json.Unmarshal(c, &rgbaColor); err == nil {
-            t.Logf("  found (RGBAColor)")
+			t.Logf("  found (RGBAColor)")
 			colors = append(colors, RGBA{rgbaColor.R, rgbaColor.G, rgbaColor.B, rgbaColor.A})
 			continue
 		}
 
 		if err := json.Unmarshal(c, &namedColor); err == nil {
-            t.Logf("  found (NamedColor)")
+			t.Logf("  found (NamedColor)")
 			if col, ok := Map[namedColor.Name]; ok {
 				colors = append(colors, col.Dark(namedColor.Dark).Bright(namedColor.Bright).Alpha(namedColor.Alpha))
 			} else {
@@ -680,7 +771,6 @@ func TestUnmarshalColor(t *testing.T) {
 			}
 			continue
 		}
-
 
 		t.Fatalf("no type found for data '%s'", c)
 	}

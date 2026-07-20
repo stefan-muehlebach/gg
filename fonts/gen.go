@@ -3,15 +3,13 @@
 
 package main
 
-// Erstellt die Datei fontnames.go. Diese enthält für die Go-Fonts, aber
-// auch für alle Fonts, die als TrueType- oder OpenType-Dateien in ./FontFiles
-// abgelegt sind, Variablen für eine einfachere Verwendung in
-// Graphikprogrammen.
+// Recreates the file fontnames.go based on the font files in ./FontFiles.
+// fontnames.org contains variables for an easier access to all the fonts
+// provided by this package.
 //
-// Dieses Programm muss manuell mit "go run gen.go" gestartet werden!
-// Dies ist allerdings nur dann notwendig, wenn es Anpassungen im Verzeichnis
-// FontFiles gibt - was wohl eher selten passiert.
-
+// This program can either be started manually by "go run gen.go" or with
+// "go generate" (see also the first line in "fonts.go"). But this is only
+// needed when the files in ./FontFiles changed.
 import (
 	"log"
 	"os"
@@ -44,13 +42,13 @@ var (
 	}
 	ttfFontList []string = make([]string, 0)
 
-	fontNamesTemplate = `// Code generated  DO NOT EDIT.
+	fontNamesTemplate = `// Code generated - DO NOT EDIT.
 
 package fonts
 
-// WICHTIG: Diese Datei sollte nicht manuell angepasst werden!
-// Sie wird automatisch per Script neu erzeugt. Allfaellige manuelle
-// Anpassungen werden damit ueberschrieben.
+// IMPORTANT: This file is a part of 'gg/fonts' and will be created
+// automatically. Manual changes will be overwritten the next time this file
+// is generated.
 
 import (
     "embed"
@@ -106,7 +104,9 @@ type TemplateData struct {
 
 func main() {
 	fileList, err := filepath.Glob(filepath.Join(fontDir, fontPattern))
-	check(err)
+    if err != nil {
+		log.Fatal(err)
+    }
 
 	dataList := make([]TemplateData, 0)
 	for _, name := range goFontList {
@@ -136,14 +136,12 @@ func main() {
 	}
 
 	fh, err := os.Create(fontFile)
-	check(err)
+    if err != nil {
+		log.Fatal(err)
+    }
 	defer fh.Close()
 	err = fontNamesTempl.Execute(fh, dataList)
-	check(err)
-}
-
-func check(err error) {
-	if err != nil {
-		log.Fatalf("%v", err)
-	}
+    if err != nil {
+		log.Fatal(err)
+    }
 }

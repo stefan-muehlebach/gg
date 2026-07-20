@@ -15,14 +15,14 @@ import (
 	"math"
 	"strings"
 
+	// "github.com/stefan-muehlebach/gg/fonts"
 	"github.com/stefan-muehlebach/gg/geom"
 
 	"github.com/golang/freetype/raster"
 	"golang.org/x/image/draw"
 	"golang.org/x/image/font"
 
-	"golang.org/x/image/font/gofont/goregular"
-	"golang.org/x/image/font/opentype"
+	// "golang.org/x/image/font/opentype"
 
 	"golang.org/x/image/math/f64"
 )
@@ -61,26 +61,28 @@ const (
 )
 
 var (
-    defaultLineWidth   = 1.0
+	defaultLineWidth   = 1.0
 	defaultFillStyle   = NewSolidPattern(color.White)
 	defaultStrokeStyle = NewSolidPattern(color.Black)
 	defaultTextStyle   = NewSolidPattern(color.Black)
-	defaultFont, _     = opentype.Parse(goregular.TTF)
+	// defaultFont        = fonts.Seaford
 	defaultFontSize    = 13.0
-	defaultFontFace, _ = opentype.NewFace(defaultFont, &opentype.FaceOptions{
-		Size:    defaultFontSize,
-		DPI:     72,
-		Hinting: font.HintingNone,
-	})
+	// defaultFontFace, _ = opentype.NewFace(
+	// 	&defaultFont.Font,
+	// 	&opentype.FaceOptions{
+	// 		Size:    defaultFontSize,
+	// 		DPI:     72,
+	// 		Hinting: font.HintingNone,
+	// 	})
 )
 
 type Context struct {
-	width         int
-	height        int
-	bounds        geom.Rectangle
-	im            *image.RGBA
-	rasterizer    *raster.Rasterizer
-    // painter       *Painter
+	width      int
+	height     int
+	bounds     geom.Rectangle
+	im         *image.RGBA
+	rasterizer *raster.Rasterizer
+	// painter       *Painter
 	rgbaPainter   *raster.RGBAPainter
 	mask          *image.Alpha
 	path          raster.Path
@@ -120,12 +122,12 @@ func NewContextForRGBA(im *image.RGBA) *Context {
 	w := im.Bounds().Size().X
 	h := im.Bounds().Size().Y
 	gc := &Context{
-		width:         w,
-		height:        h,
-		bounds:        geom.NewRectangleIMG(im.Bounds()),
-		im:            im,
-		rasterizer:    raster.NewRasterizer(im.Rect.Max.X, im.Rect.Max.Y),
-        // painter:       newPainter(im),
+		width:      w,
+		height:     h,
+		bounds:     geom.NewRectangleIMG(im.Bounds()),
+		im:         im,
+		rasterizer: raster.NewRasterizer(im.Rect.Max.X, im.Rect.Max.Y),
+		// painter:       newPainter(im),
 		rgbaPainter:   raster.NewRGBAPainter(im),
 		fillPattern:   defaultFillStyle,
 		strokePattern: defaultStrokeStyle,
@@ -133,7 +135,7 @@ func NewContextForRGBA(im *image.RGBA) *Context {
 		fillRule:      FillRuleWinding,
 		lineWidth:     defaultLineWidth,
 		fontHeight:    defaultFontSize,
-		fontFace:      defaultFontFace,
+		// fontFace:      defaultFontFace,
 		matrix:        geom.Identity(),
 	}
 	return gc
