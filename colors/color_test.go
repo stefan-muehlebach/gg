@@ -683,6 +683,13 @@ func TestSortRGBA(t *testing.T) {
 		gc.SetFillColor(col)
 		gc.DrawRectangle(pt.X, pt.Y, ColorFieldSize.X, ColorFieldSize.Y)
 		gc.Fill()
+		str := fmt.Sprintf("%.1f", col.Brightness())
+		if col.Brightness() < 0.5 {
+			gc.SetTextColor(White)
+		} else {
+			gc.SetTextColor(Black)
+		}
+        gc.DrawStringAnchored(str, pt.X+ColorFieldSize.X/2, pt.Y+ColorFieldSize.Y/2, 0.5, 0.5)
 		pt = pt.Add(step)
 	}
 

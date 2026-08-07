@@ -82,7 +82,7 @@ func RandColorByGroup(group ColorGroup) RGBA {
 	if !ok {
 		return RGBA{A: 0xff}
 	}
-	return groupColors[rand.IntN(len(groupColors))]
+	return Map[groupColors[rand.IntN(len(groupColors))]]
 }
 
 var (

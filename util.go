@@ -91,7 +91,7 @@ func SaveJPG(path string, im image.Image, quality int) error {
 // are not thread safe and cannot be used in parallel across goroutines.
 // You can usually just use the Context.LoadFontFace function instead of
 // this package-level function.
-func LoadFontFace(path string, points float64) (font.Face, error) {
+func LoadFontFace(path string, size float64) (font.Face, error) {
 	fontBytes, err := ioutil.ReadFile(path)
 	if err != nil {
 		return nil, err
@@ -101,8 +101,8 @@ func LoadFontFace(path string, points float64) (font.Face, error) {
 		return nil, err
 	}
 	face := truetype.NewFace(f, &truetype.Options{
-		Size: points,
-		// Hinting: font.HintingFull,
+		Size: size,
+		Hinting: font.HintingFull,
 	})
 	return face, nil
 }

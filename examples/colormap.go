@@ -10,14 +10,14 @@ import (
 	"github.com/stefan-muehlebach/gg/fonts"
 )
 
-type NamedColor struct {
-	name  string
-	color colors.Color
-}
-
 type NamedGroup struct {
 	name string
 	list []NamedColor
+}
+
+type NamedColor struct {
+	name  string
+	color colors.RGBA
 }
 
 var (
@@ -51,7 +51,6 @@ func DrawColorSample(gc *gg.Context, x0, y0 float64, namedCol NamedColor) {
 	gc.DrawRectangle(x0, y0+FadeHeight, SampleWidth, UniformHeight)
 	gc.Fill()
 	col := namedCol.color
-	hspCol := colors.HSPModel.Convert(namedCol.color).(colors.HSP)
 
 	for l := 0; l < NumFadeSteps; l++ {
 		t := FadeStep * float64(l+1)
@@ -61,16 +60,16 @@ func DrawColorSample(gc *gg.Context, x0, y0 float64, namedCol NamedColor) {
 		DrawFadeField(gc, x, y0, brightCol)
 		DrawFadeField(gc, x, y0+FadeHeight+UniformHeight, darkCol)
 	}
-	if hspCol.P < 0.6 {
-		gc.SetStrokeColor(colors.WhiteSmoke)
+	if col.Brightness() < 0.5 {
+		gc.SetTextColor(colors.WhiteSmoke)
 	} else {
-		gc.SetStrokeColor(colors.Black)
+		gc.SetTextColor(colors.Black)
 	}
 	gc.SetFontFace(TextFontFace)
 	gc.DrawStringAnchored(namedCol.name, x0+SampleWidth/2.0, y0+SampleHeight/2.0, 0.5, 0.5)
 }
 
-func DrawFadeField(gc *gg.Context, x, y float64, col colors.Color) {
+func DrawFadeField(gc *gg.Context, x, y float64, col colors.RGBA) {
 	gc.SetFillColor(col)
 	gc.DrawRectangle(x, y, FadeWidth, FadeHeight)
 	gc.Fill()
@@ -84,13 +83,13 @@ func DrawColorMap(groupList []NamedGroup, fileName string) {
 		for row, namedColor := range namedGroup.list {
 			if row == 0 {
 				y0 := float64(row) * (SampleHeight + Padding)
-				gc.SetStrokeColor(colors.Black)
-				gc.SetStrokeWidth(2.0)
+				gc.SetLineColor(colors.Black)
+				gc.SetLineWidth(2.0)
 				gc.SetFillColor(colors.Silver)
 				gc.DrawRectangle(x0, y0, SampleWidth, SampleHeight)
 				gc.Fill()
 				gc.SetFontFace(TitleFontFace)
-				gc.SetStrokeColor(colors.Black)
+				gc.SetTextColor(colors.Black)
 				gc.DrawStringWrapped(namedGroup.name, x0+SampleWidth/2, y0+SampleHeight/2, 0.5, 0.5, SampleWidth, 1.0, gg.AlignCenter)
 			}
 			y0 := float64(row+1) * (SampleHeight + Padding)
@@ -112,7 +111,7 @@ func CreateCanvas(groupList []NamedGroup) *gg.Context {
 	height := float64(rows)*(SampleHeight+Padding) - Padding
 
 	gc := gg.NewContext(int(width), int(height))
-	gc.SetStrokeWidth(0.0)
+	gc.SetLineWidth(0.0)
 	gc.SetFillColor(colors.White)
 	gc.Clear()
 
@@ -152,7 +151,7 @@ func PrepareFadeList(groupIndex colors.ColorGroup, modelList []color.Model) []Na
 		for j, colorName := range colors.Groups[groupIndex] {
 			groupList[i].list[j] = NamedColor{
 				colorName,
-				model.Convert(colors.Map[colorName]).(colors.Color),
+				colors.Map[colorName],
 			}
 		}
 	}

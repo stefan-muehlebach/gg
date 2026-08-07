@@ -15,15 +15,14 @@ import (
 	"math"
 	"strings"
 
-	// "github.com/stefan-muehlebach/gg/fonts"
+	"github.com/stefan-muehlebach/gg/fonts"
 	"github.com/stefan-muehlebach/gg/geom"
 
 	"github.com/golang/freetype/raster"
+
 	"golang.org/x/image/draw"
 	"golang.org/x/image/font"
-
-	// "golang.org/x/image/font/opentype"
-
+	"golang.org/x/image/font/opentype"
 	"golang.org/x/image/math/f64"
 )
 
@@ -65,15 +64,15 @@ var (
 	defaultFillStyle   = NewSolidPattern(color.White)
 	defaultStrokeStyle = NewSolidPattern(color.Black)
 	defaultTextStyle   = NewSolidPattern(color.Black)
-	// defaultFont        = fonts.Seaford
+	defaultFont        = fonts.Seaford
 	defaultFontSize    = 13.0
-	// defaultFontFace, _ = opentype.NewFace(
-	// 	&defaultFont.Font,
-	// 	&opentype.FaceOptions{
-	// 		Size:    defaultFontSize,
-	// 		DPI:     72,
-	// 		Hinting: font.HintingNone,
-	// 	})
+	defaultFontFace, _ = opentype.NewFace(
+		&defaultFont.Font,
+		&opentype.FaceOptions{
+			Size:    defaultFontSize,
+			DPI:     72,
+			Hinting: font.HintingNone,
+		})
 )
 
 type Context struct {
@@ -83,25 +82,25 @@ type Context struct {
 	im         *image.RGBA
 	rasterizer *raster.Rasterizer
 	// painter       *Painter
-	rgbaPainter   *raster.RGBAPainter
-	mask          *image.Alpha
-	path          raster.Path
-	strokePattern Pattern
-	fillPattern   Pattern
-	textPattern   Pattern
-	fillRule      FillRule
-	start         geom.Point
-	current       geom.Point
-	hasCurrent    bool
-	dashes        []float64
-	dashOffset    float64
-	lineWidth     float64
-	lineCap       LineCap
-	lineJoin      LineJoin
-	fontFace      font.Face
-	fontHeight    float64
-	matrix        *geom.Matrix
-	stack         []*Context
+	rgbaPainter *raster.RGBAPainter
+	mask        *image.Alpha
+	path        raster.Path
+	linePattern Pattern
+	fillPattern Pattern
+	textPattern Pattern
+	fillRule    FillRule
+	start       geom.Point
+	current     geom.Point
+	hasCurrent  bool
+	dashes      []float64
+	dashOffset  float64
+	lineWidth   float64
+	lineCap     LineCap
+	lineJoin    LineJoin
+	fontFace    font.Face
+	fontHeight  float64
+	matrix      *geom.Matrix
+	stack       []*Context
 }
 
 // NewContext creates a new image.RGBA with the specified width and height
@@ -128,15 +127,15 @@ func NewContextForRGBA(im *image.RGBA) *Context {
 		im:         im,
 		rasterizer: raster.NewRasterizer(im.Rect.Max.X, im.Rect.Max.Y),
 		// painter:       newPainter(im),
-		rgbaPainter:   raster.NewRGBAPainter(im),
-		fillPattern:   defaultFillStyle,
-		strokePattern: defaultStrokeStyle,
-		textPattern:   defaultTextStyle,
-		fillRule:      FillRuleWinding,
-		lineWidth:     defaultLineWidth,
-		fontHeight:    defaultFontSize,
-		// fontFace:      defaultFontFace,
-		matrix:        geom.Identity(),
+		rgbaPainter: raster.NewRGBAPainter(im),
+		fillPattern: defaultFillStyle,
+		linePattern: defaultStrokeStyle,
+		textPattern: defaultTextStyle,
+		fillRule:    FillRuleWinding,
+		lineWidth:   defaultLineWidth,
+		fontHeight:  defaultFontSize,
+		fontFace:    defaultFontFace,
+		matrix:      geom.Identity(),
 	}
 	return gc
 }
@@ -221,7 +220,7 @@ func (dc *Context) SetDashOffset(offset float64) {
 }
 
 // Legt die Breite fest, mit der ein Pfad gezeichnet werden soll.
-func (dc *Context) SetStrokeWidth(lineWidth float64) {
+func (dc *Context) SetLineWidth(lineWidth float64) {
 	dc.lineWidth = lineWidth
 }
 
@@ -271,9 +270,13 @@ func (dc *Context) SetFillColor(c color.Color) {
 	dc.fillPattern = NewSolidPattern(c)
 }
 
-func (dc *Context) SetStrokeColor(c color.Color) {
-	dc.strokePattern = NewSolidPattern(c)
+func (dc *Context) SetLineColor(c color.Color) {
+	dc.linePattern = NewSolidPattern(c)
 }
+
+// func (dc *Context) SetLineColor(c color.Color) {
+// 	dc.linePattern = NewSolidPattern(c)
+// }
 
 func (dc *Context) SetTextColor(c color.Color) {
 	dc.textPattern = NewSolidPattern(c)
@@ -283,9 +286,13 @@ func (dc *Context) SetFillStyle(pattern Pattern) {
 	dc.fillPattern = pattern
 }
 
-func (dc *Context) SetStrokeStyle(pattern Pattern) {
-	dc.strokePattern = pattern
+func (dc *Context) SetLineStyle(pattern Pattern) {
+	dc.linePattern = pattern
 }
+
+// func (dc *Context) SetLineStyle(pattern Pattern) {
+// 	dc.linePattern = pattern
+// }
 
 func (dc *Context) SetTextStyle(pattern Pattern) {
 	dc.textPattern = pattern
@@ -438,7 +445,7 @@ func (dc *Context) fill(painter raster.Painter) {
 func (dc *Context) StrokePreserve() {
 	var painter raster.Painter
 	if dc.mask == nil {
-		if pattern, ok := dc.strokePattern.(*solidPattern); ok {
+		if pattern, ok := dc.linePattern.(*solidPattern); ok {
 			// with a nil mask and a solid color pattern, we can be more efficient
 			// TODO: refactor so we don't have to do this type assertion stuff?
 			p := raster.NewRGBAPainter(dc.im)
@@ -450,7 +457,7 @@ func (dc *Context) StrokePreserve() {
 		}
 	}
 	if painter == nil {
-		painter = newPatternPainter(dc.im, dc.mask, dc.strokePattern)
+		painter = newPatternPainter(dc.im, dc.mask, dc.linePattern)
 	}
 	dc.stroke(painter)
 }
@@ -730,13 +737,14 @@ func (dc *Context) SetFontFace(fontFace font.Face) {
 	dc.fontHeight = (float64(fontFace.Metrics().Height) / 64) * 72 / 96
 }
 
-func (dc *Context) LoadFontFace(path string, points float64) error {
-	face, err := LoadFontFace(path, points)
-	if err == nil {
-		dc.fontFace = face
-		dc.fontHeight = points * 72 / 96
+func (dc *Context) LoadFontFace(path string, size float64) error {
+	face, err := LoadFontFace(path, size)
+	if err != nil {
+		return err
 	}
-	return err
+	dc.fontFace = face
+	dc.fontHeight = size * 72 / 96
+	return nil
 }
 
 func (dc *Context) FontHeight() float64 {
@@ -878,7 +886,7 @@ func (dc *Context) Translate(tx, ty float64) {
 	dc.matrix = dc.matrix.Translate(geom.Point{X: tx, Y: ty})
 }
 
-// Ergänzt die atuelle Transformation um eine Skalierung, wobei die Skalierung
+// Ergänzt die aktuelle Transformation um eine Skalierung, wobei die Skalierung
 // in X-, resp. Y-Richtung getrennt angegeben werden kann.
 func (dc *Context) Scale(sx, sy float64) {
 	dc.matrix = dc.matrix.Scale(sx, sy)
