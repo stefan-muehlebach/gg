@@ -29,8 +29,8 @@ func main() {
 	gc.SetFillColor(BackColor)
 	gc.Clear()
 
-	gc.SetStrokeColor(LineColor)
-	gc.SetStrokeWidth(LineWidth)
+	gc.SetLineColor(LineColor)
+	gc.SetLineWidth(LineWidth)
 	mp1 := geom.Point{Width / 2.0, Height / 2.0}
 	mp2 := mp1.AddXY(TickWidth/2.0, 0.0)
 	for i := 0; i < NumMajorTicks/2-1; i += 1 {
@@ -41,7 +41,7 @@ func main() {
 	}
 	gc.Stroke()
 
-	gc.SetStrokeWidth(AxesLineWidth)
+	gc.SetLineWidth(AxesLineWidth)
 	gc.DrawLine(Width/2, MarginSize, Width/2, MarginSize+CanvasSize)
 	gc.DrawLine(MarginSize, Height/2, MarginSize+CanvasSize, Height/2)
 	gc.Stroke()

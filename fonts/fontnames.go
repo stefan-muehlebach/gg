@@ -1,3 +1,5 @@
+//go:build !tinygo
+
 // Code generated - DO NOT EDIT.
 
 package fonts

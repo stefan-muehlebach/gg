@@ -36,9 +36,9 @@ func main() {
 		dc.LineTo(p.X, p.Y)
 	}
 	dc.SetFillColor(colors.RGBAF{0, 0.5, 0, 1.0})
-	dc.SetFillRule(gg.FillRuleEvenOdd)
-	dc.SetStrokeColor(colors.RGBAF{0, 1.0, 0, 0.5})
-	dc.SetStrokeWidth(16)
+	dc.SetFillRule(gg.FillRuleWinding)
+	dc.SetLineColor(colors.RGBAF{0, 1.0, 0, 0.5})
+	dc.SetLineWidth(16)
 	dc.FillStroke()
 	dc.SavePNG(outFile)
 }
