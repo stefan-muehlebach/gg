@@ -66,21 +66,6 @@ func (c RGBA) Brightness() float64 {
     return wr*float64(c.R)/255.0 + wg*float64(c.G)/255.0 + wb*float64(c.B)/255.0
 }
 
-// // Ermittelt die Helligkeit der Farbe durch den euklidischen Abstand zwischen
-// // dieser Farbe und "Weiss" (d.h. [255,255,255]).
-// func (c RGBA) Brightness01() float64 {
-//     r := (255.0 - float64(c.R))
-//     g := (255.0 - float64(c.G))
-//     b := (255.0 - float64(c.B))
-//     return 1.0 - math.Sqrt(r*r + g*g + b*b) * D
-// }
-
-// // Ermittelt die Helligkeit der Farbe, durch eine Projektion auf die
-// // Raumdiagonale des RGB-Farbwuerfels.
-// func (c RGBA) Brightness02() float64 {
-//     return (float64(c.R)+float64(c.G)+float64(c.B))/765.0
-// }
-
 // Retourniert eine neue Farbe, welche eine Interpolation zwischen c und
 // Schwarz ist. t ist ein Wert in [0, 1] und bestimmt die Position der
 // Interpolation. t=0 retourniert c, t=1 retourniert Schwarz.
@@ -106,6 +91,17 @@ func (c1 RGBA) Interpolate(c2 RGBA, t float64) RGBA {
 	b := (1.0-t)*float64(c1.B) + t*float64(c2.B)
 	a := (1.0-t)*float64(c1.A) + t*float64(c2.A)
 	return RGBA{uint8(r), uint8(g), uint8(b), uint8(a)}
+}
+
+// Berechnet den euklidischen Abstand zweier Farben im RGB-Wuerfel. Als
+// Koordinaten werden die drei Farbwerte r,g,b der Farben verwendet, die im
+// Bereich 0-255 liegen. Das Resultat ist ein Fliesskommawert, der sich
+// ebenfalls auf den RGB256-Wuerfel bezieht.
+func (c1 RGBA) Dist(c2 RGBA) float64 {
+	dx := float64(c1.R) - float64(c2.R)
+	dy := float64(c1.G) - float64(c2.G)
+	dz := float64(c1.B) - float64(c2.B)
+	return math.Sqrt(dx*dx + dy*dy + dz*dz)
 }
 
 func (c1 RGBA) Less(c2 RGBA, key SortField) bool {

@@ -19,8 +19,9 @@ var (
 	FontSize     = 36.0
 	DecoFontSize = 3.0 * FontSize
 	LineWidth    = 1024.0
-	BackColor    = colors.RGBAF{0.851, 0.811, 0.733, 1.0}
 	TextColor    = colors.Black
+	BackColor    = colors.White
+	//BackColor    = colors.RGBAF{0.851, 0.811, 0.733, 1.0}
 
 	NumberFont     = fonts.GoMono
 	NumberFontSize = 18.0
@@ -70,8 +71,8 @@ func main() {
 	gc.SetFillColor(BackColor)
 	gc.Clear()
 	gc.SetTextColor(TextColor)
-	gc.SetStrokeColor(MarkerColor)
-	gc.SetStrokeWidth(MarkerWidth)
+	gc.SetLineColor(MarkerColor)
+	gc.SetLineWidth(MarkerWidth)
 
 	numberFace, err := fonts.NewFace(NumberFont, NumberFontSize)
 	if err != nil {
